@@ -1,11 +1,18 @@
+import "./env.js";
 import app from "./app.js";
 import mongoose from "mongoose";
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(
+  process.env.MONGODB_URI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  () => {
+    console.log("Successfully connected to Database");
+  }
+);
 
 app.listen(process.env.PORT, (err) => {
   if (err) {
