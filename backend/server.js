@@ -13,3 +13,10 @@ app.listen(process.env.PORT, (err) => {
   }
   console.info("Server started on port", process.env.PORT);
 });
+
+process.on("SIGINT", () => {
+  mongoose.connection.close(() => {
+    console.log("Mongoose disconnected through app termination");
+    process.exit(0);
+  });
+});

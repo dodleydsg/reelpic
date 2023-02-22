@@ -2,11 +2,78 @@ import User from "../models/user.model.js";
 import extend from "loadash/extend";
 import errorHandler from "./error.controller";
 
-const create = (req, res, next) => {};
-const list = (req, res, next) => {};
-const userByID = (req, res, next) => {};
-const read = (req, res, next) => {};
-const update = (req, res, next) => {};
-const remove = (req, res, next) => {};
+const create = async (req, res, next) => {
+  const user = new User(req.body);
+  try {
+    await user.save();
+    return res.status(200).json({
+      message: "Successfully registered",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(error),
+    });
+  }
+};
+const list = async (req, res, next) => {
+  try {
+    let users = await User.find().select("name email updated created");
+    res.json(users);
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+
+const userByID = async (req, res, next, id) => {
+  try {
+    let user = await User.findById(id);
+    if (!user) {
+      return res.status(400).json({
+        error: "User not found",
+      });
+    }
+    req.profile = user;
+    next();
+  } catch (error) {
+    return res.status(400).json({
+      error: "Could not retrieve user",
+    });
+  }
+};
+const read = async (req, res, next) => {
+  req.profile.hashed_password = undefined;
+  req.profile.salt = undefined;
+  return res.json(req.profile);
+};
+const update = async (req, res, next) => {
+  try {
+    let user = req.profile;
+    user = extend(user, req.body);
+    user.updated = Date.now();
+    await user.save();
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    res.json(user);
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(err),
+    });
+  }
+};
+const remove = async (req, res, next) => {
+  try {
+    let user = req.profile;
+    let deletedUser = await user.remove();
+    deletedUser.hashed_password = undefined;
+    deletedUser.salt = undefined;
+    res.json(deletedUser);
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(error),
+    });
+  }
+};
 
 export default { create, userByID, read, list, remove, update };
