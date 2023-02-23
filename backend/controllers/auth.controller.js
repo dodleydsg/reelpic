@@ -21,12 +21,14 @@ const login = async (req, res) => {
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
 
     res.cookie("t", token, { expire: new Date() + 9999 });
+    user.last_login = Date.now();
     return res.json({
       token,
       user: {
         _id: user._id,
         name: user.name,
         email: user.email,
+        last_login: user.last_login,
       },
     });
   } catch (error) {

@@ -27,6 +27,7 @@ const UserSchema = new mongoose.Schema({
     required: "Password is required",
   },
   salt: String,
+  last_login: Date,
 });
 
 UserSchema.virtual("password")
