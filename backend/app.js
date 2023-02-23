@@ -6,6 +6,7 @@ import cors from "cors";
 import helmet from "helmet";
 import userRoutes from "./routes/user.routes.js";
 import authRoutes from "./routes/auth.routes.js";
+import morgan from "morgan";
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 app.use(compress());
 app.use(helmet());
 app.use(cors());
+app.use(morgan("dev"));
 
 // Routes
 

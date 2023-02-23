@@ -53,18 +53,21 @@ UserSchema.methods = {
     try {
       return createHmac("sha256", this.salt).update(password).digest("hex");
     } catch (error) {
+      console.error("Error created hash of password");
       return "";
     }
   },
 };
 
-UserSchema.path("hashed_password").validate(function (v) {
-  if (this._password && this._password.length > 6) {
-    this.invalidate("password", "Password must be at least 6 characters.");
-  }
-  if (this.isNew && !this._password) {
-    this.invalidate("password", "Password is required");
-  }
-}, null);
+UserSchema.path("hashed_password").validate({
+  validator: function (v) {
+    if (this._password && this._password.length < 6) {
+      this.invalidate("password", "Password must be at least 6 characters.");
+    }
+    if (!this._password && this.isNew) {
+      this.invalidate("password", "Password is required");
+    }
+  },
+});
 
 export default mongoose.model("User", UserSchema);
