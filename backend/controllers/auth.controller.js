@@ -1,6 +1,8 @@
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { expressjwt } from "express-jwt";
+import { sendMail } from "../helpers/emailReset.js";
+import mongoose from "mongoose";
 
 const login = async (req, res) => {
   try {
@@ -50,8 +52,29 @@ const hasAuthorization = async (req, res, next) => {
   }
   next();
 };
+const password_reset = async (req, res) => {
+  try {
+    let user = await User.findOne({
+      email: req.body.email,
+    });
 
-const password_reset = async (req, res) => {};
+    if (user) {
+      const options = {
+        from: process.env.EMAIL,
+        to: "dodleydesign@gmail.com",
+        subject: "Reset password",
+        body: "Reset password",
+      };
+      sendMail(options);
+    }
+  } catch (error) {
+    console.log("Error sending reset email", error);
+  } finally {
+    res.status(200).json({
+      message: `Reset message was sent to ${req.body.email}`,
+    });
+  }
+};
 
 const reset_confirm = async (req, res) => {};
 
