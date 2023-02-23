@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const { createHmac } = await import("node:crypto");
+import resetModes from "../helpers/resetModes.js";
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -28,6 +29,10 @@ const UserSchema = new mongoose.Schema({
   },
   salt: String,
   last_login: Date,
+  resetMode: {
+    type: String,
+    default: resetModes.LOCKED,
+  },
 });
 
 UserSchema.virtual("password")
