@@ -4,6 +4,7 @@ import { expressjwt } from "express-jwt";
 import { sendMail } from "../helpers/emailReset.js";
 import resetModes from "../helpers/resetModes.js";
 const { createHmac } = await import("node:crypto");
+import extend from "lodash/extend.js";
 
 const login = async (req, res) => {
   try {
@@ -80,7 +81,7 @@ const password_reset = async (req, res) => {
       sendMail(options);
       // Changes reset mode to "PENDING"
       user.resetMode = resetModes.PENDING;
-      user.save();
+      await user.save();
     }
   } catch (error) {
     console.log("Error sending reset email", error);
@@ -133,7 +134,7 @@ const reset_confirm = async (req, res, next) => {
 
       // Changes reset mode to "INCOMING"
       user.resetMode = resetModes.INCOMING;
-      user.save();
+      await user.save();
       return res.status(200).json({
         message: "Proceed to reset password",
         user: {
@@ -151,6 +152,34 @@ const reset_confirm = async (req, res, next) => {
 
 const reset_done = async (req, res) => {
   // Resets the password
+  try {
+    let user = await User.findOne({
+      email: req.body.email,
+    });
+    if (!user) {
+      console.log("Unknown user");
+      return res.status(404).json({
+        message: "Couldn't retrive the user with the given email",
+      });
+    } else {
+      console.log(user.resetMode);
+      if (user.resetMode !== resetModes.INCOMING) {
+        return res.status(404).json({
+          message: "Token expired, request new token",
+        });
+      } else {
+        user = extend(user, req.body);
+        user.updated = Date.now();
+        user.resetMode = resetModes.LOCKED;
+        await user.save();
+        user.hashed_password = undefined;
+        user.salt = undefined;
+        return res.status(200).json(user);
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  }
   // Changes reset mode to "LOCKED"
 };
 

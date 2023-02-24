@@ -55,7 +55,7 @@ const update = async (req, res, next) => {
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
-    res.json(user);
+    return res.json(user);
   } catch (error) {
     return res.status(400).json({
       error: errorHandler.getErrorMessage(err),
