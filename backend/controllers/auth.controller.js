@@ -178,7 +178,10 @@ const reset_done = async (req, res) => {
         await user.save();
         user.hashed_password = undefined;
         user.salt = undefined;
-        return res.status(200).json(user);
+        return res.status(200).json({
+          message: "Reset completed, login to access your dashboard",
+          user,
+        });
       }
     }
   } catch (error) {
