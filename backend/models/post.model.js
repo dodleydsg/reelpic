@@ -13,14 +13,8 @@ const PostSchema = mongoose.Schema({
     body: String,
     comments: [
       {
-        user: ObjectId,
-        body: String,
-        created: {
-          type: Date,
-          default: Date.now,
-        },
-        updated: Date,
-        likes: Number,
+        type: ObjectId,
+        default: null,
       },
     ],
     images: [
@@ -28,6 +22,10 @@ const PostSchema = mongoose.Schema({
         type: String,
       },
     ],
+  },
+  trash: {
+    type: Boolean,
+    default: false,
   },
 });
 
