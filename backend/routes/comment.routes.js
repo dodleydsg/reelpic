@@ -29,4 +29,13 @@ router
     commentCtrl.remove
   );
 
+router
+  .route("/api/comment/reply")
+  .post(
+    postCtrl.addUserToCookie,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    commentCtrl.reply
+  );
+
 export default router;

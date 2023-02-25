@@ -54,7 +54,21 @@ const like = async (req, res, next) => {};
 
 const reply = async (req, res, next) => {
   try {
-  } catch (error) {}
+    let reply = new Comment(req.body);
+    let root = await Comment.findOne({
+      _id: req.body.commentId,
+    });
+    root.replies.push(reply._id);
+    await root.save();
+    await reply.save();
+    return res.status(200).json({
+      message: "Replied successfully",
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: errorHandler.getErrorMessage(error),
+    });
+  }
 };
 
-export default { create, remove, like, list };
+export default { create, remove, like, list, reply };
