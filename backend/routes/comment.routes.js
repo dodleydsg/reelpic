@@ -9,13 +9,13 @@ router
   .route("/api/comments")
   .get(
     postCtrl.addUserToCookie,
-    authCtrl.login,
+    authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     commentCtrl.list
   )
   .post(
     postCtrl.addUserToCookie,
-    authCtrl.login,
+    authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     commentCtrl.create
   );

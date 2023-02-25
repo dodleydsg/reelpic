@@ -1,13 +1,19 @@
 import Comment from "../models/comment.model.js";
+import Post from "../models/post.model.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
 
 const create = async (req, res, next) => {
   try {
-    const commment = new Comment(req.body);
-    await commment.save();
+    const comment = new Comment(req.body);
+    let post = await Post.findOne({
+      _id: req.body.postId,
+    });
+    post.content.comments.push(comment._id);
+    await post.save();
+    await comment.save();
     return res.status(200).json({
       message: "Comment added successfully",
-      commment,
+      comment,
     });
   } catch (error) {
     return res.status(400).json({
@@ -45,5 +51,10 @@ const remove = async (req, res, next) => {
 };
 
 const like = async (req, res, next) => {};
+
+const reply = async (req, res, next) => {
+  try {
+  } catch (error) {}
+};
 
 export default { create, remove, like, list };

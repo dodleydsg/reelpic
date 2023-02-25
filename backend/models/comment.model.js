@@ -2,14 +2,23 @@ import mongoose from "mongoose";
 
 const CommentSchema = mongoose.Schema({
   // Id for the post containing the comment
-  postId: String,
-  body: String,
+  postId: {
+    type: String,
+    required: "Comment must have a postId",
+  },
+  body: {
+    type: String,
+    required: "Comment must have a body",
+  },
   replies: [{ type: String, default: null }],
   created: {
     type: Date,
     default: Date.now,
   },
-  likes: Number,
+  likes: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export default mongoose.model("Comment", CommentSchema);
