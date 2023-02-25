@@ -37,9 +37,10 @@ const list = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
   try {
-    await Comment.find({
+    let comment = await Comment.findOne({
       post: req.params.commentId,
-    }).remove();
+    });
+    await comment.remove();
     return res.status(200).json({
       message: "Successfully removed post",
     });

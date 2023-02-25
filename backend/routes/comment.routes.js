@@ -24,7 +24,7 @@ router
   .route("/api/comment/:commentId")
   .delete(
     postCtrl.addUserToCookie,
-    authCtrl.login,
+    authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     commentCtrl.remove
   );

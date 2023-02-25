@@ -35,8 +35,8 @@ const list = async (req, res, next) => {
 
 const trash = async (req, res, next) => {
   try {
-    let post = Post.findOne({
-      _id: req.params.id,
+    let post = await Post.findOne({
+      _id: req.params.postId,
     });
     post.trash = true;
     await post.save();
@@ -52,7 +52,9 @@ const trash = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
   try {
-    let post = req.params.id;
+    let post = await Post.findOne({
+      _id: req.params.postId,
+    });
     await post.remove();
     return res.status(200).json({
       message: "Post successfully deleted",
