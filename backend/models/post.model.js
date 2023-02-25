@@ -1,25 +1,27 @@
 import mongoose from "mongoose";
 
 const PostSchema = mongoose.Schema({
-  owner: { type: mongoose.Types.ObjectId },
-  title: String,
-  users_like: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
-    },
-  ],
+  owner: {
+    type: String,
+    required: "Post must have an owner",
+  },
+  likes: Number,
+  users_like: [String],
   content: {
-    body: String,
+    body: {
+      type: String,
+      required: "Post must contain some body text",
+    },
     comments: [
       {
-        type: ObjectId,
+        type: String,
         default: null,
       },
     ],
     images: [
       {
         type: String,
+        default: null,
       },
     ],
   },
@@ -29,4 +31,4 @@ const PostSchema = mongoose.Schema({
   },
 });
 
-export default mongoose.Model("Post", PostSchema);
+export default mongoose.model("Post", PostSchema);

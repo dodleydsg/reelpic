@@ -7,8 +7,18 @@ const router = express.Router();
 
 router
   .route("/api/posts")
-  .get(authCtrl.requireLogin, authCtrl.hasAuthorization, postCtrl.list)
-  .post(authCtrl.requireLogin, authCtrl.hasAuthorization, postCtrl.create);
+  .get(
+    postCtrl.addUserToCookie,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.list
+  )
+  .post(
+    postCtrl.addUserToCookie,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.create
+  );
 
 router
   .route("/api/post/:postId")

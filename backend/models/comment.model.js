@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const CommentSchema = mongoose.Schema({
-  post: ObjectId,
+  post: String,
   body: String,
-  replies: [{ type: ObjectId, default: null }],
+  replies: [{ type: String, default: null }],
   created: {
     type: Date,
     default: Date.now,
@@ -11,4 +11,4 @@ const CommentSchema = mongoose.Schema({
   likes: Number,
 });
 
-export default mongoose.Model("Comment", CommentSchema);
+export default mongoose.model("Comment", CommentSchema);

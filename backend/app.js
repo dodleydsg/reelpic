@@ -24,6 +24,7 @@ app.use(morgan("dev"));
 
 app.use("/", userRoutes);
 app.use("/", authRoutes);
+app.use("/", postRoutes);
 
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
