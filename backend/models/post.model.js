@@ -5,7 +5,10 @@ const PostSchema = mongoose.Schema({
     type: String,
     required: "Post must have an owner",
   },
-  likes: Number,
+  likes: {
+    type: Number,
+    default: 0,
+  },
   users_like: [String],
   content: {
     body: {

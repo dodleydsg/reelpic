@@ -7,7 +7,6 @@ const addUserToCookie = (req, res, next) => {
 };
 
 const create = async (req, res, next) => {
-  console.log(req.cookie);
   let post = new Post(req.body);
   try {
     await post.save();
@@ -16,7 +15,7 @@ const create = async (req, res, next) => {
     });
   } catch (error) {
     return res.status(400).json({
-      message: errorHandler(error),
+      message: errorHandler.getErrorMessage(error),
     });
   }
 };

@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
 
 const CommentSchema = mongoose.Schema({
-  post: String,
+  // Id for the post containing the comment
+  postId: String,
   body: String,
   replies: [{ type: String, default: null }],
   created: {
