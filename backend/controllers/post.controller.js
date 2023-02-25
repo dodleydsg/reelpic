@@ -73,4 +73,6 @@ const returnPost = async (req, res, next) => {
   }
 };
 
+const like = async (req, res, next) => {};
+
 export default { create, remove, returnPost, trash, list };

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const CommentSchema = mongoose.Schema({
-  user: ObjectId,
+  post: ObjectId,
   body: String,
   replies: [{ type: ObjectId, default: null }],
   created: {
