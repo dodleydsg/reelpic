@@ -39,12 +39,9 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: null,
   },
-  posts_liked: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "Posts",
-    },
-  ],
+  posts_liked: [String],
+  catalogues: [String],
+  posts: [String],
 });
 
 UserSchema.virtual("password")
