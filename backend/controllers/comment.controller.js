@@ -42,7 +42,7 @@ const remove = async (req, res, next) => {
     });
     await comment.remove();
     return res.status(200).json({
-      message: "Successfully removed post",
+      message: "Successfully removed comment",
     });
   } catch (error) {
     return res.status(400).json({

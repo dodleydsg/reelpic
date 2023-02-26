@@ -12,6 +12,7 @@ const create = async (req, res, next) => {
     await post.save();
     return res.status(200).json({
       message: "Post added",
+      post,
     });
   } catch (error) {
     return res.status(400).json({
@@ -23,8 +24,8 @@ const create = async (req, res, next) => {
 const list = async (req, res, next) => {
   try {
     const posts = await Post.find({
-      owner: req.params.user_id,
-    }).select("name email updated created");
+      owner: req.params.userId,
+    });
     return res.status(200).json(posts);
   } catch (error) {
     res.status(404).json({
@@ -68,8 +69,11 @@ const remove = async (req, res, next) => {
 
 const returnPost = async (req, res, next) => {
   try {
-    let post = req.params.id;
-    (post.trash = false), await post.save();
+    let post = await Post.findOne({
+      _id: req.params.postId,
+    });
+    post.trash = false;
+    await post.save();
     return res.status(200).json({
       message: "Post returned to inbox",
     });
