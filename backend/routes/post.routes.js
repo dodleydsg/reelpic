@@ -8,7 +8,7 @@ const router = express.Router();
 router
   .route("/api/posts")
   .post(
-    postCtrl.addUserToCookie,
+    userCtrl.getUser,
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     postCtrl.create
@@ -17,7 +17,7 @@ router
 router
   .route("/api/:userId/posts")
   .get(
-    postCtrl.addUserToCookie,
+    userCtrl.getUser,
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     postCtrl.list
@@ -26,18 +26,25 @@ router
 router
   .route("/api/post/:postId")
   .get(
-    postCtrl.addUserToCookie,
+    userCtrl.getUser,
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     postCtrl.returnPost
   )
   .delete(
-    postCtrl.addUserToCookie,
+    userCtrl.getUser,
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     postCtrl.trash
   );
 
-router.route("/api/post/delete/:postId").delete(postCtrl.remove);
+router
+  .route("/api/post/delete/:postId")
+  .delete(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.remove
+  );
 
 export default router;

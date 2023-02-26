@@ -1,11 +1,6 @@
 import Post from "../models/post.model.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
 
-const addUserToCookie = (req, res, next) => {
-  req.profile = { _id: req.cookies._id };
-  next();
-};
-
 const create = async (req, res, next) => {
   let post = new Post(req.body);
   try {
@@ -86,4 +81,4 @@ const returnPost = async (req, res, next) => {
 
 const like = async (req, res, next) => {};
 
-export default { addUserToCookie, create, remove, returnPost, trash, list };
+export default { create, remove, returnPost, trash, list };

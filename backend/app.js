@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth.routes.js";
 import morgan from "morgan";
 import postRoutes from "./routes/post.routes.js";
 import commentRoutes from "./routes/comment.routes.js";
+import catalogueRoutes from "./routes/catalogue.routes.js";
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use("/", userRoutes);
 app.use("/", authRoutes);
 app.use("/", postRoutes);
 app.use("/", commentRoutes);
+app.use("/", catalogueRoutes);
 
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {

@@ -12,6 +12,6 @@ router
   .put(authCtrl.requireLogin, authCtrl.hasAuthorization, userCtrl.update)
   .delete(authCtrl.requireLogin, authCtrl.hasAuthorization, userCtrl.remove);
 
-router.param("userId", userCtrl.userByID);
+router.param("userId", userCtrl.getUser);
 
 export default router;

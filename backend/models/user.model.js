@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 const { createHmac } = await import("node:crypto");
 import resetModes from "../helpers/resetModes.js";
-import { type } from "node:os";
 
 const UserSchema = new mongoose.Schema({
   name: {

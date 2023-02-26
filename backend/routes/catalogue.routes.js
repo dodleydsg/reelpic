@@ -1,14 +1,17 @@
 import express from "express";
-import authCtrl from "./auth.controller.js";
-import postCtrl from "./post.controller.js";
-import authController from "./auth.controller.js";
+import authCtrl from "../controllers/auth.controller.js";
+import userCtrl from "../controllers/user.controller.js";
+import catalogueCtrl from "../controllers/catalogue.controller.js";
 
-const router = express.Router;
+const router = express.Router();
 
 router
-  .route("/api/catalogues/")
+  .route("/api/catalogues")
   .get(
-    postCtrl.addUserToCookie,
-    authCtrl.login,
-    authController.hasAuthorization
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    catalogueCtrl.create
   );
+
+export default router;

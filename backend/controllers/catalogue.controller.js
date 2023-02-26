@@ -2,6 +2,8 @@ import Catalogue from "../models/catalogue.model.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
 import extend from "lodash/extend.js";
 
+
+const list = async (req, res, next) => {};
 const create = async (req, res, next) => {
   try {
     const catalogue = await Catalogue.create(req.body);
