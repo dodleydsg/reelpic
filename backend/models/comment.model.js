@@ -1,16 +1,17 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const CommentSchema = mongoose.Schema({
   // Id for the post containing the comment
   postId: {
-    type: String,
+    type: mongoose.Types.ObjectId,
+    ref: "Post",
     required: "Comment must have a postId",
   },
   body: {
     type: String,
     required: "Comment must have a body",
   },
-  replies: [{ type: String, default: null }],
+  replies: [{ type: mongoose.Types.ObjectId, default: null, ref: "Comment" }],
   created: {
     type: Date,
     default: Date.now,

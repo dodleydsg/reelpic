@@ -1,15 +1,21 @@
 import mongoose from "mongoose";
 
 const PostSchema = mongoose.Schema({
-  owner: {
-    type: String,
+  userId: {
+    type: mongoose.Types.ObjectId,
     required: "Post must have an owner",
+    ref: "User",
   },
   likes: {
     type: Number,
     default: 0,
   },
-  users_like: [String],
+  users_like: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    },
+  ],
   content: {
     body: {
       type: String,
@@ -17,7 +23,8 @@ const PostSchema = mongoose.Schema({
     },
     comments: [
       {
-        type: String,
+        type: mongoose.Types.ObjectId,
+        ref: "Comment",
         default: null,
       },
     ],
