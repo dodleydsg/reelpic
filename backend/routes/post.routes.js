@@ -1,21 +1,50 @@
 import express from "express";
 import postCtrl from "../controllers/post.controller.js";
-import { basicSetupAndAutorisation } from "./user.routes.js";
+import userCtrl from "../controllers/user.controller.js";
+import authCtrl from "../controllers/auth.controller.js";
 
 const router = express.Router();
 
 router
   .route("/api/posts")
-  .post(basicSetupAndAutorisation, postCtrl.create)
-  .get(basicSetupAndAutorisation, postCtrl.list);
+  .post(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.create
+  );
+
+router
+  .route("/api/:userId/posts")
+  .get(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.list
+  );
 
 router
   .route("/api/post/:postId")
-  .get(basicSetupAndAutorisation, postCtrl.returnPost)
-  .delete(basicSetupAndAutorisation, postCtrl.trash);
+  .get(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.returnPost
+  )
+  .delete(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.trash
+  );
 
 router
   .route("/api/post/delete/:postId")
-  .delete(basicSetupAndAutorisation, postCtrl.remove);
+  .delete(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.remove
+  );
 
 export default router;

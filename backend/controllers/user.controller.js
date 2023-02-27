@@ -2,6 +2,23 @@ import User from "../models/user.model.js";
 import extend from "lodash/extend.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
 
+const getUser = async (req, res, next) => {
+  try {
+    let user = await User.findById(req.cookies._id);
+    if (!user) {
+      return res.status(400).json({
+        error: "User not found",
+      });
+    }
+    req.profile = user;
+    next();
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(error),
+    });
+  }
+};
+
 const create = async (req, res, next) => {
   const user = new User(req.body);
   try {
@@ -17,22 +34,11 @@ const create = async (req, res, next) => {
 };
 const list = async (req, res, next) => {
   try {
-    User.find()
-      .select("name email updated created")
-      .populate("posts_liked")
-      .populate("catalogues")
-      .populate("posts")
-      .exec((err, users) => {
-        if (err) {
-          return res.status(400).json({
-            error: errorHandler.getErrorMessage(err),
-          });
-        }
-        res.json(users);
-      });
+    let users = await User.find().select("name email updated created");
+    res.json(users);
   } catch (error) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(error),
+      error: errorHandler.getErrorMessage(err),
     });
   }
 };
@@ -71,4 +77,4 @@ const remove = async (req, res, next) => {
   }
 };
 
-export default { create, read, list, remove, update };
+export default { create, read, list, remove, update, getUser };

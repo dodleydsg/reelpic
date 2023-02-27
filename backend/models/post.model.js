@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import commentModel from "./comment.model.js";
 
 const PostSchema = mongoose.Schema({
   userId: {
@@ -40,14 +39,6 @@ const PostSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
-});
-
-PostSchema.pre("remove", async (next) => {
-  // Do some cleanup on remove
-  this.content.comments.map(async (e, i, a) => {
-    await commentModel.findByIdAndDelete(e);
-  });
-  next();
 });
 
 export default mongoose.model("Post", PostSchema);
