@@ -1,42 +1,20 @@
 import express from "express";
-import authCtrl from "../controllers/auth.controller.js";
-import postCtrl from "../controllers/post.controller.js";
-import userCtrl from "../controllers/user.controller.js";
 import commentCtrl from "../controllers/comment.controller.js";
+import { basicSetupAndAutorisation } from "./user.routes.js";
 
 const router = express.Router();
 
 router
   .route("/api/comments")
-  .get(
-    userCtrl.getUser,
-    authCtrl.requireLogin,
-    authCtrl.hasAuthorization,
-    commentCtrl.list
-  )
-  .post(
-    userCtrl.getUser,
-    authCtrl.requireLogin,
-    authCtrl.hasAuthorization,
-    commentCtrl.create
-  );
+  .get(basicSetupAndAutorisation, commentCtrl.list)
+  .post(basicSetupAndAutorisation, commentCtrl.create);
 
 router
   .route("/api/comment/:commentId")
-  .delete(
-    userCtrl.getUser,
-    authCtrl.requireLogin,
-    authCtrl.hasAuthorization,
-    commentCtrl.remove
-  );
+  .delete(basicSetupAndAutorisation, commentCtrl.remove);
 
 router
   .route("/api/comment/reply")
-  .post(
-    userCtrl.getUser,
-    authCtrl.requireLogin,
-    authCtrl.hasAuthorization,
-    commentCtrl.reply
-  );
+  .post(basicSetupAndAutorisation, commentCtrl.reply);
 
 export default router;

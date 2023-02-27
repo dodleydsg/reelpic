@@ -34,11 +34,22 @@ const create = async (req, res, next) => {
 };
 const list = async (req, res, next) => {
   try {
-    let users = await User.find().select("name email updated created");
-    res.json(users);
+    User.find()
+      .select("name email updated created")
+      .populate("posts_liked")
+      .populate("catalogues")
+      .populate("posts")
+      .exec((err, users) => {
+        if (err) {
+          return res.status(400).json({
+            error: errorHandler.getErrorMessage(err),
+          });
+        }
+        res.json(users);
+      });
   } catch (error) {
     return res.status(400).json({
-      error: errorHandler.getErrorMessage(err),
+      error: errorHandler.getErrorMessage(error),
     });
   }
 };

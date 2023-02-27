@@ -2,9 +2,12 @@ import Post from "../models/post.model.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
 
 const create = async (req, res, next) => {
+  let user = req.profile;
   let post = new Post(req.body);
   try {
     await post.save();
+    user.posts.addToSet(post._id);
+    await user.save();
     return res.status(200).json({
       message: "Post added",
       post,
@@ -18,10 +21,9 @@ const create = async (req, res, next) => {
 
 const list = async (req, res, next) => {
   try {
-    const posts = await Post.find({
-      owner: req.params.userId,
-    });
-    return res.status(200).json(posts);
+    let user = req.profile;
+    let postIds = user.posts;
+    return res.status(200).json(postIds);
   } catch (error) {
     res.status(404).json({
       message: errorHandler.getErrorMessage(error),
@@ -48,16 +50,20 @@ const trash = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
   try {
+    let user = req.profile;
     let post = await Post.findOne({
       _id: req.params.postId,
     });
     await post.remove();
+    console.log(user.posts);
+    user.posts.pull(post._id);
+    await user.save();
     return res.status(200).json({
       message: "Post successfully deleted",
     });
   } catch (error) {
     return res.status(400).json({
-      message: errorHandler.getErrorMessage(error),
+      message: errorHandler.getErrorMessage(error) + error,
     });
   }
 };
