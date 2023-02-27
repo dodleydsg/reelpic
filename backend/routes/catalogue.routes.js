@@ -15,6 +15,6 @@ router
   .route("/api/catalogue/:catalogueId")
   .get(basicSetupAndAutorisation, catalogueCtrl.read)
   .put(basicSetupAndAutorisation, catalogueCtrl.update)
-  .delete(basicSetupAndAutorisation, catalogueCtrl.list);
+  .delete(basicSetupAndAutorisation, catalogueCtrl.remove);
 
 export default router;

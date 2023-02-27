@@ -3,7 +3,19 @@ import errorHandler from "../helpers/dbErrorHandler.js";
 import extend from "lodash/extend.js";
 
 
-const list = async (req, res, next) => {};
+const list = async (req, res, next) => {
+  try {
+    let user = req.profile;
+    let catalogueIds = user.catalogues;
+    return res.status(200).json(catalogueIds);
+  } catch (error) {
+    return res.status(400).json({
+      message: errorHandler.getErrorMessage(error),
+    });
+  }
+};
+const read = async (req, res, next) => {};
+
 const create = async (req, res, next) => {
   try {
     const catalogue = await Catalogue.create(req.body);
@@ -69,4 +81,4 @@ const addItem = async (req, res, next) => {
   }
 };
 
-export default { create, update, addItem, remove, list };
+export default { create, update, addItem, remove, list, read };

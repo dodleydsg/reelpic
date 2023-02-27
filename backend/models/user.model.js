@@ -58,6 +58,11 @@ const UserSchema = new mongoose.Schema({
   ],
 });
 
+UserSchema.pre("remove", (next) => {
+  // Do some cleanup on remove
+  for (let i = 0; i < this.posts.length; i++) {}
+});
+
 UserSchema.virtual("password")
   .set(function (password) {
     this._password = password;
