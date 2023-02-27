@@ -11,7 +11,40 @@ router
     userCtrl.getUser,
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
+    catalogueCtrl.list
+  )
+  .post(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
     catalogueCtrl.create
+  );
+
+router
+  .route("/api/catalogue/:catalogueId")
+  .post(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    catalogueCtrl.addItem
+  )
+  .put(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    catalogueCtrl.update
+  )
+  .delete(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    catalogueCtrl.remove
+  )
+  .get(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    catalogueCtrl.read
   );
 
 export default router;

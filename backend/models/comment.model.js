@@ -1,4 +1,5 @@
 import mongoose, { Mongoose } from "mongoose";
+import Post from "./post.model.js";
 
 const CommentSchema = mongoose.Schema({
   // Id for the post containing the comment
@@ -20,6 +21,16 @@ const CommentSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
+});
+
+CommentSchema.pre("remove", async (next) => {
+  try {
+    let post = await Post.findById(this.postId);
+    await post.content.comments.remove(this.id);
+  } catch (error) {
+    console.log("Here");
+    next(error);
+  }
 });
 
 export default mongoose.model("Comment", CommentSchema);

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "./user.model.js";
 
 const CatalogueSchema = mongoose.Schema({
   userId: {
@@ -10,7 +11,21 @@ const CatalogueSchema = mongoose.Schema({
     type: String,
     required: "Catalogue must have a title",
   },
+  description: String,
   items: [String],
+});
+
+CatalogueSchema.pre("remove", async function (next) {
+  console.log(this);
+  try {
+    let user = await User.findOne({
+      _id: this.userId.toString(),
+    });
+    console.log(this._id.toString());
+    await user.catalogues.remove(this.id);
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default mongoose.model("Catalogue", CatalogueSchema);
