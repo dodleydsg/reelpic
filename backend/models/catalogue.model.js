@@ -23,6 +23,7 @@ CatalogueSchema.pre("remove", async function (next) {
     });
     console.log(this._id.toString());
     await user.catalogues.remove(this.id);
+    user.save();
   } catch (error) {
     next(error);
   }

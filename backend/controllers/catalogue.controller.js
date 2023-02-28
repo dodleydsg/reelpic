@@ -83,6 +83,7 @@ const update = async (req, res, next) => {
     await catalogue.save();
     return res.status(200).json({
       message: "Catalogue updated",
+      catalogue,
     });
   } catch (error) {
     return res.status(400).json({

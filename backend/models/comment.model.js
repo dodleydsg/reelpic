@@ -23,14 +23,15 @@ const CommentSchema = mongoose.Schema({
   },
 });
 
-CommentSchema.pre("remove", async (next) => {
+CommentSchema.pre("remove", async function (next) {
   try {
-    let post = await Post.findById(this.postId);
+    let post = await Post.findOne({
+      _id: this.postId.toString(),
+    });
     await post.content.comments.remove(this.id);
+    post.save();
   } catch (error) {
-    console.log("Here");
     next(error);
   }
 });
-
 export default mongoose.model("Comment", CommentSchema);
