@@ -16,14 +16,12 @@ const CatalogueSchema = mongoose.Schema({
 });
 
 CatalogueSchema.pre("remove", async function (next) {
-  console.log(this);
   try {
     let user = await User.findOne({
       _id: this.userId.toString(),
     });
-    console.log(this._id.toString());
     await user.catalogues.remove(this.id);
-    user.save();
+    await user.save();
   } catch (error) {
     next(error);
   }

@@ -2,9 +2,17 @@ import Post from "../models/post.model.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
 
 const create = async (req, res, next) => {
-  let post = new Post(req.body);
   try {
+    let user = req.profile;
+    if (user._id.toString() !== req.body.userId.toString()) {
+      return res.status(400).json({
+        message: "Unauthorized user",
+      });
+    }
+    let post = new Post(req.body);
+    user.posts.push(post._id);
     await post.save();
+    await user.save();
     return res.status(200).json({
       message: "Post added",
       post,
@@ -18,9 +26,7 @@ const create = async (req, res, next) => {
 
 const list = async (req, res, next) => {
   try {
-    const posts = await Post.find({
-      owner: req.params.userId,
-    });
+    const posts = req.profile.posts;
     return res.status(200).json(posts);
   } catch (error) {
     res.status(404).json({

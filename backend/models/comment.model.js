@@ -29,7 +29,7 @@ CommentSchema.pre("remove", async function (next) {
       _id: this.postId.toString(),
     });
     await post.content.comments.remove(this.id);
-    post.save();
+    await post.save();
   } catch (error) {
     next(error);
   }

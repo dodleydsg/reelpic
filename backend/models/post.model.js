@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import User from "./user.model.js";
 
 const PostSchema = mongoose.Schema({
   userId: {
@@ -39,6 +40,18 @@ const PostSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+});
+
+PostSchema.pre("remove", async function (next) {
+  try {
+    let user = await User.findOne({
+      _id: this.userId.toString(),
+    });
+    await user.posts.remove(this.id);
+    await user.save();
+  } catch (error) {
+    next(error);
+  }
 });
 
 export default mongoose.model("Post", PostSchema);

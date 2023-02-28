@@ -12,16 +12,14 @@ router
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     postCtrl.create
-  );
-
-router
-  .route("/api/:userId/posts")
+  )
   .get(
     userCtrl.getUser,
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     postCtrl.list
   );
+
 
 router
   .route("/api/post/:postId")
