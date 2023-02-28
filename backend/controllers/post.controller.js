@@ -1,5 +1,6 @@
 import Post from "../models/post.model.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
+import extend from "lodash/extend.js";
 
 const create = async (req, res, next) => {
   try {
@@ -85,6 +86,24 @@ const returnPost = async (req, res, next) => {
   }
 };
 
+const update = async (req, res, next) => {
+  try {
+    let post = await Post.findOne({
+      _id: req.params.postId,
+    });
+    post = extend(post, req.body);
+    await post.save();
+    return res.status(200).json({
+      message: "Post updated",
+      post,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: errorHandler.getErrorMessage(error),
+    });
+  }
+};
+
 const like = async (req, res, next) => {};
 
-export default { create, remove, returnPost, trash, list };
+export default { create, remove, returnPost, trash, list, update };

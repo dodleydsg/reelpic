@@ -1,6 +1,7 @@
 import Comment from "../models/comment.model.js";
 import Post from "../models/post.model.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
+import extend from "lodash/extend.js";
 
 const create = async (req, res, next) => {
   try {
@@ -66,4 +67,22 @@ const reply = async (req, res, next) => {
   }
 };
 
-export default { create, remove, like, list, reply };
+const update = async (req, res, next) => {
+  try {
+    let comment = await Comment.findOne({
+      _id: req.params.commentId,
+    });
+    comment = extend(comment, req.body);
+    await comment.save();
+    return res.status(200).json({
+      message: "Comment updated",
+      comment,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      message: errorHandler.getErrorMessage(error),
+    });
+  }
+};
+
+export default { create, remove, like, list, reply, update };

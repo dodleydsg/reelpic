@@ -14,6 +14,10 @@ const getErrorMessage = (err) => {
       if (err.errors[errName].message) message = err.errors[errName].message;
     }
   }
+  if (message === "") {
+    console.log(err);
+    return "Couldn't complete request";
+  }
   return message;
 };
 

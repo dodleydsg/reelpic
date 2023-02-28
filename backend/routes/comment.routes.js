@@ -28,6 +28,12 @@ router
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     commentCtrl.remove
+  )
+  .put(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    commentCtrl.update
   );
 
 router

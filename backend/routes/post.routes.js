@@ -34,6 +34,12 @@ router
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
     postCtrl.trash
+  )
+  .put(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.update
   );
 
 router
