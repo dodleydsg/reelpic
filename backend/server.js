@@ -1,18 +1,33 @@
 import "./env.js";
 import app from "./app.js";
-import mongoose from "mongoose";
+import mongoose, { connection } from "mongoose";
+import { createClient } from "redis";
 
-mongoose.Promise = global.Promise;
-mongoose.connect(
-  process.env.MONGODB_URI,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  },
-  () => {
-    console.log("Successfully connected to Database");
-  }
-);
+// MongoDB connection
+mongoose
+  .connect(
+    process.env.MONGODB_URI,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    },
+    () => {
+      console.log("Successfully connected to Database");
+    }
+  )
+  .catch((error) => console.log(error));
+
+// Catch errors after initial connection
+mongoose.connection.on("error", (err) => {
+  console.log(err);
+});
+// Redis connection
+
+const redisClient = createClient();
+redisClient.connect();
+
+
+
 
 app.listen(process.env.PORT, (err) => {
   if (err) {
