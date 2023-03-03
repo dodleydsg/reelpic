@@ -1,6 +1,6 @@
 import "./env.js";
 import app from "./app.js";
-import mongoose, { connection } from "mongoose";
+import mongoose from "mongoose";
 import { createClient } from "redis";
 
 // MongoDB connection
