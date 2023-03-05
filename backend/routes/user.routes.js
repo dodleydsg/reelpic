@@ -12,6 +12,16 @@ router
   .put(authCtrl.requireLogin, authCtrl.hasAuthorization, userCtrl.update)
   .delete(authCtrl.requireLogin, authCtrl.hasAuthorization, userCtrl.remove);
 
+
+router
+  .route("/api/follow/:_id")
+  .get(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    userCtrl.follow
+  );
+
 router.param("userId", userCtrl.getUser);
 
 export default router;

@@ -77,4 +77,16 @@ const remove = async (req, res, next) => {
   }
 };
 
-export default { create, read, list, remove, update, getUser };
+const follow = async (req, res, next) => {
+  try {
+    let user = req.profile;
+    user.following.push(req.params._id);
+    user.save();
+  } catch (error) {
+    return res.status(400).json({
+      error: errorHandler.getErrorMessage(error),
+    });
+  }
+};
+
+export default { create, read, list, remove, update, getUser, follow };

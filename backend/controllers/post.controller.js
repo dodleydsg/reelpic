@@ -1,6 +1,7 @@
 import Post from "../models/post.model.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
 import extend from "lodash/extend.js";
+import mongoose from "mongoose";
 
 const create = async (req, res, next) => {
   try {
@@ -104,6 +105,16 @@ const update = async (req, res, next) => {
   }
 };
 
-const like = async (req, res, next) => {};
+const getLikes = async (req, res, next) => {};
+const setLikes = async (req, res, next) => {};
 
-export default { create, remove, returnPost, trash, list, update };
+export default {
+  create,
+  remove,
+  returnPost,
+  trash,
+  list,
+  update,
+  getLikes,
+  setLikes,
+};

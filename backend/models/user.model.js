@@ -56,6 +56,13 @@ const UserSchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
+  followers: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    },
+  ],
+  following: [{ type: mongoose.Types.ObjectId, ref: "User" }],
 });
 
 UserSchema.virtual("password")

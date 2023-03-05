@@ -4,18 +4,16 @@ import mongoose from "mongoose";
 import { createClient } from "redis";
 
 // MongoDB connection
-mongoose
-  .connect(
-    process.env.MONGODB_URI,
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    },
-    () => {
-      console.log("Successfully connected to Database");
-    }
-  )
-  .catch((error) => console.log(error));
+mongoose.connect(
+  process.env.MONGODB_URI,
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  () => {
+    console.log("Successfully connected to Database");
+  }
+);
 
 // Catch errors after initial connection
 mongoose.connection.on("error", (err) => {
@@ -23,7 +21,7 @@ mongoose.connection.on("error", (err) => {
 });
 // Redis connection
 
-const redisClient = createClient();
+const redisClient = createClient(process.env.REDIS_PORT);
 redisClient.connect();
 
 

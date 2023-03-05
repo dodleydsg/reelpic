@@ -36,6 +36,10 @@ const login = async (req, res) => {
         name: user.name,
         email: user.email,
         last_login: user.last_login,
+        posts: user.posts,
+        catalogues: user.catalogues,
+        following: user.following,
+        followers: user.following
       },
     });
   } catch (error) {
