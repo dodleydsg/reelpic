@@ -13,13 +13,13 @@ const login = async (req, res) => {
     });
     if (!user) {
       console.error(`User not found, found ${user}`);
-      return res.status(401).json({
+      return res.status(404).json({
         error: "User not found, wrong email or password",
       });
     }
     if (!user.authenticate(req.body.password)) {
       console.error(`User couldn't authenticate. User object ${user}`);
-      return res.status(401).send({ error: "Email and password dont't match" });
+      return res.status(404).send({ error: "Email and password dont't match" });
     }
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
@@ -39,12 +39,12 @@ const login = async (req, res) => {
         posts: user.posts,
         catalogues: user.catalogues,
         following: user.following,
-        followers: user.following
+        followers: user.following,
       },
     });
   } catch (error) {
     console.error(error);
-    return res.status(401).json({
+    return res.status(404).json({
       error: "Couldn't not login",
     });
   }
@@ -175,7 +175,7 @@ const reset_done = async (req, res) => {
     } else {
       console.log(user.resetMode);
       if (user.resetMode !== resetModes.INCOMING) {
-        return res.status(404).json({
+        return res.status(401).json({
           message: "Token expired, request new token",
         });
       } else {

@@ -7,14 +7,14 @@ const getUser = async (req, res, next) => {
   try {
     let user = await User.findById(req.cookies._id);
     if (!user) {
-      return res.status(400).json({
+      return res.status(404).json({
         error: "User not found",
       });
     }
     req.profile = user;
     next();
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       error: errorHandler.getErrorMessage(error),
     });
   }
@@ -33,7 +33,7 @@ const create = async (req, res, next) => {
       user,
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       error: errorHandler.getErrorMessage(error),
     });
   }
@@ -41,9 +41,9 @@ const create = async (req, res, next) => {
 const list = async (req, res, next) => {
   try {
     let users = await User.find().select("name email updated created");
-    res.json(users);
+    return res.json(users);
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       error: errorHandler.getErrorMessage(err),
     });
   }
@@ -64,7 +64,7 @@ const update = async (req, res, next) => {
     user.salt = undefined;
     return res.json(user);
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       error: errorHandler.getErrorMessage(err),
     });
   }
@@ -77,7 +77,7 @@ const remove = async (req, res, next) => {
     deletedUser.salt = undefined;
     res.json(deletedUser);
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       error: errorHandler.getErrorMessage(error),
     });
   }
@@ -89,7 +89,7 @@ const follow = async (req, res, next) => {
     user.following.push(req.params._id);
     user.save();
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       error: errorHandler.getErrorMessage(error),
     });
   }

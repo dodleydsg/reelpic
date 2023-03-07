@@ -15,7 +15,7 @@ const create = async (req, res, next) => {
       comment,
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error) + error,
     });
   }
@@ -28,7 +28,7 @@ const list = async (req, res, next) => {
     });
     return res.status(200).json(comments);
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }
@@ -42,7 +42,7 @@ const remove = async (req, res, next) => {
       message: `Successfully removed comment ${comment._id}`,
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }
@@ -61,7 +61,7 @@ const reply = async (req, res, next) => {
       message: "Replied successfully",
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }
@@ -79,7 +79,7 @@ const update = async (req, res, next) => {
       comment,
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }

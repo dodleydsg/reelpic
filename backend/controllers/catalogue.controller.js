@@ -86,7 +86,7 @@ const update = async (req, res, next) => {
       catalogue,
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }
@@ -103,7 +103,7 @@ const addItem = async (req, res, next) => {
       message: "Successfully added item",
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }

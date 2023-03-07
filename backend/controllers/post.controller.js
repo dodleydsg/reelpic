@@ -7,7 +7,7 @@ const create = async (req, res, next) => {
   try {
     let user = req.profile;
     if (user._id.toString() !== req.body.userId.toString()) {
-      return res.status(400).json({
+      return res.status(403).json({
         message: "Unauthorized user",
       });
     }
@@ -20,7 +20,7 @@ const create = async (req, res, next) => {
       post,
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }
@@ -48,7 +48,7 @@ const trash = async (req, res, next) => {
       message: "Message sent to trash",
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       error: errorHandler.getErrorMessage(error),
     });
   }
@@ -64,7 +64,7 @@ const remove = async (req, res, next) => {
       message: "Post successfully deleted",
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }
@@ -81,7 +81,7 @@ const returnPost = async (req, res, next) => {
       message: "Post returned to inbox",
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }
@@ -99,7 +99,7 @@ const update = async (req, res, next) => {
       post,
     });
   } catch (error) {
-    return res.status(400).json({
+    return res.status(404).json({
       message: errorHandler.getErrorMessage(error),
     });
   }
