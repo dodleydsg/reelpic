@@ -7,16 +7,18 @@ const UserSchema = new mongoose.Schema({
     type: String,
     trim: true,
     required: "Name is required",
+    
   },
   email: {
     type: String,
     trim: true,
-    unique: "Email already exists",
+    unique: "Email must be unique",
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       "Please enter a valid email",
     ],
     required: "Email is required",
+    dropDups: "Email already exists"
   },
   created: {
     type: Date,

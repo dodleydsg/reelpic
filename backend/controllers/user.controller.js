@@ -1,6 +1,7 @@
 import User from "../models/user.model.js";
 import extend from "lodash/extend.js";
 import errorHandler from "../helpers/dbErrorHandler.js";
+import resetModes from "../helpers/resetModes.js";
 
 const getUser = async (req, res, next) => {
   try {
@@ -22,9 +23,14 @@ const getUser = async (req, res, next) => {
 const create = async (req, res, next) => {
   const user = new User(req.body);
   try {
+    user.resetMode = resetModes.LOCKED;
     await user.save();
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    user.resetMode = undefined;
     return res.status(200).json({
       message: "Successfully registered",
+      user,
     });
   } catch (error) {
     return res.status(400).json({
