@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import User from "./user.model.js";
+const mongoose = require("mongoose");
+const User = require("./user.model");
 
 const CatalogueSchema = mongoose.Schema({
   userId: {
@@ -27,4 +27,4 @@ CatalogueSchema.pre("remove", async function (next) {
   }
 });
 
-export default mongoose.model("Catalogue", CatalogueSchema);
+module.exports = mongoose.model("Catalogue", CatalogueSchema);

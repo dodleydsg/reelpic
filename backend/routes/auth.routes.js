@@ -1,5 +1,5 @@
-import express from "express";
-import authCtrl from "../controllers/auth.controller.js";
+const express = require("express");
+const authCtrl = require("../controllers/auth.controller");
 
 const router = express.Router();
 
@@ -9,5 +9,4 @@ router.route("/auth/password_reset").post(authCtrl.password_reset);
 router.route("/auth/reset_confirm/:userId/:token").get(authCtrl.reset_confirm);
 router.route("/auth/reset_done").post(authCtrl.reset_done);
 
-
-export default router;
+module.exports = router;

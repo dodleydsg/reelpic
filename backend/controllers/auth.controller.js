@@ -1,10 +1,10 @@
-import User from "../models/user.model.js";
-import jwt from "jsonwebtoken";
-import { expressjwt } from "express-jwt";
-import { sendMail } from "../helpers/emailReset.js";
-import resetModes from "../helpers/resetModes.js";
-const { createHmac } = await import("node:crypto");
-import extend from "lodash/extend.js";
+const User = require("../models/user.model");
+const { jwt } = require("jsonwebtoken");
+const { expressjwt } = require("express-jwt");
+const { sendMail } = require("../helpers/emailReset");
+const resetModes = require("../helpers/resetModes.js");
+const { createHmac } = require("node:crypto");
+const { extend } = require("lodash");
 
 const login = async (req, res) => {
   try {
@@ -203,7 +203,7 @@ const requireLogin = expressjwt({
   userProperty: "auth",
 });
 
-export default {
+module.exports = {
   login,
   logout,
   hasAuthorization,

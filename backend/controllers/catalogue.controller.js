@@ -1,7 +1,6 @@
-import Catalogue from "../models/catalogue.model.js";
-import errorHandler from "../helpers/dbErrorHandler.js";
-import extend from "lodash/extend.js";
-
+const Catalogue = require("../models/catalogue.model");
+const errorHandler = require("../helpers/dbErrorHandler");
+const extend = require("lodash");
 
 const read = async (req, res, next) => {
   try {
@@ -109,4 +108,4 @@ const addItem = async (req, res, next) => {
   }
 };
 
-export default { create, update, addItem, remove, read, list };
+module.exports = { create, update, addItem, remove, read, list };

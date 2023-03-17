@@ -4,4 +4,4 @@ const resetModes = {
   LOCKED: "locked", // no token sent, reset is not permitted
 };
 
-export default resetModes;
+module.exports = resetModes;

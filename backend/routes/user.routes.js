@@ -1,6 +1,6 @@
-import express from "express";
-import userCtrl from "../controllers/user.controller.js";
-import authCtrl from "../controllers/auth.controller.js";
+const express = require("express");
+const userCtrl = require("../controllers/user.controller");
+const authCtrl = require("../controllers/auth.controller");
 
 const router = express.Router();
 
@@ -11,7 +11,6 @@ router
   .get(authCtrl.requireLogin, userCtrl.read)
   .put(authCtrl.requireLogin, authCtrl.hasAuthorization, userCtrl.update)
   .delete(authCtrl.requireLogin, authCtrl.hasAuthorization, userCtrl.remove);
-
 
 router
   .route("/api/follow/:_id")
@@ -24,4 +23,4 @@ router
 
 router.param("userId", userCtrl.getUser);
 
-export default router;
+module.exports = router;

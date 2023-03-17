@@ -1,13 +1,12 @@
-import mongoose from "mongoose";
-const { createHmac } = await import("node:crypto");
-import resetModes from "../helpers/resetModes.js";
+const mongoose = require("mongoose");
+const { createHmac } = require("node:crypto");
+const resetModes = require("../helpers/resetModes");
 
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
     required: "Name is required",
-    
   },
   email: {
     type: String,
@@ -18,7 +17,7 @@ const UserSchema = new mongoose.Schema({
       "Please enter a valid email",
     ],
     required: "Email is required",
-    dropDups: "Email already exists"
+    dropDups: "Email already exists",
   },
   created: {
     type: Date,
@@ -108,4 +107,4 @@ UserSchema.path("hashed_password").validate({
   },
 });
 
-export default mongoose.model("User", UserSchema);
+module.exports = mongoose.model("User", UserSchema);

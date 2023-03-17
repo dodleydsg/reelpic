@@ -1,15 +1,15 @@
-import express from "express";
-import bodyParser from "body-parser";
-import cookieParser from "cookie-parser";
-import compress from "compression";
-import cors from "cors";
-import helmet from "helmet";
-import userRoutes from "./routes/user.routes.js";
-import authRoutes from "./routes/auth.routes.js";
-import morgan from "morgan";
-import postRoutes from "./routes/post.routes.js";
-import commentRoutes from "./routes/comment.routes.js";
-import catalogueRoutes from "./routes/catalogue.routes.js";
+const express = require("express");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
+const compress = require("compression");
+const cors = require("cors");
+const helmet = require("helmet");
+const userRoutes = require("./routes/user.routes");
+const authRoutes = require("./routes/auth.routes");
+const morgan = require("morgan");
+const postRoutes = require("./routes/post.routes");
+const commentRoutes = require("./routes/comment.routes");
+const catalogueRoutes = require("./routes/catalogue.routes");
 
 const app = express();
 
@@ -39,4 +39,4 @@ app.use((err, req, res, next) => {
   }
 });
 
-export default app;
+module.exports = app;

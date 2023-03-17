@@ -1,7 +1,7 @@
-import express from "express";
-import postCtrl from "../controllers/post.controller.js";
-import userCtrl from "../controllers/user.controller.js";
-import authCtrl from "../controllers/auth.controller.js";
+const express = require("express");
+const postCtrl = require("../controllers/post.controller");
+const userCtrl = require("../controllers/user.controller");
+const authCtrl = require("../controllers/auth.controller");
 
 const router = express.Router();
 
@@ -19,7 +19,6 @@ router
     authCtrl.hasAuthorization,
     postCtrl.list
   );
-
 
 router
   .route("/api/post/:postId")
@@ -51,4 +50,13 @@ router
     postCtrl.remove
   );
 
-export default router;
+router
+  .route("/api/post/like/:postId/:action")
+  .get(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.like
+  );
+
+module.exports = router;

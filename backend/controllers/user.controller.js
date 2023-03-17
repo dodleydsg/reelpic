@@ -1,7 +1,7 @@
-import User from "../models/user.model.js";
-import extend from "lodash/extend.js";
-import errorHandler from "../helpers/dbErrorHandler.js";
-import resetModes from "../helpers/resetModes.js";
+const User = require("../models/user.model");
+const extend = require("lodash");
+const errorHandler = require("../helpers/dbErrorHandler");
+const resetModes = require("../helpers/resetModes");
 
 const getUser = async (req, res, next) => {
   try {
@@ -95,4 +95,4 @@ const follow = async (req, res, next) => {
   }
 };
 
-export default { create, read, list, remove, update, getUser, follow };
+module.exports = { create, read, list, remove, update, getUser, follow };

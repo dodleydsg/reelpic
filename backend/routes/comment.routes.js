@@ -1,8 +1,7 @@
-import express from "express";
-import authCtrl from "../controllers/auth.controller.js";
-import postCtrl from "../controllers/post.controller.js";
-import userCtrl from "../controllers/user.controller.js";
-import commentCtrl from "../controllers/comment.controller.js";
+const express = require("express");
+const authCtrl = require("../controllers/auth.controller");
+const userCtrl = require("../controllers/user.controller");
+const commentCtrl = require("../controllers/comment.controller");
 
 const router = express.Router();
 
@@ -45,4 +44,4 @@ router
     commentCtrl.reply
   );
 
-export default router;
+module.exports = router;

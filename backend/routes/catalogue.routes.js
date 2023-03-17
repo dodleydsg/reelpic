@@ -1,7 +1,7 @@
-import express from "express";
-import authCtrl from "../controllers/auth.controller.js";
-import userCtrl from "../controllers/user.controller.js";
-import catalogueCtrl from "../controllers/catalogue.controller.js";
+const express = require("express");
+const authCtrl = require("../controllers/auth.controller");
+const userCtrl = require("../controllers/user.controller.js");
+const catalogueCtrl = require("../controllers/catalogue.controller");
 
 const router = express.Router();
 
@@ -47,4 +47,4 @@ router
     catalogueCtrl.read
   );
 
-export default router;
+module.exports = router;

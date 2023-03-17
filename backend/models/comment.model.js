@@ -1,5 +1,5 @@
-import mongoose, { Mongoose } from "mongoose";
-import Post from "./post.model.js";
+const mongoose = require("mongoose");
+const Post = require("./post.model");
 
 const CommentSchema = mongoose.Schema({
   // Id for the post containing the comment
@@ -34,4 +34,4 @@ CommentSchema.pre("remove", async function (next) {
     next(error);
   }
 });
-export default mongoose.model("Comment", CommentSchema);
+module.exports = mongoose.model("Comment", CommentSchema);

@@ -1,7 +1,7 @@
-import Comment from "../models/comment.model.js";
-import Post from "../models/post.model.js";
-import errorHandler from "../helpers/dbErrorHandler.js";
-import extend from "lodash/extend.js";
+const Comment = require("../models/comment.model");
+const Post = require("../models/post.model");
+const errorHandler = require("../helpers/dbErrorHandler");
+const extend = require("lodash");
 
 const create = async (req, res, next) => {
   try {
@@ -85,4 +85,4 @@ const update = async (req, res, next) => {
   }
 };
 
-export default { create, remove, like, list, reply, update };
+module.exports = { create, remove, like, list, reply, update };

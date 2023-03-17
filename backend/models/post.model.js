@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
-import User from "./user.model.js";
+const mongoose = require("mongoose");
+const User = require("./user.model");
 
 const PostSchema = mongoose.Schema({
   userId: {
@@ -54,4 +54,4 @@ PostSchema.pre("remove", async function (next) {
   }
 });
 
-export default mongoose.model("Post", PostSchema);
+module.exports = mongoose.model("Post", PostSchema);
