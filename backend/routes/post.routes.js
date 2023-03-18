@@ -51,8 +51,8 @@ router
   );
 
 router
-  .route("/api/post/like/:postId/:action")
-  .get(
+  .route("/api/post/like/")
+  .post(
     userCtrl.getUser,
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,

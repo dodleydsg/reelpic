@@ -7,6 +7,7 @@ const PostSchema = mongoose.Schema({
     required: "Post must have an owner",
     ref: "User",
   },
+  tags: [String],
   likes: {
     type: Number,
     default: 0,

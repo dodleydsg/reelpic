@@ -19,6 +19,9 @@ const UserSchema = new mongoose.Schema({
     required: "Email is required",
     dropDups: "Email already exists",
   },
+  bio: String,
+  interests: [String],
+  location: String,
   created: {
     type: Date,
     default: Date.now,
@@ -57,6 +60,10 @@ const UserSchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
+  settings: {
+    type: mongoose.Types.ObjectId,
+    ref: "Setting",
+  },
   followers: [
     {
       type: mongoose.Types.ObjectId,
