@@ -23,7 +23,7 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
-    const { _id, rest } = user;
+    const { _id } = user;
     console.log(_id);
     res.cookie("t", token, { expire: new Date() + 9999 });
     res.cookie("_id", _id);
