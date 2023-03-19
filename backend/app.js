@@ -4,9 +4,13 @@ const cookieParser = require("cookie-parser");
 const compress = require("compression");
 const cors = require("cors");
 const helmet = require("helmet");
-const userRoutes = require("./routes/user.routes");
-const authRoutes = require("./routes/auth.routes");
+
 const morgan = require("morgan");
+
+// Routes
+const userRoutes = require("./routes/user.routes");
+const settingsRoutes = require("./routes/setting.routes");
+const authRoutes = require("./routes/auth.routes");
 const postRoutes = require("./routes/post.routes");
 const commentRoutes = require("./routes/comment.routes");
 const catalogueRoutes = require("./routes/catalogue.routes");
@@ -29,6 +33,7 @@ app.use("/", authRoutes);
 app.use("/", postRoutes);
 app.use("/", commentRoutes);
 app.use("/", catalogueRoutes);
+app.use("/", settingsRoutes);
 
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
