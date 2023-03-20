@@ -7,8 +7,8 @@ const router = express.Router();
 router.route("/api/users").get(userCtrl.list).post(userCtrl.create);
 
 router
-  .route("/api/users/:userId")
-  .get(authCtrl.requireLogin, userCtrl.read)
+  .route("/api/users/:username")
+  .get(userCtrl.read)
   .put(authCtrl.requireLogin, authCtrl.hasAuthorization, userCtrl.update)
   .delete(authCtrl.requireLogin, authCtrl.hasAuthorization, userCtrl.remove);
 

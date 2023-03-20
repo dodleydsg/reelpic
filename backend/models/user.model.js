@@ -20,6 +20,12 @@ const UserSchema = new mongoose.Schema({
     dropDups: "Email already exists",
   },
   bio: String,
+  username: {
+    type: String,
+    trim: true,
+    required: "A username is required",
+    unique: "This username is already taken",
+  },
   interests: [String],
   location: String,
   created: {

@@ -44,9 +44,21 @@ const list = async (req, res, next) => {
 };
 
 const read = async (req, res, next) => {
-  req.profile.hashed_password = undefined;
-  req.profile.salt = undefined;
-  return res.json(req.profile);
+  try {
+    console.log(req.params);
+    let user = await User.findOne({ username: req.params.username });
+    if (!user) {
+      return res.status(404).json({
+        message: "Couln't find user",
+      });
+    }
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    user.resetMode = undefined;
+    return res.status(200).json({ user });
+  } catch (error) {
+    genericErrorBlock(error, res);
+  }
 };
 const update = async (req, res, next) => {
   try {
@@ -56,7 +68,7 @@ const update = async (req, res, next) => {
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
-    return res.json(user);
+    return res.status(200).json(user);
   } catch (error) {
     genericErrorBlock(error, res);
   }

@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-const { jwt } = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const { expressjwt } = require("express-jwt");
 const { sendMail } = require("../helpers/emailReset");
 const resetModes = require("../helpers/resetModes.js");
@@ -8,9 +8,9 @@ const { extend } = require("lodash");
 
 const login = async (req, res) => {
   try {
-    let user = await User.findOne({
-      email: req.body.email,
-    });
+    let user =
+      (await User.findOne({ email: req.body.email })) ||
+      (await User.findOne({ username: req.body.username }));
     if (!user) {
       console.error(`User not found, found ${user}`);
       return res.status(404).json({
