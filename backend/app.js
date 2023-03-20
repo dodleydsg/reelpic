@@ -4,7 +4,6 @@ const cookieParser = require("cookie-parser");
 const compress = require("compression");
 const cors = require("cors");
 const helmet = require("helmet");
-
 const morgan = require("morgan");
 
 // Routes

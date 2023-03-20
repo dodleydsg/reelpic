@@ -2,7 +2,7 @@ const Comment = require("../models/comment.model");
 const Post = require("../models/post.model");
 const errorHandler = require("../helpers/dbErrorHandler");
 const extend = require("lodash");
-
+const { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 const create = async (req, res, next) => {
   try {
     const comment = new Comment(req.body);
@@ -15,9 +15,7 @@ const create = async (req, res, next) => {
       comment,
     });
   } catch (error) {
-    return res.status(404).json({
-      message: errorHandler.getErrorMessage(error) + error,
-    });
+    genericErrorBlock(error, res);
   }
 };
 
@@ -28,9 +26,7 @@ const list = async (req, res, next) => {
     });
     return res.status(200).json(comments);
   } catch (error) {
-    return res.status(404).json({
-      message: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 
@@ -42,9 +38,7 @@ const remove = async (req, res, next) => {
       message: `Successfully removed comment ${comment._id}`,
     });
   } catch (error) {
-    return res.status(404).json({
-      message: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 
@@ -61,9 +55,7 @@ const reply = async (req, res, next) => {
       message: "Replied successfully",
     });
   } catch (error) {
-    return res.status(404).json({
-      message: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 
@@ -79,9 +71,7 @@ const update = async (req, res, next) => {
       comment,
     });
   } catch (error) {
-    return res.status(404).json({
-      message: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error);
   }
 };
 

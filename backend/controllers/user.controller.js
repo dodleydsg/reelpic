@@ -1,6 +1,6 @@
 const User = require("../models/user.model");
 const extend = require("lodash");
-const errorHandler = require("../helpers/dbErrorHandler");
+const { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 const resetModes = require("../helpers/resetModes");
 
 const getUser = async (req, res, next) => {
@@ -14,15 +14,13 @@ const getUser = async (req, res, next) => {
     req.profile = user;
     next();
   } catch (error) {
-    return res.status(404).json({
-      error: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 
 const create = async (req, res, next) => {
-  const user = new User(req.body);
   try {
+    const user = new User(req.body);
     user.resetMode = resetModes.LOCKED;
     await user.save();
     user.hashed_password = undefined;
@@ -33,9 +31,7 @@ const create = async (req, res, next) => {
       user,
     });
   } catch (error) {
-    return res.status(404).json({
-      error: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 const list = async (req, res, next) => {
@@ -43,9 +39,7 @@ const list = async (req, res, next) => {
     let users = await User.find().select("name email updated created");
     return res.json(users);
   } catch (error) {
-    return res.status(404).json({
-      error: errorHandler.getErrorMessage(err),
-    });
+    genericErrorBlock(error, res);
   }
 };
 
@@ -64,9 +58,7 @@ const update = async (req, res, next) => {
     user.salt = undefined;
     return res.json(user);
   } catch (error) {
-    return res.status(404).json({
-      error: errorHandler.getErrorMessage(err),
-    });
+    genericErrorBlock(error, res);
   }
 };
 const remove = async (req, res, next) => {
@@ -77,9 +69,7 @@ const remove = async (req, res, next) => {
     deletedUser.salt = undefined;
     res.json(deletedUser);
   } catch (error) {
-    return res.status(404).json({
-      error: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 
@@ -89,9 +79,7 @@ const follow = async (req, res, next) => {
     user.following.push(req.params._id);
     user.save();
   } catch (error) {
-    return res.status(404).json({
-      error: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 

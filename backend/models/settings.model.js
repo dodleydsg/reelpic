@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const SettingSchema = new mongoose.schema({
+const SettingSchema = mongoose.Schema({
   language: {
     type: String,
     default: "en",

@@ -15,7 +15,7 @@ const create = async (req, res, next) => {
       setting,
     });
   } catch (error) {
-    genericErrorBlock(error);
+    genericErrorBlock(error, res);
   }
 };
 
@@ -23,7 +23,7 @@ const update = async (req, res, next) => {
   try {
     let user = req.profile;
     if (user._id.toString() !== req.body.userId.toString()) {
-      unAuthorizedBlock();
+      unAuthorizedBlock(res);
     }
     let setting = await Setting.findById(req.body.id);
     extend(setting, req.body);
@@ -33,7 +33,7 @@ const update = async (req, res, next) => {
       setting,
     });
   } catch (error) {
-    genericErrorBlock(error);
+    genericErrorBlock(error, res);
   }
 };
 

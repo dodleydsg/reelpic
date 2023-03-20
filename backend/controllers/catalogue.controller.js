@@ -1,6 +1,6 @@
 const Catalogue = require("../models/catalogue.model");
-const errorHandler = require("../helpers/dbErrorHandler");
 const extend = require("lodash");
+const { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 
 const read = async (req, res, next) => {
   try {
@@ -14,7 +14,9 @@ const read = async (req, res, next) => {
       message: "Retrieved catalogue succesfully",
       catalogue,
     });
-  } catch (error) {}
+  } catch (error) {
+    genericErrorBlock(error, res);
+  }
 };
 const list = async (req, res, next) => {
   try {
@@ -26,18 +28,14 @@ const list = async (req, res, next) => {
       catalogueIds,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 const create = async (req, res, next) => {
   try {
     let user = req.profile;
     if (user._id.toString() !== req.body.userId.toString()) {
-      return res.status(400).json({
-        message: "Unauthorized user",
-      });
+      unAuthorizedErrorBlock(error, res);
     }
     const catalogue = await Catalogue.create(req.body);
     user.catalogues.push(catalogue._id);
@@ -48,9 +46,7 @@ const create = async (req, res, next) => {
       catalogue,
     });
   } catch (error) {
-    return res.status(400).json({
-      message: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 
@@ -67,9 +63,7 @@ const remove = async (req, res, next) => {
       message: "Removed catalogue",
     });
   } catch (error) {
-    return res.status(400).json({
-      message: errorHandler.getErrorMessage(error) + error,
-    });
+    genericErrorBlock(error, res);
   }
 };
 
@@ -85,9 +79,7 @@ const update = async (req, res, next) => {
       catalogue,
     });
   } catch (error) {
-    return res.status(404).json({
-      message: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 
@@ -102,9 +94,7 @@ const addItem = async (req, res, next) => {
       message: "Successfully added item",
     });
   } catch (error) {
-    return res.status(404).json({
-      message: errorHandler.getErrorMessage(error),
-    });
+    genericErrorBlock(error, res);
   }
 };
 
