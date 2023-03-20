@@ -1,12 +1,25 @@
 const Post = require("../models/post.model"),
   errorHandler = require("../helpers/dbErrorHandler"),
-  extend = require("lodash"),
   Redis = require("ioredis"),
   { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 
 let LIKE_REQUESTS = 0;
 
 const redisClient = new Redis();
+
+const read = async (req, res, next) => {
+  try {
+    let post = await Post.findById(req.params.postId);
+    if (!post) {
+      return res.status(404).json({
+        message: "Could'nt find post",
+      });
+    }
+    return res.status(200).json(post);
+  } catch (error) {
+    genericErrorBlock(error, res);
+  }
+};
 
 const create = async (req, res, next) => {
   try {
@@ -70,10 +83,13 @@ const remove = async (req, res, next) => {
 
 const returnPost = async (req, res, next) => {
   try {
+    let user = req.profile;
     let post = await Post.findOne({
       _id: req.params.postId,
     });
+    user.posts.addToSet(post._id);
     post.trash = false;
+    await user.save();
     await post.save();
     return res.status(200).json({
       message: "Post returned to inbox",
@@ -85,10 +101,13 @@ const returnPost = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    let post = await Post.findOne({
-      _id: req.params.postId,
-    });
-    post = extend(post, req.body);
+    let post = await Post.findOneAndUpdate(
+      {
+        _id: req.params.postId,
+      },
+      req.body,
+      { new: true }
+    );
     await post.save();
     return res.status(200).json({
       message: "Post updated",
@@ -182,4 +201,5 @@ module.exports = {
   list,
   update,
   like,
+  read,
 };

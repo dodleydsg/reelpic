@@ -45,7 +45,6 @@ const list = async (req, res, next) => {
 
 const read = async (req, res, next) => {
   try {
-    console.log(req.params);
     let user = await User.findOne({ username: req.params.username });
     if (!user) {
       return res.status(404).json({
@@ -62,8 +61,11 @@ const read = async (req, res, next) => {
 };
 const update = async (req, res, next) => {
   try {
-    let user = req.profile;
-    user = extend(user, req.body);
+    let user = await User.findOneAndUpdate(
+      { username: req.params.username },
+      req.body,
+      { new: true }
+    );
     user.updated = Date.now();
     await user.save();
     user.hashed_password = undefined;

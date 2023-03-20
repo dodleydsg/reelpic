@@ -20,13 +20,22 @@ router
     postCtrl.list
   );
 
+
+router
+  .route("/api/post/return/:postId")
+  .get(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    postCtrl.returnPost
+  );
 router
   .route("/api/post/:postId")
   .get(
     userCtrl.getUser,
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,
-    postCtrl.returnPost
+    postCtrl.read
   )
   .delete(
     userCtrl.getUser,
