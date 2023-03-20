@@ -22,6 +22,12 @@ router
 
 router
   .route("/api/comment/:commentId")
+  .get(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    commentCtrl.read
+  )
   .delete(
     userCtrl.getUser,
     authCtrl.requireLogin,

@@ -1,7 +1,5 @@
 const Comment = require("../models/comment.model");
 const Post = require("../models/post.model");
-const errorHandler = require("../helpers/dbErrorHandler");
-const extend = require("lodash");
 const { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 const create = async (req, res, next) => {
   try {
@@ -12,6 +10,22 @@ const create = async (req, res, next) => {
     await comment.save();
     return res.status(200).json({
       message: "Comment added successfully",
+      comment,
+    });
+  } catch (error) {
+    genericErrorBlock(error, res);
+  }
+};
+
+const read = async (req, res, next) => {
+  try {
+    let comment = await Comment.findById(req.params.commentId);
+    if (!comment) {
+      return res.status(404).json({
+        message: "Couldn't find comment",
+      });
+    }
+    return res.status(200).json({
       comment,
     });
   } catch (error) {
@@ -61,18 +75,21 @@ const reply = async (req, res, next) => {
 
 const update = async (req, res, next) => {
   try {
-    let comment = await Comment.findOne({
-      _id: req.params.commentId,
-    });
-    comment = extend(comment, req.body);
+    let comment = await Comment.findOneAndUpdate(
+      {
+        _id: req.params.commentId,
+      },
+      req.body,
+      { new: true }
+    );
     await comment.save();
     return res.status(200).json({
       message: "Comment updated",
       comment,
     });
   } catch (error) {
-    genericErrorBlock(error);
+    genericErrorBlock(error, res);
   }
 };
 
-module.exports = { create, remove, like, list, reply, update };
+module.exports = { create, remove, like, list, reply, update, read };

@@ -23,6 +23,10 @@ const PostSchema = mongoose.Schema({
       type: String,
       required: "Post must contain some body text",
     },
+    commentCount: {
+      type: Number,
+      default: 0,
+    },
     comments: [
       {
         type: mongoose.Types.ObjectId,
