@@ -4,7 +4,7 @@ const User = require("./user.model");
 const PostSchema = mongoose.Schema({
   userId: {
     type: mongoose.Types.ObjectId,
-    required: "Post must have an owner",
+    required: "Post must have an Author",
     ref: "User",
   },
   tags: [String],

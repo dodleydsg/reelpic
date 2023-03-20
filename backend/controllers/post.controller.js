@@ -38,11 +38,14 @@ const list = async (req, res, next) => {
 
 const trash = async (req, res, next) => {
   try {
+    let user = req.profile;
     let post = await Post.findOne({
       _id: req.params.postId,
     });
     post.trash = true;
+    user.posts.pop(post._id.toString());
     await post.save();
+    await user.save();
     return res.status(200).json({
       message: "Post sent to trash",
     });
