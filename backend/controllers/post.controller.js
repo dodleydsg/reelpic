@@ -2,7 +2,8 @@ const Post = require("../models/post.model"),
   errorHandler = require("../helpers/dbErrorHandler"),
   Redis = require("ioredis"),
   { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors"),
-  notify = require("../helpers/notify");
+  notify = require("../helpers/notify"),
+  Tag = require("../models/tag.model");
 
 let LIKE_REQUESTS = 0;
 
@@ -34,6 +35,17 @@ const create = async (req, res, next) => {
     await user.save();
     let description = `You added a post`;
     await notify(user._id, description);
+    for (let i = 0; i < post.tags.length; i++) {
+      let tag = await Tag.findOne({ name: post.tags[i] });
+      console.log(tag);
+      if (!tag) {
+        tag = new Tag({ name: post.tags[i] });
+        await tag.save();
+      }
+      tag.posts.push(post._id);
+      await tag.save();
+    }
+
     return res.status(200).json({
       message: "Post added",
       post,
@@ -63,7 +75,7 @@ const trash = async (req, res, next) => {
     await post.save();
     await user.save();
     let description = `You trashed a post`;
-    await notify(user._id, description);
+    notify(user._id, description);
     return res.status(200).json({
       message: "Post sent to trash",
     });
@@ -79,7 +91,7 @@ const remove = async (req, res, next) => {
     });
     await post.remove();
     let description = `You deleted a post`;
-    await notify(user._id, description);
+    notify(user._id, description);
     return res.status(200).json({
       message: "Post successfully deleted",
     });
@@ -105,6 +117,33 @@ const returnPost = async (req, res, next) => {
     });
   } catch (error) {
     genericErrorBlock(error, res);
+  }
+};
+
+const feed = async (req, res, next) => {
+  let following = req.profile.following;
+  let posts = [];
+};
+
+const explore = async (req, res, next) => {
+  try {
+    let tags = req.profile.interests;
+    let posts = [];
+
+    for (let i = 0; i < tags.length; i++) {
+      let tag = await Tag.findOne({ name: tags[i] });
+      if (!tag) {
+        continue;
+      }
+      console.log(tags[i]);
+      posts = posts.concat(tag.posts);
+    }
+
+    return res.status(200).json({
+      posts,
+    });
+  } catch (error) {
+    genericErrorBlock(error);
   }
 };
 
@@ -213,4 +252,6 @@ module.exports = {
   update,
   like,
   read,
+  feed,
+  explore,
 };

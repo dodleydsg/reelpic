@@ -7,11 +7,17 @@ const PostSchema = mongoose.Schema({
     required: "Post must have an Author",
     ref: "User",
   },
+  feed: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
   created: {
     type: Date,
     default: Date.now,
   },
-  tags: [String],
+  tags: [{ type: String, ref: "Tag" }],
   likes: {
     type: Number,
     default: 0,

@@ -67,5 +67,21 @@ router
     authCtrl.hasAuthorization,
     postCtrl.like
   );
+  router
+    .route("/api/feed")
+    .post(
+      userCtrl.getUser,
+      authCtrl.requireLogin,
+      authCtrl.hasAuthorization,
+      postCtrl.feed
+    );
+  router
+    .route("/api/explore")
+    .get(
+      userCtrl.getUser,
+      authCtrl.requireLogin,
+      authCtrl.hasAuthorization,
+      postCtrl.explore
+    );
 
 module.exports = router;

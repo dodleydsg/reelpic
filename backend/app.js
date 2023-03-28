@@ -8,7 +8,6 @@ const morgan = require("morgan");
 
 // Routes
 const userRoutes = require("./routes/user.routes");
-const settingsRoutes = require("./routes/setting.routes");
 const authRoutes = require("./routes/auth.routes");
 const postRoutes = require("./routes/post.routes");
 const commentRoutes = require("./routes/comment.routes");
@@ -32,7 +31,6 @@ app.use("/", authRoutes);
 app.use("/", postRoutes);
 app.use("/", commentRoutes);
 app.use("/", catalogueRoutes);
-app.use("/", settingsRoutes);
 
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {
