@@ -44,10 +44,6 @@ const UserSchema = new mongoose.Schema({
     default: resetModes.LOCKED,
   },
   photo: String,
-  birthday: {
-    type: Date,
-    default: null,
-  },
   posts_liked: [
     {
       type: mongoose.Types.ObjectId,
@@ -66,10 +62,12 @@ const UserSchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
-  settings: {
-    type: mongoose.Types.ObjectId,
-    ref: "Setting",
-  },
+  notifications: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Notification",
+    },
+  ],
   followers: [
     {
       type: mongoose.Types.ObjectId,

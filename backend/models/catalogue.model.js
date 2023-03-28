@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("./user.model");
+const Notification = require("./notification.model");
+const notify = require("../helpers/notify");
 
 const CatalogueSchema = mongoose.Schema({
   userId: {
@@ -15,6 +17,12 @@ const CatalogueSchema = mongoose.Schema({
   items: [String],
 });
 
+CatalogueSchema.methods = {
+  toString: function (action) {
+    return `${action} catalogue with title ${this.title}`;
+  },
+};
+
 CatalogueSchema.pre("remove", async function (next) {
   try {
     let user = await User.findOne({
@@ -26,5 +34,18 @@ CatalogueSchema.pre("remove", async function (next) {
     next(error);
   }
 });
+
+CatalogueSchema.post("update", async function (next) {
+  let description = this.toString("Updated");
+  notify(description, next);
+});
+
+CatalogueSchema.post("remove", async function (next) {
+  let description = this.toString("Deleted");
+  notify(description, next);
+});
+
+
+
 
 module.exports = mongoose.model("Catalogue", CatalogueSchema);

@@ -7,6 +7,10 @@ const PostSchema = mongoose.Schema({
     required: "Post must have an Author",
     ref: "User",
   },
+  created: {
+    type: Date,
+    default: Date.now,
+  },
   tags: [String],
   likes: {
     type: Number,
