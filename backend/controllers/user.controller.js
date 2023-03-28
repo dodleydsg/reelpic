@@ -70,6 +70,8 @@ const update = async (req, res, next) => {
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
+    let description = `You just updated your profile`;
+    await notify(user._id, description);
     return res.status(200).json(user);
   } catch (error) {
     genericErrorBlock(error, res);

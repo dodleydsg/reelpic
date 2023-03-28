@@ -1,7 +1,8 @@
 const Post = require("../models/post.model"),
   errorHandler = require("../helpers/dbErrorHandler"),
   Redis = require("ioredis"),
-  { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
+  { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors"),
+  notify = require("../helpers/notify");
 
 let LIKE_REQUESTS = 0;
 
@@ -31,6 +32,8 @@ const create = async (req, res, next) => {
     user.posts.push(post._id);
     await post.save();
     await user.save();
+    let description = `You added a post`;
+    await notify(user._id, description);
     return res.status(200).json({
       message: "Post added",
       post,
@@ -59,6 +62,8 @@ const trash = async (req, res, next) => {
     user.posts.pop(post._id.toString());
     await post.save();
     await user.save();
+    let description = `You trashed a post`;
+    await notify(user._id, description);
     return res.status(200).json({
       message: "Post sent to trash",
     });
@@ -73,6 +78,8 @@ const remove = async (req, res, next) => {
       _id: req.params.postId,
     });
     await post.remove();
+    let description = `You deleted a post`;
+    await notify(user._id, description);
     return res.status(200).json({
       message: "Post successfully deleted",
     });
@@ -91,6 +98,8 @@ const returnPost = async (req, res, next) => {
     post.trash = false;
     await user.save();
     await post.save();
+    let description = `You retrieved a post`;
+    await notify(user._id, description);
     return res.status(200).json({
       message: "Post returned to inbox",
     });
@@ -109,6 +118,8 @@ const update = async (req, res, next) => {
       { new: true }
     );
     await post.save();
+    let description = `You updated a post`;
+    await notify(user._id, description);
     return res.status(200).json({
       message: "Post updated",
       post,
