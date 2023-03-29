@@ -3,7 +3,8 @@ const Post = require("../models/post.model"),
   Redis = require("ioredis"),
   { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors"),
   notify = require("../helpers/notify"),
-  Tag = require("../models/tag.model");
+  Tag = require("../models/tag.model"),
+  User = require("../models/user.model");
 
 let LIKE_REQUESTS = 0;
 
@@ -31,6 +32,7 @@ const create = async (req, res, next) => {
     }
     let post = new Post(req.body);
     user.posts.push(post._id);
+    user.feed.push(post._id);
     await post.save();
     await user.save();
     let description = `You added a post`;
@@ -121,11 +123,39 @@ const returnPost = async (req, res, next) => {
 };
 
 const feed = async (req, res, next) => {
-  let following = req.profile.following;
-  let posts = [];
+  // Returns an array of updated feed items
+  try {
+    // update variable carries new feed items for update in the frontend
+    let update = [];
+
+    // oldfeed contains all old posts, this is returned in the body of the request from the frontend
+    let oldFeed = req.body.oldFeed;
+
+    // gets the user's latest post, to be included in the feed
+    let latestPost = req.profile.posts.slice(-1).toString() || null;
+    if (!oldFeed.includes(latestPost)) update.push(latestPost);
+    if (req.profile.following.length > 0) {
+      for (let i = 0; i < req.profile.following.length; i++) {
+        let user = await User.findOne({ _id: req.profile.following[i] });
+        if (oldFeed.includes(user.posts.slice(-1).toString())) {
+          continue;
+        } else {
+          update.push(user.posts.slice(-1));
+        }
+      }
+    }
+
+    return res.status(200).json({
+      update,
+    });
+  } catch (error) {
+    genericErrorBlock(error);
+  }
 };
 
 const explore = async (req, res, next) => {
+  // This return Post ids for usage in the explore section
+  // May include start, stop keys for pagination
   try {
     let tags = req.profile.interests;
     let posts = [];
@@ -181,20 +211,14 @@ const like = async (req, res, next) => {
       let likes = parseInt(
         await redisClient.get(`post:${req.body.postId}:likes`)
       );
-      let users_like = await redisClient.smembers(
-        `post:${req.body.postId}:users_like`
-      );
 
       // update with values from redis
       post.likes += likes;
-      users_like || post.users_like.addToSet(users_like);
       // update with respect to action
       if (req.body.action.toLowerCase() === "like") {
         post.likes++;
-        post.users_like.addToSet(req.body.userId);
       } else {
         post.likes > 0 ? post.likes-- : null;
-        post.users_like.pull(req.body.userId);
       }
       await post.save();
 
@@ -202,11 +226,6 @@ const like = async (req, res, next) => {
 
       // now update Redis database with correct value, due to downtime while processesing previous actions
       await redisClient.decrby(`post:${req.body.postId}:likes`, likes);
-      users_like ||
-        (await redisClient.srem(
-          `post:${req.body.postId}:users_like`,
-          users_like
-        ));
 
       LIKE_REQUESTS = 0;
     } else {
@@ -215,17 +234,8 @@ const like = async (req, res, next) => {
       LIKE_REQUESTS++;
       if (req.body.action.toLowerCase() === "like") {
         await redisClient.incr(`post:${req.body.postId}:likes`);
-
-        await redisClient.sadd(
-          `post:${req.body.postId}:users_like`,
-          req.body.userId
-        );
       } else {
         await redisClient.decr(`post:${req.body.postId}:likes`);
-        await redisClient.srem(
-          `post:${req.body.postId}:users_like`,
-          req.body.userId
-        );
       }
     }
 

@@ -58,6 +58,10 @@ const logout = async (req, res) => {
   });
 };
 
+const googleLogin = async (req, res, next) => {};
+
+const appleLogin = async (req, res, next) => {};
+
 const hasAuthorization = async (req, res, next) => {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
   if (!authorized) {

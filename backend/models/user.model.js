@@ -19,6 +19,12 @@ const UserSchema = new mongoose.Schema({
     required: "Email is required",
     dropDups: "Email already exists",
   },
+  feed: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
   bio: String,
   username: {
     type: String,
@@ -44,12 +50,6 @@ const UserSchema = new mongoose.Schema({
     default: resetModes.LOCKED,
   },
   photo: String,
-  posts_liked: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "Post",
-    },
-  ],
   catalogues: [
     {
       type: mongoose.Types.ObjectId,

@@ -7,12 +7,7 @@ const PostSchema = mongoose.Schema({
     required: "Post must have an Author",
     ref: "User",
   },
-  feed: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "Post",
-    },
-  ],
+
   created: {
     type: Date,
     default: Date.now,
@@ -22,12 +17,6 @@ const PostSchema = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  users_like: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
-    },
-  ],
   content: {
     body: {
       type: String,
