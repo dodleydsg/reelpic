@@ -12,7 +12,7 @@ export default function InputElement(props) {
         className="h-12 border px-4 w-full rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark"
         placeholder={props.placeholder}
       />
-      <label for={props.name} className="sr-only">
+      <label aria-label={props.name} className="sr-only">
         Enter your email
       </label>
     </>

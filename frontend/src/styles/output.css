@@ -738,12 +738,40 @@ video {
   min-height: 100vh;
 }
 
+.min-h-\[280px\] {
+  min-height: 280px;
+}
+
 .w-full {
   width: 100%;
 }
 
+.min-w-\[200px\] {
+  min-width: 200px;
+}
+
+.min-w-\[200vw\] {
+  min-width: 200vw;
+}
+
+.min-w-\[400px\] {
+  min-width: 400px;
+}
+
+.min-w-\[300px\] {
+  min-width: 300px;
+}
+
+.min-w-full {
+  min-width: 100%;
+}
+
 .max-w-3xl {
   max-width: 48rem;
+}
+
+.max-w-\[380px\] {
+  max-width: 380px;
 }
 
 .grid-cols-1 {
@@ -783,8 +811,12 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
-.bg-\[url\(\'\.\.\/assets\/Home_bg\.png\'\)\] {
-  background-image: url('../assets/Home_bg.png');
+.bg-\[url\(\'\.\.\/assets\/images\/Home_bg\.png\'\)\] {
+  background-image: url('../assets/images/Home_bg.png');
+}
+
+.bg-\[url\(\'\.\.\/assets\/images\/pattern_bg\.png\'\)\] {
+  background-image: url('../assets/images/pattern_bg.png');
 }
 
 .bg-gradient-to-b {
