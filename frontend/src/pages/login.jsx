@@ -6,25 +6,21 @@ export default function Reset() {
   return (
     <>
       <Head>
-        <title>Reelpic | Register</title>
+        <title>Reelpic | Login</title>
       </Head>
-      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.png')] bg-cover">
+      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/pattern_bg.png')] bg-cover">
         <div className="relative container mx-auto flex z-10 h-screen px-4">
           <div className="items-center bg-white max-w-3xl mx-auto my-auto rounded-xl px-[22px] lg:px-16 py-[35px] lg:py-[55px]">
             <div className="space-y-3 lg:space-y-7">
               <h1 className="text-heading text-center">Reelpic</h1>
-
               <p className="text-center text-subheading">
-                Register and share your moments
+                Login to access your account
               </p>
             </div>
             <div className="mt-7">
               {/* Form element and inputs */}
-              <form
-                className="w-full grid grid-cols-1 lg:grid-cols-2 lg:min-h-[280px] lg:divide-x-2"
-                action="./getting_started"
-              >
-                <div className="space-y-4 lg:pr-6 mb-8">
+              <form className="w-full grid grid-cols-1 lg:grid-cols-2  lg:min-h-[280px] lg:divide-x-2 ">
+                <div className="space-y-4 lg:pr-6 mb-4">
                   <InputElement type="email" placeholder="Email" name="email" />
                   <InputElement
                     type="password"
@@ -32,22 +28,24 @@ export default function Reset() {
                     name="password"
                   />
                   <button className="btn-primary hover:bg-[#4900EB]">
-                    Get started
+                    Login
                   </button>
+                  <Link href="./reset" className="text-center block link">
+                    Forgot password
+                  </Link>
                 </div>
                 <div className="space-y-4 lg:pl-6">
                   <button className="btn-google hover:bg-[#DA3925]">
-                    Sign up with Google
+                    Login with Google
                   </button>
-                  <button className="btn-apple ">Sign up with Apple</button>
+                  <button className="btn-apple ">Login with Apple</button>
                 </div>
               </form>
               <p className="text-sm text-center mt-7">
-                {" "}
-                Already have an account ? <br />
+                Not yet a member ? <br />
               </p>
-              <Link href="./login" className="block text-center mt-4 link">
-                Login
+              <Link href="./register" className="block text-center mt-4 link">
+                Register
               </Link>
             </div>
           </div>
