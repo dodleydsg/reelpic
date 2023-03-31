@@ -14,10 +14,13 @@
         @apply text-lg font-semibold
     }
     .btn-google{
-        @apply block w-full mx-auto bg-[#DD4B39] py-[14px] rounded-md text-white text-lg
+        @apply block w-full mx-auto transition duration-200 bg-[#DD4B39] py-[14px] rounded-md text-white text-lg
     }.btn-apple{
-        @apply block w-full mx-auto bg-black py-[14px] rounded-md text-white text-lg
+        @apply block w-full mx-auto transition duration-200 bg-black py-[14px] rounded-md text-white text-lg
     }.btn-primary{
-        @apply block w-full mx-auto bg-primary-default py-[14px] rounded-md text-white text-lg
+        @apply block w-full mx-auto transition duration-200 bg-primary-default py-[14px] rounded-md text-white text-lg
+    }
+    .link{
+        @apply text-blue-400 hover:text-blue-500 transition duration-200
     }
 }

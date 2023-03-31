@@ -1,4 +1,6 @@
 import Head from "next/head";
+import InputElement from "./components/formElements/Input";
+import Link from "next/link";
 
 export default function Register() {
   return (
@@ -23,35 +25,33 @@ export default function Register() {
               {/* Form element and inputs */}
               <form className="w-full grid grid-cols-1 lg:grid-cols-2  lg:min-h-[280px] lg:divide-x-2 ">
                 <div className="space-y-4 lg:pr-6 mb-4">
-                  <input
-                    type="email"
-                    name="email"
-                    className="h-12 border px-4 w-full rounded-md"
-                    placeholder="Email"
-                  />
-                  <label for="email" className="sr-only">
-                    Enter your email
-                  </label>
-                  <label for="password" className="sr-only">
-                    Enter your email
-                  </label>
-                  <input
+                  <InputElement type="email" placeholder="Email" name="email" />
+                  <InputElement
                     type="password"
-                    name="password"
-                    className="h-12 border px-4 w-full rounded-md"
                     placeholder="Password"
+                    name="password"
                   />
-                  <button className="btn-primary">Get started</button>
-                  <p className="text-sm text-center">Forgot password</p>
+                  <button className="btn-primary hover:bg-[#4900EB]">
+                    Get started
+                  </button>
+                  <Link href="./reset" className="text-center block link">
+                    Forgot password
+                  </Link>
                 </div>
                 <div className="space-y-4 lg:pl-6">
-                  <button className="btn-google">Sign up with Google</button>
-                  <button className="btn-apple">Sign up with Apple</button>
+                  <button className="btn-google hover:bg-[#DA3925]">
+                    Sign up with Google
+                  </button>
+                  <button className="btn-apple ">Sign up with Apple</button>
                 </div>
               </form>
-              <p className="text-sm text-center  mt-7">
+              <p className="text-sm text-center mt-7">
+                {" "}
                 Already have an account ? <br />
               </p>
+              <Link href="./login" className="block text-center mt-4 link">
+                Login
+              </Link>
             </div>
           </div>
         </div>
