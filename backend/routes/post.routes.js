@@ -82,6 +82,5 @@ router
       authCtrl.requireLogin,
       authCtrl.hasAuthorization,
       postCtrl.explore
-    );
-
+    ); 
 module.exports = router;

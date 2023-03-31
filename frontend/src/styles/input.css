@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer components{
+    .text-label{
+        @apply font-medium text-sm
+    }
+    .text-heading{
+        @apply  font-semibold text-4xl
+    }
+    .text-subheading{
+        @apply text-lg font-semibold
+    }
+    .btn-google{
+        @apply block w-full mx-auto bg-[#DD4B39] py-[14px] rounded-md text-white text-lg
+    }.btn-apple{
+        @apply block w-full mx-auto bg-black py-[14px] rounded-md text-white text-lg
+    }.btn-primary{
+        @apply block w-full mx-auto bg-primary-default py-[14px] rounded-md text-white text-lg
+    }
+}
