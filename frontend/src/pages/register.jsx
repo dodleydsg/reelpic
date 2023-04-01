@@ -1,8 +1,10 @@
 import Head from "next/head";
 import InputElement from "./components/formElements/Input";
 import Link from "next/link";
+import { useSelector } from "react-redux";
 
 export default function Reset() {
+  const { password, email } = useSelector((store) => store.auth);
   return (
     <>
       <Head>
@@ -25,8 +27,14 @@ export default function Reset() {
                 action="./getting_started"
               >
                 <div className="space-y-4 lg:pr-6 mb-8">
-                  <InputElement type="email" placeholder="Email" name="email" />
                   <InputElement
+                    value={email}
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                  />
+                  <InputElement
+                    value={password}
                     type="password"
                     placeholder="Password"
                     name="password"

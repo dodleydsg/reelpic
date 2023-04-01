@@ -6,7 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ["var(--font-futura)", ...fontFamily.sans],
+        sans: ["var(--font-neusa)", ...fontFamily.sans],
       },
       colors: {
         primary: {

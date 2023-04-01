@@ -7,6 +7,7 @@ export default function InputElement(props) {
   return (
     <>
       <input
+        {...props}
         type={props.type}
         name="email"
         className="h-12 border px-4 w-full rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark"

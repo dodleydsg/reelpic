@@ -1,41 +1,40 @@
 import "../styles/output.css";
 import localFont from "next/font/local";
+import { Provider } from "react-redux";
+import store from "../store/index";
 
-const futura = localFont({
+const neusa = localFont({
   src: [
     {
-      path: "../assets/fonts/futura/FuturaPTBold.otf",
-      weight: "700",
-      style: "bolder",
-    },
-    {
-      path: "../assets/fonts/futura/FuturaPTDemi.otf",
+      path: "../assets/fonts/neusa/NeusaNextPro-Regular.otf",
       weight: "600",
       style: "bold",
     },
     {
-      path: "../assets/fonts/futura/FuturaPTMedium.otf",
+      path: "../assets/fonts/neusa/NeusaNextPro-Medium.otf",
       weight: "500",
       style: "semibold",
     },
     {
-      path: "../assets/fonts/futura/FuturaPTBook.otf",
+      path: "../assets/fonts/neusa/NeusaNextPro-Regular.otf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../assets/fonts/futura/FuturaPTLight.otf",
+      path: "../assets/fonts/neusa/NeusaNextPro-Light.otf",
       weight: "300",
-      style: "normal",
+      style: "light",
     },
   ],
-  variable: "--font-futura",
+  variable: "--font-neusa",
 });
 
 export default function App({ Component, pageProps }) {
   return (
-    <main className={futura.className}>
-      <Component {...pageProps} />
-    </main>
+    <Provider store={store}>
+      <main className={neusa.className}>
+        <Component {...pageProps} />
+      </main>
+    </Provider>
   );
 }
