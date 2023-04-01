@@ -1,5 +1,5 @@
 import Head from "next/head";
-import InputElement from "./components/formElements/Input";
+import InputElement from "../components/formElements/Input";
 
 export default function Register() {
   return (
