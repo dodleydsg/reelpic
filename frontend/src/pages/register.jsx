@@ -1,10 +1,16 @@
 import Head from "next/head";
 import InputElement from "./components/formElements/Input";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  clearForm,
+  updatePassword,
+  updateEmail,
+} from "../store/features/authForm/authSlice";
 
 export default function Reset() {
   const { password, email } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
   return (
     <>
       <Head>
@@ -29,17 +35,25 @@ export default function Reset() {
                 <div className="space-y-4 lg:pr-6 mb-8">
                   <InputElement
                     value={email}
+                    onChange={(e) => dispatch(updateEmail(e.target.value))}
                     type="email"
                     placeholder="Email"
                     name="email"
                   />
                   <InputElement
                     value={password}
+                    onChange={(e) => dispatch(updatePassword(e.target.value))}
                     type="password"
                     placeholder="Password"
                     name="password"
                   />
-                  <button className="btn-primary hover:bg-[#4900EB]">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      dispatch(clearForm());
+                    }}
+                    className="btn-primary hover:bg-[#4900EB]"
+                  >
                     Get started
                   </button>
                 </div>
