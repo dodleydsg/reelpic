@@ -10,7 +10,7 @@ export default function () {
       <Head>
         <title>Reelpic | Home</title>
       </Head>
-      <div className="container mx-auto px-4 py-6 space-y-6">
+      <div className="w-screen container mx-auto px-4 py-6 space-y-6">
         <header className="flex justify-between items-center">
           <h1 className="text-heading">Reelpic</h1>
           <div>
@@ -24,6 +24,7 @@ export default function () {
             </Link>
           </div>
         </header>
+        <ScrollCard />
         {/* <section className="space-y-4">
           <h3 className="text-body">Trending catalogues</h3>
           <div className="scroll-y scroll-m-0.5 flex flex-shrink-0 space-x-2.5 ">

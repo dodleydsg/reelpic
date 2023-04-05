@@ -1,13 +1,52 @@
-import FireAndIce from "../assets/images/fire_and_ice.png";
+import FireAndIce from "../assets/images/pattern_bg.png";
 import Image from "next/image";
+import { MdArrowBackIos, MdArrowForwardIos } from "react-icons/md";
+
+const scrollX = (direction) => {
+  let scrollCard = document.getElementById("scrollCard");
+  let width = window.innerWidth;
+  width = direction === "left" ? -width / 2 : width / 2;
+  scrollCard.scrollBy({
+    top: 0,
+    left: width,
+    behavior: "smooth",
+  });
+};
+
 export default function ScrollCard() {
   return (
-    <div className="relative hover:scale-105 transition-transform duration-200">
-      <Image src={FireAndIce} height={90} width={150} className="relative" />
-      <div className="absolute inset-y-0 inset-x-0 bg-gradient-to-t from-black/80 to-black/30 flex flex-col items-center justify-end rounded-lg text-light-default font-light text-sm">
-        <p className="text-body block">Fire and Ice</p>
-        <p className="text-body block">@laurafisher</p>
+    <section id="scrollContainer" className="relative">
+      <button
+        className="absolute inset-y-0 z-30 w-8 flex justify-center items-center hover:bg-black/30 transition
+      duration-300"
+        onClick={() => scrollX("right")}
+      >
+        <MdArrowBackIos className="text-white " />
+      </button>
+      <button
+        className="absolute inset-y-0 right-0 z-30 w-8 flex justify-center items-center hover:bg-black/30 transition
+      duration-300"
+        onClick={() => scrollX("left")}
+      >
+        <MdArrowForwardIos className="text-white " />
+      </button>
+
+      <div
+        id="scrollCard"
+        className="relative flex h-40 gap-4 overflow-x-scroll"
+      >
+        <div className="relative inset-0 shrink-0 hover:scale-95 transition duration-300">
+          <div className="absolute inset-0 from-black/30 rounded-md to-black/60 bg-gradient-to-b"></div>
+          <div className="absolute pb-4 z-10 inset-0 bg-none text-white flex flex-col items-center justify-end">
+            <p className="text-body">Fire and Ice</p>
+            <p className="text-xs">@johnking</p>
+          </div>
+          <Image
+            src={FireAndIce}
+            className="h-full rounded-md w-auto mx-auto"
+          />
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
