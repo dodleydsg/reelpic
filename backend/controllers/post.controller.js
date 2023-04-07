@@ -88,6 +88,7 @@ const trash = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
   try {
+    let user = req.profile;
     let post = await Post.findOne({
       _id: req.params.postId,
     });

@@ -9,8 +9,8 @@ export default function Register() {
       </Head>
       <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/pattern_bg.png')] bg-cover">
         <div className="relative container mx-auto flex z-10 h-screen px-4">
-          <div className="items-center bg-white max-w-[380px] w-full mx-auto my-auto rounded-xl px-[22px] lg:px-16 py-[35px] lg:py-[55px]">
-            <div className="space-y-3 lg:space-y-7">
+          <div className="items-center bg-white max-w-[380px] w-full mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px]">
+            <div className="space-y-3 sm:space-y-7">
               <h1 className="text-heading text-center">Reelpic</h1>
               <p className="text-center text-subheading">Reset your password</p>
             </div>

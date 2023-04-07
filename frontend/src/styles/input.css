@@ -14,6 +14,15 @@
     scrollbar-width: none;
 }
 
+#mainContent::-webkit-scrollbar{
+    display: none;
+}
+
+#mainContent{
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 @layer components{
     .text-label{
         @apply font-medium text-sm
@@ -22,7 +31,7 @@
         @apply  font-semibold text-4xl
     }
     .text-subheading{
-        @apply text-lg font-semibold
+        @apply text-lg text-dark-default/70 font-semibold
     }
     .btn-google{
         @apply block w-full mx-auto transition duration-200 bg-[#DD4B39] py-[14px] rounded-md text-white text-lg

@@ -18,8 +18,8 @@ export default function Reset() {
       </Head>
       <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.png')] bg-cover">
         <div className="relative container mx-auto flex z-10 h-screen px-4">
-          <div className="items-center bg-white max-w-3xl mx-auto my-auto rounded-xl px-[22px] lg:px-16 py-[35px] lg:py-[55px]">
-            <div className="space-y-3 lg:space-y-7">
+          <div className="items-center bg-white max-w-3xl mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px]">
+            <div className="space-y-3 sm:space-y-7">
               <h1 className="text-heading text-center">Reelpic</h1>
 
               <p className="text-center text-subheading">
@@ -29,10 +29,10 @@ export default function Reset() {
             <div className="mt-7">
               {/* Form element and inputs */}
               <form
-                className="w-full grid grid-cols-1 lg:grid-cols-2 lg:min-h-[280px] lg:divide-x-2"
+                className="w-full grid grid-cols-1 sm:grid-cols-2 sm:min-h-[280px] sm:divide-x-2"
                 action="./getting_started"
               >
-                <div className="space-y-4 lg:pr-6 mb-8">
+                <div className="space-y-4 sm:pr-6 mb-8">
                   <InputElement
                     value={email}
                     onChange={(e) => dispatch(updateEmail(e.target.value))}
@@ -57,7 +57,7 @@ export default function Reset() {
                     Get started
                   </button>
                 </div>
-                <div className="space-y-4 lg:pl-6">
+                <div className="space-y-4 sm:pl-6">
                   <button className="btn-google hover:bg-[#DA3925]">
                     Sign up with Google
                   </button>

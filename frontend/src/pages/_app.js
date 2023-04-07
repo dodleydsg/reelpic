@@ -6,7 +6,7 @@ import store from "../store/index";
 const neusa = localFont({
   src: [
     {
-      path: "../assets/fonts/neusa/NeusaNextPro-Regular.otf",
+      path: "../assets/fonts/neusa/NeusaNextPro-Bold.otf",
       weight: "600",
       style: "bold",
     },
