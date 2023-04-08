@@ -7,6 +7,8 @@ import NavBar from "../components/navBar";
 import { MdOutlineNotifications, MdOutlineSettings } from "react-icons/md";
 import NotificationCard from "../components/notificationCard";
 import CatalogueCard from "../components/catalogueCard";
+import Carousel from "../components/postCarousel";
+import Post from "../components/post";
 
 export default function () {
   return (
@@ -15,15 +17,21 @@ export default function () {
         <title>Reelpic | Home</title>
       </Head>
 
-      <div className="w-screen h-screen elative container py-4 mx-auto px-4  gap-6 flex">
+      <div className="w-screen h-screen relative container py-4 mx-auto px-4  gap-6 sm:grid sm:grid-cols-4">
         <NavBar />
         <div
           id="mainContent"
-          className="space-y-4 overflow-y-scroll sm:space-y-0  relative  lg:space-y-0 gap-4"
+          className="sm:col-span-3 overflow-y-scroll pb-40  relative gap-4"
         >
-          <div className="mt-20 sm:mt-0">
-            <h3 className="text-subheading mt-3">Trending catalogues</h3>
-            <ScrollCard />
+          <div className="space-y-4">
+            <div className="mt-20 sm:mt-0">
+              <h3 className="text-subheading mt-3">Trending catalogues</h3>
+              <ScrollCard />
+            </div>
+            <div className="space-y-4">
+              <Post />
+              <Post />
+            </div>
           </div>
           <header className="p-4 shadow flex sm:hidden justify-between items-center fixed bg-white z-50 top-0 inset-x-0">
             <div className="flex gap-3 items-center">

@@ -26,7 +26,7 @@ export default function NavBar() {
   return (
     <>
       {/* Mobile nav */}
-      <div className="sm:hidden container px-4 mx-auto fixed flex z-50  inset-x-0 bottom-2 h-12 gap-4">
+      <div className="sm:hidden container px-4 mx-auto fixed flex z-[100]  inset-x-0 bottom-2 h-12 gap-4">
         <div
           id="mobileActionExpand"
           className="absolute scale-y-0 transition-transform ease-in-out origin-bottom duration-300 border-[#D2C4E9] border ml-4 left-0 bottom-16 text-primary-default/70 w-40 rounded bg-light-default flex justify-evenly flex-col text-base"
@@ -63,7 +63,7 @@ export default function NavBar() {
         </div>
       </div>
 
-      <div className="shadow-xl w-[30vw]  h-full py-12 px-4 lg:px-8 hidden sm:block  space-y-10 text-center rounded-2xl from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
+      <div className="shadow-xl col-span-1 h-full py-12 px-4 lg:px-8 hidden sm:block  space-y-10 text-center rounded-2xl from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
         <div className="flex items-center gap-4 justify-start">
           <Image src={profileImg} height={48} className="block" />
           <div>
