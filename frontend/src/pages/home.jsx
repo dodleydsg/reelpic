@@ -2,7 +2,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import placeHolderProfile from "../assets/images/placeholder_profile.png";
-import ScrollCard from "../components/ScrollCard";
+import ScrollCard from "../components/scrollCard";
 import NavBar from "../components/navBar";
 import { MdOutlineNotifications, MdOutlineSettings } from "react-icons/md";
 import NotificationCard from "../components/notificationCard";

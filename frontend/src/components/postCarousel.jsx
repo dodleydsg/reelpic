@@ -55,8 +55,9 @@ export default function Carousel() {
       >
         <MdOutlineArrowForwardIos />
       </button>
-      <div className="flex absolute bottom-2 inset-x-0">
+      <div className="flex absolute bottom-10 sm:bottom-4 inset-x-0">
         <div className="mx-auto flex gap-2">
+          <div className="h-2 w-2 rounded-xl bg-black"></div>
           <div className="h-2 w-2 rounded-xl bg-black"></div>
           <div className="h-2 w-2 rounded-xl bg-black"></div>
         </div>
@@ -64,15 +65,15 @@ export default function Carousel() {
       <div className="absolute flex inset-0 mx-auto carousel" data-current="0">
         <Image
           src={coverImg}
-          className="h-full w-auto absolute inset-0 py-5  object-contain shrink-0 mx-auto transition-transform duration-300"
+          className="h-full w-auto absolute inset-0 py-10  object-contain shrink-0 mx-auto transition-transform duration-300"
         />
         <Image
           src={coverImg1}
-          className="h-full w-auto absolute inset-0  py-5  object-contain shrink-0 mx-auto transition-transform duration-300 scale-x-0"
+          className="h-full w-auto absolute inset-0  py-10  object-contain shrink-0 mx-auto transition-transform duration-300 scale-x-0"
         />
         <Image
           src={food}
-          className="h-full w-auto absolute inset-0  py-5  object-contain shrink-0 mx-auto transition-transform duration-300 scale-x-0"
+          className="h-full w-auto absolute inset-0  py-10 object-contain shrink-0 mx-auto transition-transform duration-300 scale-x-0"
         />
       </div>
     </section>
