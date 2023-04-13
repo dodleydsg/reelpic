@@ -5,6 +5,7 @@
 
 /* Hides scrollbar for carousel */
 
+
 #scrollCard::-webkit-scrollbar{
     display: none;
 }

@@ -5,13 +5,8 @@ import placeHolderProfile from "../assets/images/placeholder_profile.png";
 import ScrollCard from "../components/scrollCard";
 import NavBar from "../components/navBar";
 import { MdOutlineNotifications, MdOutlineSettings } from "react-icons/md";
-import NotificationCard from "../components/notificationCard";
-import CatalogueCard from "../components/catalogueCard";
-import Carousel from "../components/postCarousel";
-import Post from "../components/post";
 
-
-export default function () {
+export default function ({ children }) {
   return (
     <>
       <Head>
@@ -25,24 +20,11 @@ export default function () {
           className="lg:col-span-3 overflow-y-scroll pb-40  relative gap-4"
         >
           <div className="space-y-4">
-            <div className="mt-20 lg:mt-0">
-              <h3 className="text-subheading mt-3">Trending catalogues</h3>
-              <ScrollCard />
-            </div>
-            <div className="space-y-4">
-              <Post />
-              <Post />
-            </div>
+            <div className="space-y-4 mt-20 lg:mt-0">{children}</div>
           </div>
           <header className="p-4 shadow flex lg:hidden justify-between items-center fixed bg-white z-50 top-0 inset-x-0">
             <div className="flex gap-3 items-center">
-              <Link
-                href="/user/jaso"
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log(document.URL);
-                }}
-              >
+              <Link href="/user/jaso">
                 <Image
                   alt="profile_img"
                   height={40}

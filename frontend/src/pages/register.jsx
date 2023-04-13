@@ -47,15 +47,17 @@ export default function Reset() {
                     placeholder="Password"
                     name="password"
                   />
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      dispatch(clearForm());
-                    }}
-                    className="btn-primary hover:bg-[#4900EB]"
-                  >
-                    Get started
-                  </button>
+                  <Link href="/getting_started" className="block">
+                    <button
+                      onClick={(e) => {
+                        // e.preventDefault();
+                        // dispatch(clearForm());
+                      }}
+                      className="btn-primary hover:bg-[#4900EB]"
+                    >
+                      Get started
+                    </button>
+                  </Link>
                 </div>
                 <div className="space-y-4 sm:pl-6">
                   <button className="btn-google hover:bg-[#DA3925]">

@@ -3,19 +3,24 @@ import Carousel from "./postCarousel";
 import profile1 from "../assets/images/profile1.png";
 import {
   MdComment,
+  MdIosShare,
+  MdLink,
   MdMoreVert,
   MdOutlineHeartBroken,
+  MdSend,
+  MdShare,
   MdThumbUp,
   MdThumbUpAlt,
 } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
+import { IoHeart } from "react-icons/io5";
 
 export default function Post() {
   return (
     <div>
       <div className="flex justify-between items-center border border-gray-100 p-2">
-        <div className="flex gap-2 items-center ">
+        <div className="flex gap-2 items-center relative">
           <Image src={profile1} className="h-10 w-10" />
           <Link href="/a" className="text-label">
             @majorlazer
@@ -24,14 +29,14 @@ export default function Post() {
             Follow
           </Link>
         </div>
-        <MdMoreVert className="h-18 w-auto" />
+        <MdLink className="h-18 w-auto pr-4" />
       </div>
       <Carousel />
       <div className="border-gray-100 p-2 space-y-2">
         <div className="flex gap-4 ">
           <div className="flex gap-2 items-center">
             <p>
-              <MdThumbUp className="w-5 h-auto items-center" />
+              <IoHeart className="w-5 h-auto items-center" />
             </p>
             <p className="text-sm">403,120</p>
           </div>

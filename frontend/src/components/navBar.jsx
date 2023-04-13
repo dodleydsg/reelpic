@@ -21,12 +21,13 @@ import {
 
 import profileImg from "../assets/images/placeholder_profile1.png";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function NavBar() {
   return (
     <>
       {/* Mobile nav */}
-      <div className="sm:hidden container px-4 mx-auto fixed flex z-[100]  inset-x-0 bottom-2 h-12 gap-4">
+      <div className="lg:hidden container px-4 mx-auto fixed flex z-[100]  inset-x-0 bottom-2 h-12 gap-4">
         <div
           id="mobileActionExpand"
           className="absolute scale-y-0 transition-transform ease-in-out origin-bottom duration-300 border-[#D2C4E9] border ml-4 left-0 bottom-16 text-primary-default/70 w-40 rounded bg-light-default flex justify-evenly flex-col text-base"
@@ -48,22 +49,22 @@ export default function NavBar() {
           <MdAdd />
         </button>
         <div className="w-full  bg-light-default shadow-lg rounded flex justify-around items-center text-dark-default text-2xl">
-          <Link href="/home">
-            <MdDashboard className="text-primary-default" />
+          <Link href="/home" className="target:text-primary-default">
+            <MdDashboard />
           </Link>
-          <Link href="/explore">
+          <Link href="/explore" className="target:text-primary-default">
             <MdOutlineExplore />
           </Link>
-          <Link href="/catalogues">
+          <Link href="/catalogues" className="target:text-primary-default">
             <MdOutlinePhotoLibrary />
           </Link>
-          <Link href="/trash">
+          <Link href="/trash" className="target:text-primary-default">
             <MdOutlineDeleteOutline />
           </Link>
         </div>
       </div>
 
-      <div className="shadow-xl col-span-1 h-full py-12 px-4 lg:px-8 hidden sm:block  space-y-10 text-center rounded-2xl from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
+      <div className="shadow-xl col-span-1 h-full py-12 px-4 lg:px-8 hidden lg:block  space-y-10 text-center rounded-2xl from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
         <div className="flex items-center gap-4 justify-start">
           <Image src={profileImg} height={48} className="block" />
           <div>
@@ -93,7 +94,7 @@ export default function NavBar() {
             <MdHome className="w-6 h-auto" />
             Home
           </Link>
-          <Link href="/home" className="w-full gap-4 flex items-center">
+          <Link href="/explore" className="w-full gap-4 flex items-center">
             <MdOutlineExplore className="w-6 h-auto" />
             Explore
           </Link>

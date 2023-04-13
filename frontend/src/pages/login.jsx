@@ -27,9 +27,12 @@ export default function Reset() {
                     placeholder="Password"
                     name="password"
                   />
-                  <button className="btn-primary hover:bg-[#4900EB]">
-                    Login
-                  </button>
+                  <Link href="/home" className="block">
+                    <button className="btn-primary hover:bg-[#4900EB]">
+                      Login
+                    </button>
+                  </Link>
+
                   <Link href="./reset" className="text-center block link">
                     Forgot password
                   </Link>
