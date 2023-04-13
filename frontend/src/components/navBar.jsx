@@ -1,21 +1,13 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
-  MdHome,
-  MdCompas,
-  MdSettings,
   MdAdd,
-  MdNotifications,
   MdOutlineSettings,
   MdOutlineDelete,
   MdOutlineDeleteOutline,
   MdOutlinePhotoLibrary,
-  MdOutlineCompassCalibration,
-  MdOutlineNavigation,
   MdOutlineExplore,
-  MdHomeMax,
   MdDashboard,
-  MdExplore,
   MdExitToApp,
   MdOutlineNotifications,
 } from "react-icons/md";
@@ -120,7 +112,7 @@ export default function NavBar() {
             data-active={pathname}
             className='w-full gap-4 flex items-center data-[active="/home"]:text-primary-default'
           >
-            <MdHome className="w-6 h-auto" />
+            <MdDashboard className="w-6 h-auto" />
             Home
           </Link>
           <Link
