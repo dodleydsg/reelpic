@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   MdHome,
   MdCompas,
@@ -24,6 +25,9 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function NavBar() {
+  const router = useRouter();
+  const { pathname } = router;
+  console.log(pathname);
   return (
     <>
       {/* Mobile nav */}
@@ -49,16 +53,32 @@ export default function NavBar() {
           <MdAdd />
         </button>
         <div className="w-full  bg-light-default shadow-lg rounded flex justify-around items-center text-dark-default text-2xl">
-          <Link href="/home" className="target:text-primary-default">
+          <Link
+            href="/home"
+            data-active={pathname}
+            className='data-[active="/home"]:text-primary-default'
+          >
             <MdDashboard />
           </Link>
-          <Link href="/explore" className="target:text-primary-default">
+          <Link
+            href="/explore"
+            data-active={pathname}
+            className='data-[active="/explore"]:text-primary-default'
+          >
             <MdOutlineExplore />
           </Link>
-          <Link href="/catalogues" className="target:text-primary-default">
+          <Link
+            href="/catalogues"
+            data-active={pathname}
+            className='data-[active="/catalogues"]:text-primary-default'
+          >
             <MdOutlinePhotoLibrary />
           </Link>
-          <Link href="/trash" className="target:text-primary-default">
+          <Link
+            href="/trash"
+            data-active={pathname}
+            className='data-[active="/trash"]:text-primary-default'
+          >
             <MdOutlineDeleteOutline />
           </Link>
         </div>
@@ -89,28 +109,49 @@ export default function NavBar() {
         <div className="space-y-8 text-dark-default/90">
           <Link
             href="/home"
-            className="text-primary-default w-full gap-4 flex items-center"
+            data-active={pathname}
+            className='w-full gap-4 flex items-center data-[active="/home"]:text-primary-default'
           >
             <MdHome className="w-6 h-auto" />
             Home
           </Link>
-          <Link href="/explore" className="w-full gap-4 flex items-center">
+          <Link
+            data-active={pathname}
+            href="/explore"
+            className='w-full gap-4 flex items-center data-[active="/explore"]:text-primary-default'
+          >
             <MdOutlineExplore className="w-6 h-auto" />
             Explore
           </Link>
-          <Link href="/home" className="w-full gap-4 flex items-center">
+          <Link
+            data-active={pathname}
+            href="/catalogues"
+            className='w-full gap-4 flex items-center data-[active="/catalogues"]:text-primary-default'
+          >
             <MdOutlinePhotoLibrary className="w-6 h-auto" />
             Catalogues
           </Link>
-          <Link href="/home" className="w-full gap-4 flex items-center">
+          <Link
+            data-active={pathname}
+            href="/notifications"
+            className='w-full gap-4 flex items-center data-[active="/notifications"]:text-primary-default'
+          >
             <MdOutlineNotifications className="w-6 h-auto" />
             Notifications
           </Link>
-          <Link href="/home" className="w-full gap-4 flex items-center">
+          <Link
+            data-active={pathname}
+            href="/trash"
+            className='w-full gap-4 flex items-center data-[active="/trash"]:text-primary-default'
+          >
             <MdOutlineDelete className="w-6 h-auto" />
             Trash
           </Link>
-          <Link href="/home" className="w-full gap-4 flex items-center">
+          <Link
+            data-active={pathname}
+            href="/settings"
+            className='w-full gap-4 flex items-center data-[active="/settings"]:text-primary-default'
+          >
             <MdOutlineSettings className="w-6 h-auto" />
             Settings
           </Link>

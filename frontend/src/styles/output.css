@@ -1725,6 +1725,41 @@ video {
   color: rgb(101 31 255 / var(--tw-text-opacity));
 }
 
+.data-\[active\=\'\/home\'\]\:text-primary-default[data-active='/home'] {
+  --tw-text-opacity: 1;
+  color: rgb(101 31 255 / var(--tw-text-opacity));
+}
+
+.data-\[active\=\"\/home\"\]\:text-primary-default[data-active="/home"] {
+  --tw-text-opacity: 1;
+  color: rgb(101 31 255 / var(--tw-text-opacity));
+}
+
+.data-\[active\=\"\/catalogues\"\]\:text-primary-default[data-active="/catalogues"] {
+  --tw-text-opacity: 1;
+  color: rgb(101 31 255 / var(--tw-text-opacity));
+}
+
+.data-\[active\=\"\/explore\"\]\:text-primary-default[data-active="/explore"] {
+  --tw-text-opacity: 1;
+  color: rgb(101 31 255 / var(--tw-text-opacity));
+}
+
+.data-\[active\=\"\/notifications\"\]\:text-primary-default[data-active="/notifications"] {
+  --tw-text-opacity: 1;
+  color: rgb(101 31 255 / var(--tw-text-opacity));
+}
+
+.data-\[active\=\"\/settings\"\]\:text-primary-default[data-active="/settings"] {
+  --tw-text-opacity: 1;
+  color: rgb(101 31 255 / var(--tw-text-opacity));
+}
+
+.data-\[active\=\"\/trash\"\]\:text-primary-default[data-active="/trash"] {
+  --tw-text-opacity: 1;
+  color: rgb(101 31 255 / var(--tw-text-opacity));
+}
+
 .data-\[active\=\'true\'\]\:opacity-50[data-active='true'] {
   opacity: 0.5;
 }
