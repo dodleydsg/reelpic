@@ -22,12 +22,19 @@ import {
 
 import profileImg from "../assets/images/placeholder_profile1.png";
 import Image from "next/image";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleMask, setMask } from "../store/features/uiSlice";
+import { useEffect } from "react";
 
 export default function NavBar() {
+  const dispatch = useDispatch();
   const router = useRouter();
   const { pathname } = router;
-  console.log(pathname);
+
+  useEffect(() => {
+    dispatch(setMask(false));
+  }, []);
+
   return (
     <>
       {/* Mobile nav */}
@@ -36,10 +43,10 @@ export default function NavBar() {
           id="mobileActionExpand"
           className="absolute scale-y-0 transition-transform ease-in-out origin-bottom duration-300 border-[#D2C4E9] border ml-4 left-0 bottom-16 text-primary-default/70 w-40 rounded bg-light-default flex justify-evenly flex-col text-base"
         >
-          <p className="p-4 border-b border-[#D2C4E9] hover:bg-primary-default hover:text-light-default transition duration-300">
+          <p className="p-4 border-b border-[#D2C4E9] hover:bg-primary-default hover:cursor-pointer hover:text-light-default transition duration-300">
             Create Post
           </p>
-          <p className="p-4 hover:bg-primary-default hover:text-light-default transition duration-300">
+          <p className="p-4 hover:bg-primary-default hover:text-light-default hover:cursor-pointer transition duration-300">
             Add Catalogue
           </p>
         </div>
@@ -47,6 +54,7 @@ export default function NavBar() {
           onClick={() => {
             let menu = document.getElementById("mobileActionExpand");
             menu.classList.toggle("scale-y-0");
+            dispatch(toggleMask());
           }}
           className="w-16 rounded flex items-center justify-center text-light-default bg-primary-default text-2xl"
         >

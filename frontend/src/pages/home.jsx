@@ -5,11 +5,8 @@ import placeHolderProfile from "../assets/images/placeholder_profile.png";
 import ScrollCard from "../components/scrollCard";
 import NavBar from "../components/navBar";
 import { MdOutlineNotifications, MdOutlineSettings } from "react-icons/md";
-import NotificationCard from "../components/notificationCard";
-import CatalogueCard from "../components/catalogueCard";
-import Carousel from "../components/postCarousel";
 import Post from "../components/post";
-
+import Mask from "../components/mask";
 
 export default function () {
   return (
@@ -17,7 +14,7 @@ export default function () {
       <Head>
         <title>Reelpic | Home</title>
       </Head>
-
+      <Mask />
       <div className="w-screen h-screen relative container py-4 mx-auto px-4  gap-6 lg:grid lg:grid-cols-4">
         <NavBar />
         <div
@@ -36,13 +33,7 @@ export default function () {
           </div>
           <header className="p-4 shadow flex lg:hidden justify-between items-center fixed bg-white z-50 top-0 inset-x-0">
             <div className="flex gap-3 items-center">
-              <Link
-                href="/user/jaso"
-                onClick={(e) => {
-                  e.preventDefault();
-                  console.log(document.URL);
-                }}
-              >
+              <Link href="/user/jaso">
                 <Image
                   alt="profile_img"
                   height={40}
