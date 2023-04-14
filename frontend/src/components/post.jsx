@@ -53,6 +53,14 @@ export default function Post() {
           to you faces of the world powered by the latest algorithms in neural
           networks. Link in bio for complete list of images
         </p>
+        <div className="gap-2">
+          <button className="border rounded hover:text-primary-default/80 transition duration-200 border-primary-default/50 p-2">
+            People
+          </button>{" "}
+          <button className="border rounded hover:text-primary-default/80 transition duration-200 border-primary-default/50 p-2">
+            Nature
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -14,7 +14,8 @@ export default function MobileNotification() {
 
   return (
     <div id="mobileNotifications" className={classes}>
-      <div className="flex justify-end bg-white fixed shadow p-4 top-0 inset-x-0">
+      <div className="flex justify-between items-center bg-white fixed shadow p-4 top-0 inset-x-0">
+        <h3>Notifications</h3>
         <MdClose
           onClick={() => dispatch(toggleMobileNotifications())}
           className="cursor-pointer w-5 h-auto"
