@@ -2,18 +2,30 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import placeHolderProfile from "../assets/images/placeholder_profile.png";
-import ScrollCard from "../components/scrollCard";
 import NavBar from "../components/navBar";
 import { MdOutlineNotifications, MdOutlineSettings } from "react-icons/md";
+import Mask from "../components/mask";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleMobileNotifications } from "../store/features/uiSlice";
+import MobileNotification from "../components/mobileNotification";
 
 export default function ({ children }) {
+  const dispatch = useDispatch();
+  const { ui } = useSelector((state) => state);
+
   return (
     <>
       <Head>
         <title>Reelpic | Home</title>
       </Head>
+      <MobileNotification />
 
-      <div className="w-screen h-screen relative container py-4 mx-auto px-4  gap-6 lg:grid lg:grid-cols-4">
+      <Mask />
+      <div
+        className={`w-screen h-screen relative container py-4 mx-auto px-4  gap-6 lg:grid lg:grid-cols-4 ${
+          ui.mobileNav ? "overflow-hidden" : ""
+        }`}
+      >
         <NavBar />
         <div
           id="mainContent"
@@ -35,12 +47,12 @@ export default function ({ children }) {
               <h2 className="font-bold text-2xl text-dark-default/90">Feed</h2>
             </div>
             <div className="flex items-center gap-4">
-              <Link href="/user/jaso/notifications" className="text-2xl">
-                <MdOutlineNotifications className="text-dark-default/90 " />
-              </Link>
-              <Link href="/user/jaso/notifications" className="text-2xl">
-                <MdOutlineSettings className="text-dark-default/90 " />
-              </Link>
+              <MdOutlineNotifications
+                onClick={() => dispatch(toggleMobileNotifications())}
+                className="text-dark-default/90 w-5 h-auto cursor-pointer "
+              />
+
+              <MdOutlineSettings className="text-dark-default/90 cursor-pointer" />
             </div>
           </header>
         </div>

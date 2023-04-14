@@ -5,6 +5,7 @@ import placeHolderProfile from "../assets/images/placeholder_profile.png";
 import ScrollCard from "../components/scrollCard";
 import NavBar from "../components/navBar";
 import { MdOutlineNotifications, MdOutlineSettings } from "react-icons/md";
+import Mask from "../components/mask";
 
 export default function ({ children }) {
   return (
@@ -12,7 +13,7 @@ export default function ({ children }) {
       <Head>
         <title>Reelpic | Home</title>
       </Head>
-
+      <Mask />
       <div className="w-screen h-screen relative container py-4 mx-auto px-4  gap-6 sm:grid sm:grid-cols-4">
         <NavBar />
         <div
