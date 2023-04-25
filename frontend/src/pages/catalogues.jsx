@@ -9,7 +9,6 @@ import InputElement from "../components/formElements/input";
 export default function Catalogue() {
   return (
     <>
-      <Mask />
       <NavbarTemplate>
         <div className="px-4 lg:grid lg:grid-cols-3 gap-4">
           <div className="col-span-2 space-y-6">

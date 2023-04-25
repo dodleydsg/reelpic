@@ -5,27 +5,19 @@ import placeHolderProfile from "../assets/images/placeholder_profile.png";
 import NavBar from "../components/navBar";
 import { MdOutlineNotifications, MdOutlineSettings } from "react-icons/md";
 import Mask from "../components/mask";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleMobileNotifications } from "../store/features/uiSlice";
-import MobileNotification from "../components/mobileNotification";
+import { useRouter } from "next/router";
 
 export default function ({ children }) {
-  const dispatch = useDispatch();
-  const { ui } = useSelector((state) => state);
+  const router = useRouter();
 
   return (
     <>
       <Head>
         <title>Reelpic | Home</title>
       </Head>
-      <MobileNotification />
 
       <Mask />
-      <div
-        className={`w-screen h-screen relative container py-4 mx-auto px-4  gap-6 lg:grid lg:grid-cols-4 ${
-          ui.mobileNav ? "overflow-hidden" : ""
-        }`}
-      >
+      <div className="w-screen h-screen relative container py-4 mx-auto px-4  gap-6 lg:grid lg:grid-cols-4">
         <NavBar />
         <div
           id="mainContent"
@@ -48,11 +40,11 @@ export default function ({ children }) {
             </div>
             <div className="flex items-center gap-4">
               <MdOutlineNotifications
-                onClick={() => dispatch(toggleMobileNotifications())}
-                className="text-dark-default/90 w-5 h-auto cursor-pointer "
+                onClick={() => router.push("/notifications")}
+                className="text-dark-default/90 w-6 h-auto cursor-pointer "
               />
 
-              <MdOutlineSettings className="text-dark-default/90 cursor-pointer" />
+              <MdOutlineSettings className="text-dark-default/90 cursor-pointer w-6 h-auto" />
             </div>
           </header>
         </div>
