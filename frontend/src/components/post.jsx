@@ -1,6 +1,6 @@
 import React from "react";
 import Carousel from "./postCarousel";
-import profile1 from "../assets/images/profile1.png";
+import profile1 from "../assets/images/Profile1.png";
 import Comment from "./comment";
 import { useState } from "react";
 import {

@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import Profile1 from "../assets/images/profile1.png";
+import Profile1 from "../assets/images/Profile1.png";
 import Image from "next/image";
 
 export default function NotificationCard() {
