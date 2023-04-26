@@ -1,5 +1,5 @@
 import Image from "next/image";
-import InputElement from "../components/formElements/input";
+import InputElement from "../components/form/input";
 import NavbarTemplate from "../templates/template_with_navbar";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
