@@ -1,4 +1,4 @@
-import ScrollCard from "./../components/scrollCard";
+import ScrollCard from "../components/scrollCard";
 
 import Post from "../components/post";
 
