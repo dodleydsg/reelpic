@@ -1,6 +1,8 @@
 import React from "react";
 import Carousel from "./postCarousel";
 import profile1 from "../assets/images/profile1.png";
+import Comment from "./comment";
+import { useState } from "react";
 import {
   MdComment,
   MdIosShare,
@@ -17,6 +19,7 @@ import Link from "next/link";
 import { IoHeart } from "react-icons/io5";
 
 export default function Post() {
+  const [commentsShown, toggleComments] = useState(false);
   return (
     <div>
       <div className="flex justify-between items-center border border-gray-100 p-2">
@@ -32,20 +35,26 @@ export default function Post() {
         <MdLink className="h-18 w-auto pr-4" />
       </div>
       <Carousel />
-      <div className="border-gray-100 p-2 space-y-2">
-        <div className="flex gap-4 ">
+      <div className="border-gray-100 p-2 space-y-4">
+        <div className="flex gap-4">
           <div className="flex gap-2 items-center">
             <p>
               <IoHeart className="w-5 h-auto items-center" />
             </p>
             <p className="text-sm">403,120</p>
           </div>
-          <div className="flex gap-2 items-center">
+          <div
+            className="flex gap-2 items-center cursor-pointer"
+            onClick={() => toggleComments(!commentsShown)}
+          >
             <p>
               <MdComment className="w-5 h-auto" />
             </p>
             <p className="text-sm">1k</p>
           </div>
+        </div>
+        <div className={commentsShown ? "" : "hidden"}>
+          <Comment />
         </div>
         <p className="text-dark-default/70 text-sm font-light">4 hours ago</p>
         <p className="text-dark-default/90">

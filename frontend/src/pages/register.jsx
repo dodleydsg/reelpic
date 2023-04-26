@@ -39,6 +39,7 @@ export default function Reset() {
                     type="email"
                     placeholder="Email"
                     name="email"
+                    className="w-full"
                   />
                   <InputElement
                     value={password}
@@ -46,6 +47,7 @@ export default function Reset() {
                     type="password"
                     placeholder="Password"
                     name="password"
+                    className="w-full"
                   />
                   <Link href="/getting_started" className="block">
                     <button

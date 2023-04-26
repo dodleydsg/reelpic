@@ -21,11 +21,17 @@ export default function Reset() {
               {/* Form element and inputs */}
               <form className="w-full grid grid-cols-1 sm:grid-cols-2  sm:min-h-[280px] sm:divide-x-2 ">
                 <div className="space-y-4 sm:pr-6 mb-4">
-                  <InputElement type="email" placeholder="Email" name="email" />
+                  <InputElement
+                    type="email"
+                    className="w-full"
+                    placeholder="Email"
+                    name="email"
+                  />
                   <InputElement
                     type="password"
                     placeholder="Password"
                     name="password"
+                    className="w-full"
                   />
                   <Link href="/home" className="block">
                     <button className="btn-primary hover:bg-[#4900EB]">

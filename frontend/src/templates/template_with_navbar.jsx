@@ -44,7 +44,10 @@ export default function ({ children }) {
                 className="text-dark-default/90 w-6 h-auto cursor-pointer "
               />
 
-              <MdOutlineSettings className="text-dark-default/90 cursor-pointer w-6 h-auto" />
+              <MdOutlineSettings
+                onClick={() => router.push("/settings")}
+                className="text-dark-default/90 cursor-pointer w-6 h-auto"
+              />
             </div>
           </header>
         </div>
