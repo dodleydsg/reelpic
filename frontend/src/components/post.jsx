@@ -36,32 +36,36 @@ export default function Post() {
       </div>
       <Carousel />
       <div className="border-gray-100 p-2 space-y-4">
-        <div className="flex gap-4">
-          <div className="flex gap-2 items-center">
-            <p>
-              <IoHeart className="w-5 h-auto items-center" />
-            </p>
-            <p className="text-sm">403,120</p>
+        <div className="flex items-center justify-between">
+          <div className="flex gap-4 mt-4 items-center">
+            <div className="flex gap-2 items-center">
+              <p>
+                <IoHeart className="w-5 h-auto items-center cursor-pointer" />
+              </p>
+              <p className="text-sm">403,120</p>
+            </div>
+            <div
+              className="flex gap-2 items-center cursor-pointer"
+              onClick={() => toggleComments(!commentsShown)}
+            >
+              <p>
+                <MdComment className="w-5 h-auto" />
+              </p>
+              <p className="text-sm">1k</p>
+            </div>
           </div>
-          <div
-            className="flex gap-2 items-center cursor-pointer"
-            onClick={() => toggleComments(!commentsShown)}
-          >
-            <p>
-              <MdComment className="w-5 h-auto" />
-            </p>
-            <p className="text-sm">1k</p>
-          </div>
+
+          <p className="text-dark-default/70 text-sm font-light">4 hours ago</p>
         </div>
-        <div className={commentsShown ? "" : "hidden"}>
+        <div className={commentsShown ? "bg-gray-200 rounded-lg" : "hidden"}>
           <Comment />
         </div>
-        <p className="text-dark-default/70 text-sm font-light">4 hours ago</p>
         <p className="text-dark-default/90">
           After running expensive, computations for hundreds of hours, I present
           to you faces of the world powered by the latest algorithms in neural
           networks. Link in bio for complete list of images
         </p>
+
         <div className="gap-2">
           <button className="border rounded hover:text-primary-default/80 transition duration-200 border-primary-default/50 p-2">
             People

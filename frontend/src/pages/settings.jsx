@@ -4,6 +4,8 @@ import NavbarTemplate from "../templates/template_with_navbar";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
+import NavbarProfile from "../components/navBar/navBarProfile";
+import profile from "../assets/images/Profile1.png";
 
 const TABS = ["profile", "password", "display"];
 
@@ -39,7 +41,7 @@ export default function Settings() {
     });
   };
   const TopTab = () => (
-    <div className="flex p-2 mx-auto justify-around items-center gap-4 bg-light-default border-2">
+    <div className="flex sticky top-16 p-2 mx-auto justify-around items-center gap-4 bg-light-default border-2">
       {TABS.map((val, idx) => {
         let classes = "px-4 py-2 rounded cursor-pointer";
         if (val === activeTab) {
@@ -62,7 +64,10 @@ export default function Settings() {
 
   return (
     <>
-      <NavbarTemplate>
+      <NavbarTemplate
+        HeaderAside={() => <NavbarProfile image={profile} />}
+        headerText="Settings"
+      >
         <TopTab />
         {activeTab === TABS[0] ? (
           <TabWrapper>

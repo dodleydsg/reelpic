@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import placeHolderProfile from "../assets/images/placeholder_profile.png";
 import ScrollCard from "../components/scrollCard";
-import NavBar from "../components/navBar";
+import NavBar from "../components/navBar/navBar";
 import { MdOutlineNotifications, MdOutlineSettings } from "react-icons/md";
 import Mask from "../components/mask";
 

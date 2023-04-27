@@ -2,12 +2,17 @@ import NavbarTemplate from "../templates/template_with_navbar";
 
 import Mask from "../components/mask";
 import NotificationCard from "../components/notificationCard";
+import NavbarProfile from "../components/navBar/navBarProfile";
+import profile from "../assets/images/Profile1.png";
 
 export default function Catalogue() {
   return (
     <>
       <Mask />
-      <NavbarTemplate>
+      <NavbarTemplate
+        HeaderAside={() => <NavbarProfile image={profile} />}
+        headerText="Alerts"
+      >
         <div className="px-4 gap-4">
           <div className="space-y-2">
             <div>

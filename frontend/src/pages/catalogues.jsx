@@ -4,11 +4,16 @@ import template1 from "../assets/images/1.png";
 import template2 from "../assets/images/2.png";
 import template3 from "../assets/images/3.png";
 import InputElement from "../components/form/input";
+import NavbarProfile from "../components/navBar/navBarProfile";
+import profile from "../assets/images/Profile1.png";
 
 export default function Catalogue() {
   return (
     <>
-      <NavbarTemplate>
+      <NavbarTemplate
+        HeaderAside={() => <NavbarProfile image={profile} />}
+        headerText="Catalogues"
+      >
         <div className="px-4 lg:grid lg:grid-cols-3 gap-4">
           <div className="col-span-2 space-y-6">
             <form className="mt-4">

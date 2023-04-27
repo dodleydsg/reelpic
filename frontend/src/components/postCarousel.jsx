@@ -23,7 +23,7 @@ export default function Carousel() {
       if (activeItem !== carousel.children.length - 1) {
         // Check if active item is currently the last
 
-        carousel.children[activeItem].classList.add("z-50", "origin-left");
+        carousel.children[activeItem].classList.add("z-[49]", "origin-left");
         carousel.children[activeItem + 1].classList.remove(
           "scale-0",
           "opacity-0",
@@ -36,7 +36,7 @@ export default function Carousel() {
     } else {
       if (activeItem) {
         // Checks if activeItem isn't the first element i.e activeItem:0
-        carousel.children[activeItem].classList.add("z-50", "origin-right");
+        carousel.children[activeItem].classList.add("z-[49]", "origin-right");
         carousel.children[activeItem - 1].classList.remove(
           "scale-0",
           "opacity-0",
@@ -51,49 +51,54 @@ export default function Carousel() {
   };
 
   return (
-    <section className="bg-none h-[60vh] py-5 w-full relative overflow-hidden flex p-4 bg-gray-100 ">
-      <button
-        onClick={(e) => {
-          navigateCarousel(e, "left");
-        }}
-        className="absolute top-1/2 left-0 z-[51] mx-2 p-4 rounded-3xl text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
-      >
-        <MdOutlineArrowBackIos />
-      </button>{" "}
-      <button
-        onClick={(e) => {
-          navigateCarousel(e, "right");
-        }}
-        className="absolute top-1/2 right-0 z-[52]  mx-2 p-4 rounded-3xl text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
-      >
-        <MdOutlineArrowForwardIos />
-      </button>
-      <div className="absolute flex inset-0 mx-auto carousel" data-current="0">
-        <Image
-          src={potrait}
-          data-active="true"
-          className="object-contain h-full w-auto absolute inset-0 py-10  shrink-0 mx-auto transition-transform duration-500"
-        />
-        <Image
-          src={coverImg1}
-          className="h-full w-auto absolute inset-0  py-10  object-contain shrink-0 mx-auto transition-transform duration-500 scale-0"
-        />
-        <Image
-          src={food}
-          className="h-full w-auto absolute inset-0  py-10 object-contain shrink-0 mx-auto transition-transform duration-500 scale-0"
-        />
-        <Image
-          src={landscape}
-          className="h-full w-auto absolute inset-0  py-10 object-contain shrink-0 mx-auto transition-transform duration-500 scale-0"
-        />
-      </div>
-      <div className="flex self-end w-full bottom-10 sm:bottom-4 inset-x-0">
+    <>
+      <section className="bg-none h-[60vh] py-5 w-full relative overflow-hidden flex p-4 bg-gray-100 ">
+        <button
+          onClick={(e) => {
+            navigateCarousel(e, "left");
+          }}
+          className="absolute top-1/2 left-0 z-[50] mx-2 p-4 rounded-3xl text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
+        >
+          <MdOutlineArrowBackIos />
+        </button>{" "}
+        <button
+          onClick={(e) => {
+            navigateCarousel(e, "right");
+          }}
+          className="absolute top-1/2 right-0 z-[50]  mx-2 p-4 rounded-3xl text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
+        >
+          <MdOutlineArrowForwardIos />
+        </button>
+        <div
+          className="absolute flex inset-0 mx-auto carousel"
+          data-current="0"
+        >
+          <Image
+            src={potrait}
+            data-active="true"
+            className="object-cover h-full  w-full lg:w-auto absolute inset-0  shrink-0 mx-auto transition-transform duration-500"
+          />
+          <Image
+            src={coverImg1}
+            className="object-cover h-full w-full lg:w-auto absolute inset-0    shrink-0 mx-auto transition-transform duration-500 scale-0"
+          />
+          <Image
+            src={food}
+            className="object-cover h-full w-full lg:w-auto absolute inset-0   shrink-0 mx-auto transition-transform duration-500 scale-0"
+          />
+          <Image
+            src={landscape}
+            className="object-cover h-full w-full lg:w-auto absolute inset-0   shrink-0 mx-auto transition-transform duration-500 scale-0"
+          />
+        </div>
+      </section>
+      <div className="flex self-end w-full bottom-10 sm:bottom-4 inset-x-0 mt-4">
         <div className="mx-auto flex gap-2">
           <div className="h-2 w-2 rounded-xl bg-black"></div>
           <div className="h-2 w-2 rounded-xl bg-black"></div>
           <div className="h-2 w-2 rounded-xl bg-black"></div>
         </div>
       </div>
-    </section>
+    </>
   );
 }

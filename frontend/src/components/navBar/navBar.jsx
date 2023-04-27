@@ -12,11 +12,28 @@ import {
   MdOutlineNotifications,
 } from "react-icons/md";
 
-import profileImg from "../assets/images/placeholder_profile1.png";
+import profileImg from "../../assets/images/placeholder_profile1.png";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleMask, setMask } from "../store/features/uiSlice";
+import { toggleMask, setMask } from "../../store/features/uiSlice";
 import { useEffect } from "react";
+import {
+  IoHome,
+  IoAdd,
+  IoHomeOutline,
+  IoCompass,
+  IoCompassOutline,
+  IoImages,
+  IoImagesOutline,
+  IoTrashBin,
+  IoTrashBinOutline,
+  IoSettings,
+  IoSettingsOutline,
+  IoNotifications,
+  IoNotificationsOutline,
+  IoCard,
+} from "react-icons/io5";
+import NavIcon from "./navIcon";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -50,37 +67,33 @@ export default function NavBar() {
           }}
           className="w-16 rounded flex items-center justify-center text-light-default bg-primary-default text-2xl"
         >
-          <MdAdd />
+          <IoAdd />
         </button>
         <div className="w-full  bg-light-default shadow-lg rounded flex justify-around items-center text-dark-default text-2xl">
-          <Link
+          <NavIcon
             href="/home"
-            data-active={pathname}
-            className='data-[active="/home"]:text-primary-default'
-          >
-            <MdDashboard />
-          </Link>
-          <Link
+            SolidIcon={() => <IoHome />}
+            OutlineIcon={() => <IoHomeOutline />}
+            path={pathname}
+          />
+          <NavIcon
             href="/explore"
-            data-active={pathname}
-            className='data-[active="/explore"]:text-primary-default'
-          >
-            <MdOutlineExplore />
-          </Link>
-          <Link
+            SolidIcon={() => <IoCompass />}
+            OutlineIcon={() => <IoCompassOutline />}
+            path={pathname}
+          />
+          <NavIcon
             href="/catalogues"
-            data-active={pathname}
-            className='data-[active="/catalogues"]:text-primary-default'
-          >
-            <MdOutlinePhotoLibrary />
-          </Link>
-          <Link
+            SolidIcon={() => <IoImages />}
+            OutlineIcon={() => <IoImagesOutline />}
+            path={pathname}
+          />
+          <NavIcon
             href="/trash"
-            data-active={pathname}
-            className='data-[active="/trash"]:text-primary-default'
-          >
-            <MdOutlineDeleteOutline />
-          </Link>
+            SolidIcon={() => <IoTrashBin />}
+            OutlineIcon={() => <IoTrashBinOutline />}
+            path={pathname}
+          />
         </div>
       </div>
 
@@ -107,54 +120,50 @@ export default function NavBar() {
           </div>
         </div>
         <div className="space-y-8 text-dark-default/90">
-          <Link
+          <NavIcon
             href="/home"
-            data-active={pathname}
-            className='w-full gap-4 flex items-center data-[active="/home"]:text-primary-default'
-          >
-            <MdDashboard className="w-6 h-auto" />
-            Home
-          </Link>
-          <Link
-            data-active={pathname}
+            SolidIcon={() => <IoHome />}
+            OutlineIcon={() => <IoHomeOutline />}
+            path={pathname}
+            display="Home"
+          />
+
+          <NavIcon
             href="/explore"
-            className='w-full gap-4 flex items-center data-[active="/explore"]:text-primary-default'
-          >
-            <MdOutlineExplore className="w-6 h-auto" />
-            Explore
-          </Link>
-          <Link
-            data-active={pathname}
+            SolidIcon={() => <IoCompass />}
+            OutlineIcon={() => <IoCompassOutline />}
+            path={pathname}
+            display="Explore"
+          />
+
+          <NavIcon
             href="/catalogues"
-            className='w-full gap-4 flex items-center data-[active="/catalogues"]:text-primary-default'
-          >
-            <MdOutlinePhotoLibrary className="w-6 h-auto" />
-            Catalogues
-          </Link>
-          <Link
-            data-active={pathname}
+            SolidIcon={() => <IoImages />}
+            OutlineIcon={() => <IoImagesOutline />}
+            path={pathname}
+            display="Catalogues"
+          />
+          <NavIcon
             href="/notifications"
-            className='w-full gap-4 flex items-center data-[active="/notifications"]:text-primary-default'
-          >
-            <MdOutlineNotifications className="w-6 h-auto" />
-            Notifications
-          </Link>
-          <Link
-            data-active={pathname}
+            SolidIcon={() => <IoNotifications />}
+            OutlineIcon={() => <IoNotificationsOutline />}
+            path={pathname}
+            display="Alerts"
+          />
+          <NavIcon
             href="/trash"
-            className='w-full gap-4 flex items-center data-[active="/trash"]:text-primary-default'
-          >
-            <MdOutlineDelete className="w-6 h-auto" />
-            Trash
-          </Link>
-          <Link
-            data-active={pathname}
+            SolidIcon={() => <IoTrashBin />}
+            OutlineIcon={() => <IoTrashBinOutline />}
+            path={pathname}
+            display="Trash"
+          />
+          <NavIcon
             href="/settings"
-            className='w-full gap-4 flex items-center data-[active="/settings"]:text-primary-default'
-          >
-            <MdOutlineSettings className="w-6 h-auto" />
-            Settings
-          </Link>
+            SolidIcon={() => <IoSettings />}
+            OutlineIcon={() => <IoSettingsOutline />}
+            path={pathname}
+            display="Settings"
+          />
         </div>
         <div>
           <Link href="/home" className="w-full gap-4 flex items-center">

@@ -1,14 +1,18 @@
 import Head from "next/head";
-import Link from "next/link";
-import Image from "next/image";
-import placeHolderProfile from "../assets/images/placeholder_profile.png";
-import NavBar from "../components/navBar";
-import { MdOutlineNotifications, MdOutlineSettings } from "react-icons/md";
+import NavBar from "../components/navBar/navBar";
 import Mask from "../components/mask";
 import { useRouter } from "next/router";
+import {
+  IoNotifications,
+  IoNotificationsOutline,
+  IoSettingsOutline,
+  IoSettings,
+} from "react-icons/io5";
+import NavIcon from "../components/navBar/navIcon";
 
-export default function ({ children }) {
+export default function ({ children, headerText, HeaderAside }) {
   const router = useRouter();
+  const pathname = router.pathname;
 
   return (
     <>
@@ -26,30 +30,40 @@ export default function ({ children }) {
           <div className="space-y-4">
             <div className="space-y-4 mt-20 lg:mt-0">{children}</div>
           </div>
-          <header className="p-4 shadow flex lg:hidden justify-between items-center fixed bg-white z-50 top-0 inset-x-0">
-            <div className="flex gap-3 items-center">
-              <Link href="/user/jaso">
-                <Image
-                  alt="profile_img"
-                  height={40}
-                  width={40}
-                  src={placeHolderProfile}
-                />
-              </Link>
-              <h2 className="font-bold text-2xl text-dark-default/90">Feed</h2>
-            </div>
-            <div className="flex items-center gap-4">
-              <MdOutlineNotifications
-                onClick={() => router.push("/notifications")}
-                className="text-dark-default/90 w-6 h-auto cursor-pointer "
-              />
+          <div className="fixed z-50 top-0 inset-x-0 shadow ">
+            <header className="p-4 flex lg:hidden justify-between items-center  container mx-auto bg-white ">
+              <div className="flex gap-3 items-center">
+                {/* 
+                
+                HeaderAside is needed to properly render the appropriate Header for mobile
+                
+                */}
+                <HeaderAside />
 
-              <MdOutlineSettings
-                onClick={() => router.push("/settings")}
-                className="text-dark-default/90 cursor-pointer w-6 h-auto"
-              />
-            </div>
-          </header>
+                <h2 className="text-medium text-2xl text-dark-default/90">
+                  {headerText}
+                </h2>
+              </div>
+              <div className="flex items-center gap-4">
+                <NavIcon
+                  href="/notifications"
+                  SolidIcon={() => <IoNotifications />}
+                  OutlineIcon={() => <IoNotificationsOutline />}
+                  path={pathname}
+                  display="Alerts"
+                  clickCallback={() => router.push("/notifications")}
+                />
+                <NavIcon
+                  href="/settings"
+                  SolidIcon={() => <IoSettings />}
+                  OutlineIcon={() => <IoSettingsOutline />}
+                  path={pathname}
+                  clickCallback={() => router.push("/settings")}
+                  display="Settings"
+                />
+              </div>
+            </header>
+          </div>
         </div>
       </div>
     </>

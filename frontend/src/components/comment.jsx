@@ -41,7 +41,7 @@ export default function Comment() {
 
   const Reply = () => {
     return (
-      <div className="text-dark-default/75">
+      <div className="text-dark-default/75 ">
         <CommentBlock />
       </div>
     );
@@ -49,8 +49,8 @@ export default function Comment() {
 
   if (showReply) {
     return (
-      <div className="space-y-4">
-        <div className="space-y-1 bg-gray-200 p-4">
+      <div className="space-y-4 px-1 py-2">
+        <div className="space-y-1 bg-gray-200">
           <div className="flex gap-4 items-center">
             <MdArrowBack
               className="w-4 h-auto cursor-pointer"
@@ -67,7 +67,7 @@ export default function Comment() {
     );
   } else {
     return (
-      <div className="space-y-2 p-4">
+      <div className="space-y-2 px-1 py-2">
         <h3 className="text-subheading">Comments</h3>
         <CommentBlock />
         <p
