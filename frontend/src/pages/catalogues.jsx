@@ -21,7 +21,7 @@ export default function Catalogue() {
               <InputElement
                 type="text"
                 placeholder="Search catalogues"
-                className="lg:w-1/2"
+                className="lg:w-1/2 w-full"
               />
             </form>
             <h3 className="text-subheading">My catalogues</h3>
