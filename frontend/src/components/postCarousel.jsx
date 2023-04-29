@@ -14,12 +14,20 @@ import {
 import { useState } from "react";
 
 export default function Carousel() {
-  const [activeCarousel, setActiveCarousel] = useState();
+  const [activeCarousel, setActiveCarousel] = useState(1);
+  // Carousel item count starts from 1
+  const CONTENT_LENGTH = 4;
+  // Current example simulates carousel with four image items
+  // Will represent the number of image items in a post
 
   const navigateCarousel = (e, direction) => {
     let carousel = e.currentTarget.parentNode.querySelector(".carousel");
     let activeItem = parseInt(carousel.dataset.current);
     if (direction === "right") {
+      if (activeCarousel < CONTENT_LENGTH) {
+        setActiveCarousel(activeCarousel + 1);
+        console.log(activeCarousel);
+      }
       if (activeItem !== carousel.children.length - 1) {
         // Check if active item is currently the last
 
@@ -34,6 +42,10 @@ export default function Carousel() {
         carousel.dataset.current = `${activeItem + 1}`;
       }
     } else {
+      if (activeCarousel > 1) {
+        setActiveCarousel(activeCarousel - 1);
+        console.log(activeCarousel);
+      }
       if (activeItem) {
         // Checks if activeItem isn't the first element i.e activeItem:0
         carousel.children[activeItem].classList.add("z-[49]", "origin-right");
@@ -94,9 +106,34 @@ export default function Carousel() {
       </section>
       <div className="flex self-end w-full bottom-10 sm:bottom-4 inset-x-0 mt-4">
         <div className="mx-auto flex gap-2">
-          <div className="h-2 w-2 rounded-xl bg-black"></div>
-          <div className="h-2 w-2 rounded-xl bg-black"></div>
-          <div className="h-2 w-2 rounded-xl bg-black"></div>
+          <div
+            className={`h-2 w-2 rounded-xl ${
+              activeCarousel === 1
+                ? " bg-primary-default/50"
+                : " bg-dark-default/50"
+            }`}
+          ></div>
+          <div
+            className={`h-2 w-2 rounded-xl ${
+              activeCarousel === 2
+                ? " bg-primary-default/50"
+                : " bg-dark-default/50"
+            }`}
+          ></div>
+          <div
+            className={`h-2 w-2 rounded-xl ${
+              activeCarousel === 3
+                ? " bg-primary-default/50"
+                : " bg-dark-default/50"
+            }`}
+          ></div>
+          <div
+            className={`h-2 w-2 rounded-xl ${
+              activeCarousel === 4
+                ? " bg-primary-default/50"
+                : " bg-dark-default/50"
+            }`}
+          ></div>
         </div>
       </div>
     </>
