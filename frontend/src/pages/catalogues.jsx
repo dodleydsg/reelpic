@@ -64,7 +64,12 @@ export default function Catalogue() {
               <label for="title" className="sr-only">
                 Title
               </label>
-              <InputElement type="text" placeholder="Title" name="title" />
+              <InputElement
+                type="text"
+                className="w-full"
+                placeholder="Title"
+                name="title"
+              />
               <label for="description" className="sr-only">
                 Description
               </label>

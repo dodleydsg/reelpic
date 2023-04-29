@@ -18,7 +18,12 @@ export default function Register() {
               {/* Form element and inputs */}
               <form className="w-full min-h-[280px]">
                 <div className="space-y-4 mb-4">
-                  <InputElement type="email" placeholder="Email" name="email" />
+                  <InputElement
+                    type="email"
+                    className="w-full"
+                    placeholder="Email"
+                    name="email"
+                  />
                   <button className="btn-primary hover:bg-[#4900EB]">
                     Reset password
                   </button>

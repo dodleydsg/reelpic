@@ -2,6 +2,8 @@ import { useState } from "react";
 import Image from "next/image";
 import { MdArrowBack, MdComment, MdThumbUp } from "react-icons/md";
 import profile1 from "../assets/images/Profile1.png";
+import InputElement from "./form/input";
+import { IoSend } from "react-icons/io5";
 
 export default function Comment() {
   const [comments, updateComments] = useState([{}]);
@@ -49,33 +51,47 @@ export default function Comment() {
 
   if (showReply) {
     return (
-      <div className="space-y-4 px-1 py-2">
-        <div className="space-y-1 bg-gray-200">
-          <div className="flex gap-4 items-center">
-            <MdArrowBack
-              className="w-4 h-auto cursor-pointer"
-              onClick={() => toggleReply(!showReply)}
-            />
-            <h3 className="text-subheading">Replies </h3>
+      <div className="py-2">
+        <div className="space-y-4 px-1 pb-10 overflow-y-scroll max-h-52">
+          <div className="space-y-1 bg-gray-200">
+            <div className="flex gap-4 items-center">
+              <MdArrowBack
+                className="w-4 h-auto cursor-pointer"
+                onClick={() => toggleReply(!showReply)}
+              />
+              <h3 className="text-subheading">Replies </h3>
+            </div>
+            <CommentBlock />
           </div>
-          <CommentBlock />
-        </div>
-        <div className="ml-12">
-          <Reply />
+          <div className="ml-12">
+            <Reply />
+          </div>
         </div>
       </div>
     );
   } else {
     return (
-      <div className="space-y-2 px-1 py-2">
-        <h3 className="text-subheading">Comments</h3>
-        <CommentBlock />
-        <p
-          className="text-sm cursor-pointer link"
-          onClick={() => toggleReply(!showReply)}
-        >
-          Show replies
-        </p>
+      <div className="px-1 space-y-1 py-2">
+        <div className="space-y-2 mb-4 overflow-y-scroll max-h-52">
+          <h3 className="text-subheading">Comments</h3>
+          <CommentBlock />
+          <p
+            className="text-sm cursor-pointer link"
+            onClick={() => toggleReply(!showReply)}
+          >
+            Show replies
+          </p>
+        </div>
+        <form action="#" className="flex gap-4 w-full">
+          <textarea
+            rows="1"
+            placeholder="Add comment"
+            className=" resize-none px-2 bg-gray-100 py-2 grow h-10 rounded focus:outline-0 focus:ring-2 focus:ring-primary-default/50"
+          />
+          <button className="h-full rounded-sm flex shrink-0 p-3 items-center justify-center border-2 border-primary-default/50">
+            <IoSend className="w-4 h-auto" />
+          </button>
+        </form>
       </div>
     );
   }
