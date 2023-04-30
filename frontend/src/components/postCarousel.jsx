@@ -1,5 +1,4 @@
 import Image from "next/image";
-import coverImg from "../assets/images/Home_bg.png";
 import coverImg1 from "../assets/images/pattern_bg.png";
 import food from "../assets/images/food.jpg";
 import landscape from "../assets/images/landscape.jpg";

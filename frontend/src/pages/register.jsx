@@ -3,7 +3,6 @@ import InputElement from "../components/form/input";
 import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  clearForm,
   updatePassword,
   updateEmail,
 } from "../store/features/authForm/authSlice";

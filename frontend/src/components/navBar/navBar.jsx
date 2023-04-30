@@ -1,16 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import {
-  MdAdd,
-  MdOutlineSettings,
-  MdOutlineDelete,
-  MdOutlineDeleteOutline,
-  MdOutlinePhotoLibrary,
-  MdOutlineExplore,
-  MdDashboard,
-  MdExitToApp,
-  MdOutlineNotifications,
-} from "react-icons/md";
+import { MdExitToApp } from "react-icons/md";
 
 import profileImg from "../../assets/images/placeholder_profile1.png";
 import Image from "next/image";

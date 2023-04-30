@@ -2,7 +2,6 @@ import { useState } from "react";
 import Image from "next/image";
 import { MdArrowBack, MdComment, MdThumbUp } from "react-icons/md";
 import profile1 from "../assets/images/Profile1.png";
-import InputElement from "./form/input";
 import { IoSend } from "react-icons/io5";
 
 export default function Comment() {
