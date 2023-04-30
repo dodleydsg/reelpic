@@ -53,7 +53,7 @@ export default function Comment() {
     return (
       <div className="py-2">
         <div className="space-y-4 px-1 pb-10 overflow-y-scroll max-h-52">
-          <div className="space-y-1 bg-gray-200">
+          <div className="space-y-1 bg-light-default">
             <div className="flex gap-4 items-center">
               <MdArrowBack
                 className="w-4 h-auto cursor-pointer"
