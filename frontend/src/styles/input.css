@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 
+
 /* Hides scrollbar for carousel */
 
 #scrollCard::-webkit-scrollbar{

@@ -1523,6 +1523,10 @@ video {
   text-align: justify;
 }
 
+.font-logo {
+  font-family: var(--font-grandHotel);
+}
+
 .font-sans {
   font-family: var(--font-neusa), ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
@@ -1624,6 +1628,11 @@ video {
 .text-white {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-logoBlue {
+  --tw-text-opacity: 1;
+  color: rgb(31 0 99 / var(--tw-text-opacity));
 }
 
 .opacity-0 {

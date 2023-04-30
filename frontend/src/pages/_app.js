@@ -29,10 +29,21 @@ const neusa = localFont({
   variable: "--font-neusa",
 });
 
+const grandHotel = localFont({
+  src: [
+    {
+      path: "../assets/fonts/grand_hotel/GrandHotel-Regular.ttf",
+      weight: "400",
+      style: "normal",
+    },
+  ],
+  variable: "--font-grandHotel",
+});
+
 export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <main className={neusa.className}>
+      <main className={`${neusa.variable} ${grandHotel.variable} font-sans`}>
         <Component {...pageProps} />
       </main>
     </Provider>

@@ -11,7 +11,19 @@ export default function Register() {
         <div className="relative container mx-auto flex z-10 h-screen px-4">
           <div className="items-center bg-white max-w-[380px] w-full mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px]">
             <div className="space-y-3 sm:space-y-7">
-              <h1 className="text-heading text-center">Reelpic</h1>
+              <div className="flex gap-3 items-center w-full justify-center">
+                <h1 className="text-heading text-center font-logo text-logoBlue">
+                  Reelpic
+                </h1>
+                <div>
+                  <img
+                    src="./logo/Logo_512x512.svg"
+                    alt="Reelpic logo"
+                    width="48"
+                    height="48"
+                  />
+                </div>
+              </div>
               <p className="text-center text-subheading">Reset your password</p>
             </div>
             <div className="mt-7 w-full">

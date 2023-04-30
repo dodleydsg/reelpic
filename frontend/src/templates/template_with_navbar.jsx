@@ -18,6 +18,9 @@ export default function ({ children, headerText, HeaderAside }) {
     <>
       <Head>
         <title>Reelpic | Home</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       </Head>
 
       <Mask />

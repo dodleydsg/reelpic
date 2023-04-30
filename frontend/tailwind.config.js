@@ -7,11 +7,13 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["var(--font-neusa)", ...fontFamily.sans],
+        logo: ["var(--font-grandHotel)"],
       },
       colors: {
         primary: {
           default: "#651FFF",
         },
+        logoBlue: "#1F0063",
         danger: {
           default: "#D90429",
         },
