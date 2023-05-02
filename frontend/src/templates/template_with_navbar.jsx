@@ -9,10 +9,12 @@ import {
   IoSettings,
 } from "react-icons/io5";
 import NavIcon from "../components/navBar/navIcon";
+import { useSelector } from "react-redux";
 
 export default function ({ children, headerText, HeaderAside }) {
   const router = useRouter();
   const pathname = router.pathname;
+  const { addPost, addCatalogue } = useSelector((state) => state.ui);
 
   return (
     <>
@@ -24,13 +26,17 @@ export default function ({ children, headerText, HeaderAside }) {
       </Head>
 
       <Mask />
-      <div className="w-screen h-screen relative container p-4 mx-auto gap-6 lg:grid lg:grid-cols-4">
+      <div
+        className={`w-screen h-screen relative container p-4 mx-auto gap-6 lg:grid lg:grid-cols-4 ${
+          addPost || addCatalogue ? "overflow-hidden" : ""
+        }`}
+      >
         <NavBar />
         <div
           id="mainContent"
           className="lg:col-span-3 overflow-y-scroll pb-40  relative gap-4"
         >
-          <div className="space-y-4">
+          <div className="space-y-4 ">
             <div className="space-y-4 mt-[56px] lg:mt-0">{children}</div>
           </div>
           <div className="fixed z-50 top-0 inset-x-0 shadow ">

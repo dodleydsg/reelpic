@@ -22,7 +22,7 @@ export default function AddPost() {
             placeholder="Give a useful description to your post"
           />
         </div>
-        <div className="flex gap-2 lg:gap-4  items-start">
+        <div className="flex gap-4  items-start">
           <label htmlFor="tag">Tags</label>
           <div className="w-52 lg:w-72 flex flex-wrap items-center gap-2">
             <InputElement

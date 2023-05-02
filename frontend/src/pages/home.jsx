@@ -9,10 +9,26 @@ import Image from "next/image";
 import { useState } from "react";
 import { IoAdd, IoClose } from "react-icons/io5";
 import AddPost from "../components/post/addPost";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleAddPost, toggleAddCatalogue } from "../store/features/uiSlice";
 
 export default function Home() {
+  const { addPost, addCatalogue } = useSelector((state) => state.ui);
+  const dispatch = useDispatch();
+
   // trigger for opening and closing fields for adding posts
-  const [addPost, toggleAddPost] = useState(true);
+
+  const AddContentContainer = ({ children }) => {
+    return (
+      <div
+        className={`${
+          addPost ? "scale-y-100" : "scale-y-0"
+        } bg-white lg:hidden fixed p-4 inset-0 z-[55] origin-bottom-left transition-all duration-500`}
+      >
+        <div className="container mx-auto">{children}</div>
+      </div>
+    );
+  };
 
   return (
     <>
@@ -20,6 +36,27 @@ export default function Home() {
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Home"
       >
+        {/* AddPost for mobile */}
+
+        <AddContentContainer>
+          <div className="mt-4 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-medium text-2xl text-dark-default/90">
+                Create post
+              </h2>
+              <span
+                onClick={() => {
+                  dispatch(toggleAddPost(false));
+                }}
+                className="p-2 border rounded border-danger-default/10 inline-block hover:bg-danger-default/20 transition duration-200"
+              >
+                <IoClose className="w-6 cursor-pointer h-auto text-danger-default/60 " />
+              </span>
+            </div>
+            <AddPost />
+          </div>
+        </AddContentContainer>
+
         <div className="space-y-4">
           <div className="mt-20 lg:mt-0">
             <h3 className="text-subheading mt-3">Trending catalogues</h3>

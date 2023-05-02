@@ -4,8 +4,13 @@ import { MdExitToApp } from "react-icons/md";
 
 import profileImg from "../../assets/images/placeholder_profile1.png";
 import Image from "next/image";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleMask, setMask } from "../../store/features/uiSlice";
+import { useDispatch } from "react-redux";
+import {
+  toggleMask,
+  setMask,
+  toggleAddCatalogue,
+  toggleAddPost,
+} from "../../store/features/uiSlice";
 import { useEffect } from "react";
 import {
   IoHome,
@@ -42,10 +47,16 @@ export default function NavBar() {
           id="mobileActionExpand"
           className="absolute z-[55] scale-y-0 transition-transform ease-in-out origin-bottom duration-300 border-[#D2C4E9] border ml-4 left-0 bottom-16 text-primary-default/70 w-40 rounded bg-light-default flex justify-evenly flex-col text-base"
         >
-          <p className="p-4 border-b border-[#D2C4E9] hover:bg-primary-default hover:cursor-pointer hover:text-light-default transition duration-300">
+          <p
+            onClick={() => dispatch(toggleAddPost(true))}
+            className="p-4 border-b border-[#D2C4E9] hover:bg-primary-default hover:cursor-pointer hover:text-light-default transition duration-300"
+          >
             Create Post
           </p>
-          <p className="p-4 hover:bg-primary-default hover:text-light-default hover:cursor-pointer transition duration-300">
+          <p
+            onClick={() => dispatch(toggleAddCatalogue(true))}
+            className="p-4 hover:bg-primary-default hover:text-light-default hover:cursor-pointer transition duration-300"
+          >
             Add Catalogue
           </p>
         </div>
@@ -86,6 +97,8 @@ export default function NavBar() {
           />
         </div>
       </div>
+
+      {/* Mobile Nav end */}
 
       <div className="shadow-xl col-span-1 h-full py-12 px-4 lg:px-8 hidden lg:block  space-y-10 text-center rounded-2xl from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
         <div className="flex items-center gap-4 justify-start">
