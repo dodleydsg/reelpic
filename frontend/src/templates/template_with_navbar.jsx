@@ -24,14 +24,14 @@ export default function ({ children, headerText, HeaderAside }) {
       </Head>
 
       <Mask />
-      <div className="w-screen h-screen relative container py-4 mx-auto px-4  gap-6 lg:grid lg:grid-cols-4">
+      <div className="w-screen h-screen relative container p-4 mx-auto gap-6 lg:grid lg:grid-cols-4">
         <NavBar />
         <div
           id="mainContent"
           className="lg:col-span-3 overflow-y-scroll pb-40  relative gap-4"
         >
           <div className="space-y-4">
-            <div className="space-y-4 mt-20 lg:mt-0">{children}</div>
+            <div className="space-y-4 mt-[56px] lg:mt-0">{children}</div>
           </div>
           <div className="fixed z-50 top-0 inset-x-0 shadow ">
             <header className="p-4 flex lg:hidden justify-between items-center  container mx-auto bg-white ">

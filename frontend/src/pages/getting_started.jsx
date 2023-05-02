@@ -190,16 +190,11 @@ export default function Reset() {
                     Skip
                   </Link>
                 </div>
-                <Link href="/home" className="col-span-1 block">
-                  <button
-                    onClick={(e) => {
-                      // e.preventDefault();
-                      // dispatch(clearForm());
-                    }}
-                    className="btn-primary hover:bg-[#4900EB]"
-                  >
-                    Get started
-                  </button>
+                <Link
+                  href="/home"
+                  className="btn-primary text-center hover:bg-[#4900EB] col-span-1 block"
+                >
+                  Get started
                 </Link>
               </div>
             </div>

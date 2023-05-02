@@ -48,6 +48,8 @@ body{
         @apply block w-full mx-auto transition duration-200 bg-black py-[14px] rounded-md text-white text-lg
     }.btn-primary{
         @apply block w-full mx-auto transition duration-200 bg-primary-default py-[14px] rounded-md text-white text-lg
+    }.btn-secondary{
+        @apply block w-full mx-auto transition duration-200 bg-danger-default py-[14px] rounded-md text-white text-lg
     }
     .link{
         @apply text-blue-400 hover:text-blue-500 transition duration-200

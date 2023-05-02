@@ -1,8 +1,8 @@
 import Image from "next/image";
-import coverImg1 from "../assets/images/pattern_bg.png";
-import food from "../assets/images/food.jpg";
-import landscape from "../assets/images/landscape.jpg";
-import potrait from "../assets/images/2.png";
+import coverImg1 from "../../assets/images/pattern_bg.png";
+import food from "../../assets/images/food.jpg";
+import landscape from "../../assets/images/landscape.jpg";
+import potrait from "../../assets/images/2.png";
 import {
   MdOutlineArrowBackIos,
   MdOutlineArrowForwardIos,
@@ -81,7 +81,7 @@ export default function Carousel() {
           <MdOutlineArrowForwardIos />
         </button>
         <div
-          className="absolute flex inset-0 mx-auto carousel"
+          className="absolute flex inset-0 lg:inset-6 mx-auto carousel"
           data-current="0"
         >
           <Image

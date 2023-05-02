@@ -4,21 +4,9 @@ import { MdArrowBack, MdGrid4X4, MdList, MdUpload } from "react-icons/md";
 import Image from "next/image";
 import food from "../../assets/images/food.jpg";
 import BackButton from "@/components/components/backButton";
+import UploadLabel from "@/components/components/form/uploadLabel";
 
 export default function CatalogueDetail() {
-  const UploadLabel = ({ mobile }) => {
-    return (
-      <label
-        htmlFor="images"
-        className={`${
-          mobile ? "lg:hidden" : ""
-        } px-4 rounded inline-block text-primary-default/60 border-gray-300 border py-2 hover:text-primary-default hover:bg-light-default transition cursor-pointer`}
-      >
-        Add image/s
-      </label>
-    );
-  };
-
   const router = useRouter();
   const { catalogueId } = router.query;
 
@@ -54,7 +42,11 @@ export default function CatalogueDetail() {
               </div>
 
               {/* Mobile upload button */}
-              <UploadLabel mobile={true} />
+              <UploadLabel
+                htmlFor="images"
+                text="Add image/s"
+                className="lg:hidden"
+              />
             </div>
 
             <div className="space-y-4">
@@ -88,7 +80,11 @@ export default function CatalogueDetail() {
           </div>
           <div className="hidden lg:block col-span-1 space-y-6 ">
             <h2 className="text-subheading">Upload new images</h2>
-            <UploadLabel />
+            <UploadLabel
+              htmlFor="images"
+              text="Add image/s"
+              className="hidden lg:inline-block"
+            />
             <div className="h-72 w-full bg-light-default border-gray-300 border-2 flex items-center justify-center">
               <div className="flex flex-col gap-2 items-center">
                 <MdUpload className="w-16 h-auto" />

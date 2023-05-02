@@ -15,9 +15,6 @@ export default function InputElement(props) {
         }
         placeholder={props.placeholder}
       />
-      <label aria-label={props.name} className="sr-only">
-        Enter your email
-      </label>
     </>
   );
 }
