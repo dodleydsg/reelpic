@@ -72,8 +72,19 @@ export default function Settings() {
         {activeTab === TABS[0] ? (
           <TabWrapper>
             <h2 className="font-bold">Edit Profile</h2>
-            <div className="flex flex-col items-center justify-start space-y-8">
-              <div>{/* Profile picture section */}</div>
+            <div className="flex flex-col items-center justify-start space-y-8 py-2">
+              <div className="flex justify-center items-center flex-col">
+                {/* Profile picture section */}
+
+                <InputElement type="file" id="profileImg" className="hidden" />
+                <label
+                  htmlFor="profileImg"
+                  className="flex items-center text-dark-default/80 text-sm cursor-pointer flex-col gap-2"
+                >
+                  <Image src={profile} className="w-20 h-20 rounded-[40px]" />
+                  <span>Click to change profile</span>
+                </label>
+              </div>
               <div className=" flex gap-2 lg:gap-4 items-center">
                 <label htmlFor="username" className="w-20 text-right">
                   Username
