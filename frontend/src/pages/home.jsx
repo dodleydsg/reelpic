@@ -46,7 +46,11 @@ export default function Home() {
               </h2>
               <span
                 onClick={() => {
-                  dispatch(toggleAddPost(false));
+                  let container = document.querySelector(
+                    "#createPostContainer"
+                  );
+                  container.classList.toggle("scale-y-0");
+                  dispatch(toggleAddPost(!addPost));
                 }}
                 className="p-2 border rounded border-danger-default/10 inline-block hover:bg-danger-default/20 transition duration-200"
               >
@@ -74,11 +78,12 @@ export default function Home() {
               </div>
               <button
                 onClick={() => {
-                  toggleAddPost(!addPost);
+                  
                   let container = document.querySelector(
                     "#createPostContainer"
                   );
                   container.classList.toggle("scale-y-0");
+                  dispatch(toggleAddPost(!addPost));
                 }}
                 className="p-4 rounded border-primary-default/20 hover:bg-light-default flex border"
               >

@@ -28,7 +28,7 @@ export default function ({ children, headerText, HeaderAside }) {
       <Mask />
       <div
         className={`w-screen h-screen relative container p-4 mx-auto gap-6 lg:grid lg:grid-cols-4 ${
-          addPost || addCatalogue ? "overflow-hidden" : ""
+          addPost || addCatalogue ? "overflow-hidden lg:overflow-auto" : ""
         }`}
       >
         <NavBar />

@@ -2146,6 +2146,10 @@ body{
     margin-bottom: calc(1.75rem * var(--tw-space-y-reverse));
   }
 
+  .lg\:overflow-auto {
+    overflow: auto;
+  }
+
   .lg\:px-16 {
     padding-left: 4rem;
     padding-right: 4rem;
