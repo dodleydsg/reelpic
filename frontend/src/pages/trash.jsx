@@ -9,6 +9,7 @@ export default function Trash() {
       <NavbarTemplate
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Trash"
+        pageTitle="Trash | Restore any trashed photos"
       >
         <div className="px-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
           <TrashCard />

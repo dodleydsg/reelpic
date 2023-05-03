@@ -37,7 +37,7 @@ export default function Reset() {
   return (
     <>
       <Head>
-        <title>Reelpic | Getting started</title>
+        <title>Getting started | Lets know more about you</title>
       </Head>
       <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.png')] bg-cover bg-blend-screen">
         <div className="absolute left-0 right-0 bottom-0 top-0 opacity-50 bg-gradient-to-b from-black to-[rgb(0,0,0,.5)]"></div>

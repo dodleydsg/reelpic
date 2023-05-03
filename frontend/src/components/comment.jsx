@@ -87,7 +87,7 @@ export default function Comment() {
             placeholder="Add comment"
             className=" resize-none px-2 bg-gray-100 py-2 grow h-10 rounded focus:outline-0 focus:ring-2 focus:ring-primary-default/50"
           />
-          <button className="h-full rounded-sm flex shrink-0 p-3 items-center justify-center border-2 border-primary-default/50">
+          <button className="h-full rounded-sm flex shrink-0 p-3 items-center justify-center  text-primary-default">
             <IoSend className="w-4 h-auto" />
           </button>
         </form>

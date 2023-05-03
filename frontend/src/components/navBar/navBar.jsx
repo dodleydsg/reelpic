@@ -27,6 +27,7 @@ import {
   IoNotifications,
   IoNotificationsOutline,
   IoCard,
+  IoExit,
 } from "react-icons/io5";
 import NavIcon from "./navIcon";
 
@@ -73,26 +74,26 @@ export default function NavBar() {
         <div className="w-full  bg-light-default shadow-lg rounded flex justify-around items-center text-dark-default text-2xl">
           <NavIcon
             href="/home"
-            SolidIcon={() => <IoHome />}
-            OutlineIcon={() => <IoHomeOutline />}
+            SolidIcon={(props) => <IoHome {...props} />}
+            OutlineIcon={(props) => <IoHomeOutline {...props} />}
             path={pathname}
           />
           <NavIcon
             href="/explore"
-            SolidIcon={() => <IoCompass />}
-            OutlineIcon={() => <IoCompassOutline />}
+            SolidIcon={(props) => <IoCompass {...props} />}
+            OutlineIcon={(props) => <IoCompassOutline {...props} />}
             path={pathname}
           />
           <NavIcon
             href="/catalogues"
-            SolidIcon={() => <IoImages />}
-            OutlineIcon={() => <IoImagesOutline />}
+            SolidIcon={(props) => <IoImages {...props} />}
+            OutlineIcon={(props) => <IoImagesOutline {...props} />}
             path={pathname}
           />
           <NavIcon
             href="/trash"
-            SolidIcon={() => <IoTrashBin />}
-            OutlineIcon={() => <IoTrashBinOutline />}
+            SolidIcon={(props) => <IoTrashBin {...props} />}
+            OutlineIcon={(props) => <IoTrashBinOutline {...props} />}
             path={pathname}
           />
         </div>
@@ -125,53 +126,56 @@ export default function NavBar() {
         <div className="space-y-8 text-dark-default/90">
           <NavIcon
             href="/home"
-            SolidIcon={() => <IoHome />}
-            OutlineIcon={() => <IoHomeOutline />}
+            SolidIcon={(props) => <IoHome {...props} />}
+            OutlineIcon={(props) => <IoHomeOutline {...props} />}
             path={pathname}
             display="Home"
           />
 
           <NavIcon
             href="/explore"
-            SolidIcon={() => <IoCompass />}
-            OutlineIcon={() => <IoCompassOutline />}
+            SolidIcon={(props) => <IoCompass {...props} />}
+            OutlineIcon={(props) => <IoCompassOutline {...props} />}
             path={pathname}
             display="Explore"
           />
 
           <NavIcon
             href="/catalogues"
-            SolidIcon={() => <IoImages />}
-            OutlineIcon={() => <IoImagesOutline />}
+            SolidIcon={(props) => <IoImages {...props} />}
+            OutlineIcon={(props) => <IoImagesOutline {...props} />}
             path={pathname}
             display="Catalogues"
           />
           <NavIcon
             href="/notifications"
-            SolidIcon={() => <IoNotifications />}
-            OutlineIcon={() => <IoNotificationsOutline />}
+            SolidIcon={(props) => <IoNotifications {...props} />}
+            OutlineIcon={(props) => <IoNotificationsOutline {...props} />}
             path={pathname}
             display="Alerts"
           />
           <NavIcon
             href="/trash"
-            SolidIcon={() => <IoTrashBin />}
-            OutlineIcon={() => <IoTrashBinOutline />}
+            SolidIcon={(props) => <IoTrashBin {...props} />}
+            OutlineIcon={(props) => <IoTrashBinOutline {...props} />}
             path={pathname}
             display="Trash"
           />
           <NavIcon
             href="/settings"
-            SolidIcon={() => <IoSettings />}
-            OutlineIcon={() => <IoSettingsOutline />}
+            SolidIcon={(props) => <IoSettings {...props} />}
+            OutlineIcon={(props) => <IoSettingsOutline {...props} />}
             path={pathname}
             display="Settings"
           />
         </div>
         <div>
-          <Link href="/home" className="w-full gap-4 flex items-center">
-            <MdExitToApp className="w-6 h-auto text-danger-default" />
-            Logout
+          <Link
+            href="#"
+            className=" flex justify-center lg:justify-start items-start gap-2 w-full text-lg text-danger-default font-medium"
+          >
+            <IoExit className="text-2xl" />
+            <p className="text-xl hidden lg:block text-dark-default">Logout</p>
           </Link>
         </div>
       </div>

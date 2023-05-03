@@ -12,6 +12,7 @@ export default function Catalogue() {
       <NavbarTemplate
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Alerts"
+        pageTitle="Alerts | Find alerts for recent activity"
       >
         <div className="px-4 gap-4">
           <div className="space-y-2">

@@ -11,9 +11,9 @@ export default function NavIcon({
     return (
       <Link
         href={href}
-        className="flex justify-center lg:justify-start items-start gap-2 w-full text-[24px]  text-primary-default"
+        className="flex justify-center lg:justify-start items-start gap-2 w-full text-lg text-primary-default font-medium"
       >
-        <SolidIcon className="w-6 lg:w-8 h-auto" />
+        <SolidIcon className="text-2xl" />
         <p className="text-xl hidden lg:block">{display}</p>
       </Link>
     );
@@ -21,9 +21,9 @@ export default function NavIcon({
     return (
       <Link
         href={href}
-        className=" flex justify-center lg:justify-start items-start gap-2 w-full text-[24px] text-dark-default/80"
+        className=" flex justify-center lg:justify-start items-start gap-2 w-full text-lg text-dark-default font-medium"
       >
-        <OutlineIcon className=" w-6 lg:w-8 h-auto" />
+        <OutlineIcon  className='text-2xl' />
         <p className="text-xl hidden lg:block">{display}</p>
       </Link>
     );

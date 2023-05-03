@@ -13,7 +13,7 @@ export default function Reset() {
   return (
     <>
       <Head>
-        <title>Reelpic | Register</title>
+        <title>Reelpic | Complete to join the community</title>
       </Head>
       <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.png')] bg-cover">
         <div className="relative container mx-auto flex z-10 h-screen px-4">

@@ -7,24 +7,89 @@ import {
   IoNotificationsOutline,
   IoSettingsOutline,
   IoSettings,
+  IoClose,
 } from "react-icons/io5";
 import NavIcon from "../components/navBar/navIcon";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleAddPost, toggleAddCatalogue } from "../store/features/uiSlice";
+import AddPostForm from "../components/form/addPostForm";
+import AddCatalogueForm from "../components/form/addCatalogueForm";
 
-export default function ({ children, headerText, HeaderAside }) {
+export default function ({ children, headerText, HeaderAside, pageTitle }) {
   const router = useRouter();
   const pathname = router.pathname;
   const { addPost, addCatalogue } = useSelector((state) => state.ui);
+  const dispatch = useDispatch();
+
+  // trigger for opening and closing fields for adding posts
+
+  const AddContentContainer = ({ children, type }) => {
+    if (type === "catalogue") {
+      return (
+        <div
+          className={`${
+            addCatalogue ? "scale-y-100" : "scale-y-0"
+          } bg-white lg:hidden fixed p-4 inset-0 z-[55] origin-bottom-left transition-all duration-500`}
+        >
+          <div className="container mx-auto h-full">{children}</div>
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className={`${
+            addPost ? "scale-y-100" : "scale-y-0"
+          } bg-white lg:hidden fixed p-4 inset-0 z-[55] origin-bottom-left transition-all duration-500`}
+        >
+          <div className="container mx-auto h-full">{children}</div>
+        </div>
+      );
+    }
+  };
 
   return (
     <>
       <Head>
-        <title>Reelpic | Home</title>
+        <title>{pageTitle}</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       </Head>
+      {/* AddPost for mobile */}
 
+      <AddContentContainer>
+        <div className="space-y-4 h-full">
+          <div className="flex items-center justify-between">
+            <h2 className="font-bold text-2xl">Create post</h2>
+            <span
+              onClick={() => dispatch(toggleAddPost(false))}
+              className="p-2 border rounded border-danger-default/10 inline-block hover:bg-danger-default/20 transition duration-200"
+            >
+              <IoClose className="w-6 cursor-pointer h-auto text-danger-default/60 " />
+            </span>
+          </div>
+          <AddPostForm />
+        </div>
+      </AddContentContainer>
+
+      {/* AddPost for mobile end */}
+
+      {/* AddCatalogue for Mobile */}
+
+      <AddContentContainer type="catalogue">
+        <div className="flex items-center justify-between">
+          <h2 className="font-bold text-2xl">Create catalogue</h2>
+          <span
+            onClick={() => dispatch(toggleAddCatalogue(false))}
+            className="p-2 border rounded border-danger-default/10 inline-block hover:bg-danger-default/20 transition duration-200"
+          >
+            <IoClose className="w-6 cursor-pointer h-auto text-danger-default/60 " />
+          </span>
+        </div>
+        <AddCatalogueForm />
+      </AddContentContainer>
+
+      {/* AddCatalogue for mobile end */}
       <Mask />
       <div
         className={`w-screen h-screen relative container p-4 mx-auto gap-6 lg:grid lg:grid-cols-4 ${

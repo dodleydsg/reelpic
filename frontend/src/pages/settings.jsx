@@ -67,6 +67,7 @@ export default function Settings() {
       <NavbarTemplate
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Settings"
+        pageTitle="Settings | Configure the app to your liking"
       >
         <TopTab />
         {activeTab === TABS[0] ? (

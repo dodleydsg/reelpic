@@ -6,6 +6,7 @@ import template3 from "../assets/images/3.png";
 import InputElement from "../components/form/input";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
+import AddCatalogueForm from "../components/form/addCatalogueForm";
 
 export default function Catalogue() {
   return (
@@ -13,6 +14,7 @@ export default function Catalogue() {
       <NavbarTemplate
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Catalogues"
+        pageTitle="Catalogues | Organise your posts into relatable groups"
       >
         <div className="px-4 lg:grid lg:grid-cols-3 gap-4">
           <div className="col-span-2 space-y-6">
@@ -24,7 +26,7 @@ export default function Catalogue() {
                 className="lg:w-1/2 w-full"
               />
             </form>
-            <h3 className="text-subheading">My catalogues</h3>
+            <h3 className="font-bold text-xl">My catalogues</h3>
             <div className="grid grid-cols-2 gap-2 ">
               <div className="relative hover:cursor-pointer col-span-1  hover:scale-95 transition duration-300">
                 <div className="absolute inset-0 from-black/30 rounded-md to-black/60 bg-gradient-to-b"></div>
@@ -58,32 +60,9 @@ export default function Catalogue() {
               </div>
             </div>
           </div>
-          <div className="col-span-1 hidden lg:block ">
-            <h3 className="text-subheading">Create new catalogue</h3>
-            <form className="space-y-4">
-              <label for="title" className="sr-only">
-                Title
-              </label>
-              <InputElement
-                type="text"
-                className="w-full"
-                placeholder="Title"
-                name="title"
-              />
-              <label for="description" className="sr-only">
-                Description
-              </label>
-              <textarea
-                type="textarea"
-                rows="5"
-                placeholder="Description"
-                name="description"
-                className="border p-4 w-full rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark "
-              />
-              <button className="btn-primary hover:bg-[#4900EB]">
-                Confirm
-              </button>
-            </form>
+          <div className="col-span-1 hidden lg:block space-y-2">
+            <h3 className="font-bold text-xl">Create new catalogue</h3>
+            <AddCatalogueForm />
           </div>
         </div>
       </NavbarTemplate>

@@ -17,6 +17,7 @@ export default function Explore() {
       <NavbarTemplate
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Explore"
+        pageTitle="Explore | Dive into the community to find the best pics and stories"
       >
         <div className="space-y-4 px-1">
           <form className="grid py-4 top-0 grid-cols-2 gap-2">

@@ -6,7 +6,7 @@ export default function Reset() {
   return (
     <>
       <Head>
-        <title>Reelpic | Login</title>
+        <title>Login | Welcome back to Reelpic</title>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
         <link
