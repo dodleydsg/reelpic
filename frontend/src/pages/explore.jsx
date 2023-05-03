@@ -20,7 +20,7 @@ export default function Explore() {
         pageTitle="Explore | Dive into the community to find the best pics and stories"
       >
         <div className="space-y-4 px-1">
-          <form className="grid py-4 top-0 grid-cols-2 gap-2">
+          <form className="grid bg-white sticky top-[72px] lg:top-0 py-4 grid-cols-2 gap-2">
             <div className="col-span-2 lg:col-span-1">
               <label className="sr-only" htmlFor="search">
                 Search users or tags

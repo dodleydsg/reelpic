@@ -24,11 +24,8 @@
     scrollbar-width: none;
 }
 
-body{
-    scroll-behavior: smooth;
-    scroll-margin: 10px;
-    scrollbar-color: red;
-    scrollbar-width: 2px;
+html{
+    scrollbar-color: red red;
 }
 
 

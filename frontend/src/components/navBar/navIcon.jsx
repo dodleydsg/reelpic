@@ -13,7 +13,7 @@ export default function NavIcon({
         href={href}
         className="flex justify-center lg:justify-start items-start gap-2 w-full text-lg text-primary-default font-medium"
       >
-        <SolidIcon className="text-2xl" />
+        <SolidIcon className="text-lg lg:text-2xl" />
         <p className="text-xl hidden lg:block">{display}</p>
       </Link>
     );
@@ -23,7 +23,7 @@ export default function NavIcon({
         href={href}
         className=" flex justify-center lg:justify-start items-start gap-2 w-full text-lg text-dark-default font-medium"
       >
-        <OutlineIcon  className='text-2xl' />
+        <OutlineIcon  className='text-lg lg:text-2xl' />
         <p className="text-xl hidden lg:block">{display}</p>
       </Link>
     );

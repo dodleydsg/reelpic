@@ -1,7 +1,5 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { MdExitToApp } from "react-icons/md";
-
 import profileImg from "../../assets/images/placeholder_profile1.png";
 import Image from "next/image";
 import { useDispatch } from "react-redux";
@@ -26,10 +24,11 @@ import {
   IoSettingsOutline,
   IoNotifications,
   IoNotificationsOutline,
-  IoCard,
-  IoExit,
+  IoExitOutline,
 } from "react-icons/io5";
 import NavIcon from "./navIcon";
+import NavbarProfile from "./navBarProfile";
+import profile from "../../assets/images/Profile1.png";
 
 export default function NavBar() {
   const dispatch = useDispatch();
@@ -103,7 +102,7 @@ export default function NavBar() {
 
       <div className="shadow-xl col-span-1 h-full py-12 px-4 lg:px-8 hidden lg:block  space-y-10 text-center rounded-2xl from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
         <div className="flex items-center gap-4 justify-start">
-          <Image src={profileImg} height={48} className="block" />
+          <NavbarProfile image={profile} />
           <div>
             <p className="text-label">Stephen King</p>
             <p className="text-xs text-dark-default/70">@stephenking</p>
@@ -174,7 +173,7 @@ export default function NavBar() {
             href="#"
             className=" flex justify-center lg:justify-start items-start gap-2 w-full text-lg text-danger-default font-medium"
           >
-            <IoExit className="text-2xl" />
+            <IoExitOutline className="text-2xl" />
             <p className="text-xl hidden lg:block text-dark-default">Logout</p>
           </Link>
         </div>
