@@ -67,6 +67,12 @@ export default function Profile() {
                 <p className="text-sm text-dark-default/80">673</p>
               </div>
             </div>
+            <p className="max-w-sm self-center text-justify text-dark-default/90 text-sm text-dark">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
+              ea dolor deleniti excepturi culpa consectetur debitis earum
+              aperiam accusantium veniam aut, illum sunt totam? Ad vel
+              repudiandae ut aperiam distinctio.
+            </p>
           </div>
           <TopTab />
           {activeTab === "posts" ? (

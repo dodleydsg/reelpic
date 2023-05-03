@@ -17,8 +17,8 @@ export default function Catalogue() {
         pageTitle="Catalogues | Organise your posts into relatable groups"
       >
         <div className="px-4 lg:grid lg:grid-cols-3 gap-4">
-          <div className="col-span-2 space-y-6">
-            <form className="mt-4">
+          <div className="col-span-2 space-y-4">
+            <form className="mt-4 py-4">
               <label className="sr-only">Search catalogues</label>
               <InputElement
                 type="text"

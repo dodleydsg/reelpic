@@ -13,7 +13,6 @@ export default function Explore() {
 
   return (
     <>
-      <Mask />
       <NavbarTemplate
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Explore"
@@ -28,7 +27,7 @@ export default function Explore() {
               <InputElement
                 type="text"
                 id="search"
-                placeholder="Search users or tags"
+                placeholder="Search users, tags or catalogues"
                 className="w-full"
               />
             </div>
@@ -71,6 +70,26 @@ export default function Explore() {
                   } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded inline-block text-center cursor-pointer`}
                 >
                   People
+                </label>
+              </div>
+              <div>
+                <InputElement
+                  id="catalogues"
+                  name="searchChoice"
+                  className="hidden"
+                  aria-hidden="true"
+                  type="radio"
+                />
+                <label
+                  onClick={() => setSearchChoice("catalogues")}
+                  htmlFor="catalogues"
+                  className={`${
+                    searchChoice === "catalogues"
+                      ? "bg-primary-default/80 text-light-default"
+                      : "bg-light-default hover:bg-primary-default/10 transition duration-150 "
+                  } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded inline-block text-center cursor-pointer`}
+                >
+                  Catalogues
                 </label>
               </div>
               <div>

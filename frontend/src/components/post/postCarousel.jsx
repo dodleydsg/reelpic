@@ -11,6 +11,14 @@ import {
 } from "react-icons/md";
 
 import { useState } from "react";
+import {
+  IoBookmarkOutline,
+  IoChevronBack,
+  IoChevronForward,
+  IoDownload,
+  IoSaveOutline,
+} from "react-icons/io5";
+import InputElement from "../form/input";
 
 export default function Carousel() {
   const [activeCarousel, setActiveCarousel] = useState(1);
@@ -70,7 +78,7 @@ export default function Carousel() {
           }}
           className="absolute top-1/2 left-0 z-[50] mx-2 p-4 rounded-3xl text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
         >
-          <MdOutlineArrowBackIos />
+          <IoChevronBack className="text-xl" />
         </button>{" "}
         <button
           onClick={(e) => {
@@ -78,7 +86,7 @@ export default function Carousel() {
           }}
           className="absolute top-1/2 right-0 z-[50]  mx-2 p-4 rounded-3xl text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
         >
-          <MdOutlineArrowForwardIos />
+          <IoChevronForward className="text-xl" />
         </button>
         <div
           className="absolute flex inset-0 lg:inset-6 mx-auto carousel"
@@ -103,7 +111,42 @@ export default function Carousel() {
           />
         </div>
       </section>
-      <div className="flex self-end w-full bottom-10 sm:bottom-4 inset-x-0 mt-4">
+      <div className="flex flex-col justify-center gap-4 items-center self-end w-full bottom-10 sm:bottom-4 inset-x-0 mt-4">
+        <div className="relative w-full flex justify-center">
+          <button
+            onClick={(e) => {
+              e.currentTarget.nextSibling.classList.toggle("scale-y-0");
+            }}
+            className="p-2   hover:bg-gray-300 transition duration-200 border-gray-300 bg-gray-200 border rounded"
+          >
+            <IoBookmarkOutline className="text-lg" />
+          </button>
+          {/* option menu for button */}
+          <div className="scale-y-0 origin-top duration-300 absolute w-1/2 top-10 left-1/2  bg-white overflow-clip rounded border space-y-2 border-gray-200">
+            <p className="font-bold text-sm px-2 pt-4">Bookmark</p>
+            <div className="space-y-1">
+              <p className="text-sm text-dark-default/80 px-2">
+                Choose a catalogue
+              </p>
+
+              <p className="py-2 cursor-pointer text-sm px-2 hover:bg-primary-default/50 hover:text-white transition">
+                Fashion
+              </p>
+              <p className="py-2 cursor-pointer text-sm px-2 hover:bg-primary-default/50 hover:text-white transition">
+                Food
+              </p>
+              <p className="py-2 cursor-pointer text-sm px-2 hover:bg-primary-default/50 hover:text-white transition">
+                Tech
+              </p>
+              <form className="px-2 pb-4">
+                <InputElement
+                  className="w-full text-xs h-9 pl-1 rounded-sm"
+                  placeholder="Search catalogues"
+                />
+              </form>
+            </div>
+          </div>
+        </div>
         <div className="mx-auto flex gap-2">
           <div
             className={`h-2 w-2 rounded-xl ${

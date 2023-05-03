@@ -41,18 +41,20 @@ export default function Settings() {
     });
   };
   const TopTab = () => (
-    <div className="flex sticky top-16 p-2 mx-auto justify-around items-center gap-4 bg-light-default border-2">
-      {TABS.map((val, idx) => {
-        let classes = "px-4 py-2 rounded cursor-pointer";
-        if (val === activeTab) {
-          classes += " bg-gray-300";
-        }
-        return (
-          <p key={idx} className={classes} onClick={() => toggleTab(val)}>
-            {val.charAt(0).toLocaleUpperCase() + val.substring(1)}
-          </p>
-        );
-      })}
+    <div className="sticky top-[72px] bg-white py-2">
+      <div className="flex p-2 mx-auto justify-around items-center gap-4 bg-light-default border-2">
+        {TABS.map((val, idx) => {
+          let classes = "px-4 py-2 rounded cursor-pointer";
+          if (val === activeTab) {
+            classes += " bg-gray-300";
+          }
+          return (
+            <p key={idx} className={classes} onClick={() => toggleTab(val)}>
+              {val.charAt(0).toLocaleUpperCase() + val.substring(1)}
+            </p>
+          );
+        })}
+      </div>
     </div>
   );
 
