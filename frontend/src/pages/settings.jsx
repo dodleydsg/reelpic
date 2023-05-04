@@ -6,6 +6,7 @@ import { MdClose } from "react-icons/md";
 import { IoEye } from "react-icons/io5";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
+import UpdatePasswordForm from "../components/forms/updatePasswordForm";
 
 const TABS = ["profile", "password", "display"];
 
@@ -161,8 +162,8 @@ export default function Settings() {
         {activeTab === TABS[1] ? (
           <TabWrapper>
             <h2 className="font-bold">Change Password</h2>
-            <div className="flex flex-col items-center justify-start space-y-8">
-              <div>{/* Profile picture section */}</div>
+            {/* <div className="flex flex-col items-center justify-start space-y-8">
+              ={" "}
               <div className="relative flex gap-2 lg:gap-4 items-center">
                 <label htmlFor="old_password" className="w-20 text-right">
                   Old password
@@ -222,7 +223,8 @@ export default function Settings() {
 
             <button className="mt-10  btn-primary w-40 hover:bg-primary-default/80 transition">
               Save Changes
-            </button>
+            </button> */}
+            <UpdatePasswordForm />
           </TabWrapper>
         ) : null}
         {activeTab === TABS[2] ? (
