@@ -1,8 +1,10 @@
 import Head from "next/head";
-import InputElement from "../components/forms/input";
 import Link from "next/link";
+import LoginForm from "../components/forms/loginForm";
+import { useRouter } from "next/router";
 
 export default function Reset() {
+  const router = useRouter();
   return (
     <>
       <Head>
@@ -10,7 +12,7 @@ export default function Reset() {
       </Head>
       <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/pattern_bg.png')] bg-cover">
         <div className="relative container mx-auto flex z-10 h-screen px-4">
-          <div className="items-center bg-white max-w-3xl mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px]">
+          <div className="items-center bg-white max-w-3xl mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px] w-full">
             <div className="space-y-3 sm:space-y-7">
               <div className="flex gap-3 items-center w-full justify-center">
                 <h1 className="text-heading text-center font-logo text-logoBlue">
@@ -30,38 +32,7 @@ export default function Reset() {
               </p>
             </div>
             <div className="mt-7">
-              {/* Form element and inputs */}
-              <form className="w-full grid grid-cols-1 sm:grid-cols-2  sm:min-h-[280px] sm:divide-x-2 ">
-                <div className="space-y-4 sm:pr-6 mb-4">
-                  <InputElement
-                    type="email"
-                    className="w-full"
-                    placeholder="Email"
-                    name="email"
-                  />
-                  <InputElement
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                    className="w-full"
-                  />
-                  <Link href="/home" className="block">
-                    <button className="btn-primary hover:bg-[#4900EB]">
-                      Login
-                    </button>
-                  </Link>
-
-                  <Link href="./reset" className="text-center block link">
-                    Forgot password
-                  </Link>
-                </div>
-                <div className="space-y-4 sm:pl-6">
-                  <button className="btn-google hover:bg-[#DA3925]">
-                    Login with Google
-                  </button>
-                  <button className="btn-apple ">Login with Apple</button>
-                </div>
-              </form>
+              <LoginForm router={router} />
               <p className="text-sm text-center mt-7">
                 Not yet a member ? <br />
               </p>

@@ -1,7 +1,8 @@
 import { Formik } from "formik";
+import Link from "next/link";
 import * as Yup from "yup";
 
-export default function RegisterForm({ router }) {
+export default function LoginForm({ router }) {
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
@@ -14,9 +15,9 @@ export default function RegisterForm({ router }) {
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
           alert(JSON.stringify(values, null, 2));
-          router.push("/getting_started");
+          router.push("/home");
           // Call external API
-        }, 400);
+        }, 1000);
       }}
     >
       {(formik) => (
@@ -72,14 +73,17 @@ export default function RegisterForm({ router }) {
               disabled={formik.isSubmitting}
               className="btn-primary hover:bg-[#4900EB]"
             >
-              Get started
+              Login
             </button>
+            <Link href="/reset" className="text-center block link">
+              Forgot password
+            </Link>
           </div>
           <div className="space-y-4 sm:pl-6">
             <button className="btn-google hover:bg-[#DA3925]">
-              Sign up with Google
+              Login with Google
             </button>
-            <button className="btn-apple ">Sign up with Apple</button>
+            <button className="btn-apple ">Login with Apple</button>
           </div>
         </form>
       )}
