@@ -162,68 +162,6 @@ export default function Settings() {
         {activeTab === TABS[1] ? (
           <TabWrapper>
             <h2 className="font-bold">Change Password</h2>
-            {/* <div className="flex flex-col items-center justify-start space-y-8">
-              ={" "}
-              <div className="relative flex gap-2 lg:gap-4 items-center">
-                <label htmlFor="old_password" className="w-20 text-right">
-                  Old password
-                </label>
-                <InputElement
-                  className="w-52 lg:w-72"
-                  name="old_password"
-                  type="password"
-                />
-                <IoEye
-                  className="absolute cursor-pointer right-2 text-dark-default/40"
-                  onClick={(e) => {
-                    const type =
-                      e.target.parentNode.parentNode.querySelector(
-                        "input"
-                      ).type;
-                    if (type === "password") {
-                      e.target.parentNode.parentNode.querySelector(
-                        "input"
-                      ).type = "text";
-                    } else {
-                      e.target.parentNode.parentNode.querySelector(
-                        "input"
-                      ).type = "password";
-                    }
-                  }}
-                />
-              </div>
-              <div className="relative flex gap-2 lg:gap-4 items-center">
-                <label htmlFor="new_password" className="w-20 text-right">
-                  New password
-                </label>
-                <InputElement
-                  className="w-52 lg:w-72"
-                  name="new_password"
-                  type="password"
-                />
-                <IoEye
-                  className="absolute cursor-pointer right-2 text-dark-default/40"
-                  onClick={(e) => {
-                    const type = e.target.parentNode.parentNode.querySelector(
-                      "input[name='new_password']"
-                    ).type;
-                    if (type === "password") {
-                      e.target.parentNode.parentNode.querySelector(
-                        "input"
-                      ).type = "text";
-                    } else {
-                      e.target.parentNode.parentNode.querySelector(
-                        "input"
-                      ).type = "password";
-                    }
-                  }}
-                />
-              </div>
-            </div>
-
-            <button className="mt-10  btn-primary w-40 hover:bg-primary-default/80 transition">
-              Save Changes
-            </button> */}
             <UpdatePasswordForm />
           </TabWrapper>
         ) : null}
@@ -231,7 +169,6 @@ export default function Settings() {
           <TabWrapper>
             <h2 className="font-bold">Display options</h2>
             <div className="flex flex-col items-center justify-start space-y-8">
-              <div>{/* Profile picture section */}</div>
               <div className="relative flex gap-2 lg:gap-4 items-center">
                 <label htmlFor="language" className="w-20 text-right">
                   Language

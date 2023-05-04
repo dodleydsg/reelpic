@@ -7,6 +7,7 @@ import InputElement from "../components/forms/input";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import AddCatalogueForm from "../components/forms/addCatalogueForm";
+import SearchInput from "../components/forms/searchInput";
 
 export default function Catalogue() {
   return (
@@ -18,14 +19,15 @@ export default function Catalogue() {
       >
         <div className="px-4 lg:grid lg:grid-cols-3 gap-4">
           <div className="col-span-2 space-y-4">
-            <form className="mt-4 py-4">
+            {/* <form className="mt-4 py-4">
               <label className="sr-only">Search catalogues</label>
               <InputElement
                 type="text"
                 placeholder="Search catalogues"
                 className="lg:w-1/2 w-full"
               />
-            </form>
+            </form> */}
+            <SearchInput placeholder="Search catalogues" name="search" />
             <h3 className="font-bold text-xl">My catalogues</h3>
             <div className="grid grid-cols-2 gap-2 ">
               <div className="relative hover:cursor-pointer col-span-1  hover:scale-95 transition duration-300">
