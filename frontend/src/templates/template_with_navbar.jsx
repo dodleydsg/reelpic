@@ -12,8 +12,8 @@ import {
 import NavIcon from "../components/navBar/navIcon";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleAddPost, toggleAddCatalogue } from "../store/features/uiSlice";
-import AddPostForm from "../components/form/addPostForm";
-import AddCatalogueForm from "../components/form/addCatalogueForm";
+import AddPostForm from "../components/forms/addPostForm";
+import AddCatalogueForm from "../components/forms/addCatalogueForm";
 
 
 

@@ -4,7 +4,7 @@ import Mask from "../components/mask";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import Masonry from "../components/masonry/masonry";
-import InputElement from "../components/form/input";
+import InputElement from "../components/forms/input";
 import { useState } from "react";
 
 export default function Explore() {

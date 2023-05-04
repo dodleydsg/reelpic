@@ -8,7 +8,7 @@ import profile from "../assets/images/Profile1.png";
 import Image from "next/image";
 import { useState } from "react";
 import { IoAdd, IoClose } from "react-icons/io5";
-import AddPostForm from "../components/form/addPostForm";
+import AddPostForm from "../components/forms/addPostForm";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleAddPost, toggleAddCatalogue } from "../store/features/uiSlice";
 

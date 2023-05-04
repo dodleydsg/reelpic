@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Link from "next/link";
 import { useState } from "react";
-import InputElement from "../components/form/input";
+import InputElement from "../components/forms/input";
 import { useRouter } from "next/router";
 const MAX_STEP = 2;
 

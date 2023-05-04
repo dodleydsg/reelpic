@@ -1,5 +1,5 @@
 import Head from "next/head";
-import InputElement from "../components/form/input";
+import InputElement from "../components/forms/input";
 import Link from "next/link";
 
 export default function Reset() {
@@ -7,12 +7,6 @@ export default function Reset() {
     <>
       <Head>
         <title>Login | Welcome back to Reelpic</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Grand+Hotel&display=swap"
-          rel="stylesheet"
-        />
       </Head>
       <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/pattern_bg.png')] bg-cover">
         <div className="relative container mx-auto flex z-10 h-screen px-4">

@@ -3,10 +3,10 @@ import Image from "next/image";
 import template1 from "../assets/images/1.png";
 import template2 from "../assets/images/2.png";
 import template3 from "../assets/images/3.png";
-import InputElement from "../components/form/input";
+import InputElement from "../components/forms/input";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
-import AddCatalogueForm from "../components/form/addCatalogueForm";
+import AddCatalogueForm from "../components/forms/addCatalogueForm";
 
 export default function Catalogue() {
   return (

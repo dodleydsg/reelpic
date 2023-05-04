@@ -4,7 +4,7 @@ import { MdArrowBack, MdGrid4X4, MdList, MdUpload } from "react-icons/md";
 import Image from "next/image";
 import food from "../../assets/images/food.jpg";
 import BackButton from "@/components/components/backButton";
-import UploadLabel from "@/components/components/form/uploadLabel";
+import UploadLabel from "@/components/components/forms/uploadLabel";
 
 export default function CatalogueDetail() {
   const router = useRouter();

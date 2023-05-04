@@ -18,7 +18,7 @@ import {
   IoDownload,
   IoSaveOutline,
 } from "react-icons/io5";
-import InputElement from "../form/input";
+import InputElement from "../forms/input";
 
 export default function Carousel() {
   const [activeCarousel, setActiveCarousel] = useState(1);
