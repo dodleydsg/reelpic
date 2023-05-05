@@ -1,11 +1,11 @@
 import NavbarTemplate from "../templates/template_with_navbar";
 
-import Mask from "../components/mask";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import Masonry from "../components/masonry/masonry";
 import InputElement from "../components/forms/input";
 import { useState } from "react";
+import SearchInput from "../components/forms/searchInput";
 
 export default function Explore() {
   const [searchChoice, setSearchChoice] = useState("all");
@@ -21,15 +21,7 @@ export default function Explore() {
         <div className="space-y-4 px-1">
           <form className="grid bg-white sticky top-[72px] lg:top-0 py-4 grid-cols-2 gap-2">
             <div className="col-span-2 lg:col-span-1">
-              <label className="sr-only" htmlFor="search">
-                Search users or tags
-              </label>
-              <InputElement
-                type="text"
-                id="search"
-                placeholder="Search users, tags or catalogues"
-                className="w-full"
-              />
+              <SearchInput placeholder="Search users or tags" />
             </div>
             <div className="col-span-2 lg:col-span-1 flex items-center gap-2">
               <div>

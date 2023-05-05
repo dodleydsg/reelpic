@@ -94,7 +94,7 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
       {/* AddCatalogue for mobile end */}
       <Mask />
       <div
-        className={`w-screen h-screen relative container p-4 mx-auto gap-6 lg:grid lg:grid-cols-4 ${
+        className={`w-screen h-screen relative p-4 mx-auto gap-6 lg:grid lg:grid-cols-4  max-w-[1536px] ${
           addPost || addCatalogue ? "overflow-hidden lg:overflow-auto" : ""
         }`}
       >
@@ -106,7 +106,7 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
           <div className="space-y-4 ">
             <div className="space-y-4 mt-[56px] lg:mt-0">{children}</div>
           </div>
-          <div className="fixed z-50 top-0 inset-x-0 shadow ">
+          <div className="fixed z-50 top-0 inset-x-0 shadow bg-white ">
             <header className="p-4 flex lg:hidden justify-between items-center  container mx-auto bg-white ">
               <div className="flex gap-3 items-center">
                 {/* 

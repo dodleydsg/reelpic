@@ -27,7 +27,9 @@ export default function Catalogue() {
                 className="lg:w-1/2 w-full"
               />
             </form> */}
-            <SearchInput placeholder="Search catalogues" name="search" />
+            <form className="mt-4 py-4 relative">
+              <SearchInput placeholder="Search catalogues" name="search" />
+            </form>
             <h3 className="font-bold text-xl">My catalogues</h3>
             <div className="grid grid-cols-2 gap-2 ">
               <div className="relative hover:cursor-pointer col-span-1  hover:scale-95 transition duration-300">
