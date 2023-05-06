@@ -70,7 +70,7 @@ export default function NavBar() {
         >
           <IoAdd />
         </button>
-        <div className="w-full  bg-light-default shadow-lg rounded flex justify-around items-center text-dark-default text-2xl">
+        <div className="w-full bg-light-default shadow-lg rounded flex justify-around items-center text-dark-default text-2xl">
           <NavIcon
             href="/home"
             SolidIcon={(props) => <IoHome {...props} />}
