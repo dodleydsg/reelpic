@@ -32,7 +32,7 @@ export default function SearchInput({ name, placeholder, queryCallback }) {
         placeholder={placeholder}
         onChange={_updateSuggestions}
         onBlur={(e) => e.target.nextSibling.classList.add("scale-y-0")}
-        className="h-12 border px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark lg:w-1/2 w-full"
+        className="h-12 border px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark w-full"
       />
       <div className="absolute delay-300 transition scale-y-0 origin-top ease-in-out duration-300 rounded mt-2 bg-white w-full lg:w-1/2 z-20 border border-gray-100  divide-y-2 divide-gray-100">
         {suggestions.map((val, idx) => (

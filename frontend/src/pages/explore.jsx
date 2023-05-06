@@ -4,108 +4,28 @@ import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import Masonry from "../components/masonry/masonry";
 import InputElement from "../components/forms/input";
-import { useState } from "react";
-import SearchInput from "../components/forms/searchInput";
+import ExploreSearchModal from "../components/modal/exploreSearchModal";
+import { toggleExploreModal } from "../store/features/uiSlice";
+import { useDispatch } from "react-redux";
 
 export default function Explore() {
-  const [searchChoice, setSearchChoice] = useState("all");
-  // state is used for styling, options for input styling are uncontrollerd
+  const dispatch = useDispatch();
 
   return (
     <>
+      <ExploreSearchModal />
       <NavbarTemplate
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Explore"
         pageTitle="Explore | Dive into the community to find the best pics and stories"
       >
-        <div className="space-y-4 px-1">
-          <form className="grid bg-white sticky top-[72px] lg:top-0 py-4 grid-cols-2 gap-2">
-            <div className="col-span-2 lg:col-span-1">
-              <SearchInput placeholder="Search users or tags" />
-            </div>
-            <div className="col-span-2 lg:col-span-1 flex items-center gap-2">
-              <div>
-                <InputElement
-                  id="all"
-                  name="searchChoice"
-                  className="hidden"
-                  aria-hidden="true"
-                  type="radio"
-                />
-                <label
-                  onClick={() => setSearchChoice("all")}
-                  htmlFor="all"
-                  className={`${
-                    searchChoice === "all"
-                      ? "bg-primary-default/80 text-light-default"
-                      : "bg-light-default hover:bg-primary-default/10 transition duration-150 "
-                  } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded text-center inline-block cursor-pointer`}
-                >
-                  All
-                </label>
-              </div>
-              <div>
-                <InputElement
-                  id="people"
-                  name="searchChoice"
-                  className="hidden"
-                  aria-hidden="true"
-                  type="radio"
-                />
-                <label
-                  onClick={() => setSearchChoice("people")}
-                  htmlFor="people"
-                  className={`${
-                    searchChoice === "people"
-                      ? "bg-primary-default/80 text-light-default"
-                      : "bg-light-default hover:bg-primary-default/10 transition duration-150 "
-                  } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded inline-block text-center cursor-pointer`}
-                >
-                  People
-                </label>
-              </div>
-              <div>
-                <InputElement
-                  id="catalogues"
-                  name="searchChoice"
-                  className="hidden"
-                  aria-hidden="true"
-                  type="radio"
-                />
-                <label
-                  onClick={() => setSearchChoice("catalogues")}
-                  htmlFor="catalogues"
-                  className={`${
-                    searchChoice === "catalogues"
-                      ? "bg-primary-default/80 text-light-default"
-                      : "bg-light-default hover:bg-primary-default/10 transition duration-150 "
-                  } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded inline-block text-center cursor-pointer`}
-                >
-                  Catalogues
-                </label>
-              </div>
-              <div>
-                <InputElement
-                  id="tags"
-                  name="searchChoice"
-                  className="hidden"
-                  aria-hidden="true"
-                  type="radio"
-                />
-                <label
-                  onClick={() => setSearchChoice("tags")}
-                  htmlFor="tags"
-                  className={`${
-                    searchChoice === "tags"
-                      ? "bg-primary-default/80 text-light-default"
-                      : "bg-light-default hover:bg-primary-default/10 transition duration-150 "
-                  } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded text-center inline-block cursor-pointer`}
-                >
-                  Tags
-                </label>
-              </div>
-            </div>
-          </form>
+        <div className="space-y-4 px-1 pt-4">
+          <div
+            onClick={() => dispatch(toggleExploreModal())}
+            className="w-full lg:w-1/2 h-12 border px-4 rounded-md cursor-pointer text-gray-600 flex items-center "
+          >
+            Search users, catalogues and tags
+          </div>
           <Masonry />
         </div>
       </NavbarTemplate>

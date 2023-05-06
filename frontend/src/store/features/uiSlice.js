@@ -4,6 +4,7 @@ const initialState = {
   mask: false,
   addPost: false,
   addCatalogue: false,
+  exploreModal: false,
 };
 
 const uiSlice = createSlice({
@@ -22,10 +23,18 @@ const uiSlice = createSlice({
     toggleAddCatalogue: (state, { payload }) => {
       state.addCatalogue = payload;
     },
+    toggleExploreModal: (state) => {
+      state.exploreModal = !state.exploreModal;
+    },
   },
 });
 
-export const { toggleMask, setMask, toggleAddPost, toggleAddCatalogue } =
-  uiSlice.actions;
+export const {
+  toggleMask,
+  setMask,
+  toggleAddPost,
+  toggleAddCatalogue,
+  toggleExploreModal,
+} = uiSlice.actions;
 
 export default uiSlice.reducer;

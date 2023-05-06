@@ -56,7 +56,7 @@ export default function Reset() {
       <Head>
         <title>Getting started | Lets know more about you</title>
       </Head>
-      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.png')] bg-cover bg-blend-screen">
+      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.webp')] bg-cover bg-blend-screen">
         <div className="absolute left-0 right-0 bottom-0 top-0 opacity-50 bg-gradient-to-b from-black to-[rgb(0,0,0,.5)]"></div>
         <div className="relative container mx-auto flex z-10 h-screen px-4">
           <div className="items-center bg-white max-w-3xl mx-auto my-auto rounded-xl px-[22px] lg:px-16 py-[35px] lg:py-[55px]">

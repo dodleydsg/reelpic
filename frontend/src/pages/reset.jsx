@@ -7,7 +7,7 @@ export default function Register() {
       <Head>
         <title>Reset password</title>
       </Head>
-      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/pattern_bg.png')] bg-cover">
+      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/pattern_bg.webp')] bg-cover">
         <div className="relative container mx-auto flex z-10 h-screen px-4">
           <div className="items-center bg-white max-w-[380px] w-full mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px]">
             <div className="space-y-3 sm:space-y-7">

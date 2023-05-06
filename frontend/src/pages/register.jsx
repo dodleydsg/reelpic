@@ -10,7 +10,7 @@ export default function Register() {
       <Head>
         <title>Reelpic | Complete to join the community</title>
       </Head>
-      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.png')] bg-cover">
+      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.webp')] bg-cover">
         <div className="relative container mx-auto flex z-10 h-screen px-4">
           <div className="items-center bg-white max-w-3xl mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px] w-full">
             <div className="space-y-3 sm:space-y-7">
