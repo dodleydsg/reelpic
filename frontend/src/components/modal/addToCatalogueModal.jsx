@@ -1,7 +1,7 @@
 import SearchInput from "../forms/searchInput";
 import { IoClose } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { toggleAddToCatalogueModal } from "@/components/store/features/uiSlice";
 import InputElement from "../forms/input";
 
@@ -9,6 +9,7 @@ export default function AddToCatalogueModal() {
   const { addToCatalogueModal } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
   const addToCatalogueModalRef = useRef();
+  const [searchResults, updateSearchResults] = useState([]);
 
   useEffect(() => {
     addToCatalogueModalRef.current.classList.toggle("translate-y-full");
@@ -27,34 +28,42 @@ export default function AddToCatalogueModal() {
           />
         </div>
         <div className="space-y-2">
+          <h3 className="text-xl font-medium">Bookmark post</h3>
           <form className="bg-white py-4 gap-2">
             <div className="relative">
-              <SearchInput placeholder="Find catalogues" />
+              <SearchInput placeholder="Search catalogues" />
             </div>
           </form>
-          <div className="space-y-1">
-            <div className="scale-y-0 origin-top duration-300 w-full   bg-white overflow-clip rounded border space-y-2 border-gray-200">
-              <p className="font-bold text-sm px-2 pt-4">Bookmark</p>
-              <div className="space-y-1">
-                <p className="text-sm text-dark-default/80 px-2">
-                  Choose a catalogue
-                </p>
 
-                <p className="py-2 cursor-pointer text-sm px-2 hover:bg-primary-default/50 hover:text-white transition">
-                  Fashion
-                </p>
-                <p className="py-2 cursor-pointer text-sm px-2 hover:bg-primary-default/50 hover:text-white transition">
-                  Food
-                </p>
-                <p className="py-2 cursor-pointer text-sm px-2 hover:bg-primary-default/50 hover:text-white transition">
-                  Tech
-                </p>
-                <form className="px-2 pb-4">
-                  <InputElement
-                    className="w-full text-xs h-9 pl-1 rounded-sm"
-                    placeholder="Search catalogues"
-                  />
-                </form>
+          <div className="divide-y-2 space-y-2">
+            {/* Recent */}
+            <div className="space-y-1">
+              <h4 className="text-sm font-light">Recent</h4>
+              <div className="grid grid-cols-2 lg:grid-cols-4">
+                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
+                  <p>Fashion</p>
+                </div>
+                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
+                  <p>Food</p>
+                </div>
+                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
+                  <p>Tech</p>
+                </div>
+              </div>
+            </div>
+            {/* Search results */}
+            <div className="space-y-1 py-2">
+              <h4 className="text-sm font-light">Search results</h4>
+              <div className="grid grid-cols-2 lg:grid-cols-4">
+                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
+                  <p>Fashion</p>
+                </div>
+                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
+                  <p>Food</p>
+                </div>
+                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
+                  <p>Tech</p>
+                </div>
               </div>
             </div>
           </div>

@@ -25,7 +25,7 @@ export default function ({ children, pageTitle }) {
           className="lg:col-span-3 overflow-y-visible lg:overflow-y-scroll pb-40  relative gap-4"
         >
           <div className="space-y-4 ">
-            <div className="space-y-4 mt-[56px] lg:mt-0">{children}</div>
+            <div className="space-y-4 ">{children}</div>
           </div>
         </div>
       </div>

@@ -3,27 +3,18 @@ import coverImg1 from "../../assets/images/pattern_bg.png";
 import food from "../../assets/images/food.jpg";
 import landscape from "../../assets/images/landscape.jpg";
 import potrait from "../../assets/images/2.png";
-import {
-  MdOutlineArrowBackIos,
-  MdOutlineArrowForwardIos,
-  MdSave,
-  MdSaveAlt,
-} from "react-icons/md";
-
 import { useState } from "react";
 import {
   IoBookmarkOutline,
   IoChevronBack,
   IoChevronForward,
-  IoDownload,
-  IoSaveOutline,
 } from "react-icons/io5";
-import InputElement from "../forms/input";
 import AddToCatalogueModal from "../modal/addToCatalogueModal";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toggleAddToCatalogueModal } from "@/components/store/features/uiSlice";
 
 export default function Carousel() {
+  const { loggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [activeCarousel, setActiveCarousel] = useState(1);
   // Carousel item count starts from 1
@@ -118,14 +109,16 @@ export default function Carousel() {
         </div>
       </section>
       <div className="flex flex-col justify-center gap-4 items-center self-end w-full bottom-10 sm:bottom-4 inset-x-0 mt-4">
-        <div className="relative w-full flex justify-center">
-          <button
-            onClick={() => dispatch(toggleAddToCatalogueModal())}
-            className="p-2   hover:bg-gray-300 transition duration-200 border-gray-300 bg-gray-200 border rounded"
-          >
-            <IoBookmarkOutline className="text-lg" />
-          </button>
-        </div>
+        {loggedIn ? (
+          <div className="relative w-full flex justify-center">
+            <button
+              onClick={() => dispatch(toggleAddToCatalogueModal())}
+              className="p-2   hover:bg-gray-300 transition duration-200 border-gray-300 bg-gray-200 border rounded"
+            >
+              <IoBookmarkOutline className="text-lg" />
+            </button>
+          </div>
+        ) : null}
         <div className="mx-auto flex gap-2">
           <div
             className={`h-2 w-2 rounded-xl ${

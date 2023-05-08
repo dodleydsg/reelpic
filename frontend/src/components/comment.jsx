@@ -3,9 +3,12 @@ import Image from "next/image";
 import { MdArrowBack, MdComment, MdThumbUp } from "react-icons/md";
 import profile1 from "../assets/images/Profile1.png";
 import { IoSend } from "react-icons/io5";
+import Link from "next/link";
+import { useSelector } from "react-redux";
 
 export default function Comment() {
   const [comments, updateComments] = useState([{}]);
+  const { loggedIn } = useSelector((state) => state.auth);
   const [showReply, toggleReply] = useState(false);
 
   const CommentBlock = () => {
@@ -47,6 +50,19 @@ export default function Comment() {
       </div>
     );
   };
+
+  if (!loggedIn) {
+    return (
+      <div className="bg-white p-4">
+        <p className="gap-2 flex">
+          <Link className="link" href="/login">
+            Login
+          </Link>
+          to comment
+        </p>
+      </div>
+    );
+  }
 
   if (showReply) {
     return (

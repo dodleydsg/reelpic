@@ -1,24 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const initialState = {
-  email: "",
-  password: "",
+  loggedIn: false,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {
-    clearForm: (state) => {
-      return (state = initialState);
-    },
-    updatePassword: (state, { payload }) => {
-      state.password = payload;
-    },
-    updateEmail: (state, { payload }) => {
-      state.email = payload;
-    },
-  },
+  reducers: {},
 });
 
 export const setCredentials = createAsyncThunk("auth/setCredentials", () => {
@@ -27,6 +16,5 @@ export const setCredentials = createAsyncThunk("auth/setCredentials", () => {
     .catch((err) => console.log(err));
 });
 
-export const { clearForm, updatePassword, updateEmail } = authSlice.actions;
 
 export default authSlice.reducer;

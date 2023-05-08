@@ -25,12 +25,26 @@ export default function CatalogueSearchModal() {
             className="cursor-pointer text-xl text-danger-default/80 hover:text-danger-default transition duration-200"
           />
         </div>
-        <div>
+        <div className="space-y-2">
           <form className="bg-white py-4 gap-2">
             <div className="relative">
               <SearchInput placeholder="Find catalogues" />
             </div>
           </form>
+          <div className="space-y-1 py-2">
+            <h4 className="text-sm font-light">Search results</h4>
+            <div className="grid grid-cols-2 lg:grid-cols-4">
+              <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
+                <p>Fashion</p>
+              </div>
+              <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
+                <p>Food</p>
+              </div>
+              <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
+                <p>Tech</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
