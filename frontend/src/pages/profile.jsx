@@ -46,7 +46,7 @@ export default function Profile() {
         <div className="space-y-4 py-4 relative">
           <IoChevronBack
             onClick={() => router.back()}
-            className="text-dark-default text-lg lg:text-2xl"
+            className="cursor-pointer text-dark-default text-lg lg:text-2xl"
           />
 
           <div className="flex flex-col justify-center space-y-4">
