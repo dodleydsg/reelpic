@@ -19,8 +19,12 @@ import {
   IoSaveOutline,
 } from "react-icons/io5";
 import InputElement from "../forms/input";
+import AddToCatalogueModal from "../modal/addToCatalogueModal";
+import { useDispatch } from "react-redux";
+import { toggleAddToCatalogueModal } from "@/components/store/features/uiSlice";
 
 export default function Carousel() {
+  const dispatch = useDispatch();
   const [activeCarousel, setActiveCarousel] = useState(1);
   // Carousel item count starts from 1
   const CONTENT_LENGTH = 4;
@@ -71,6 +75,8 @@ export default function Carousel() {
 
   return (
     <>
+      <AddToCatalogueModal />
+
       <section className="bg-none h-[60vh] py-5 w-full relative overflow-hidden flex p-4 bg-gray-100 ">
         <button
           onClick={(e) => {
@@ -114,38 +120,11 @@ export default function Carousel() {
       <div className="flex flex-col justify-center gap-4 items-center self-end w-full bottom-10 sm:bottom-4 inset-x-0 mt-4">
         <div className="relative w-full flex justify-center">
           <button
-            onClick={(e) => {
-              e.currentTarget.nextSibling.classList.toggle("scale-y-0");
-            }}
+            onClick={() => dispatch(toggleAddToCatalogueModal())}
             className="p-2   hover:bg-gray-300 transition duration-200 border-gray-300 bg-gray-200 border rounded"
           >
             <IoBookmarkOutline className="text-lg" />
           </button>
-          {/* option menu for button */}
-          <div className="scale-y-0 origin-top duration-300 absolute w-1/2 top-10 left-1/2  bg-white overflow-clip rounded border space-y-2 border-gray-200">
-            <p className="font-bold text-sm px-2 pt-4">Bookmark</p>
-            <div className="space-y-1">
-              <p className="text-sm text-dark-default/80 px-2">
-                Choose a catalogue
-              </p>
-
-              <p className="py-2 cursor-pointer text-sm px-2 hover:bg-primary-default/50 hover:text-white transition">
-                Fashion
-              </p>
-              <p className="py-2 cursor-pointer text-sm px-2 hover:bg-primary-default/50 hover:text-white transition">
-                Food
-              </p>
-              <p className="py-2 cursor-pointer text-sm px-2 hover:bg-primary-default/50 hover:text-white transition">
-                Tech
-              </p>
-              <form className="px-2 pb-4">
-                <InputElement
-                  className="w-full text-xs h-9 pl-1 rounded-sm"
-                  placeholder="Search catalogues"
-                />
-              </form>
-            </div>
-          </div>
         </div>
         <div className="mx-auto flex gap-2">
           <div

@@ -7,11 +7,15 @@ import InputElement from "../components/forms/input";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import AddCatalogueForm from "../components/forms/addCatalogueForm";
-import SearchInput from "../components/forms/searchInput";
+import CatalogueSearchModal from "../components/modal/catalogueSearchModal";
+import { toggleCatalogueModal } from "../store/features/uiSlice";
+import { useDispatch } from "react-redux";
 
 export default function Catalogue() {
+  const dispatch = useDispatch();
   return (
     <>
+      <CatalogueSearchModal />
       <NavbarTemplate
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Catalogues"
@@ -28,7 +32,12 @@ export default function Catalogue() {
               />
             </form> */}
             <form className="mt-4 py-4 relative">
-              <SearchInput placeholder="Search catalogues" name="search" />
+              <div
+                onClick={() => dispatch(toggleCatalogueModal())}
+                className="w-full lg:w-1/2 h-12 border px-4 rounded-md cursor-pointer text-gray-600 flex items-center "
+              >
+                Find my catalogues
+              </div>
             </form>
             <h3 className="font-bold text-xl">My catalogues</h3>
             <div className="grid grid-cols-2 gap-2 ">

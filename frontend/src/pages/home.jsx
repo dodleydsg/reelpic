@@ -11,9 +11,10 @@ import { IoAdd, IoClose } from "react-icons/io5";
 import AddPostForm from "../components/forms/addPostForm";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleAddPost, toggleAddCatalogue } from "../store/features/uiSlice";
+import AddToCatalogueModal from "../components/modal/addToCatalogueModal";
 
 export default function Home() {
-  const { addPost } = useSelector((state) => state.ui);
+  const { addPost, addToCatalogueModal } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
   return (

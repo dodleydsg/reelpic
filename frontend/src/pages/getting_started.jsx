@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputElement from "../components/forms/input";
 import { useRouter } from "next/router";
 const MAX_STEP = 2;
@@ -57,9 +57,9 @@ export default function Reset() {
         <title>Getting started | Lets know more about you</title>
       </Head>
       <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.webp')] bg-cover bg-blend-screen">
-        <div className="absolute left-0 right-0 bottom-0 top-0 opacity-50 bg-gradient-to-b from-black to-[rgb(0,0,0,.5)]"></div>
+        <div className="absolute inset-0 opacity-50 bg-gradient-to-b from-black to-[rgb(0,0,0,.5)]"></div>
         <div className="relative container mx-auto flex z-10 h-screen px-4">
-          <div className="items-center bg-white max-w-3xl mx-auto my-auto rounded-xl px-[22px] lg:px-16 py-[35px] lg:py-[55px]">
+          <div className="items-center bg-white max-w-3xl lg:h-3/5 mx-auto my-auto rounded-xl px-[22px] lg:px-16 py-[35px] lg:py-[55px]">
             <div className="space-y-3 lg:space-y-7 sm:px-20">
               <div className="flex gap-3 items-center w-full justify-center">
                 <h1 className="text-heading text-center font-logo text-logoBlue">
@@ -80,7 +80,7 @@ export default function Reset() {
                   <p className="text-center text-subheading">
                     Choose a username
                   </p>
-                  <form className="h-40 lg:w-80">
+                  <form className="h-auto  flex gap-4 flex-col items-center">
                     <label htmlFor="username" className="sr-only">
                       Choose a username
                     </label>
@@ -98,7 +98,7 @@ export default function Reset() {
                 </div>
               ) : null}
               {step === 2 ? (
-                <div>
+                <div className="lg:space-y-4 space-y-2">
                   <p className="text-center text-subheading">
                     What are you interested in ?
                   </p>
@@ -228,23 +228,19 @@ export default function Reset() {
                   </ul>
                 </div>
               ) : null}
-              <div className="flex justify-between items-center">
-                <div
-                  className={`flex items-center justify-start ${
+              <div className="grid items-center gap-2 grid-cols-2">
+                <Link
+                  onClick={(e) => {
+                    e.preventDefault();
+                    _updateStep("backward");
+                  }}
+                  href="#"
+                  className={`link w-full block items-center col-span-1 justify-start ${
                     step === 1 ? "hidden" : ""
                   }`}
                 >
-                  <Link
-                    onClick={(e) => {
-                      e.preventDefault();
-                      _updateStep("backward");
-                    }}
-                    href="#"
-                    className="link"
-                  >
-                    Back
-                  </Link>
-                </div>
+                  Back
+                </Link>
                 <Link
                   href="#"
                   onClick={(e) => {
@@ -256,7 +252,7 @@ export default function Reset() {
                       _updateStep("forward");
                     }
                   }}
-                  className="btn-primary text-center justify-self-end hover:bg-[#4900EB] w-auto px-6 mx-0"
+                  className="btn-primary col-span-1 block text-center justify-self-end hover:bg-[#4900EB] w-full px-6 mx-0 col-offset-1"
                 >
                   {step === MAX_STEP ? "Get started" : "Next"}
                 </Link>

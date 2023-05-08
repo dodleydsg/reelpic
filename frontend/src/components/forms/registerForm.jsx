@@ -1,19 +1,19 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 
-export default function RegisterForm({ router }) {
+export default function RegisterForm({ router, googleSignIn }) {
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
       validationSchema={Yup.object({
         email: Yup.string().email("Invalid email address").required(),
         password: Yup.string()
-          .min(8, "Must be atleast 15 characters")
+          .min(8, "Must be atleast 8 characters")
           .required(),
       })}
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+          console.log(JSON.stringify(values, null, 2));
           router.push("/getting_started");
           // Call external API
         }, 400);
@@ -76,7 +76,13 @@ export default function RegisterForm({ router }) {
             </button>
           </div>
           <div className="space-y-4 sm:pl-6">
-            <button className="btn-google hover:bg-[#DA3925]">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                googleSignIn();
+              }}
+              className="btn-google hover:bg-[#DA3925]"
+            >
               Sign up with Google
             </button>
             <button className="btn-apple ">Sign up with Apple</button>

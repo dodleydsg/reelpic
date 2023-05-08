@@ -11,16 +11,16 @@ export default function ExploreSearchModal({ hidden }) {
   // state is used for styling, options for input styling are uncontrolled
   const { exploreModal } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
-  const modal = useRef();
+  const exploreModalRef = useRef();
 
   useEffect(() => {
-    modal.current.classList.toggle("-translate-y-full");
+    exploreModalRef.current.classList.toggle("translate-y-full");
   }, [exploreModal]);
 
   return (
     <div
-      ref={modal}
-      className="-translate-y-full origin-top transition ease-in-out duration-300 inset-0 bg-black/70 z-[53] backdrop-blur h-full flex items-center justify-center w-full p-4 lg:p-8 fixed"
+      ref={exploreModalRef}
+      className="-top-full origin-top transition ease-in-out duration-300 inset-0 bg-black/70 z-[53] backdrop-blur h-full flex items-center justify-center w-full p-4 lg:p-8 fixed"
     >
       <div className="w-full max-w-4xl h-4/5 bg-white p-4 rounded-lg">
         <div className="flex items-center justify-end">

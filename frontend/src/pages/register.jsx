@@ -2,8 +2,20 @@ import Head from "next/head";
 import Link from "next/link";
 import RegisterForm from "../components/forms/registerForm";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
+import { auth } from "../components/firebase";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+} from "firebase/auth";
 
 export default function Register() {
+  const googleSignIn = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider);
+  };
+
   const router = useRouter();
   return (
     <>
@@ -32,7 +44,7 @@ export default function Register() {
               </p>
             </div>
             <div className="mt-7">
-              <RegisterForm router={router} />
+              <RegisterForm googleSignIn={googleSignIn} router={router} />
               <p className="text-sm text-center mt-7">
                 {" "}
                 Already have an account ? <br />
