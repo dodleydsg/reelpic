@@ -4,7 +4,8 @@ const Post = require("../models/post.model"),
   { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors"),
   notify = require("../helpers/notify"),
   Tag = require("../models/tag.model"),
-  User = require("../models/user.model");
+  User = require("../models/user.model"),
+  _ = require("lodash");
 
 let LIKE_REQUESTS = 0;
 
@@ -124,33 +125,67 @@ const returnPost = async (req, res, next) => {
 };
 
 const feed = async (req, res, next) => {
-  // Returns an array of updated feed items
+  let seen = req.profile.seen || [];
+  /* 
+  Seen is an array of postIds, these postIds correspond to posts already viewed by the user
+  This array has a max length of 200, cleaning the array is done in the post.read controlle 
+  */
+
+  let interests = req.profile.interests;
+
   try {
-    // update variable carries new feed items for update in the frontend
-    let update = [];
-
-    // oldfeed contains all old posts, this is returned in the body of the request from the frontend
-    let oldFeed = req.body.oldFeed;
-
-    // gets the user's latest post, to be included in the feed
-    let latestPost = req.profile.posts.slice(-1).toString() || null;
-    if (!oldFeed.includes(latestPost)) update.push(latestPost);
+    let feed = req.profile.feed;
+    let latestPost = _.last(req.profile.posts) || null;
+    if (latestPost && !seen.includes(latestPost.toString())) {
+      feed.addToSet(latestPost.toString());
+    }
     if (req.profile.following.length > 0) {
       for (let i = 0; i < req.profile.following.length; i++) {
         let user = await User.findOne({ _id: req.profile.following[i] });
-        if (oldFeed.includes(user.posts.slice(-1).toString())) {
-          continue;
-        } else {
-          update.push(user.posts.slice(-1));
+        if (_.last(user.posts)) {
+          if (seen.includes(_.last(user.posts).toString())) {
+            continue;
+          } else {
+            feed.addToSet(_.last(user.posts).toString());
+          }
         }
       }
     }
 
-    return res.status(200).json({
-      update,
-    });
+    let tags = await Tag.find(
+      {
+        name: { $in: interests },
+      },
+      "posts"
+    ).limit(10);
+
+    for (let i = 0; i < tags.length; i++) {
+      // last post
+      if (_.last(tags[i].posts)) {
+        if (seen.includes(_.last(tags[i].posts).toString())) {
+          continue;
+        } else {
+          feed.addToSet(_.last(tags[i].posts).toString());
+        }
+      }
+      // random post
+      let randomPost = _.nth(
+        tags[i].posts,
+        Math.floor(Math.random() * tags[i].posts.length)
+      );
+
+      if (randomPost) {
+        if (seen.includes(randomPost.toString())) {
+          continue;
+        } else {
+          feed.addToSet(randomPost.toString());
+        }
+      }
+    }
+    await req.profile.save();
+    return res.json(feed);
   } catch (error) {
-    genericErrorBlock(error);
+    genericErrorBlock(error, res);
   }
 };
 
@@ -189,7 +224,7 @@ const update = async (req, res, next) => {
     );
     await post.save();
     let description = `You updated a post`;
-    await notify(user._id, description);
+    await notify(req.profile._id, description);
     return res.status(200).json({
       message: "Post updated",
       post,

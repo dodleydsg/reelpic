@@ -92,8 +92,23 @@ const remove = async (req, res, next) => {
 const follow = async (req, res, next) => {
   try {
     let user = req.profile;
-    user.following.push(req.params._id);
-    user.save();
+    if (user._id.toString() === req.params._id.toString()) {
+      return res.json({
+        message: "You can't follow yourself",
+      });
+    }
+    let target = await User.findOne({ _id: req.params._id });
+    if (!target) {
+      genericErrorBlock(Error("Couldn't find user", res));
+    }
+
+    target.followers.addToSet(user._id.toString());
+    user.following.addToSet(req.params._id);
+    await user.save();
+    await target.save();
+    return res.json({
+      message: "Followed successfully",
+    });
   } catch (error) {
     genericErrorBlock(error, res);
   }
