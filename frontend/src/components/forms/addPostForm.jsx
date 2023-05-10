@@ -4,17 +4,32 @@ import UploadLabel from "./uploadLabel";
 import { IoChevronBack, IoChevronForward, IoClose } from "react-icons/io5";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { storage } from "../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import Image from "next/image";
 
 export default function AddPostForm() {
   const MAX_STEPS = 2;
   const [steps, updateSteps] = useState(1);
-  const [files, updateFiles] = useState(null);
+  const [files, updateFiles] = useState([]);
 
   const MediaDisplay = ({ files }) => {
     if (files) {
-      return <div className="h-2/3 lg:h-72"></div>;
+      return (
+        <div className="h-2/3 lg:h-72 bg-gray-100 aspect-video">
+          {files.map((val, idx) => (
+            <Image
+              id={idx}
+              src={val}
+              height={240}
+              width={240}
+              className="object-cover"
+            />
+          ))}
+        </div>
+      );
     } else {
-      return <div className="h-2/3 lg:h-72 bg-gray-100 aspect-video"></div>;
+      return <div className="h-2/3 lg:h-72 bg-gray-200"></div>;
     }
   };
   const _updateSteps = (direction) => {
@@ -26,6 +41,30 @@ export default function AddPostForm() {
       if (steps > 1) {
         updateSteps(steps - 1);
       }
+    }
+  };
+
+  const _updateFiles = async (e, formik) => {
+    e.preventDefault();
+    e.stopPropagation();
+    let files = e.target.files;
+    for (let i = 0; i < files.length; i++) {
+      const itemStorageRef = ref(
+        storage,
+        `images/dodley/${files.item(i).name}`
+      );
+      await uploadBytes(itemStorageRef, files.item(i)).then((snapshot) => {
+        console.log(
+          `Uploaded file ${snapshot.metadata.name} and web path is ${snapshot.metadata.fullPath}`
+        );
+        formik.setValues({
+          ...formik.values,
+          media: [...formik.values.media, snapshot.metadata.fullPath],
+        });
+      });
+      await getDownloadURL(itemStorageRef).then((url) =>
+        updateFiles([...files, url])
+      );
     }
   };
 
@@ -90,9 +129,7 @@ export default function AddPostForm() {
               <>
                 <MediaDisplay files={files} />
                 <input
-                  onChange={(e) => {
-                    updateFiles(e.target.files);
-                  }}
+                  onChange={(e) => _updateFiles(e, formik)}
                   type="file"
                   multiple
                   id="media"

@@ -28,7 +28,6 @@ export default function Carousel() {
     if (direction === "right") {
       if (activeCarousel < CONTENT_LENGTH) {
         setActiveCarousel(activeCarousel + 1);
-        console.log(activeCarousel);
       }
       if (activeItem !== carousel.children.length - 1) {
         // Check if active item is currently the last

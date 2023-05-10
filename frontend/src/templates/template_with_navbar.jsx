@@ -94,7 +94,7 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
       {/* AddCatalogue for mobile end */}
       <Mask />
       <div
-        className={`w-screen h-screen relative p-4 mx-auto gap-6 lg:grid lg:grid-cols-4  max-w-[1536px] ${
+        className={`relative p-4 mx-auto gap-6 lg:grid lg:grid-cols-4  max-w-[1536px] ${
           addPost || addCatalogue ? "overflow-hidden lg:overflow-auto" : ""
         }`}
       >
