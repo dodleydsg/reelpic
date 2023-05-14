@@ -1,15 +1,15 @@
 import Head from "next/head";
 import InputElement from "../components/forms/input";
 
-export default function Register() {
+export default function Reset() {
   return (
     <>
       <Head>
         <title>Reset password</title>
       </Head>
-      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/pattern_bg.webp')] bg-cover">
-        <div className="relative container mx-auto flex z-10 h-screen px-4">
-          <div className="items-center bg-white max-w-[380px] w-full mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px]">
+      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/pattern_bg.webp')] flex items-center bg-cover">
+        <div className="p-2 w-full">
+          <div className=" bg-white max-w-[380px] w-full mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px]">
             <div className="space-y-3 sm:space-y-7">
               <div className="flex gap-3 items-center w-full justify-center">
                 <h1 className="text-heading text-center font-logo text-logoBlue">

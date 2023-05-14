@@ -56,10 +56,10 @@ export default function Reset() {
       <Head>
         <title>Getting started | Lets know more about you</title>
       </Head>
-      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.webp')] bg-cover bg-blend-screen">
-        <div className="absolute inset-0 opacity-50 bg-gradient-to-b from-black to-[rgb(0,0,0,.5)]"></div>
-        <div className="relative container mx-auto flex z-10 h-screen px-4">
-          <div className="items-center bg-white max-w-3xl lg:h-3/5 mx-auto my-auto rounded-xl px-[22px] lg:px-16 py-[35px] lg:py-[55px]">
+      <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/Home_bg.webp')] bg-cover bg-blend-screen flex items-center">
+        <div className="absolute inset-0 opacity-50 bg-gradient-to-b from-black to-[rgb(0,0,0,.5)] flex items-center"></div>
+        <div className="p-2 w-full relative z-10">
+          <div className="items-center bg-white min-h-[540px] max-w-xl lg:h-3/5 mx-auto my-auto rounded-xl px-[22px] lg:px-16 py-[35px] lg:py-[55px]">
             <div className="space-y-3 lg:space-y-7 sm:px-20">
               <div className="flex gap-3 items-center w-full justify-center">
                 <h1 className="text-heading text-center font-logo text-logoBlue">
@@ -228,14 +228,18 @@ export default function Reset() {
                   </ul>
                 </div>
               ) : null}
-              <div className="grid items-center gap-2 grid-cols-2">
+              <div
+                className={`flex items-center gap-2 ${
+                  step === 1 ? "justify-center" : "justify-between"
+                }`}
+              >
                 <Link
                   onClick={(e) => {
                     e.preventDefault();
                     _updateStep("backward");
                   }}
                   href="#"
-                  className={`link w-full block items-center col-span-1 justify-start ${
+                  className={`link pl-4 w-full block items-center col-span-1 justify-start ${
                     step === 1 ? "hidden" : ""
                   }`}
                 >

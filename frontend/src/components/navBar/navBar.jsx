@@ -103,7 +103,7 @@ export default function NavBar() {
 
       {/* Mobile Nav end */}
 
-      <div className="shadow-xl sticky top-4 max-h-screen col-span-1 h-full py-12 px-4 lg:px-8 hidden lg:block  space-y-10 text-center rounded-2xl from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
+      <div className="shadow-xl sticky top-4 col-span-1 py-12 px-4 lg:px-8 hidden lg:block  space-y-10 text-center rounded-2xl from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
         <div className="flex items-center gap-4 justify-start">
           <NavbarProfile image={profile} />
           <div>
