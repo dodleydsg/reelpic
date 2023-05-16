@@ -1,23 +1,21 @@
-import { headers } from "../../next.config";
 import catalogueRoutes from "./catalogue.routes";
 import axios from "axios";
+import { AUTH_TOKEN, BACKEND_DOMAIN } from "./vars";
 
 export default async function catalogueResolver(
-  token,
   action,
+  token,
   userId = "",
   data = {},
   catalogueId = ""
 ) {
-  const BACKEND_DOMAIN = process.env.BACKEND_DOMAIN;
-  const AUTH_TOKEN = `Bearer ${token}`;
   try {
     if (action === catalogueRoutes.CREATE_CATALOGUE) {
       let resp = await axios({
         method: "post",
         url: BACKEND_DOMAIN + "/api/catalogue/",
         headers: {
-          Authorization: AUTH_TOKEN,
+          Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;

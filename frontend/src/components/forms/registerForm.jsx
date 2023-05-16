@@ -1,9 +1,11 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
-import axios from "axios";
 import { useRouter } from "next/router";
+import authResolver from "../../resolvers/auth.resolver";
+import authRoutes from "../../routes/auth.routes";
+import { setCookie } from "../../utils/cookie";
 
-export default function RegisterForm({ router, googleSignIn }) {
+export default function RegisterForm({ googleSignIn }) {
   const router = useRouter();
   return (
     <Formik
@@ -14,39 +16,61 @@ export default function RegisterForm({ router, googleSignIn }) {
           .min(8, "Must be atleast 8 characters")
           .required(),
       })}
-      onSubmit={async (values, { setSubmitting }) => {
-        try {
-          setSubmitting = true;
-          let resp = await axios({
-            method: "post",
-            data: {
-              password: values.password,
+      onSubmit={(values, { setSubmitting }) => {
+        authResolver(authRoutes.REGISTER, "", "", {
+          email: values.email,
+          password: values.password,
+        })
+          .then(({ data }) => {
+            authResolver(authRoutes.LOGIN, "", "", {
               email: values.email,
-            },
-          });
-          switch (resp.status) {
-            case "404":
-              /// send error
-              break;
-            case "401":
-            // send error
-            case "200":
-              try {
-                localStorage.setItem("token", resp.data.token);
-                router.push("/getting_started");
-              } catch (error) {
-                //console.log(error)
-                // use Formik to report error to user
-              }
-            default:
-            //
-          }
-        } catch (error) {
-          // console.log(error)
-          // use Formik to report error to user
-        }
+              password: values.password,
+            })
+              .then(({ data }) => {
+                console.log(data);
+                setCookie("token", data.token);
+                setCookie("id", data.user._id);
+                console.log(document.cookie);
+              })
+              .catch((error) => {
+                console.log(error);
+              });
 
-       
+            // router.push("/getting_started");
+            setSubmitting(false);
+          })
+          .catch((error) => {
+            if (error.response) {
+              console.log(error.response.data.message);
+              setSubmitting(false);
+            } else if (error.request) {
+              console.log(error.request);
+            } else {
+              null;
+            }
+          });
+
+        // try {
+        //   const resp = await authResolver(authRoutes.REGISTER, "", "", {
+        //     email: values.email,
+        //     password: values.password,
+        //   });
+        //   console.log(resp);
+        //   localStorage.setItem("token", data.token);
+        //   router.push("/getting_started");
+        // } catch (error) {
+        //   if (error.response) {
+        //     // call error in formik
+        //     console.log(error);
+        //   } else if (error.request) {
+        //     console.log("Heollo");
+
+        //     null;
+        //   } else {
+        //     null;
+        //     console.log(error);
+        //   }
+        // }
       }}
     >
       {(formik) => (
@@ -100,7 +124,7 @@ export default function RegisterForm({ router, googleSignIn }) {
             <button
               type="submit"
               disabled={formik.isSubmitting}
-              className="btn-primary hover:bg-[#4900EB]"
+              className="btn-primary hover:bg-[#4900EB] disabled:bg-gray-400 disabled:cursor-not-allowed"
             >
               Get started
             </button>

@@ -1,8 +1,12 @@
 import { Formik } from "formik";
 import Link from "next/link";
 import * as Yup from "yup";
+import authResolver from "../../resolvers/auth.resolver";
+import authRoutes from "../../routes/auth.routes";
+import { useRouter } from "next/router";
 
-export default function LoginForm({ router }) {
+export default function LoginForm() {
+  const router = useRouter();
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
@@ -12,12 +16,17 @@ export default function LoginForm({ router }) {
           .min(8, "Must be atleast 15 characters")
           .required(),
       })}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
+      onSubmit={async (values, { setSubmitting }) => {
+        const { data } = await authResolver(authRoutes.LOGIN, "", "", {
+          email: values.email,
+          password: values.password,
+        });
+        try {
+          localStorage.setItem("token", data.token);
           router.push("/home");
-          // Call external API
-        }, 1000);
+        } catch (error) {
+          // console.log("Couldn't store the token in localstorage");
+        }
       }}
     >
       {(formik) => (

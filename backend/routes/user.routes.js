@@ -31,6 +31,7 @@ router
     userCtrl.follow
   );
 
+
 router.param("userId", userCtrl.getUser);
 
 module.exports = router;

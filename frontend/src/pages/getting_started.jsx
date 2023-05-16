@@ -16,7 +16,15 @@ export default function Reset() {
   const [step, updateStep] = useState(1);
 
   useEffect(() => {
-    dispatch(getUser());
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        router.push("/login");
+      }
+    } catch {
+      router.push("/login");
+    }
+    dispatch(getUser(token));
   });
 
   const formSubmit = async (e) => {
@@ -84,7 +92,6 @@ export default function Reset() {
         }
         return true;
       });
-      console.log(items);
       toggleInterests(items.join(","));
     } else {
       e.target.classList.add("ring-primary-default", "ring-1", "ring-offset-2");
@@ -92,7 +99,6 @@ export default function Reset() {
       items.push(e.target.dataset["value"]);
       toggleInterests(items.join(","));
       e.target.dataset["selected"] = "true";
-      console.log(items);
     }
   }
 

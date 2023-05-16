@@ -6,12 +6,11 @@ const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
-    required: "Name is required",
   },
   email: {
     type: String,
     trim: true,
-    unique: "Email must be unique",
+    unique: "This email already exists",
     match: [
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       "Please enter a valid email",
@@ -29,7 +28,6 @@ const UserSchema = new mongoose.Schema({
   username: {
     type: String,
     trim: true,
-    required: "A username is required",
     unique: "This username is already taken",
   },
   interests: [String],

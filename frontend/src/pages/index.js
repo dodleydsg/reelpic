@@ -5,18 +5,16 @@ import { useRouter } from "next/router";
 export default function Home() {
 const router = useRouter();
 useEffect(() => {
+  let token = localStorage.getItem("token");
+  if (!token) {
+    router.push("/login");
+  } else {
+    router.push("/home");
+  }
 
-
-  const app = initializeApp(firebaseConfig);
   
-  router.push("/register");
+  router.push("/login");
 });
 
-  return (
-    <>
-      <Head>
-        <title>Reelpic | Register</title>
-      </Head>
-    </>
-  );
+  return null;
 }
