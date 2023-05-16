@@ -45,12 +45,40 @@ const list = async (req, res, next) => {
 
 const read = async (req, res, next) => {
   try {
-    let user = await User.findOne({ username: req.params.username });
+    if (req.params.username) {
+      let user = await User.findOne({ username: req.params.username });
+      if (!user) {
+        return res.status(404).json({
+          message: "Couldn't find user",
+        });
+      }
+    } else {
+      let user = await User.findById({ _id: req.body.userId });
+      if (!user) {
+        return res.status(404).json({
+          message: "Couldn't find user",
+        });
+      }
+    }
+
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    user.resetMode = undefined;
+    return res.status(200).json(user);
+  } catch (error) {
+    genericErrorBlock(error, res);
+  }
+};
+
+const altRead = async (req, res, next) => {
+  try {
+    let user = await User.findById({ _id: req.body.userId });
     if (!user) {
       return res.status(404).json({
-        message: "Couln't find user",
+        message: "Couldn't find user",
       });
     }
+
     user.hashed_password = undefined;
     user.salt = undefined;
     user.resetMode = undefined;
@@ -114,4 +142,13 @@ const follow = async (req, res, next) => {
   }
 };
 
-module.exports = { create, read, list, remove, update, getUser, follow };
+module.exports = {
+  create,
+  read,
+  list,
+  remove,
+  update,
+  altRead,
+  getUser,
+  follow,
+};

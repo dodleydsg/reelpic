@@ -9,12 +9,15 @@ const initialState = {
 
 export const getUser = createAsyncThunk(
   "user/getUser",
-  async (token, thunkAPI) => {
+  async ({ token, id }, thunkAPI) => {
     try {
       let resp = await axios({
         method: "get",
 
-        url: `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/api/user/jj`,
+        url: `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/api/user`,
+        data: {
+          userId: id,
+        },
         headers: {
           Authorization: `Bearer ${token}`,
         },

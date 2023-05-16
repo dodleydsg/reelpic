@@ -9,6 +9,12 @@ router.route("/api/users").get(userCtrl.list).post(userCtrl.create);
 router
   .route("/api/user/:username")
   .get(userCtrl.read)
+  .post(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    userCtrl.altRead
+  )
   .put(
     userCtrl.getUser,
     authCtrl.requireLogin,
