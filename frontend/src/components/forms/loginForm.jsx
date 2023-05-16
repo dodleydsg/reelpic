@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import authResolver from "../../resolvers/auth.resolver";
 import authRoutes from "../../routes/auth.routes";
 import { useRouter } from "next/router";
+import { setCookie } from "@/components/utils/cookie";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -16,17 +17,20 @@ export default function LoginForm() {
           .min(8, "Must be atleast 15 characters")
           .required(),
       })}
-      onSubmit={async (values, { setSubmitting }) => {
-        const { data } = await authResolver(authRoutes.LOGIN, "", "", {
+      onSubmit={(values, { setSubmitting }) => {
+        authResolver(authRoutes.LOGIN, "", "", {
           email: values.email,
           password: values.password,
-        });
-        try {
-          localStorage.setItem("token", data.token);
-          router.push("/home");
-        } catch (error) {
-          // console.log("Couldn't store the token in localstorage");
-        }
+        })
+          .then(({ data }) => {
+            setCookie("token", data.token);
+            setCookie("id", data.user._id);
+            router.push("/home");
+          })
+          .catch((error) => {
+            // console.log(error)
+            router.push("/_error");
+          });
       }}
     >
       {(formik) => (

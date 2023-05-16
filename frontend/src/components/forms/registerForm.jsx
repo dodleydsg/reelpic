@@ -27,13 +27,12 @@ export default function RegisterForm({ googleSignIn }) {
               password: values.password,
             })
               .then(({ data }) => {
-                console.log(data);
                 setCookie("token", data.token);
                 setCookie("id", data.user._id);
-                console.log(document.cookie);
               })
               .catch((error) => {
-                console.log(error);
+                router.push("/login");
+                // console.log(error);
               });
 
             // router.push("/getting_started");
