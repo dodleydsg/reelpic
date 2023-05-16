@@ -54,7 +54,7 @@ const read = async (req, res, next) => {
     user.hashed_password = undefined;
     user.salt = undefined;
     user.resetMode = undefined;
-    return res.status(200).json({ user });
+    return res.status(200).json(user);
   } catch (error) {
     genericErrorBlock(error, res);
   }

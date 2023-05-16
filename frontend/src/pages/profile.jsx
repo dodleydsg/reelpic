@@ -2,7 +2,6 @@ import NavbarTemplate from "../templates/template_with_navbar";
 import template1 from "../assets/images/1.png";
 import template2 from "../assets/images/2.png";
 import template3 from "../assets/images/3.png";
-
 import Mask from "../components/mask";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
@@ -11,12 +10,22 @@ import { IoChevronBack } from "react-icons/io5";
 import { useState } from "react";
 import food from "../assets/images/food.jpg";
 import Image from "next/image";
+import { getUser } from "../store/features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import LoadingScreen from "../components/loadingScreen";
+import { useEffect } from "react";
 
 const TABS = ["posts", "catalogues"];
 
 export default function Profile() {
+  const { pending, rejected, user } = useSelector((state) => state.user);
   const [activeTab, toggleTab] = useState("posts");
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
 
   const TopTab = () => (
     <div className="sticky z-20 top-[72px] lg:top-0  py-4 bg-white">
@@ -35,6 +44,9 @@ export default function Profile() {
       </div>
     </div>
   );
+  if (pending || rejected) {
+    return <LoadingScreen />;
+  }
   return (
     <>
       <Mask />
@@ -55,7 +67,7 @@ export default function Profile() {
               <p className="text-sm text-medium text-dark-default">
                 Stephen King
               </p>
-              <p className="text-xs text-dark-default/80">@stephenking</p>
+              <p className="text-xs text-dark-default/80">@{user.username}</p>
             </div>
             <div className="flex max-w-lg self-center justify-between gap-12 px-6">
               <div className="flex gap-4 flex-col items-center">

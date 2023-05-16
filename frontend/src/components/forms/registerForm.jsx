@@ -1,7 +1,10 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function RegisterForm({ router, googleSignIn }) {
+  const router = useRouter();
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
@@ -11,12 +14,39 @@ export default function RegisterForm({ router, googleSignIn }) {
           .min(8, "Must be atleast 8 characters")
           .required(),
       })}
-      onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          console.log(JSON.stringify(values, null, 2));
-          router.push("/getting_started");
-          // Call external API
-        }, 400);
+      onSubmit={async (values, { setSubmitting }) => {
+        try {
+          setSubmitting = true;
+          let resp = await axios({
+            method: "post",
+            data: {
+              password: values.password,
+              email: values.email,
+            },
+          });
+          switch (resp.status) {
+            case "404":
+              /// send error
+              break;
+            case "401":
+            // send error
+            case "200":
+              try {
+                localStorage.setItem("token", resp.data.token);
+                router.push("/getting_started");
+              } catch (error) {
+                //console.log(error)
+                // use Formik to report error to user
+              }
+            default:
+            //
+          }
+        } catch (error) {
+          // console.log(error)
+          // use Formik to report error to user
+        }
+
+       
       }}
     >
       {(formik) => (

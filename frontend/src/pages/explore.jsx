@@ -3,14 +3,22 @@ import NavbarTemplate from "../templates/template_with_navbar";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import Masonry from "../components/masonry/masonry";
-import InputElement from "../components/forms/input";
 import ExploreSearchModal from "../components/modal/exploreSearchModal";
 import { toggleExploreModal } from "../store/features/uiSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import LoadingScreen from "../components/loadingScreen";
+import { getUser } from "../store/features/userSlice";
+import { useEffect } from "react";
 
 export default function Explore() {
   const dispatch = useDispatch();
-
+  const { pending, user } = useSelector((state) => state.user);
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+  if (pending) {
+    <LoadingScreen />;
+  }
   return (
     <>
       <ExploreSearchModal />

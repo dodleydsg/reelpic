@@ -9,10 +9,21 @@ import profile from "../assets/images/Profile1.png";
 import AddCatalogueForm from "../components/forms/addCatalogueForm";
 import CatalogueSearchModal from "../components/modal/catalogueSearchModal";
 import { toggleCatalogueModal } from "../store/features/uiSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import LoadingScreen from "../components/loadingScreen";
+import { getUser } from "../store/features/userSlice";
 
 export default function Catalogue() {
+  const { pending, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+  if (pending) {
+    return <LoadingScreen />;
+  }
   return (
     <>
       <CatalogueSearchModal />
@@ -47,6 +58,7 @@ export default function Catalogue() {
                   <p className="text-body">Family</p>
                 </div>
                 <Image
+                  alt="jj"
                   src={template1}
                   className="h-[150px] object-cover rounded-md w-full"
                 />
@@ -57,6 +69,7 @@ export default function Catalogue() {
                   <p className="text-body">Design</p>
                 </div>
                 <Image
+                  alt="jj"
                   src={template2}
                   className="h-[150px] object-cover rounded-md w-full"
                 />
@@ -67,6 +80,7 @@ export default function Catalogue() {
                   <p className="text-body">Nature</p>
                 </div>
                 <Image
+                  alt="jj"
                   src={template3}
                   className="h-[150px] object-cover rounded-md w-full"
                 />

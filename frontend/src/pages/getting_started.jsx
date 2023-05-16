@@ -1,14 +1,59 @@
 import Head from "next/head";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import InputElement from "../components/forms/input";
 import { useRouter } from "next/router";
+import { getUser, setToken } from "../store/features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
 const MAX_STEP = 2;
 
 export default function Reset() {
+  const { email } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const router = useRouter();
   const [interests, toggleInterests] = useState("reelpic");
   const [step, updateStep] = useState(1);
+
+  useEffect(() => {
+    dispatch(getUser());
+  });
+
+  const formSubmit = async (e) => {
+    let token = null;
+    try {
+      token = localStorage.getItem("token");
+    } catch (error) {
+      // console.log(error)
+    }
+    const resp = await axios({
+      method: "post",
+      url: `${process.env.BACKEND_DOMAIN}/api/user/`,
+      data: {
+        email: email,
+        interests: interests,
+        username: e.target.username,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    switch (resp.status) {
+      case "404":
+        ///do something
+        break;
+      case "401":
+      //do something
+
+      case "200":
+        router.push("/home");
+      // navigate home
+
+      default:
+        console.log("sad");
+    }
+  };
 
   function _updateStep(direction) {
     if (direction === "forward") {

@@ -1,10 +1,20 @@
 import NavbarTemplate from "../templates/template_with_navbar";
-import Mask from "../components/mask";
 import NotificationCard from "../components/notificationCard";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
+import { getUser } from "../store/features/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+import LoadingScreen from "../components/loadingScreen";
 
 export default function Catalogue() {
+  const { pending, user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+  if (pending) {
+    <LoadingScreen />;
+  }
   return (
     <>
       <NavbarTemplate

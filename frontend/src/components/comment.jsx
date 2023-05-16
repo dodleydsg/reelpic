@@ -15,7 +15,7 @@ export default function Comment() {
     return (
       <div className="border-1 ">
         <div className="flex justify-start items-center gap-2">
-          <Image className="w-6 h-6 rounded-[24px]" src={profile1} />
+          <Image alt="jjs" className="w-6 h-6 rounded-[24px]" src={profile1} />
           <p className="text-sm text-dark-default/80">Walter White</p>
           <p className="text-xs text-dark-default/60">12h ago</p>
         </div>

@@ -45,7 +45,6 @@ export default function Carousel() {
     } else {
       if (activeCarousel > 1) {
         setActiveCarousel(activeCarousel - 1);
-        console.log(activeCarousel);
       }
       if (activeItem) {
         // Checks if activeItem isn't the first element i.e activeItem:0
@@ -89,19 +88,23 @@ export default function Carousel() {
           data-current="0"
         >
           <Image
+            alt="hey"
             src={potrait}
             data-active="true"
             className="object-cover h-full  w-full lg:w-auto absolute inset-0  shrink-0 mx-auto transition-transform duration-500"
           />
           <Image
+            alt="hey"
             src={coverImg1}
             className="object-cover h-full w-full lg:w-auto absolute inset-0    shrink-0 mx-auto transition-transform duration-500 scale-0"
           />
           <Image
+            alt="hey"
             src={food}
             className="object-cover h-full w-full lg:w-auto absolute inset-0   shrink-0 mx-auto transition-transform duration-500 scale-0"
           />
           <Image
+            alt="hey"
             src={landscape}
             className="object-cover h-full w-full lg:w-auto absolute inset-0   shrink-0 mx-auto transition-transform duration-500 scale-0"
           />

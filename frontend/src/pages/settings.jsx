@@ -85,7 +85,11 @@ export default function Settings() {
                   htmlFor="profileImg"
                   className="flex items-center text-dark-default/80 text-sm cursor-pointer flex-col gap-2"
                 >
-                  <Image src={profile} className="w-20 h-20 rounded-[40px]" />
+                  <Image
+                    alt="jj"
+                    src={profile}
+                    className="w-20 h-20 rounded-[40px]"
+                  />
                   <span>Click to change profile</span>
                 </label>
               </div>

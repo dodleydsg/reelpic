@@ -1,21 +1,30 @@
 import ScrollCard from "../components/scrollCard";
 
 import Post from "../components/post/post";
-
 import NavbarTemplate from "../templates/template_with_navbar";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoAdd, IoClose } from "react-icons/io5";
 import AddPostForm from "../components/forms/addPostForm";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleAddPost, toggleAddCatalogue } from "../store/features/uiSlice";
-import AddToCatalogueModal from "../components/modal/addToCatalogueModal";
+import { toggleAddPost } from "../store/features/uiSlice";
+import { getUser } from "../store/features/userSlice";
+import LoadingScreen from "../components/loadingScreen";
 
 export default function Home() {
+  const { pending, user } = useSelector((state) => state.user);
   const { addPost, addToCatalogueModal } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUser());
+  }, []);
+
+  if (pending) {
+    return <LoadingScreen />;
+  }
 
   return (
     <>

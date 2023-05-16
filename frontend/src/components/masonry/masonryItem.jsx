@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function MasonryItem({ className }) {
   return (
     <div className={className + " shrink-0 last:grow"}>
-      <Image src={template} className="object-cover h-full" />
+      <Image alt="item" src={template} className="object-cover h-full" />
     </div>
   );
 }

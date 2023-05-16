@@ -14,7 +14,7 @@ export default function Post() {
     <div>
       <div className="flex justify-between items-center border border-gray-100 p-2">
         <div className="flex gap-2 items-center relative">
-          <Image src={profile1} className="h-10 w-10" />
+          <Image alt="profile" src={profile1} className="h-10 w-10" />
           <Link href="/a" className="text-label">
             @majorlazer
           </Link>
