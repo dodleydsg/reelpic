@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const initialState = {
-  loggedIn: true,
   pending: true,
   rejected: false,
 };
@@ -12,8 +11,7 @@ export const getUser = createAsyncThunk(
   async ({ token, id }, thunkAPI) => {
     try {
       let resp = await axios({
-        method: "get",
-
+        method: "post",
         url: `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/api/user`,
         data: {
           userId: id,
@@ -33,11 +31,7 @@ export const getUser = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {
-    setLoggedIn: (state, payload) => {
-      state.loggedIn = payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(getUser.fulfilled, (state, action) => {
