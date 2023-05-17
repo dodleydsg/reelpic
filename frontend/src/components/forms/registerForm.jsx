@@ -27,8 +27,8 @@ export default function RegisterForm({ googleSignIn }) {
               password: values.password,
             })
               .then(({ data }) => {
-                setCookie("token", data.token);
-                setCookie("id", data.user._id);
+                localStorage.setItem("token", data.token);
+                localStorage.setItem("id", data._id);
               })
               .catch((error) => {
                 router.push("/login");

@@ -3,21 +3,25 @@ import Link from "next/link";
 import LoginForm from "../components/forms/loginForm";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { getCookie } from "../utils/cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../store/features/userSlice";
 
 export default function Login() {
+  const router = useRouter();
   const { rejected } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
-    const id = getCookie("id");
-    const token = getCookie("token");
-    if (id && token) {
-      dispatch(getUser({ token: token, id: id }));
+    try {
+      const token = localStorage.getItem("token");
+      const id = localStorage.getItem("id");
+      console.log(token, id);
+      if (id && token) {
+        dispatch(getUser({ token: token, id: id }));
+      }
+    } catch (error) {
+      console.log(error);
     }
-  });
-  const router = useRouter();
+  }, []);
   if (rejected) {
     return (
       <>

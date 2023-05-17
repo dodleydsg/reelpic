@@ -54,11 +54,10 @@ export default async function catalogueResolver(
           Authorization: AUTH_TOKEN,
         },
       });
+      return resp
     }
   } catch (error) {
-    return {
-      message: error,
-    };
+    throw(error)
   }
   // catalogue routers
 }

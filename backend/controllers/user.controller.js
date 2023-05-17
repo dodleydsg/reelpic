@@ -5,7 +5,7 @@ const resetModes = require("../helpers/resetModes");
 
 const getUser = async (req, res, next) => {
   try {
-    let user = await User.findById(req.cookies._id);
+    let user = await User.findById(req.cookies._id || req.body.userId);
     if (!user) {
       return res.status(404).json({
         error: "User not found",
@@ -45,20 +45,11 @@ const list = async (req, res, next) => {
 
 const read = async (req, res, next) => {
   try {
-    if (req.params.username) {
-      let user = await User.findOne({ username: req.params.username });
-      if (!user) {
-        return res.status(404).json({
-          message: "Couldn't find user",
-        });
-      }
-    } else {
-      let user = await User.findById({ _id: req.body.userId });
-      if (!user) {
-        return res.status(404).json({
-          message: "Couldn't find user",
-        });
-      }
+    let user = await User.findOne({ username: req.params.username });
+    if (!user) {
+      return res.status(404).json({
+        message: "Couldn't find user",
+      });
     }
 
     user.hashed_password = undefined;
@@ -72,7 +63,7 @@ const read = async (req, res, next) => {
 
 const altRead = async (req, res, next) => {
   try {
-    let user = await User.findById({ _id: req.body.userId });
+    let user = req.profile;
     if (!user) {
       return res.status(404).json({
         message: "Couldn't find user",

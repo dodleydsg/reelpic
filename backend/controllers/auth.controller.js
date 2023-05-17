@@ -24,23 +24,25 @@ const login = async (req, res) => {
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
     const { _id } = user;
-    console.log(_id);
-    res.cookie("t", token, { expire: new Date() + 9999 });
-    res.cookie("_id", _id);
+
+    res.cookie("token", token, {
+      maxAge: 60 * 60,
+    });
+    res.cookie("_id", _id, {
+      maxAge: 60 * 60,
+    });
     user.last_login = Date.now();
     user.save();
     return res.json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      last_login: user.last_login,
+      posts: user.posts,
+      catalogues: user.catalogues,
+      following: user.following,
+      followers: user.following,
       token,
-      user: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        last_login: user.last_login,
-        posts: user.posts,
-        catalogues: user.catalogues,
-        following: user.following,
-        followers: user.following,
-      },
     });
   } catch (error) {
     console.error(error);

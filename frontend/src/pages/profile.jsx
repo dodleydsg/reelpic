@@ -24,8 +24,16 @@ export default function Profile() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getUser());
+    try {
+      const token = localStorage.getItem("token");
+      const id = localStorage.getItem("id");
+      dispatch(getUser({ token: token, id: id }));
+    } catch (error) {
+      router.push("/login");
+    }
   }, []);
+
+  /// User hasn't completed the registration process
 
   const TopTab = () => (
     <div className="sticky z-20 top-[72px] lg:top-0  py-4 bg-white">

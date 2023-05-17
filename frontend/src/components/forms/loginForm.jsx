@@ -4,7 +4,6 @@ import * as Yup from "yup";
 import authResolver from "../../resolvers/auth.resolver";
 import authRoutes from "../../routes/auth.routes";
 import { useRouter } from "next/router";
-import { setCookie } from "@/components/utils/cookie";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -23,14 +22,15 @@ export default function LoginForm() {
           password: values.password,
         })
           .then(({ data }) => {
-            setCookie("token", data.token);
-            setCookie("id", data.user._id);
+            localStorage.setItem("token", data.token);
+            localStorage.setItem("id", data._id);
             router.push("/home");
           })
           .catch((error) => {
-            // console.log(error)
-            router.push("/_error");
+            console.log(error);
+            // router.push("/_error");
           });
+        setSubmitting(false);
       }}
     >
       {(formik) => (

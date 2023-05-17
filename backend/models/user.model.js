@@ -29,6 +29,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     trim: true,
     unique: "This username is already taken",
+    default: "",
   },
   interests: [String],
   location: String,

@@ -3,12 +3,12 @@ import axios from "axios";
 
 const initialState = {
   pending: true,
-  rejected: false,
+  rejected: true,
 };
 
 export const getUser = createAsyncThunk(
   "user/getUser",
-  async ({ token, id }, thunkAPI) => {
+  async ({ id, token }, thunkAPI) => {
     try {
       let resp = await axios({
         method: "post",
@@ -16,14 +16,14 @@ export const getUser = createAsyncThunk(
         data: {
           userId: id,
         },
+        withCredentials: true,
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(resp.data);
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue("There was an error");
+      return thunkAPI.rejectWithValue(error);
     }
   }
 );
@@ -37,13 +37,13 @@ const userSlice = createSlice({
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.pending = false;
-        state.tried = true;
+        state.rejected = false;
       })
       .addCase(getUser.pending, (state) => {
         state.pending = true;
       })
       .addCase(getUser.rejected, (state, action) => {
-        console.log(action);
+        // console.log(action);
         state.pending = false;
         state.rejected = true;
       });
