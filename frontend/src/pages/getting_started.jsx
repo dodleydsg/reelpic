@@ -67,7 +67,7 @@ export default function Reset() {
                 </div>
               </div>
 
-              <InitForm />
+              <InitForm email={user.email} />
             </div>
           </div>
         </div>

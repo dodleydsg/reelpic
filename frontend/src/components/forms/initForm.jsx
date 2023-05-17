@@ -72,10 +72,11 @@ export default function InitForm({ email }) {
         console.log(values);
         try {
           let token = localStorage.getItem("token");
+          console.log(token);
           let userId = localStorage.getItem("id");
           userResolver(userActions.UPDATE, {
+            token,
             data: {
-              token,
               userId,
               email: email,
               username: values.username,

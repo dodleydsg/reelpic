@@ -83,9 +83,7 @@ const update = async (req, res, next) => {
   try {
     let user =
       (await User.findOneAndUpdate(
-        {
-          email: req.body.email,
-        },
+        { email: req.body.email },
         { ...req.body, email: undefined },
         { new: true }
       )) ||
@@ -94,6 +92,12 @@ const update = async (req, res, next) => {
         { ...req.body, email: undefined },
         { new: true }
       ));
+
+    if (!user) {
+      return res.status(404).json({
+        message: "Couldn't find user",
+      });
+    }
 
     user.updated = Date.now();
     await user.save();
