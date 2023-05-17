@@ -1,5 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import userResolver from "../../resolvers/user.resolver";
+import userRoutes from "../../actions/user.actions";
 
 const initialState = {
   pending: true,
@@ -10,16 +12,9 @@ export const getUser = createAsyncThunk(
   "user/getUser",
   async ({ id, token }, thunkAPI) => {
     try {
-      let resp = await axios({
-        method: "post",
-        url: `${process.env.NEXT_PUBLIC_BACKEND_DOMAIN}/api/user`,
-        data: {
-          userId: id,
-        },
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+      let resp = await userResolver(userRoutes.ALT_READ, {
+        userId: id,
+        token,
       });
       return resp.data;
     } catch (error) {

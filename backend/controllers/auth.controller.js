@@ -22,7 +22,9 @@ const login = async (req, res) => {
       return res.status(404).send({ error: "Email and password dont't match" });
     }
 
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "15 days",
+    });
     const { _id } = user;
 
     res.cookie("token", token, {
@@ -202,6 +204,7 @@ const reset_done = async (req, res) => {
   }
   // Changes reset mode to "LOCKED"
 };
+
 
 const requireLogin = expressjwt({
   secret: process.env.JWT_SECRET,

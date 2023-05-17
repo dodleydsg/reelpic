@@ -27,12 +27,15 @@ export default function Profile() {
     try {
       const token = localStorage.getItem("token");
       const id = localStorage.getItem("id");
-      dispatch(getUser({ token: token, id: id }));
+      if (token && id) {
+        dispatch(getUser({ token, id }));
+      } else {
+        router.push("/login");
+      }
     } catch (error) {
       router.push("/login");
     }
   }, []);
-
   /// User hasn't completed the registration process
 
   const TopTab = () => (

@@ -23,7 +23,7 @@ router
   );
 
 router
-  .route("/api/user/")
+  .route("/api/user")
   .post(
     userCtrl.getUser,
     authCtrl.requireLogin,
@@ -32,8 +32,8 @@ router
   );
 
 router
-  .route("/api/follow/:_id")
-  .get(
+  .route("/api/follow/:followId")
+  .post(
     userCtrl.getUser,
     authCtrl.requireLogin,
     authCtrl.hasAuthorization,

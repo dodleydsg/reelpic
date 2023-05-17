@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import Link from "next/link";
 import * as Yup from "yup";
 import authResolver from "../../resolvers/auth.resolver";
-import authRoutes from "../../routes/auth.routes";
+import authRoutes from "../../actions/auth.actions";
 import { useRouter } from "next/router";
 
 export default function LoginForm() {
@@ -27,7 +27,7 @@ export default function LoginForm() {
             router.push("/home");
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
             // router.push("/_error");
           });
         setSubmitting(false);

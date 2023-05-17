@@ -15,7 +15,7 @@ import LoadingScreen from "../components/loadingScreen";
 import { useRouter } from "next/router";
 
 export default function Home() {
-  const router = useRouter;
+  const router = useRouter();
   const { pending, user } = useSelector((state) => state.user);
   const { addPost, addToCatalogueModal } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
@@ -24,7 +24,11 @@ export default function Home() {
     try {
       const token = localStorage.getItem("token");
       const id = localStorage.getItem("id");
-      dispatch(getUser({ token, id }));
+      if (token && id) {
+        dispatch(getUser({ token, id }));
+      } else {
+        router.push("/login");
+      }
     } catch (error) {
       router.push("/login");
     }
@@ -32,6 +36,10 @@ export default function Home() {
 
   if (pending) {
     return <LoadingScreen />;
+  }
+
+  if (user.username.trim() === "") {
+    router.push("/getting_started");
   }
 
   return (
@@ -43,7 +51,7 @@ export default function Home() {
       >
         <div className="space-y-4">
           <div className="mt-20 lg:mt-0">
-            <h3 className="text-subheading mt-3">Trending Catalogue</h3>
+            <h3 className="text-subheading mt-3">{user._id}</h3>
             <ScrollCard />
           </div>
           <div className="sticky h-auto top-0 z-[51] bg-white">

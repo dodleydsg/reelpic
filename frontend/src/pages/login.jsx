@@ -14,12 +14,12 @@ export default function Login() {
     try {
       const token = localStorage.getItem("token");
       const id = localStorage.getItem("id");
-      console.log(token, id);
+      // console.log(token, id);
       if (id && token) {
-        dispatch(getUser({ token: token, id: id }));
+        dispatch(getUser({ token, id }));
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }, []);
   if (rejected) {

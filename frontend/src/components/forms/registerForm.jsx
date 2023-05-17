@@ -2,7 +2,7 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import authResolver from "../../resolvers/auth.resolver";
-import authRoutes from "../../routes/auth.routes";
+import authRoutes from "../../actions/auth.actions";
 import { setCookie } from "../../utils/cookie";
 
 export default function RegisterForm({ googleSignIn }) {

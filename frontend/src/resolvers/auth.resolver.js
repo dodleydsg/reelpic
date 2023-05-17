@@ -1,5 +1,5 @@
 import axios from "axios";
-import authRoutes from "../routes/auth.routes";
+import authRoutes from "../actions/auth.actions";
 import { BACKEND_DOMAIN } from "./vars";
 
 export default async function authResolver(

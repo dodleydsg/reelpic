@@ -2,6 +2,7 @@ const User = require("../models/user.model");
 const extend = require("lodash");
 const { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 const resetModes = require("../helpers/resetModes");
+const notify = require("../helpers/notify");
 
 const getUser = async (req, res, next) => {
   try {
@@ -80,11 +81,20 @@ const altRead = async (req, res, next) => {
 };
 const update = async (req, res, next) => {
   try {
-    let user = await User.findOneAndUpdate(
-      { username: req.params.username },
-      req.body,
-      { new: true }
-    );
+    let user =
+      (await User.findOneAndUpdate(
+        {
+          email: req.body.email,
+        },
+        { ...req.body, email: undefined },
+        { new: true }
+      )) ||
+      (await User.findOneAndUpdate(
+        { username: req.params.username },
+        { ...req.body, email: undefined },
+        { new: true }
+      ));
+
     user.updated = Date.now();
     await user.save();
     user.hashed_password = undefined;
@@ -96,6 +106,7 @@ const update = async (req, res, next) => {
     genericErrorBlock(error, res);
   }
 };
+
 const remove = async (req, res, next) => {
   try {
     let user = req.profile;
@@ -111,7 +122,7 @@ const remove = async (req, res, next) => {
 const follow = async (req, res, next) => {
   try {
     let user = req.profile;
-    if (user._id.toString() === req.params._id.toString()) {
+    if (user._id.toString() === req.params.followId.toString()) {
       return res.json({
         message: "You can't follow yourself",
       });
