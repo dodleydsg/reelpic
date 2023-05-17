@@ -36,7 +36,13 @@ export default function Profile() {
       router.push("/login");
     }
   }, []);
-  /// User hasn't completed the registration process
+  if (pending) {
+    return <LoadingScreen />;
+  }
+  // pending should be checked before rejection else, might result in cyclic login attempts
+  if (rejected) {
+    router.push("/login");
+  }
 
   const TopTab = () => (
     <div className="sticky z-20 top-[72px] lg:top-0  py-4 bg-white">
@@ -55,9 +61,7 @@ export default function Profile() {
       </div>
     </div>
   );
-  if (pending || rejected) {
-    return <LoadingScreen />;
-  }
+  
   return (
     <>
       <Mask />

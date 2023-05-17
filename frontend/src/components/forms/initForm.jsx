@@ -72,7 +72,6 @@ export default function InitForm({ email }) {
         console.log(values);
         try {
           let token = localStorage.getItem("token");
-          console.log(token);
           let userId = localStorage.getItem("id");
           userResolver(userActions.UPDATE, {
             token,
@@ -83,7 +82,7 @@ export default function InitForm({ email }) {
               interests: values.interests,
             },
           }).then(({ data }) => {
-            console.log(data);
+            router.push("./home");
           });
         } catch (error) {
           console.log(error);

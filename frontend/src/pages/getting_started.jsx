@@ -1,24 +1,15 @@
 import Head from "next/head";
-import Link from "next/link";
-import { useState, useEffect, use } from "react";
-import InputElement from "../components/forms/input";
-import { useRouter } from "next/router";
 import { getUser } from "../store/features/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import userResolver from "../resolvers/user.resolver";
-import userActions from "../actions/user.actions";
+import { useEffect } from "react";
 import LoadingScreen from "../components/loadingScreen";
 import InitForm from "../components/forms/initForm";
-
-const MAX_STEP = 2;
+import { useRouter } from "next/router";
 
 export default function Reset() {
+  const router = useRouter();
   const { pending, user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const router = useRouter();
-  const [interests, toggleInterests] = useState("reelpic");
-  const [step, updateStep] = useState(1);
-  const [username, updateUsername] = useState("");
 
   useEffect(() => {
     try {
@@ -27,21 +18,19 @@ export default function Reset() {
       if (token && id) {
         dispatch(getUser({ token, id }));
       } else {
-        // router.push("/login");
-        console.log("Eror");
+        router.push("/login");
       }
     } catch (error) {
-      // router.push("/login");
-      console.log("Error here");
+      router.push("/login");
     }
   }, []);
   if (pending) {
     return <LoadingScreen />;
   }
 
-  // if (user.username) {
-  //   router.push("/home");
-  // }
+  if (user.username) {
+    router.push("/home");
+  }
 
   return (
     <>

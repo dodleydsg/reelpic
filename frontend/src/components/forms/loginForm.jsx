@@ -17,9 +17,11 @@ export default function LoginForm() {
           .required(),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        authResolver(authRoutes.LOGIN, "", "", {
-          email: values.email,
-          password: values.password,
+        authResolver(authRoutes.LOGIN, {
+          data: {
+            email: values.email,
+            password: values.password,
+          },
         })
           .then(({ data }) => {
             localStorage.setItem("token", data.token);

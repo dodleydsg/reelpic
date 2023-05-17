@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 
 export default function Home() {
   const router = useRouter();
-  const { pending, user } = useSelector((state) => state.user);
+  const { pending, user, rejected } = useSelector((state) => state.user);
   const { addPost, addToCatalogueModal } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
@@ -36,6 +36,10 @@ export default function Home() {
 
   if (pending) {
     return <LoadingScreen />;
+  }
+  // pending should be checked before rejection else, might result in cyclic login attempts
+  if (rejected) {
+    router.push("/login");
   }
 
   if (user.username.trim() === "") {

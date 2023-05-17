@@ -2,8 +2,9 @@ import { Formik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import authResolver from "../../resolvers/auth.resolver";
-import authRoutes from "../../actions/auth.actions";
-import { setCookie } from "../../utils/cookie";
+import authActions from "../../actions/auth.actions";
+import userActions from "../../actions/user.actions";
+import userResolver from "../../resolvers/user.resolver";
 
 export default function RegisterForm({ googleSignIn }) {
   const router = useRouter();
@@ -17,25 +18,25 @@ export default function RegisterForm({ googleSignIn }) {
           .required(),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        authResolver(authRoutes.REGISTER, "", "", {
-          email: values.email,
-          password: values.password,
+        userResolver(userActions.CREATE, {
+          data: { email: values.email, password: values.password },
         })
           .then(({ data }) => {
-            authResolver(authRoutes.LOGIN, "", "", {
-              email: values.email,
-              password: values.password,
+            authResolver(authActions.LOGIN, {
+              data: {
+                email: values.email,
+                password: values.password,
+              },
             })
               .then(({ data }) => {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("id", data._id);
+                router.push("/getting_started");
               })
               .catch((error) => {
                 router.push("/login");
-                // console.log(error);
               });
 
-            // router.push("/getting_started");
             setSubmitting(false);
           })
           .catch((error) => {
@@ -48,28 +49,6 @@ export default function RegisterForm({ googleSignIn }) {
               null;
             }
           });
-
-        // try {
-        //   const resp = await authResolver(authRoutes.REGISTER, "", "", {
-        //     email: values.email,
-        //     password: values.password,
-        //   });
-        //   console.log(resp);
-        //   localStorage.setItem("token", data.token);
-        //   router.push("/getting_started");
-        // } catch (error) {
-        //   if (error.response) {
-        //     // call error in formik
-        //     console.log(error);
-        //   } else if (error.request) {
-        //     console.log("Heollo");
-
-        //     null;
-        //   } else {
-        //     null;
-        //     console.log(error);
-        //   }
-        // }
       }}
     >
       {(formik) => (

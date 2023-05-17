@@ -1,24 +1,19 @@
 import axios from "axios";
-import authRoutes from "../actions/auth.actions";
+import authActions from "../actions/auth.actions";
 import { BACKEND_DOMAIN } from "./vars";
 
-export default async function authResolver(
-  action,
-  token = "",
-  userId = "",
-  data = {}
-) {
+export default async function authResolver(action, options) {
   try {
-    if (action === authRoutes.LOGIN) {
+    if (action === authActions.LOGIN) {
       let resp = await axios({
         method: "post",
-        data: data,
+        data: options.data,
         url: BACKEND_DOMAIN + "/auth/login",
       });
       return resp;
-    } else if (action === authRoutes.REGISTER) {
+    } else if (action === authActions.LOGOUT) {
       let resp = await axios({
-        method: "post",
+        method: "get",
         data: data,
         url: BACKEND_DOMAIN + "/api/users",
       });
