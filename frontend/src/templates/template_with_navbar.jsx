@@ -8,14 +8,13 @@ import {
   IoSettingsOutline,
   IoSettings,
   IoClose,
+  IoExitOutline,
 } from "react-icons/io5";
 import NavIcon from "../components/navBar/navIcon";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleAddPost, toggleAddCatalogue } from "../store/features/uiSlice";
 import AddPostForm from "../components/forms/addPostForm";
 import AddCatalogueForm from "../components/forms/addCatalogueForm";
-
-
 
 export default function ({ children, headerText, HeaderAside, pageTitle }) {
   const router = useRouter();
@@ -137,6 +136,9 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
                   clickCallback={() => router.push("/settings")}
                   display="Settings"
                 />
+                <span className="inline-block cursor-pointer text-danger-default/80">
+                  <IoExitOutline className="text-xl sm:text-2xl" />
+                </span>
               </div>
             </header>
           </div>
