@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 const MAX_STEP = 2;
 import { useState } from "react";
 
-export default function InitForm({ email }) {
+export default function StartingForm({ email }) {
   const router = useRouter();
   const [step, updateStep] = useState(1);
 

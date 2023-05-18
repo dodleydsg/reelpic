@@ -24,11 +24,11 @@ export default function ({
   headerText,
   HeaderAside,
   pageTitle,
-  user,
 }) {
   const router = useRouter();
   const pathname = router.pathname;
   const { addPost, addCatalogue } = useSelector((state) => state.ui);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   // trigger for opening and closing fields for adding posts

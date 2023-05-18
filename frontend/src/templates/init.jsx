@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingScreen from "../components/loadingScreen";
+import { getUser } from "../store/features/userSlice";
 
 export default function authLayout() {
   return function getLayout(page) {
@@ -12,7 +13,7 @@ export default function authLayout() {
   };
 }
 
-function Init() {
+export function Init({ children }) {
   const router = useRouter();
   const { pending, rejected, loggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function Init() {
     } catch (error) {
       router.push("/login");
     }
-  }, []);
+  }, [loggedIn]);
 
   if (pending) {
     return <LoadingScreen />;
@@ -38,4 +39,7 @@ function Init() {
   if (rejected) {
     router.push("/login");
   }
+
+  if()
+  return <>{children}</>;
 }

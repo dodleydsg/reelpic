@@ -2,20 +2,9 @@ import NavbarTemplate from "../templates/template_with_navbar";
 import TrashCard from "../components/trashCard";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
-import { getUser } from "../store/features/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingScreen from "../components/loadingScreen";
-import { useEffect } from "react";
+import { CompleteLogin } from "../components/requireLogin";
 
-export default function Trash() {
-  const { pending, user } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
-  if (pending) {
-    return <LoadingScreen />;
-  }
+function Trash() {
   return (
     <>
       <NavbarTemplate
@@ -38,3 +27,10 @@ export default function Trash() {
     </>
   );
 }
+
+export default () => (
+  <CompleteLogin>
+    <Trash />
+  </CompleteLogin>
+);
+

@@ -6,19 +6,11 @@ import Masonry from "../components/masonry/masonry";
 import ExploreSearchModal from "../components/modal/exploreSearchModal";
 import { toggleExploreModal } from "../store/features/uiSlice";
 import { useDispatch, useSelector } from "react-redux";
-import LoadingScreen from "../components/loadingScreen";
-import { getUser } from "../store/features/userSlice";
-import { useEffect } from "react";
+import { CompleteLogin } from "../components/requireLogin";
 
-export default function Explore() {
+function Explore() {
   const dispatch = useDispatch();
-  const { pending, user } = useSelector((state) => state.user);
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
-  if (pending) {
-    <LoadingScreen />;
-  }
+
   return (
     <>
       <ExploreSearchModal />
@@ -40,3 +32,10 @@ export default function Explore() {
     </>
   );
 }
+
+export default () => (
+  <CompleteLogin>
+    <Explore />
+  </CompleteLogin>
+);
+

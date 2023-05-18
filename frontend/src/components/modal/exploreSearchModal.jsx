@@ -14,7 +14,9 @@ export default function ExploreSearchModal({ hidden }) {
   const exploreModalRef = useRef();
 
   useEffect(() => {
-    exploreModalRef.current.classList.toggle("translate-y-full");
+    if (exploreModal) {
+      exploreModalRef.current.classList.toggle("translate-y-full");
+    }
   }, [exploreModal]);
 
   return (

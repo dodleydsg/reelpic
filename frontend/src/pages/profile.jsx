@@ -10,39 +10,15 @@ import { IoChevronBack } from "react-icons/io5";
 import { useState } from "react";
 import food from "../assets/images/food.jpg";
 import Image from "next/image";
-import { getUser } from "../store/features/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import LoadingScreen from "../components/loadingScreen";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { CompleteLogin } from "../components/requireLogin";
 
 const TABS = ["posts", "catalogues"];
 
-export default function Profile() {
-  const { pending, rejected, user } = useSelector((state) => state.user);
+function Profile() {
+  const { user } = useSelector((state) => state.user);
   const [activeTab, toggleTab] = useState("posts");
   const router = useRouter();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    try {
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("id");
-      if (token && id) {
-        dispatch(getUser({ token, id }));
-      } else {
-        router.push("/login");
-      }
-    } catch (error) {
-      router.push("/login");
-    }
-  }, []);
-  if (pending) {
-    return <LoadingScreen />;
-  }
-  // pending should be checked before rejection else, might result in cyclic login attempts
-  if (rejected) {
-    router.push("/login");
-  }
 
   const TopTab = () => (
     <div className="sticky z-20 top-[72px] lg:top-0  py-4 bg-white">
@@ -61,7 +37,7 @@ export default function Profile() {
       </div>
     </div>
   );
-  
+
   return (
     <>
       <Mask />
@@ -172,3 +148,10 @@ export default function Profile() {
     </>
   );
 }
+
+export default () => (
+  <CompleteLogin>
+    <Profile />
+  </CompleteLogin>
+);
+

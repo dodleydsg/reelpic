@@ -30,11 +30,17 @@ const userSlice = createSlice({
     setLoggedIn: (state, { payload }) => {
       state.loggedIn = payload;
     },
+    updateCatalogues: (state, { payload }) => {
+      state.catalogues = [...state.catalogues, payload];
+    },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+      .addCase(getUser.fulfilled, (state, { payload }) => {
+        state.user = payload;
+        state.catalogues = payload.catalogues;
+        state.notifications = payload.notifications;
+        state.posts = payload.posts;
         state.pending = false;
         state.rejected = false;
         state.loggedIn = true;
@@ -43,7 +49,6 @@ const userSlice = createSlice({
         state.pending = true;
       })
       .addCase(getUser.rejected, (state, action) => {
-        // console.log(action);
         state.pending = false;
         state.rejected = true;
       });

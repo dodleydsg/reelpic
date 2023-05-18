@@ -1,36 +1,10 @@
 import Head from "next/head";
-import { getUser } from "../store/features/userSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import LoadingScreen from "../components/loadingScreen";
-import InitForm from "../components/forms/initForm";
-import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { PartialLogin } from "../components/requireLogin";
+import StartingForm from "../components/forms/startingForm";
 
-export default function Reset() {
-  const router = useRouter();
-  const { pending, user } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    try {
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("id");
-      if (token && id) {
-        dispatch(getUser({ token, id }));
-      } else {
-        router.push("/login");
-      }
-    } catch (error) {
-      router.push("/login");
-    }
-  }, []);
-  if (pending) {
-    return <LoadingScreen />;
-  }
-
-  if (user.username) {
-    router.push("/home");
-  }
+function GettingStarted() {
+  const { user } = useSelector((state) => state.user);
 
   return (
     <>
@@ -56,7 +30,7 @@ export default function Reset() {
                 </div>
               </div>
 
-              <InitForm email={user.email} />
+              <StartingForm email={user.email} />
             </div>
           </div>
         </div>
@@ -64,3 +38,9 @@ export default function Reset() {
     </>
   );
 }
+
+export default () => (
+  <PartialLogin>
+    <GettingStarted />
+  </PartialLogin>
+);

@@ -10,20 +10,10 @@ import AddCatalogueForm from "../components/forms/addCatalogueForm";
 import CatalogueSearchModal from "../components/modal/catalogueSearchModal";
 import { toggleCatalogueModal } from "../store/features/uiSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import LoadingScreen from "../components/loadingScreen";
-import { getUser } from "../store/features/userSlice";
+import { CompleteLogin } from "../components/requireLogin";
 
-export default function Catalogue() {
-  const { pending, user } = useSelector((state) => state.user);
+function Catalogue() {
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUser());
-  }, []);
-  if (pending) {
-    return <LoadingScreen />;
-  }
   return (
     <>
       <CatalogueSearchModal />
@@ -96,3 +86,9 @@ export default function Catalogue() {
     </>
   );
 }
+
+export default () => (
+  <CompleteLogin>
+    <Catalogue />
+  </CompleteLogin>
+);

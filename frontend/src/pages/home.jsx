@@ -1,57 +1,25 @@
 import ScrollCard from "../components/scrollCard";
-
 import Post from "../components/post/post";
 import NavbarTemplate from "../templates/template_with_navbar";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import { IoAdd, IoClose } from "react-icons/io5";
 import AddPostForm from "../components/forms/addPostForm";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleAddPost } from "../store/features/uiSlice";
-import { getUser } from "../store/features/userSlice";
-import LoadingScreen from "../components/loadingScreen";
 import { useRouter } from "next/router";
+import { CompleteLogin } from "../components/requireLogin";
 
-export default function Home() {
+function Home() {
   const router = useRouter();
-  const { pending, user, rejected, loggedIn } = useSelector(
-    (state) => state.user
-  );
   const { addPost, addToCatalogueModal } = useSelector((state) => state.ui);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    try {
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("id");
-      if (token && id) {
-        dispatch(getUser({ token, id }));
-      } else {
-        router.push("/login");
-      }
-    } catch (error) {
-      router.push("/login");
-    }
-  }, [loggedIn]);
-
-  if (pending) {
-    return <LoadingScreen />;
-  }
-  // pending should be checked before rejection else, might result in cyclic login attempts
-  if (rejected) {
-    router.push("/login");
-  }
-
-  if (user.username.trim() === "") {
-    router.push("/getting_started");
-  }
 
   return (
     <>
       <NavbarTemplate
-        user={user}
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Home"
         pageTitle="Home for all pics and stories"
@@ -104,3 +72,9 @@ export default function Home() {
     </>
   );
 }
+
+export default () => (
+  <CompleteLogin>
+    <Home />
+  </CompleteLogin>
+);

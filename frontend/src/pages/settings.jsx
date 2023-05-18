@@ -3,14 +3,14 @@ import InputElement from "../components/forms/input";
 import NavbarTemplate from "../templates/template_with_navbar";
 import { useState } from "react";
 import { MdClose } from "react-icons/md";
-import { IoEye } from "react-icons/io5";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import UpdatePasswordForm from "../components/forms/updatePasswordForm";
+import { CompleteLogin } from "../components/requireLogin";
 
 const TABS = ["profile", "password", "display"];
 
-export default function Settings() {
+function Settings() {
   const [activeTab, toggleTab] = useState("profile");
   const [interests, updateInterest] = useState([
     "cinema",
@@ -208,3 +208,9 @@ export default function Settings() {
     </>
   );
 }
+
+export default () => (
+  <CompleteLogin>
+    <Settings />
+  </CompleteLogin>
+);
