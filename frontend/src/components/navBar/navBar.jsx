@@ -27,13 +27,14 @@ import {
   IoExitOutline,
 } from "react-icons/io5";
 
-
-
 import NavIcon from "./navIcon";
 import NavbarProfile from "./navBarProfile";
 import profile from "../../assets/images/Profile1.png";
+import authActions from "../../actions/auth.actions";
+import authResolver from "../../resolvers/auth.resolver";
+import { setLoggedIn } from "../../store/features/userSlice";
 
-export default function NavBar() {
+export default function NavBar({ user }) {
   const dispatch = useDispatch();
   const router = useRouter();
   const { pathname } = router;
@@ -172,13 +173,20 @@ export default function NavBar() {
           />
         </div>
         <div>
-          <Link
-            href="#"
-            className=" flex justify-center lg:justify-start items-start gap-2 w-full text-lg text-danger-default font-medium"
+          <span
+            onClick={() => {
+              authResolver(authActions.LOGOUT, {
+                data: {
+                  userId: user._id,
+                },
+              });
+              dispatch(setLoggedIn(false));
+            }}
+            className="cursor-pointer flex justify-center lg:justify-start items-start gap-2 w-full text-lg text-danger-default font-medium"
           >
             <IoExitOutline className="text-2xl" />
             <p className="text-xl hidden lg:block text-dark-default">Logout</p>
-          </Link>
+          </span>
         </div>
       </div>
     </>

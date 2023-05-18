@@ -8,7 +8,7 @@ import { getUser } from "../store/features/userSlice";
 
 export default function Login() {
   const router = useRouter();
-  const { rejected } = useSelector((state) => state.user);
+  const { loggedIn } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
     try {
@@ -22,7 +22,7 @@ export default function Login() {
       // console.log(error);
     }
   }, []);
-  if (rejected) {
+  if (!loggedIn) {
     return (
       <>
         <Head>

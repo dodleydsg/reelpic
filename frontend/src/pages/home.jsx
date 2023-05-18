@@ -16,7 +16,9 @@ import { useRouter } from "next/router";
 
 export default function Home() {
   const router = useRouter();
-  const { pending, user, rejected } = useSelector((state) => state.user);
+  const { pending, user, rejected, loggedIn } = useSelector(
+    (state) => state.user
+  );
   const { addPost, addToCatalogueModal } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
 
@@ -32,7 +34,7 @@ export default function Home() {
     } catch (error) {
       router.push("/login");
     }
-  }, []);
+  }, [loggedIn]);
 
   if (pending) {
     return <LoadingScreen />;
@@ -49,6 +51,7 @@ export default function Home() {
   return (
     <>
       <NavbarTemplate
+        user={user}
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Home"
         pageTitle="Home for all pics and stories"

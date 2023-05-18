@@ -12,10 +12,12 @@ export default async function authResolver(action, options) {
       });
       return resp;
     } else if (action === authActions.LOGOUT) {
+      localStorage.clear("token");
+      localStorage.clear("id");
       let resp = await axios({
         method: "get",
-        data: data,
-        url: BACKEND_DOMAIN + "/api/users",
+        data: options.data,
+        url: BACKEND_DOMAIN + "/auth/logout",
       });
       return resp;
     }

@@ -1,11 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
 import userResolver from "../../resolvers/user.resolver";
 import userRoutes from "../../actions/user.actions";
 
 const initialState = {
   pending: true,
   rejected: true,
+  loggedIn: false,
 };
 
 export const getUser = createAsyncThunk(
@@ -26,13 +26,18 @@ export const getUser = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setLoggedIn: (state, { payload }) => {
+      state.loggedIn = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUser.fulfilled, (state, action) => {
         state.user = action.payload;
         state.pending = false;
         state.rejected = false;
+        state.loggedIn = true;
       })
       .addCase(getUser.pending, (state) => {
         state.pending = true;

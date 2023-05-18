@@ -15,8 +15,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleAddPost, toggleAddCatalogue } from "../store/features/uiSlice";
 import AddPostForm from "../components/forms/addPostForm";
 import AddCatalogueForm from "../components/forms/addCatalogueForm";
+import { setLoggedIn } from "../store/features/userSlice";
+import authActions from "../actions/auth.actions";
+import authResolver from "../resolvers/auth.resolver";
 
-export default function ({ children, headerText, HeaderAside, pageTitle }) {
+export default function ({
+  children,
+  headerText,
+  HeaderAside,
+  pageTitle,
+  user,
+}) {
   const router = useRouter();
   const pathname = router.pathname;
   const { addPost, addCatalogue } = useSelector((state) => state.ui);
@@ -97,7 +106,7 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
           addPost || addCatalogue ? "overflow-hidden lg:overflow-auto" : ""
         }`}
       >
-        <NavBar />
+        <NavBar user={user} />
         <div
           id="mainContent"
           className="lg:col-span-3 overflow-y-visible lg:overflow-y-scroll pb-40  relative gap-4"
@@ -136,7 +145,17 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
                   clickCallback={() => router.push("/settings")}
                   display="Settings"
                 />
-                <span className="inline-block cursor-pointer text-danger-default/80">
+                <span
+                  className="inline-block cursor-pointer text-danger-default/80"
+                  onClick={() => {
+                    authResolver(authActions.LOGOUT, {
+                      data: {
+                        userId: user._id,
+                      },
+                    });
+                    dispatch(setLoggedIn(false));
+                  }}
+                >
                   <IoExitOutline className="text-xl sm:text-2xl" />
                 </span>
               </div>
