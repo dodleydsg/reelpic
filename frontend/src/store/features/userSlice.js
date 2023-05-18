@@ -55,6 +55,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setLoggedIn } = userSlice.actions;
+export const { setLoggedIn, updateCatalogues } = userSlice.actions;
 
 export default userSlice.reducer;

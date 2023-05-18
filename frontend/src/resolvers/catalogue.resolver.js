@@ -1,63 +1,59 @@
-import catalogueRoutes from "./catalogue.routes";
+import catalogueActions from "../actions/catalogue.actions";
 import axios from "axios";
 import { AUTH_TOKEN, BACKEND_DOMAIN } from "./vars";
 
-export default async function catalogueResolver(
-  action,
-  token,
-  userId = "",
-  data = {},
-  catalogueId = ""
-) {
+export default async function catalogueResolver(action, userId, token, data) {
   try {
-    if (action === catalogueRoutes.CREATE_CATALOGUE) {
+    if (action === catalogueActions.CREATE_CATALOGUE) {
       let resp = await axios({
         method: "post",
-        url: BACKEND_DOMAIN + "/api/catalogue/",
+        url: BACKEND_DOMAIN + "/api/catalogues",
+        data: { ...data, userId },
         headers: {
           Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;
-    } else if (action === catalogueRoutes.DELETE_CATALOGUE) {
+    } else if (action === catalogueActions.DELETE_CATALOGUE) {
       let resp = await axios({
         method: "delete",
-        url: BACKEND_DOMAIN + `/api/catalogue/${catalogueId}`,
+        url: BACKEND_DOMAIN + `/api/catalogue/${options.catalogueId}`,
         headers: {
-          Authorization: AUTH_TOKEN,
+          Authorization: AUTH_TOKEN(options.token),
         },
       });
       return resp;
-    } else if (action === catalogueRoutes.UPDATE_CATALOGUE) {
+    } else if (action === catalogueActions.UPDATE_CATALOGUE) {
       let resp = await axios({
         method: "put",
-        url: BACKEND_DOMAIN + `/api/catalogue/${catalogueId}`,
+        data: options.data,
+        url: BACKEND_DOMAIN + `/api/catalogue/${options.catalogueId}`,
         headers: {
-          Authorization: AUTH_TOKEN,
+          Authorization: AUTH_TOKEN(options.token),
         },
       });
       return resp;
-    } else if (action === catalogueRoutes.READ_CATALOGUE) {
+    } else if (action === catalogueActions.READ_CATALOGUE) {
       let resp = await axios({
         method: "get",
-        url: BACKEND_DOMAIN + `api/catalogue/${catalogueId}`,
+        url: BACKEND_DOMAIN + `api/catalogue/${options.catalogueId}`,
         headers: {
-          Authorization: AUTH_TOKEN,
+          Authorization: AUTH_TOKEN(options.token),
         },
       });
       return resp;
-    } else if (action === catalogueRoutes.LIST_CATALOGUES) {
+    } else if (action === catalogueActions.LIST_CATALOGUES) {
       let resp = await axios({
         method: "get",
         url: BACKEND_DOMAIN + "api/catalogue/",
         headers: {
-          Authorization: AUTH_TOKEN,
+          Authorization: AUTH_TOKEN(options.token),
         },
       });
-      return resp
+      return resp;
     }
   } catch (error) {
-    throw(error)
+    throw error;
   }
   // catalogue routers
 }

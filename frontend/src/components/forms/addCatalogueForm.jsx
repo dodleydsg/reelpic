@@ -1,8 +1,13 @@
+import catalogueResolver from "../../resolvers/catalogue.resolver";
+import catalogueActions from "../../actions/catalogue.actions";
+import { updateCatalogues } from "../../store/features/userSlice";
 import InputElement from "./input";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { useDispatch } from "react-redux";
 
 export default function AddCatalogueForm() {
+  const dispatch = useDispatch();
   return (
     <Formik
       initialValues={{
@@ -15,11 +20,21 @@ export default function AddCatalogueForm() {
           .max(3000, "Please a concise description less than 3000 characters")
           .required("A little description for the title will help"),
       })}
-      onSubmit={(values, { setSubmitting, validate }) => {
-        setTimeout(() => {
-          console.log(JSON.stringify(values, null, 2));
-          // Call external API here
-        }, 400);
+      onSubmit={(values, { setSubmitting, resetForm }) => {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("id");
+        catalogueResolver(catalogueActions.CREATE_CATALOGUE, userId, token, {
+          title: values.title,
+          description: values.description,
+        })
+          .then(({ data }) => {
+            dispatch(updateCatalogues(data._id));
+          })
+          .catch((error) => {
+            // console.log(error.response.data.error);
+          });
+        resetForm();
+        setSubmitting(false);
       }}
     >
       {(formik) => (
@@ -61,7 +76,11 @@ export default function AddCatalogueForm() {
               </div>
             ) : null}
           </div>
-          <button type="submit" className="btn-primary hover:bg-[#4900EB]">
+          <button
+            disabled={formik.isSubmitting}
+            type="submit"
+            className="btn-primary hover:bg-[#4900EB] disabled:cursor-not-allowed disabled:bg-gray-400"
+          >
             Confirm
           </button>
         </form>

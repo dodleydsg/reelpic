@@ -44,10 +44,7 @@ const create = async (req, res, next) => {
     await user.save();
     let description = `You created a catalogue with title <b>${catalogue.title}</b>`;
     await notify(req.profile._id, description);
-    return res.status(200).json({
-      message: "Added catalogue successfully",
-      catalogue,
-    });
+    return res.status(200).json(catalogue);
   } catch (error) {
     genericErrorBlock(error, res);
   }
