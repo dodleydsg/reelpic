@@ -102,15 +102,12 @@ export default function ({
       {/* AddCatalogue for mobile end */}
       <Mask />
       <div
-        className={`relative p-4 mx-auto gap-6 lg:grid lg:grid-cols-4  max-w-[1536px] ${
-          addPost || addCatalogue ? "overflow-hidden lg:overflow-auto" : ""
+        className={`relative py-4 px-4 lg:py-0 mx-auto gap-6 lg:grid lg:grid-cols-4  max-w-[1536px] ${
+          addPost || addCatalogue ? "overflow-hidden lg:overflow-hidden" : ""
         }`}
       >
         <NavBar user={user} />
-        <div
-          id="mainContent"
-          className="lg:col-span-3 overflow-y-visible lg:overflow-y-scroll pb-40  relative gap-4"
-        >
+        <div id="mainContent" className="lg:col-span-3 pb-40  relative gap-4">
           <div className="space-y-4 ">
             <div className="space-y-4 mt-[56px] lg:mt-0">{children}</div>
           </div>

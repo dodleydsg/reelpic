@@ -6,7 +6,7 @@ const initialState = {
   addCatalogue: false,
   exploreModal: false,
   catalogueModal: false,
-  addToCatalogueModal: false,
+  bookmarkModal: false,
 };
 
 const uiSlice = createSlice({
@@ -31,8 +31,8 @@ const uiSlice = createSlice({
     toggleCatalogueModal: (state) => {
       state.catalogueModal = !state.catalogueModal;
     },
-    toggleAddToCatalogueModal: (state) => {
-      state.addToCatalogueModal = !state.addToCatalogueModal;
+    toggleBookmarkModal: (state) => {
+      state.bookmarkModal = !state.bookmarkModal;
     },
   },
 });
@@ -44,7 +44,7 @@ export const {
   toggleAddCatalogue,
   toggleExploreModal,
   toggleCatalogueModal,
-  toggleAddToCatalogueModal,
+  toggleBookmarkModal,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

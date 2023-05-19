@@ -9,9 +9,9 @@ import {
   IoChevronBack,
   IoChevronForward,
 } from "react-icons/io5";
-import AddToCatalogueModal from "../modal/addToCatalogueModal";
+import BookmarkModal from "../modal/bookmarkModal";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleAddToCatalogueModal } from "@/components/store/features/uiSlice";
+import { toggleBookmarkModal } from "@/components/store/features/uiSlice";
 
 export default function Carousel() {
   const { loggedIn } = useSelector((state) => state.auth);
@@ -64,7 +64,7 @@ export default function Carousel() {
 
   return (
     <>
-      <AddToCatalogueModal />
+      <BookmarkModal />
 
       <section className="bg-none h-[60vh] py-5 w-full relative overflow-hidden flex p-4 bg-gray-100 ">
         <button
@@ -114,7 +114,7 @@ export default function Carousel() {
         {loggedIn ? (
           <div className="relative w-full flex justify-center">
             <button
-              onClick={() => dispatch(toggleAddToCatalogueModal())}
+              onClick={() => dispatch(toggleBookmarkModal())}
               className="p-2   hover:bg-gray-300 transition duration-200 border-gray-300 bg-gray-200 border rounded"
             >
               <IoBookmarkOutline className="text-lg" />

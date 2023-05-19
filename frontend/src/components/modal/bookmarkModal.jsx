@@ -2,30 +2,30 @@ import SearchInput from "../forms/searchInput";
 import { IoClose } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import { toggleAddToCatalogueModal } from "@/components/store/features/uiSlice";
+import { toggleBookmarkModal } from "@/components/store/features/uiSlice";
 import InputElement from "../forms/input";
 
-export default function AddToCatalogueModal() {
-  const { addToCatalogueModal } = useSelector((state) => state.ui);
+export default function BookmarkModal() {
+  const { bookmarkModal } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
-  const addToCatalogueModalRef = useRef();
+  const bookmarkModalRef = useRef();
   const [searchResults, updateSearchResults] = useState([]);
 
   useEffect(() => {
-    if (addToCatalogueModal) {
-      addToCatalogueModalRef.current.classList.toggle("translate-y-full");
+    if (bookmarkModal) {
+      bookmarkModalRef.current.classList.toggle("translate-y-full");
     }
-  }, [addToCatalogueModal]);
+  }, [bookmarkModal]);
 
   return (
     <div
-      ref={addToCatalogueModalRef}
+      ref={bookmarkModalRef}
       className="-top-full max-w-full origin-top transition ease-in-out duration-300 inset-0 bg-black/70 z-[53] backdrop-blur h-full flex items-center justify-center w-full p-4 lg:p-8 fixed"
     >
       <div className="w-full max-w-4xl h-4/5 bg-white p-4 rounded-lg">
         <div className="flex items-center justify-end">
           <IoClose
-            onClick={() => dispatch(toggleAddToCatalogueModal())}
+            onClick={() => dispatch(toggleBookmarkModal())}
             className="cursor-pointer text-xl text-danger-default/80 hover:text-danger-default transition duration-200"
           />
         </div>

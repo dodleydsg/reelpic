@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(compress());
 app.use(helmet());
 app.use(cors({ credentials: true, origin: "http://localhost:3000" }));
-app.use(morgan("dev"));
+app.use(morgan(process.env.MODE === "DEV" ? "dev" : "short"));
 
 // Routes
 
