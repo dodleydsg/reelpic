@@ -13,7 +13,7 @@ import { CompleteLogin } from "../components/requireLogin";
 
 function Home() {
   const router = useRouter();
-  const { addPost, addToCatalogueModal } = useSelector((state) => state.ui);
+  const { addPost } = useSelector((state) => state.ui);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 

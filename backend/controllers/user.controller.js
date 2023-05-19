@@ -6,7 +6,9 @@ const notify = require("../helpers/notify");
 
 const getUser = async (req, res, next) => {
   try {
-    let user = await User.findById(req.cookies._id || req.body.userId);
+    let user = await User.findById(
+      req.cookies._id || req.body.userId || req.query.userId
+    );
     if (!user) {
       return res.status(404).json({
         error: "User not found",

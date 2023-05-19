@@ -18,6 +18,7 @@ export default async function catalogueResolver(action, userId, token, data) {
       let resp = await axios({
         method: "delete",
         url: BACKEND_DOMAIN + `/api/catalogue/${options.catalogueId}`,
+        data: {userId},
         headers: {
           Authorization: AUTH_TOKEN(options.token),
         },
@@ -26,7 +27,7 @@ export default async function catalogueResolver(action, userId, token, data) {
     } else if (action === catalogueActions.UPDATE_CATALOGUE) {
       let resp = await axios({
         method: "put",
-        data: options.data,
+        data: {...options.data, userId},
         url: BACKEND_DOMAIN + `/api/catalogue/${options.catalogueId}`,
         headers: {
           Authorization: AUTH_TOKEN(options.token),
