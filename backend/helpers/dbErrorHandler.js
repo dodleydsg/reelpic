@@ -3,6 +3,9 @@ const getErrorMessage = (err) => {
   if (err.code) {
     switch (err.code) {
       case 11000:
+        
+        return `${Object.keys(err.keyValue)[0]} already exists`;
+
       case 11001:
         message = getUniqueErrorMessage(err);
         break;

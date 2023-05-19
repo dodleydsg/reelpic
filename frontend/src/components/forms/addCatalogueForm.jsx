@@ -1,10 +1,11 @@
 import catalogueResolver from "../../resolvers/catalogue.resolver";
 import catalogueActions from "../../actions/catalogue.actions";
-import { updateCatalogues } from "../../store/features/userSlice";
+import { updateCatalogueList } from "../../store/features/userSlice";
 import InputElement from "./input";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
+import { toggleSuccessModal } from "../../store/features/uiSlice";
 
 export default function AddCatalogueForm() {
   const dispatch = useDispatch();
@@ -28,7 +29,8 @@ export default function AddCatalogueForm() {
           description: values.description,
         })
           .then(({ data }) => {
-            dispatch(updateCatalogues(data._id));
+            dispatch(updateCatalogueList(data._id));
+            dispatch(toggleSuccessModal());
           })
           .catch((error) => {
             // console.log(error.response.data.error);

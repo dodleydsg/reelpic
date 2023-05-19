@@ -48,7 +48,6 @@ export function PartialLogin({ children }) {
     (state) => state.user
   );
   const dispatch = useDispatch();
-  const { username } = user;
 
   useEffect(() => {
     try {
@@ -71,6 +70,9 @@ export function PartialLogin({ children }) {
   else if (rejected) {
     router.push("/login");
     // partial login doesn't check for email availability
+  }else if (user.username.trim()) {
+      router.push("/home");
+    
   } else {
     return <>{children}</>;
   }

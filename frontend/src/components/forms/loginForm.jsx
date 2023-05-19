@@ -11,7 +11,13 @@ export default function LoginForm() {
     <Formik
       initialValues={{ email: "", password: "" }}
       validationSchema={Yup.object({
-        email: Yup.string().email("Invalid email address").required(),
+        email: Yup.string()
+          .email("Please enter a valid email")
+          .matches(
+            /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+            "Please enter a valid email"
+          )
+          .required(),
         password: Yup.string()
           .min(8, "Must be atleast 15 characters")
           .required(),
@@ -29,7 +35,7 @@ export default function LoginForm() {
             router.push("/home");
           })
           .catch((error) => {
-            // console.log(error);
+            console.log(error);
             // router.push("/_error");
           });
         setSubmitting(false);

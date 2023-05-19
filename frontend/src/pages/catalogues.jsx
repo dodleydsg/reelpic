@@ -11,9 +11,47 @@ import CatalogueSearchModal from "../components/modal/catalogueSearchModal";
 import { toggleCatalogueModal } from "../store/features/uiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { CompleteLogin } from "../components/requireLogin";
+import catalogueResolver from "../resolvers/catalogue.resolver";
+import catalogueActions from "../actions/catalogue.actions";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 function Catalogue() {
+  const { catalogueList } = useSelector((state) => state.user);
+  const token = localStorage.getItem("token");
+  const userId = localStorage.getItem("id");
   const dispatch = useDispatch();
+  const [catalogues, updateCatalogues] = useState([]);
+
+  // useEffect(() => {
+  //   catalogueList.map(async (val) => {
+  //     let { data } = await catalogueResolver(
+  //       catalogueActions.LIST_CATALOGUES,
+  //       userId,
+  //       token,
+  //     );
+  //     updateCatalogues(data)
+
+  // }, [catalogueList])
+
+  useEffect(() => {
+    const getCatalogues = async () => {
+      const holder = [];
+      for (let i = 0; i < catalogueList.length; i++) {
+        let { data } = await catalogueResolver(
+          catalogueActions.READ_CATALOGUE,
+          userId,
+          token,
+          { catalogueId: catalogueList[i] }
+        );
+        holder.push(data);
+      }
+      updateCatalogues(holder);
+    };
+
+    getCatalogues();
+  }, [catalogueList]);
+
   return (
     <>
       <CatalogueSearchModal />
@@ -24,14 +62,6 @@ function Catalogue() {
       >
         <div className="px-4 lg:grid lg:grid-cols-3 gap-4">
           <div className="col-span-2 space-y-4">
-            {/* <form className="mt-4 py-4">
-              <label className="sr-only">Search catalogues</label>
-              <InputElement
-                type="text"
-                placeholder="Search catalogues"
-                className="lg:w-1/2 w-full"
-              />
-            </form> */}
             <form className="mt-4 py-4 relative">
               <div
                 onClick={() => dispatch(toggleCatalogueModal())}
@@ -42,39 +72,17 @@ function Catalogue() {
             </form>
             <h3 className="font-bold text-xl">My catalogues</h3>
             <div className="grid grid-cols-2 gap-2 ">
-              <div className="relative hover:cursor-pointer col-span-1  hover:scale-95 transition duration-300">
-                <div className="absolute inset-0 from-black/30 rounded-md to-black/60 bg-gradient-to-b"></div>
-                <div className="absolute pb-2 sm:pb-4 z-10 inset-0 bg-none text-white flex flex-col items-center justify-end">
-                  <p className="text-body">Family</p>
-                </div>
-                <Image
-                  alt="jj"
-                  src={template1}
-                  className="h-[150px] object-cover rounded-md w-full"
-                />
-              </div>
-              <div className="relative hover:cursor-pointer col-span-1  hover:scale-95 transition duration-300">
-                <div className="absolute inset-0 from-black/30 rounded-md to-black/60 bg-gradient-to-b"></div>
-                <div className="absolute pb-2 sm:pb-4 z-10 inset-0 bg-none text-white flex flex-col items-center justify-end">
-                  <p className="text-body">Design</p>
-                </div>
-                <Image
-                  alt="jj"
-                  src={template2}
-                  className="h-[150px] object-cover rounded-md w-full"
-                />
-              </div>
-              <div className="relative hover:cursor-pointer col-span-1  hover:scale-95 transition duration-300">
-                <div className="absolute inset-0 from-black/30 rounded-md to-black/60 bg-gradient-to-b"></div>
-                <div className="absolute pb-2 sm:pb-4 z-10 inset-0 bg-none text-white flex flex-col items-center justify-end">
-                  <p className="text-body">Nature</p>
-                </div>
-                <Image
-                  alt="jj"
-                  src={template3}
-                  className="h-[150px] object-cover rounded-md w-full"
-                />
-              </div>
+              {catalogues.map((val) => {
+                return (
+                  <Link
+                    href={`/catalogue/${val._id}`}
+                    key={val._id}
+                    className="p-4 hover:bg-primary-default/80 hover:text-white transition bg-light-default border border-primary-default/25 rounded"
+                  >
+                    {val.title}
+                  </Link>
+                );
+              })}
             </div>
           </div>
           <div className="col-span-1 hidden lg:block space-y-2">

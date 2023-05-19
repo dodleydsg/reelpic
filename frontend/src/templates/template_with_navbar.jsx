@@ -18,13 +18,9 @@ import AddCatalogueForm from "../components/forms/addCatalogueForm";
 import { setLoggedIn } from "../store/features/userSlice";
 import authActions from "../actions/auth.actions";
 import authResolver from "../resolvers/auth.resolver";
+import SuccessModal from "../components/modal/successModal";
 
-export default function ({
-  children,
-  headerText,
-  HeaderAside,
-  pageTitle,
-}) {
+export default function ({ children, headerText, HeaderAside, pageTitle }) {
   const router = useRouter();
   const pathname = router.pathname;
   const { addPost, addCatalogue } = useSelector((state) => state.ui);
@@ -65,98 +61,101 @@ export default function ({
         <meta name="viewport" content="width=device-width" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       </Head>
-      {/* AddPost for mobile */}
+      <div>
+        {/* AddPost for mobile */}
 
-      <AddContentContainer>
-        <div className="space-y-4 h-full">
+        <AddContentContainer>
+          <div className="space-y-4 h-full">
+            <div className="flex items-center justify-between">
+              <h2 className="font-bold text-2xl">Create post</h2>
+              <span
+                onClick={() => dispatch(toggleAddPost(false))}
+                className="p-2 border rounded border-danger-default/10 inline-block hover:bg-danger-default/20 transition duration-200"
+              >
+                <IoClose className="w-6 cursor-pointer h-auto text-danger-default/60 " />
+              </span>
+            </div>
+            <AddPostForm />
+          </div>
+        </AddContentContainer>
+
+        {/* AddPost for mobile end */}
+
+        {/* AddCatalogue for Mobile */}
+
+        <AddContentContainer type="catalogue">
           <div className="flex items-center justify-between">
-            <h2 className="font-bold text-2xl">Create post</h2>
+            <h2 className="font-bold text-2xl">Create catalogue</h2>
             <span
-              onClick={() => dispatch(toggleAddPost(false))}
+              onClick={() => dispatch(toggleAddCatalogue(false))}
               className="p-2 border rounded border-danger-default/10 inline-block hover:bg-danger-default/20 transition duration-200"
             >
               <IoClose className="w-6 cursor-pointer h-auto text-danger-default/60 " />
             </span>
           </div>
-          <AddPostForm />
-        </div>
-      </AddContentContainer>
+          <AddCatalogueForm />
+        </AddContentContainer>
 
-      {/* AddPost for mobile end */}
-
-      {/* AddCatalogue for Mobile */}
-
-      <AddContentContainer type="catalogue">
-        <div className="flex items-center justify-between">
-          <h2 className="font-bold text-2xl">Create catalogue</h2>
-          <span
-            onClick={() => dispatch(toggleAddCatalogue(false))}
-            className="p-2 border rounded border-danger-default/10 inline-block hover:bg-danger-default/20 transition duration-200"
-          >
-            <IoClose className="w-6 cursor-pointer h-auto text-danger-default/60 " />
-          </span>
-        </div>
-        <AddCatalogueForm />
-      </AddContentContainer>
-
-      {/* AddCatalogue for mobile end */}
-      <Mask />
-      <div
-        className={`relative py-4 px-4 lg:py-0 mx-auto gap-6 lg:grid lg:grid-cols-4  max-w-[1536px] ${
-          addPost || addCatalogue ? "overflow-hidden lg:overflow-hidden" : ""
-        }`}
-      >
-        <NavBar user={user} />
-        <div id="mainContent" className="lg:col-span-3 pb-40  relative gap-4">
-          <div className="space-y-4 ">
-            <div className="space-y-4 mt-[56px] lg:mt-0">{children}</div>
-          </div>
-          <div className="fixed z-50 top-0 inset-x-0 shadow bg-white ">
-            <header className="p-4 flex lg:hidden justify-between items-center bg-white ">
-              <div className="flex gap-3 items-center">
-                {/* 
+        {/* AddCatalogue for mobile end */}
+        <Mask />
+        <SuccessModal />
+        <div
+          className={`relative py-4 px-4 lg:py-0 mx-auto gap-6 lg:grid lg:grid-cols-4  max-w-[1536px] ${
+            addPost || addCatalogue ? "overflow-hidden lg:overflow-hidden" : ""
+          }`}
+        >
+          <NavBar user={user} />
+          <div id="mainContent" className="lg:col-span-3 pb-40  relative gap-4">
+            <div className="space-y-4 ">
+              <div className="space-y-4 mt-[56px] lg:mt-0">{children}</div>
+            </div>
+            <div className="fixed z-50 top-0 inset-x-0 shadow bg-white ">
+              <header className="p-4 flex lg:hidden justify-between items-center bg-white ">
+                <div className="flex gap-3 items-center">
+                  {/* 
                 
                 HeaderAside is needed to properly render the appropriate Header for mobile
                 
                 */}
-                <HeaderAside />
+                  <HeaderAside />
 
-                <h2 className="text-medium text-2xl text-dark-default/90">
-                  {headerText}
-                </h2>
-              </div>
-              <div className="flex items-center gap-4">
-                <NavIcon
-                  href="/notifications"
-                  SolidIcon={() => <IoNotifications />}
-                  OutlineIcon={() => <IoNotificationsOutline />}
-                  path={pathname}
-                  display="Alerts"
-                  clickCallback={() => router.push("/notifications")}
-                />
-                <NavIcon
-                  href="/settings"
-                  SolidIcon={() => <IoSettings />}
-                  OutlineIcon={() => <IoSettingsOutline />}
-                  path={pathname}
-                  clickCallback={() => router.push("/settings")}
-                  display="Settings"
-                />
-                <span
-                  className="inline-block cursor-pointer text-danger-default/80"
-                  onClick={() => {
-                    authResolver(authActions.LOGOUT, {
-                      data: {
-                        userId: user._id,
-                      },
-                    });
-                    dispatch(setLoggedIn(false));
-                  }}
-                >
-                  <IoExitOutline className="text-xl sm:text-2xl" />
-                </span>
-              </div>
-            </header>
+                  <h2 className="text-medium text-2xl text-dark-default/90">
+                    {headerText}
+                  </h2>
+                </div>
+                <div className="flex items-center gap-4">
+                  <NavIcon
+                    href="/notifications"
+                    SolidIcon={() => <IoNotifications />}
+                    OutlineIcon={() => <IoNotificationsOutline />}
+                    path={pathname}
+                    display="Alerts"
+                    clickCallback={() => router.push("/notifications")}
+                  />
+                  <NavIcon
+                    href="/settings"
+                    SolidIcon={() => <IoSettings />}
+                    OutlineIcon={() => <IoSettingsOutline />}
+                    path={pathname}
+                    clickCallback={() => router.push("/settings")}
+                    display="Settings"
+                  />
+                  <span
+                    className="inline-block cursor-pointer text-danger-default/80"
+                    onClick={() => {
+                      authResolver(authActions.LOGOUT, {
+                        data: {
+                          userId: user._id,
+                        },
+                      });
+                      dispatch(setLoggedIn(false));
+                    }}
+                  >
+                    <IoExitOutline className="text-xl sm:text-2xl" />
+                  </span>
+                </div>
+              </header>
+            </div>
           </div>
         </div>
       </div>

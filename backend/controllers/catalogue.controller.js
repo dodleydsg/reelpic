@@ -11,10 +11,7 @@ const read = async (req, res, next) => {
         message: "Could not find requested catalogue",
       });
     }
-    return res.status(200).json({
-      message: "Retrieved catalogue succesfully",
-      catalogue,
-    });
+    return res.status(200).json(catalogue);
   } catch (error) {
     genericErrorBlock(error, res);
   }
