@@ -24,7 +24,7 @@ export default function Post() {
         </div>
         <MdLink className="h-18 w-auto pr-4" />
       </div>
-      <Carousel />
+      <Carousel images={[]} bookmark={false} />
       <div className="border-gray-100 p-2 space-y-4">
         <div className="flex items-end justify-between">
           <div className="flex gap-4 mt-4 items-center">

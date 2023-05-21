@@ -2,23 +2,17 @@ const dotenv = require("dotenv").config({ path: "./.env" });
 const app = require("./app");
 const mongoose = require("mongoose");
 
-// MongoDB connection
-mongoose.connect(
-  process.env.MONGODB_URI,
-  {
+mongoose
+  .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  },
-  () => {
+  })
+  .then(() => {
     console.log("Successfully connected to Database");
-  }
-);
-
-// Catch errors after initial connection
-mongoose.connection.on("error", (err) => {
-  console.log(err);
-});
-// Redis connection
+  })
+  .catch((error) => {
+    throw new Error("Couldn't connect to the databse, check your connection");
+  });
 
 app.listen(process.env.PORT, (err) => {
   if (err) {

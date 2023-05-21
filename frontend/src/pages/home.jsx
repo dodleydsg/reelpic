@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { toggleAddPost } from "../store/features/uiSlice";
 import { useRouter } from "next/router";
 import { CompleteLogin } from "../components/requireLogin";
+import BookmarkModal from "../components/modal/bookmarkModal";
 
 function Home() {
   const router = useRouter();
@@ -19,6 +20,7 @@ function Home() {
 
   return (
     <>
+      <BookmarkModal />
       <NavbarTemplate
         HeaderAside={() => <NavbarProfile image={profile} />}
         headerText="Home"
@@ -41,10 +43,6 @@ function Home() {
               </div>
               <button
                 onClick={() => {
-                  let container = document.querySelector(
-                    "#createPostContainer"
-                  );
-                  container.classList.toggle("scale-y-0");
                   dispatch(toggleAddPost(!addPost));
                 }}
                 className="p-4 rounded border-primary-default/20 hover:bg-light-default flex border"
@@ -55,12 +53,6 @@ function Home() {
                   <IoClose className="w-6 h-auto text-danger-default" />
                 )}
               </button>
-            </div>
-            <div
-              id="createPostContainer"
-              className="origin-top scale-y-0 p-2 border border-gray-300 bg-inherit absolute inset-x-0 transition-all duration-300 hidden m-0 lg:block"
-            >
-              <AddPostForm />
             </div>
           </div>
           <div className="space-y-4">

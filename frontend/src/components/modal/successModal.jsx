@@ -21,7 +21,7 @@ export default function SuccessModal() {
   return (
     <div
       ref={successModalRef}
-      className="-top-full max-w-full origin-top transition ease-in-out duration-300 inset-0 bg-black/70 z-[53] backdrop-blur h-full flex items-center justify-center w-full p-4 lg:p-8 fixed"
+      className="-top-full max-w-full origin-top transition ease-in-out duration-300 inset-0 bg-black/70 z-[54] backdrop-blur h-full flex items-center justify-center w-full p-4 lg:p-8 fixed"
     >
       <div className="h-80 w-80 bg-white p-4 rounded-lg">
         <div className="h-full flex items-center justify-center">

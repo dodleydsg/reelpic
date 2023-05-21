@@ -37,7 +37,7 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
             addCatalogue ? "scale-y-100" : "scale-y-0"
           } bg-white lg:hidden fixed p-4 inset-0 z-[55] origin-bottom-left transition-all duration-500`}
         >
-          <div className="container mx-auto h-full">{children}</div>
+          <div className="my-auto max-w-sm mx-auto h-full">{children}</div>
         </div>
       );
     } else {
@@ -45,9 +45,9 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
         <div
           className={`${
             addPost ? "scale-y-100" : "scale-y-0"
-          } bg-white lg:hidden fixed p-4 inset-0 z-[55] origin-bottom-left transition-all duration-500`}
+          } bg-white fixed p-4 inset-0 z-[55] origin-bottom-left transition-all duration-500`}
         >
-          <div className="container mx-auto h-full">{children}</div>
+          <div className="my-auto max-w-sm mx-auto h-full">{children}</div>
         </div>
       );
     }

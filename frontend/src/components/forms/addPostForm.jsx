@@ -1,37 +1,32 @@
 import { useState } from "react";
-import InputElement from "./input";
 import UploadLabel from "./uploadLabel";
 import { IoChevronBack, IoChevronForward, IoClose } from "react-icons/io5";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import Image from "next/image";
+import Carousel from "../post/postCarousel";
+import _ from "lodash";
+import ErrorMessage from "./errorMessage";
+import { useRouter } from "next/router";
+import postResolver from "@/components/resolvers/post.resolver";
+import postActions from "@/components/actions/post.actions";
+import { useDispatch } from "react-redux";
+import {
+  toggleAddPost,
+  toggleSuccessModal,
+} from "@/components/store/features/uiSlice";
 
 export default function AddPostForm() {
+  const dispatch = useDispatch();
+  const id = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
+  const router = useRouter();
   const MAX_STEPS = 2;
   const [steps, updateSteps] = useState(1);
   const [files, updateFiles] = useState([]);
+  const [rawFiles, updateRawFiles] = useState([]);
 
-  const MediaDisplay = ({ files }) => {
-    if (files) {
-      return (
-        <div className="h-2/3 lg:h-72 bg-gray-100 aspect-video">
-          {files.map((val, idx) => (
-            <Image
-              id={idx}
-              src={val}
-              height={240}
-              width={240}
-              className="object-cover"
-            />
-          ))}
-        </div>
-      );
-    } else {
-      return <div className="h-2/3 lg:h-72 bg-gray-200"></div>;
-    }
-  };
   const _updateSteps = (direction) => {
     if (direction === "forward") {
       if (steps < MAX_STEPS) {
@@ -48,24 +43,17 @@ export default function AddPostForm() {
     e.preventDefault();
     e.stopPropagation();
     let files = e.target.files;
+    let container = [];
     for (let i = 0; i < files.length; i++) {
-      const itemStorageRef = ref(
-        storage,
-        `images/dodley/${files.item(i).name}`
-      );
-      await uploadBytes(itemStorageRef, files.item(i)).then((snapshot) => {
-        console.log(
-          `Uploaded file ${snapshot.metadata.name} and web path is ${snapshot.metadata.fullPath}`
-        );
-        formik.setValues({
-          ...formik.values,
-          media: [...formik.values.media, snapshot.metadata.fullPath],
-        });
-      });
-      await getDownloadURL(itemStorageRef).then((url) =>
-        updateFiles([...files, url])
-      );
+      let val = URL.createObjectURL(files[0]);
+      container.push(val);
     }
+    console.log(container);
+    updateFiles(container);
+    formik.setValues({
+      ...formik.values,
+      media: container,
+    });
   };
 
   const formValidator = (values) => {
@@ -75,6 +63,9 @@ export default function AddPostForm() {
     }
     if (values.tags.length === 0) {
       errors.tags = "Please add atleast a tag";
+    }
+    if (values.body.length === 0) {
+      errors.tags = "Every post must contain a body description";
     }
 
     return errors;
@@ -88,18 +79,43 @@ export default function AddPostForm() {
           media: [],
         }}
         validate={formValidator}
-        onSubmit={(values, { setSubmitting, validate }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            router.push("/home");
-            // Call external API
-          }, 5900);
+        onSubmit={(values, { setSubmitting, resetForm }) => {
+          let imageUrls = [];
+          for (let i = 0; i < rawFiles.length; i++) {
+            const itemStorageRef = ref(
+              storage,
+              `images/${id}/${rawFiles.item(i).name}`
+            );
+            uploadBytes(itemStorageRef, rawFiles.item(i))
+              .then(() => {
+                getDownloadURL(itemStorageRef).then((url) => {
+                  imageUrls.push(url);
+                });
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+          postResolver(postActions.CREATE_POST, id, token, {
+            content: {
+              body: values.body,
+              image: imageUrls,
+            },
+            tags: values.tags,
+          })
+            .then(({ data }) => {
+              dispatch(toggleSuccessModal());
+              dispatch(toggleAddPost());
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         }}
       >
         {(formik) => (
           <form
             onSubmit={formik.handleSubmit}
-            className="lg:w-3/5  mx-auto py-4 space-y-4 flex flex-col items-center h-full"
+            className="mx-auto py-4 space-y-4 flex flex-col items-center h-full"
           >
             <div className="flex w-full items-center justify-between py-2">
               <button
@@ -116,9 +132,13 @@ export default function AddPostForm() {
                 {steps === 2 ? "Content" : null}
               </h5>
               <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  _updateSteps("forward");
+                type="button"
+                onClick={() => {
+                  formik.validateForm().then((errors) => {
+                    if (!errors.media) {
+                      _updateSteps("forward");
+                    }
+                  });
                 }}
                 className="p-2 border-primary-default/10 rounded border hover:bg-primary-default/10 transition duration-200"
               >
@@ -127,7 +147,7 @@ export default function AddPostForm() {
             </div>
             {steps === 1 ? (
               <>
-                <MediaDisplay files={files} />
+                <Carousel images={files} bookmark={false} />
                 <input
                   onChange={(e) => _updateFiles(e, formik)}
                   type="file"
@@ -141,6 +161,9 @@ export default function AddPostForm() {
                   className="mx-auto inline-block"
                   onBlur={formik.onBlur}
                 />
+                {formik.errors.media ? (
+                  <ErrorMessage message={formik.errors.media} />
+                ) : null}
               </>
             ) : null}
             {steps === 2 ? (
@@ -161,24 +184,33 @@ export default function AddPostForm() {
                     <div className="flex-col flex gap-2">
                       <div className="w-52 lg:w-72 flex items-center gap-2">
                         <div className="flex gap-2 items-center">
-                          <InputElement
+                          <input
+                            className="h-12 border px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark "
                             id="tag"
                             type="text"
                             placeholder="Add tags"
                             onBlur={formik.onBlur}
                           />
                           <button
+                            type="button"
                             onClick={(e) => {
-                              e.preventDefault();
-
-                              formik.setValues({
-                                ...formik.values,
-                                tags: [
-                                  ...formik.values.tags,
-                                  e.target.previousSibling.value,
-                                ],
-                              });
-                              console.log(formik.values);
+                              let tag = e.target.previousSibling.value
+                                .toLowerCase()
+                                .trim();
+                              if (
+                                !_.includes(formik.values.tags, tag) &&
+                                tag !== ""
+                              ) {
+                                formik.setValues({
+                                  ...formik.values,
+                                  tags: [
+                                    ...formik.values.tags,
+                                    e.target.previousSibling.value.toLowerCase(),
+                                  ],
+                                });
+                                e.target.previousSibling.value = "";
+                                console.log(formik.values);
+                              }
                             }}
                             className="border h-full block px-4 py-2 rounded text-primary-default bg-light-default hover:text-dark-default transition"
                           >
@@ -201,11 +233,6 @@ export default function AddPostForm() {
                   </div>
                 </div>
                 <div className="space-y-2">
-                  {formik.errors.media ? (
-                    <div className="text-danger-default/50 text-xs">
-                      {formik.errors.media}
-                    </div>
-                  ) : null}
                   {formik.errors.tags ? (
                     <div className="text-danger-default/50 text-xs">
                       {formik.errors.tags}

@@ -9,7 +9,7 @@ import {
   toggleAddCatalogue,
   toggleAddPost,
 } from "../../store/features/uiSlice";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import {
   IoHome,
   IoAdd,
@@ -35,6 +35,7 @@ import authResolver from "../../resolvers/auth.resolver";
 import { setLoggedIn } from "../../store/features/userSlice";
 
 export default function NavBar({ user }) {
+  const mobileActionExpandRef = useRef();
   const dispatch = useDispatch();
   const router = useRouter();
   const { pathname } = router;
@@ -48,17 +49,25 @@ export default function NavBar({ user }) {
       {/* Mobile nav */}
       <div className="lg:hidden  px-4  fixed flex z-[54]  inset-x-0 bottom-2 h-12 gap-4">
         <div
-          id="mobileActionExpand"
+          ref={mobileActionExpandRef}
           className="absolute z-[55] scale-y-0 transition-transform ease-in-out origin-bottom duration-300 border-[#D2C4E9] border ml-4 left-0 bottom-16 text-primary-default/70 w-40 rounded bg-light-default flex justify-evenly flex-col text-base"
         >
           <p
-            onClick={() => dispatch(toggleAddPost(true))}
+            onClick={() => {
+              dispatch(toggleAddPost(true));
+              mobileActionExpandRef.current.classList.toggle("scale-y-0");
+              dispatch(setMask(false));
+            }}
             className="p-4 border-b border-[#D2C4E9] hover:bg-primary-default hover:cursor-pointer hover:text-light-default transition duration-300"
           >
             Create Post
           </p>
           <p
-            onClick={() => dispatch(toggleAddCatalogue(true))}
+            onClick={() => {
+              dispatch(toggleAddCatalogue(true));
+              mobileActionExpandRef.current.classList.toggle("scale-y-0");
+              dispatch(setMask(false));
+            }}
             className="p-4 hover:bg-primary-default hover:text-light-default hover:cursor-pointer transition duration-300"
           >
             Add Catalogue
@@ -66,7 +75,7 @@ export default function NavBar({ user }) {
         </div>
         <button
           onClick={() => {
-            let menu = document.getElementById("mobileActionExpand");
+            let menu = mobileActionExpandRef.current;
             menu.classList.toggle("scale-y-0");
             dispatch(toggleMask());
           }}
@@ -91,12 +100,6 @@ export default function NavBar({ user }) {
             href="/catalogues"
             SolidIcon={(props) => <IoImages {...props} />}
             OutlineIcon={(props) => <IoImagesOutline {...props} />}
-            path={pathname}
-          />
-          <NavIcon
-            href="/trash"
-            SolidIcon={(props) => <IoTrashBin {...props} />}
-            OutlineIcon={(props) => <IoTrashBinOutline {...props} />}
             path={pathname}
           />
         </div>
@@ -157,13 +160,7 @@ export default function NavBar({ user }) {
             path={pathname}
             display="Alerts"
           />
-          <NavIcon
-            href="/trash"
-            SolidIcon={(props) => <IoTrashBin {...props} />}
-            OutlineIcon={(props) => <IoTrashBinOutline {...props} />}
-            path={pathname}
-            display="Trash"
-          />
+
           <NavIcon
             href="/settings"
             SolidIcon={(props) => <IoSettings {...props} />}

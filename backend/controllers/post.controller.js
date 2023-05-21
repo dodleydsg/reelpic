@@ -40,7 +40,6 @@ const create = async (req, res, next) => {
     await notify(user._id, description);
     for (let i = 0; i < post.tags.length; i++) {
       let tag = await Tag.findOne({ name: post.tags[i] });
-      console.log(tag);
       if (!tag) {
         tag = new Tag({ name: post.tags[i] });
         await tag.save();

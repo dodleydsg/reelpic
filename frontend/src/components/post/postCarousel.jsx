@@ -1,24 +1,18 @@
-import Image from "next/image";
-import coverImg1 from "../../assets/images/pattern_bg.png";
-import food from "../../assets/images/food.jpg";
-import landscape from "../../assets/images/landscape.jpg";
-import potrait from "../../assets/images/2.png";
 import { useState } from "react";
 import {
   IoBookmarkOutline,
   IoChevronBack,
   IoChevronForward,
 } from "react-icons/io5";
-import BookmarkModal from "../modal/bookmarkModal";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleBookmarkModal } from "@/components/store/features/uiSlice";
 
-export default function Carousel() {
+export default function Carousel({ images, bookmark, view }) {
   const { loggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [activeCarousel, setActiveCarousel] = useState(1);
   // Carousel item count starts from 1
-  const CONTENT_LENGTH = 4;
+  const CONTENT_LENGTH = images.length;
   // Current example simulates carousel with four image items
   // Will represent the number of image items in a post
 
@@ -62,20 +56,28 @@ export default function Carousel() {
     }
   };
 
+  if (CONTENT_LENGTH === 0) {
+    return (
+      <section className="bg-none  py-5 w-full relative overflow-hidden flex p-4 bg-gray-100 h-[60vh]"></section>
+    );
+  }
+
   return (
     <>
-      <BookmarkModal />
-
-      <section className="bg-none h-[60vh] py-5 w-full relative overflow-hidden flex p-4 bg-gray-100 ">
+      <section
+        className={`bg-none  py-5 w-full relative overflow-hidden flex p-4 bg-gray-100 h-[60vh]`}
+      >
         <button
+          type="button"
           onClick={(e) => {
             navigateCarousel(e, "left");
           }}
-          className="absolute top-1/2 left-0 z-[50] mx-2 p-4 rounded-3xl text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
+          className="absolute bg-primary-default/10 top-1/2 left-0 z-[50] mx-2 p-4 rounded-3xl text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
         >
           <IoChevronBack className="text-xl" />
-        </button>{" "}
+        </button>
         <button
+          type="button"
           onClick={(e) => {
             navigateCarousel(e, "right");
           }}
@@ -87,31 +89,22 @@ export default function Carousel() {
           className="absolute flex inset-0 lg:inset-6 mx-auto carousel"
           data-current="0"
         >
-          <Image
-            alt="hey"
-            src={potrait}
-            data-active="true"
-            className="object-cover h-full  w-full lg:w-auto absolute inset-0  shrink-0 mx-auto transition-transform duration-500"
-          />
-          <Image
-            alt="hey"
-            src={coverImg1}
-            className="object-cover h-full w-full lg:w-auto absolute inset-0    shrink-0 mx-auto transition-transform duration-500 scale-0"
-          />
-          <Image
-            alt="hey"
-            src={food}
-            className="object-cover h-full w-full lg:w-auto absolute inset-0   shrink-0 mx-auto transition-transform duration-500 scale-0"
-          />
-          <Image
-            alt="hey"
-            src={landscape}
-            className="object-cover h-full w-full lg:w-auto absolute inset-0   shrink-0 mx-auto transition-transform duration-500 scale-0"
-          />
+          {images.map((val, idx) => {
+            return (
+              <img
+                alt={`postPreview${idx}`}
+                src={val}
+                key={idx}
+                data-active={idx === 0 ? "true" : null}
+                className="h-full w-full lg:w-auto absolute inset-0
+                shrink-0 mx-auto transition-transform duration-500 object-contain"
+              />
+            );
+          })}
         </div>
       </section>
       <div className="flex flex-col justify-center gap-4 items-center self-end w-full bottom-10 sm:bottom-4 inset-x-0 mt-4">
-        {loggedIn ? (
+        {true ? (
           <div className="relative w-full flex justify-center">
             <button
               onClick={() => dispatch(toggleBookmarkModal())}
@@ -122,34 +115,17 @@ export default function Carousel() {
           </div>
         ) : null}
         <div className="mx-auto flex gap-2">
-          <div
-            className={`h-2 w-2 rounded-xl ${
-              activeCarousel === 1
-                ? " bg-primary-default/50"
-                : " bg-dark-default/50"
-            }`}
-          ></div>
-          <div
-            className={`h-2 w-2 rounded-xl ${
-              activeCarousel === 2
-                ? " bg-primary-default/50"
-                : " bg-dark-default/50"
-            }`}
-          ></div>
-          <div
-            className={`h-2 w-2 rounded-xl ${
-              activeCarousel === 3
-                ? " bg-primary-default/50"
-                : " bg-dark-default/50"
-            }`}
-          ></div>
-          <div
-            className={`h-2 w-2 rounded-xl ${
-              activeCarousel === 4
-                ? " bg-primary-default/50"
-                : " bg-dark-default/50"
-            }`}
-          ></div>
+          {images.map((val, idx) => {
+            return (
+              <div
+                className={`h-2 w-2 rounded-xl ${
+                  activeCarousel === idx + 1
+                    ? " bg-primary-default/50"
+                    : " bg-dark-default/50"
+                }`}
+              ></div>
+            );
+          })}
         </div>
       </div>
     </>

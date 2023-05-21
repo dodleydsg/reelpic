@@ -20,7 +20,7 @@ export default async function postResolver(action, userId, token, data) {
         url: BACKEND_DOMAIN + `/api/post/delete/${data.postId}`,
         data: { userId },
         headers: {
-          Authorization: AUTH_TOKEN(options.token),
+          Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;
@@ -29,7 +29,7 @@ export default async function postResolver(action, userId, token, data) {
         method: "delete",
         url: BACKEND_DOMAIN + `/api/post/${data.postId}?userId=${userId}`,
         headers: {
-          Authorization: AUTH_TOKEN(options.token),
+          Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;
@@ -39,7 +39,7 @@ export default async function postResolver(action, userId, token, data) {
         data: { ...data, userId },
         url: BACKEND_DOMAIN + `/api/post/${options.catalogueId}`,
         headers: {
-          Authorization: AUTH_TOKEN(options.token),
+          Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;
@@ -49,7 +49,7 @@ export default async function postResolver(action, userId, token, data) {
         url:
           BACKEND_DOMAIN + `api/post/${options.catalogueId}?userId=${userId}`,
         headers: {
-          Authorization: AUTH_TOKEN(options.token),
+          Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;
@@ -58,7 +58,7 @@ export default async function postResolver(action, userId, token, data) {
         method: "get",
         url: BACKEND_DOMAIN + `api/posts?userId=${userId}`,
         headers: {
-          Authorization: AUTH_TOKEN(options.token),
+          Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;
@@ -67,20 +67,11 @@ export default async function postResolver(action, userId, token, data) {
         method: "post",
         url: BACKEND_DOMAIN + "api/post/",
         headers: {
-          Authorization: AUTH_TOKEN(options.token),
-        },
-      });
-      return resp;
-    } else if (action === postActions.RETURN_POST) {
-      let resp = await axios({
-        method: "get",
-        url: BACKEND_DOMAIN + `api/post/return/${data.postId}?userId=${userId}`,
-        headers: {
           Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;
-    } else if (action === postActions.POST_Like) {
+    }  else if (action === postActions.POST_Like) {
       let resp = await axios({
         method: "post",
         data: { ...data, userId },
