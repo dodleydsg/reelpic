@@ -28,6 +28,13 @@ html{
     scrollbar-color: red red;
 }
 
+.no-scrollBar{
+    -ms-overflow-style: none;
+    scrollbar-width: none; 
+}
+.no-scrollBar::-webkit-scrollbar{
+    display: none;
+}
 
 @layer components{
     .text-label{

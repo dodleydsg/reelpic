@@ -4,17 +4,18 @@ import NavbarTemplate from "../templates/template_with_navbar";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import Image from "next/image";
-import { IoAdd, IoClose } from "react-icons/io5";
-import AddPostForm from "../components/forms/addPostForm";
+import { IoAdd } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleAddPost } from "../store/features/uiSlice";
+import {
+  toggleAddCatalogueModal,
+  toggleAddPost,
+} from "../store/features/uiSlice";
 import { useRouter } from "next/router";
 import { CompleteLogin } from "../components/requireLogin";
 import BookmarkModal from "../components/modal/bookmarkModal";
+import { toggleAddPostModal } from "../store/features/uiSlice";
 
 function Home() {
-  const router = useRouter();
-  const { addPost } = useSelector((state) => state.ui);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -33,25 +34,21 @@ function Home() {
           </div>
           <div className="sticky h-auto top-0 z-[51] bg-white">
             <div className="lg:flex py-2  w-full justify-between hidden items-center ">
-              <div className="flex items-center justify-between gap-4">
-                <Image src={profile} height="40" width="40" alt="profile_pic" />
-                <p className="text-dark-default/80">
-                  {!addPost
-                    ? "Never too late to share an experience"
-                    : "Create Post"}
-                </p>
-              </div>
               <button
                 onClick={() => {
-                  dispatch(toggleAddPost(!addPost));
+                  dispatch(toggleAddPostModal());
                 }}
-                className="p-4 rounded border-primary-default/20 hover:bg-light-default flex border"
+                className="p-4 rounded bg-primary-default hover:bg-primary-default/80 text-white transition duration-300 flex border"
               >
-                {!addPost ? (
-                  <IoAdd className="w-6 h-auto text-primary-default" />
-                ) : (
-                  <IoClose className="w-6 h-auto text-danger-default" />
-                )}
+                Create post
+              </button>
+              <button
+                onClick={() => {
+                  dispatch(toggleAddCatalogueModal());
+                }}
+                className="p-4 rounded border-primary-default/20 hover:bg-light-default transition duration-300 flex border"
+              >
+                Create catalogue
               </button>
             </div>
           </div>

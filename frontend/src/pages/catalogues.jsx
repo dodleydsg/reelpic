@@ -15,6 +15,7 @@ import catalogueResolver from "../resolvers/catalogue.resolver";
 import catalogueActions from "../actions/catalogue.actions";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import CatalogueCard from "../components/catalogueCard";
 
 function Catalogue() {
   const { catalogueList } = useSelector((state) => state.user);
@@ -60,34 +61,30 @@ function Catalogue() {
         headerText="Catalogues"
         pageTitle="Catalogues | Organise your posts into relatable groups"
       >
-        <div className="px-4 lg:grid lg:grid-cols-3 gap-4">
+        <div className="px-4  gap-4">
           <div className="col-span-2 space-y-4">
-            <form className="mt-4 py-4 relative">
-              <div
-                onClick={() => dispatch(toggleCatalogueModal())}
-                className="w-full lg:w-1/2 h-12 border px-4 rounded-md cursor-pointer text-gray-600 flex items-center "
+            <div className="flex items-center">
+              <form className="mt-4 grow py-4 relative">
+                <div
+                  onClick={() => dispatch(toggleCatalogueModal())}
+                  className="w-full lg:w-1/2 h-12 border px-4 rounded-md cursor-pointer text-gray-600 flex items-center "
+                >
+                  Find my catalogues
+                </div>
+              </form>
+              <button
+                type="button"
+                className="px-4 rounded hidden lg:inline-block text-primary-default/60 border-gray-300 border py-2 hover:text-primary-default hover:bg-light-default transition my-5 cursor-pointer"
               >
-                Find my catalogues
-              </div>
-            </form>
+                Create catalogue
+              </button>
+            </div>
             <h3 className="font-bold text-xl">My catalogues</h3>
-            <div className="grid grid-cols-2 gap-2 ">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
               {catalogues.map((val) => {
-                return (
-                  <Link
-                    href={`/catalogue/${val._id}`}
-                    key={val._id}
-                    className="p-4 hover:bg-primary-default/80 hover:text-white transition bg-light-default border border-primary-default/25 rounded"
-                  >
-                    {val.title}
-                  </Link>
-                );
+                return <CatalogueCard title={val.title} key={val._id} />;
               })}
             </div>
-          </div>
-          <div className="col-span-1 hidden lg:block space-y-2">
-            <h3 className="font-bold text-xl">Create new catalogue</h3>
-            <AddCatalogueForm />
           </div>
         </div>
       </NavbarTemplate>

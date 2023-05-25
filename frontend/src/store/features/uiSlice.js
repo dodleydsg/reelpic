@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   mask: false,
-  addPost: false,
-  addCatalogue: false,
+  addPostModal: false,
+  addCatalogueModal: false,
   exploreModal: false,
   successModal: false,
   failureModal: false,
@@ -21,11 +21,14 @@ const uiSlice = createSlice({
     setMask: (state, { payload }) => {
       state.mask = payload;
     },
-    toggleAddPost: (state, { payload }) => {
-      state.addPost = payload;
+    resetState: (state) => {
+      state = initialState;
     },
-    toggleAddCatalogue: (state, { payload }) => {
-      state.addCatalogue = payload;
+    toggleAddPostModal: (state) => {
+      state.addPostModal = !state.addPostModal;
+    },
+    toggleAddCatalogueModal: (state, { payload }) => {
+      state.addCatalogueModal = !state.addCatalogueModal;
     },
     toggleExploreModal: (state) => {
       state.exploreModal = !state.exploreModal;
@@ -45,8 +48,9 @@ const uiSlice = createSlice({
 export const {
   toggleMask,
   setMask,
-  toggleAddPost,
-  toggleAddCatalogue,
+  resetState,
+  toggleAddPostModal,
+  toggleAddCatalogueModal,
   toggleExploreModal,
   toggleCatalogueModal,
   toggleBookmarkModal,

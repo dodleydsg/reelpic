@@ -9,11 +9,16 @@ import BackButton from "@/components/components/backButton";
 import { useSelector } from "react-redux";
 
 export default function CatalogueDetail() {
-  const { loggedIn } = useSelector((state) => state.auth);
+  let id;
+  let token;
+  try {
+    id = localStorage.getItem(id);
+    token = localStorage.getItem(token);
+  } catch (error) {}
   const router = useRouter();
   const { catalogueId } = router.query;
 
-  if (loggedIn) {
+  if (id) {
     return (
       <>
         <NavbarTemplate

@@ -5,7 +5,11 @@ import InputElement from "./input";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
-import { toggleSuccessModal } from "../../store/features/uiSlice";
+import {
+  toggleAddCatalogue,
+  toggleAddCatalogueModal,
+  toggleSuccessModal,
+} from "../../store/features/uiSlice";
 
 export default function AddCatalogueForm() {
   const dispatch = useDispatch();
@@ -30,6 +34,7 @@ export default function AddCatalogueForm() {
         })
           .then(({ data }) => {
             dispatch(updateCatalogueList(data._id));
+            dispatch(toggleAddCatalogueModal(false));
             dispatch(toggleSuccessModal());
           })
           .catch((error) => {

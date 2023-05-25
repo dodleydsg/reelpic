@@ -6,8 +6,8 @@ import { useDispatch } from "react-redux";
 import {
   toggleMask,
   setMask,
-  toggleAddCatalogue,
-  toggleAddPost,
+  toggleAddCatalogueModal,
+  toggleAddPostModal,
 } from "../../store/features/uiSlice";
 import { useEffect, useRef } from "react";
 import {
@@ -18,8 +18,6 @@ import {
   IoCompassOutline,
   IoImages,
   IoImagesOutline,
-  IoTrashBin,
-  IoTrashBinOutline,
   IoSettings,
   IoSettingsOutline,
   IoNotifications,
@@ -54,7 +52,7 @@ export default function NavBar({ user }) {
         >
           <p
             onClick={() => {
-              dispatch(toggleAddPost(true));
+              dispatch(toggleAddPostModal());
               mobileActionExpandRef.current.classList.toggle("scale-y-0");
               dispatch(setMask(false));
             }}
@@ -64,7 +62,7 @@ export default function NavBar({ user }) {
           </p>
           <p
             onClick={() => {
-              dispatch(toggleAddCatalogue(true));
+              dispatch(toggleAddCatalogueModal());
               mobileActionExpandRef.current.classList.toggle("scale-y-0");
               dispatch(setMask(false));
             }}

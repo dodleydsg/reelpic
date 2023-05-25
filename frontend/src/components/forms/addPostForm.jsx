@@ -2,20 +2,19 @@ import { useState } from "react";
 import UploadLabel from "./uploadLabel";
 import { IoChevronBack, IoChevronForward, IoClose } from "react-icons/io5";
 import { Formik } from "formik";
-import * as Yup from "yup";
 import { storage } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import Carousel from "../post/postCarousel";
 import _ from "lodash";
 import ErrorMessage from "./errorMessage";
 import { useRouter } from "next/router";
-import postResolver from "@/components/resolvers/post.resolver";
-import postActions from "@/components/actions/post.actions";
+import postResolver from "../../resolvers/post.resolver";
+import postActions from "../../actions/post.actions";
 import { useDispatch } from "react-redux";
 import {
-  toggleAddPost,
+  toggleAddPostModal,
   toggleSuccessModal,
-} from "@/components/store/features/uiSlice";
+} from "../../store/features/uiSlice";
+import FormCarousel from "./formCarousel";
 
 export default function AddPostForm() {
   const dispatch = useDispatch();
@@ -45,10 +44,9 @@ export default function AddPostForm() {
     let files = e.target.files;
     let container = [];
     for (let i = 0; i < files.length; i++) {
-      let val = URL.createObjectURL(files[0]);
+      let val = URL.createObjectURL(files[i]);
       container.push(val);
     }
-    console.log(container);
     updateFiles(container);
     formik.setValues({
       ...formik.values,
@@ -105,17 +103,21 @@ export default function AddPostForm() {
           })
             .then(({ data }) => {
               dispatch(toggleSuccessModal());
-              dispatch(toggleAddPost());
+              dispatch(toggleAddPostModal());
+              resetForm();
+              updateFiles([]);
             })
             .catch((error) => {
               console.log(error);
+              resetForm();
+              updateFiles([]);
             });
         }}
       >
         {(formik) => (
           <form
             onSubmit={formik.handleSubmit}
-            className="mx-auto py-4 space-y-4 flex flex-col items-center h-full"
+            className="mx-auto space-y-4 flex flex-col items-center h-full"
           >
             <div className="flex w-full items-center justify-between py-2">
               <button
@@ -147,9 +149,11 @@ export default function AddPostForm() {
             </div>
             {steps === 1 ? (
               <>
-                <Carousel images={files} bookmark={false} />
+                <FormCarousel images={files} bookmark={false} />
                 <input
-                  onChange={(e) => _updateFiles(e, formik)}
+                  onChange={(e) => {
+                    _updateFiles(e, formik);
+                  }}
                   type="file"
                   multiple
                   id="media"
@@ -209,7 +213,6 @@ export default function AddPostForm() {
                                   ],
                                 });
                                 e.target.previousSibling.value = "";
-                                console.log(formik.values);
                               }
                             }}
                             className="border h-full block px-4 py-2 rounded text-primary-default bg-light-default hover:text-dark-default transition"
