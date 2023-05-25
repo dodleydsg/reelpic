@@ -11,7 +11,9 @@ export default function CatalogueSearchModal() {
 
   useEffect(() => {
     if (catalogueModal) {
-      catalogueModalRef.current.classList.toggle("translate-y-full");
+      catalogueModalRef.current.classList.add("translate-y-full");
+    }else{
+      catalogueModalRef.current.classList.remove("translate-y-full");
     }
   }, [catalogueModal]);
 

@@ -62,8 +62,8 @@ function Catalogue() {
         pageTitle="Catalogues | Organise your posts into relatable groups"
       >
         <div className="px-4  gap-4">
-          <div className="col-span-2 space-y-4">
-            <div className="flex items-center">
+          <div className="col-span-2 space-y-4 relative">
+            <div className="flex items-center sticky top-0  z-30 bg-white">
               <form className="mt-4 grow py-4 relative">
                 <div
                   onClick={() => dispatch(toggleCatalogueModal())}

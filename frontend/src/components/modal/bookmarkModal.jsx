@@ -12,7 +12,10 @@ export default function BookmarkModal() {
 
   useEffect(() => {
     if (bookmarkModal) {
-      bookmarkModalRef.current.classList.toggle("translate-y-full");
+      bookmarkModalRef.current.classList.add("translate-y-full");
+    }else{
+      bookmarkModalRef.current.classList.remove("translate-y-full");
+
     }
   }, [bookmarkModal]);
 

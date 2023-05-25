@@ -14,7 +14,7 @@ export default function FormCarousel({ images }) {
     carousel.scrollBy({
       left: width,
       top: 0,
-      behavior: "instant",
+      behavior: "smooth",
     });
     if (direction === "right") {
       if (activeCarousel < CONTENT_LENGTH) {
@@ -61,13 +61,14 @@ export default function FormCarousel({ images }) {
         >
           {images.map((val, idx) => {
             return (
-              <img
-                alt={`postPreview${idx}`}
-                src={val}
-                key={idx}
-                className="h-auto my-auto w-full 
-                mx-auto transition-transform duration-500 object-contain"
-              />
+              <div className="min-w-full inline-flex">
+                <img
+                  alt={`postPreview${idx}`}
+                  src={val}
+                  key={idx}
+                  className="max-h-full w-auto mx-auto duration-150 object-fit object-center aspect-video"
+                />
+              </div>
             );
           })}
         </div>
