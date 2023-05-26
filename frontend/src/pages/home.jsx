@@ -20,13 +20,20 @@ import postResolver from "../resolvers/post.resolver";
 
 function Home() {
   const { user } = useSelector((state) => state.user);
-  const [feed, updateFeed] = useState({});
+  const [feed, updateFeed] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const getFeed = async () => {
-      const { data } = await postResolver(postActions.FEED);
-      updateFeed();
+      try {
+        const userId = localStorage.getItem("id");
+        const token = localStorage.getItem("token");
+        const { data } = await postResolver(postActions.FEED, userId, token);
+        console.log(data);
+        updateFeed(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     getFeed();
@@ -66,8 +73,9 @@ function Home() {
             </div>
           </div>
           <div className="space-y-4">
-            <Post />
-            <Post />
+            {feed.map((val) => {
+              return <Post key={val._id} {...val} />;
+            })}
           </div>
         </div>
       </NavbarTemplate>

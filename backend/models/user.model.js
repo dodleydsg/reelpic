@@ -48,7 +48,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: resetModes.LOCKED,
   },
-  photo: String,
+  photo: {
+    type: String,
+    default: "",
+  },
   catalogues: [
     {
       type: mongoose.Types.ObjectId,
@@ -74,6 +77,7 @@ const UserSchema = new mongoose.Schema({
     },
   ],
   following: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+  seen: [],
 });
 
 UserSchema.virtual("password")

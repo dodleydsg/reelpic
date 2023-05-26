@@ -1,6 +1,7 @@
 import React from "react";
 import Carousel from "./postCarousel";
 import profile1 from "../../assets/images/Profile1.png";
+import template from "../../assets/images/food.jpg";
 import Comment from "../comment";
 import { useState } from "react";
 import { MdLink } from "react-icons/md";
@@ -20,7 +21,11 @@ export default function Post({ user, likes, views, created, tags, content }) {
     <div>
       <div className="flex justify-between items-center border border-gray-100 p-2">
         <div className="flex gap-2 items-center relative">
-          <Image alt="profile" src={user.profile} className="h-10 w-10" />
+          <Image
+            alt="profile"
+            src={user.photo || profile1}
+            className="h-10 w-10"
+          />
           <Link href={`/users/${user.username}`} className="text-label">
             @{user.username}
           </Link>
@@ -75,7 +80,7 @@ export default function Post({ user, likes, views, created, tags, content }) {
                 key={idx}
                 className="border rounded hover:text-primary-default/80 transition duration-200 border-primary-default/50 p-2"
               >
-                {val.capitalize()}
+                {val}
               </button>
             );
           })}

@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const User = require("./user.model");
 
 const PostSchema = mongoose.Schema({
-  userId: {
+  user: {
     type: mongoose.Types.ObjectId,
     required: "Post must have an Author",
     ref: "User",

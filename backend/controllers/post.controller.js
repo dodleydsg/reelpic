@@ -14,11 +14,17 @@ const redisClient = new Redis();
 const read = async (req, res, next) => {
   try {
     let post = await Post.findById(req.params.postId);
+    let user = req.profile;
     if (!post) {
       return res.status(404).json({
         message: "Could'nt find post",
       });
     }
+    if (user.seen.length > 200) {
+      user.seen = [];
+      user.seen.addToSet(post._id.toString());
+    }
+    await user.save();
     return res.status(200).json(post);
   } catch (error) {
     genericErrorBlock(error, res);
@@ -48,10 +54,7 @@ const create = async (req, res, next) => {
       await tag.save();
     }
 
-    return res.status(200).json({
-      message: "Post added",
-      post,
-    });
+    return res.status(200).json(post);
   } catch (error) {
     genericErrorBlock(error, res);
   }
@@ -127,7 +130,7 @@ const feed = async (req, res, next) => {
   let seen = req.profile.seen || [];
   /* 
   Seen is an array of postIds, these postIds correspond to posts already viewed by the user
-  This array has a max length of 200, cleaning the array is done in the post.read controlle 
+  This array has a max length of 200, cleaning the array is done in the post.read controller
   */
 
   let interests = req.profile.interests;
@@ -167,7 +170,7 @@ const feed = async (req, res, next) => {
           feed.addToSet(_.last(tags[i].posts).toString());
         }
       }
-      // random post
+      random post
       let randomPost = _.nth(
         tags[i].posts,
         Math.floor(Math.random() * tags[i].posts.length)
@@ -181,8 +184,17 @@ const feed = async (req, res, next) => {
         }
       }
     }
+
+    let extra_feed = [];
+    for (let i = 0; i < feed.length; i++) {
+      let post = await Post.findById(feed[i])
+        .populate("user", "username photo")
+        .exec();
+      req.profile.seen.addToSet(post._id);
+      extra_feed.push(post);
+    }
     await req.profile.save();
-    return res.json(feed);
+    return res.json(extra_feed);
   } catch (error) {
     genericErrorBlock(error, res);
   }
@@ -204,9 +216,13 @@ const explore = async (req, res, next) => {
       posts = posts.concat(tag.posts);
     }
 
-    return res.status(200).json({
-      posts,
-    });
+    let extra_feed = [];
+    for (let i = 0; i < posts.length; i++) {
+      let post = await Post.findById(post[i]).select("content");
+
+      extra_feed.push(post);
+    }
+    return res.json(extra_feed);
   } catch (error) {
     genericErrorBlock(error);
   }
