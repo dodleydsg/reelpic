@@ -13,8 +13,12 @@ export default function BookmarkModal() {
   useEffect(() => {
     if (bookmarkModal) {
       bookmarkModalRef.current.classList.add("translate-y-full");
+      bookmarkModalRef.current.classList.remove("opacity-0");
+
     }else{
       bookmarkModalRef.current.classList.remove("translate-y-full");
+      bookmarkModalRef.current.classList.add("opacity-0");
+
 
     }
   }, [bookmarkModal]);

@@ -13,8 +13,12 @@ export default function AddCatalogueModal() {
   useEffect(() => {
     if (addCatalogueModal) {
       addCatalogueModalRef.current.classList.add("translate-y-full");
+      addCatalogueModalRef.current.classList.remove("opacity-0");
+
     } else {
       addCatalogueModalRef.current.classList.remove("translate-y-full");
+      addCatalogueModalRef.current.classList.add("opacity-0");
+
     }
   }, [addCatalogueModal]);
 

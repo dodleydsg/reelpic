@@ -21,7 +21,6 @@ import AddCatalogueModal from "../components/modal/addCatalogueModal";
 export default function ({ children, headerText, HeaderAside, pageTitle }) {
   const router = useRouter();
   const pathname = router.pathname;
-  const { addPostModal, addCatalogueModal } = useSelector((state) => state.ui);
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 

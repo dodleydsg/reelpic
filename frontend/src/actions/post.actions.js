@@ -4,4 +4,7 @@ export default {
   READ_POST: "read_post",
   UPDATE_POST: "update_post",
   LIST_POSTS: "list_posts",
+  FEED: "feed",
+  LIKE: "like",
+  EXPLORE: "explore",
 };

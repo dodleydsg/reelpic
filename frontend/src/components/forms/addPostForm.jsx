@@ -42,6 +42,10 @@ export default function AddPostForm() {
     e.preventDefault();
     e.stopPropagation();
     let files = e.target.files;
+    if (files.length > 10) {
+      alert("Helo");
+      formik.setFieldError("media", "The upload limit is 10 images");
+    }
     let container = [];
     for (let i = 0; i < files.length; i++) {
       let val = URL.createObjectURL(files[i]);
@@ -63,7 +67,7 @@ export default function AddPostForm() {
       errors.tags = "Please add atleast a tag";
     }
     if (values.body.length === 0) {
-      errors.tags = "Every post must contain a body description";
+      errors.body = "Every post must contain a body description";
     }
 
     return errors;
@@ -117,12 +121,12 @@ export default function AddPostForm() {
         {(formik) => (
           <form
             onSubmit={formik.handleSubmit}
-            className="mx-auto space-y-4 flex flex-col items-center h-full"
+            className="mx-auto space-y-4 flex flex-col items-center h-full overflow-y-scroll no-scrollBar"
           >
             <div className="flex w-full items-center justify-between py-2">
               <button
+                type="button"
                 onClick={(e) => {
-                  e.preventDefault();
                   _updateSteps("backward");
                 }}
                 className="p-2 border-primary-default/10 rounded border hover:bg-primary-default/10 transition duration-200"
@@ -156,6 +160,10 @@ export default function AddPostForm() {
                   }}
                   type="file"
                   multiple
+                  max={10}
+                  capture="environment"
+                  accept="image/*"
+                  maxLength={10}
                   id="media"
                   className="hidden"
                 />
@@ -171,23 +179,28 @@ export default function AddPostForm() {
               </>
             ) : null}
             {steps === 2 ? (
-              <div className="w-full space-y-4 ">
-                <div className="flex items-start gap-4 ">
-                  <label htmlFor="body">Body</label>
-                  <textarea
-                    id="body"
-                    rows="5"
-                    className="grow border p-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark resize-none h-64"
-                    placeholder="Give a useful description to your post"
-                    {...formik.getFieldProps("body")}
-                  />
-                </div>
+              <div className="w-full space-y-2 px-2">
+                <label htmlFor="body">
+                  Body
+                  {formik.touched.body && formik.errors.body ? (
+                    <ErrorMessage message={formik.errors.body} />
+                  ) : null}
+                </label>
+
+                <textarea
+                  id="body"
+                  rows="5"
+                  className="grow block w-full border p-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark resize-none h-64"
+                  placeholder="Give a useful description to your post"
+                  {...formik.getFieldProps("body")}
+                />
+
                 <div>
-                  <div className="flex gap-4">
-                    <label htmlFor="tag">Tags</label>
-                    <div className="flex-col flex gap-2">
-                      <div className="w-52 lg:w-72 flex items-center gap-2">
-                        <div className="flex gap-2 items-center">
+                  <div>
+                    <div className="space-y-2">
+                      <label htmlFor="tag">Tags</label>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2">
                           <input
                             className="h-12 border px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark "
                             id="tag"
@@ -220,31 +233,51 @@ export default function AddPostForm() {
                             Add
                           </button>
                         </div>
+                        <div className="flex w-full flex-wrap gap-2">
+                          {formik.values.tags.map((val, idx) => (
+                            <div
+                              key={idx}
+                              className="flex py-2 gap-1 items-center px-4 rounded border border-dark-default/60 "
+                            >
+                              <span className="block">{val}</span>
+                              <IoClose
+                                onClick={() => {
+                                  formik.setValues({
+                                    ...formik.values,
+                                    tags: [...formik.values.tags].filter(
+                                      (item) => {
+                                        if (val === item) {
+                                          return false;
+                                        } else {
+                                          return true;
+                                        }
+                                      }
+                                    ),
+                                  });
+                                }}
+                                className="block text-danger-default cursor-pointer"
+                              />
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                      <div className="flex w-full flex-wrap gap-2">
-                        {formik.values.tags.map((val, idx) => (
-                          <div
-                            key={idx}
-                            className="flex py-2 gap-1 items-center px-4 rounded border border-dark-default/60 "
-                          >
-                            <span className="block">{val}</span>
-                            <IoClose className="block text-danger-default cursor-pointer" />
-                          </div>
-                        ))}
+                    </div>
+
+                    <div className="flex-col flex gap-2">
+                      <div className="w-52 lg:w-72 flex items-center gap-2">
+                        <div className="flex gap-2 items-center"></div>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div className="space-y-2">
                   {formik.errors.tags ? (
-                    <div className="text-danger-default/50 text-xs">
-                      {formik.errors.tags}
-                    </div>
+                    <ErrorMessage message={formik.errors.tags} />
                   ) : null}
                 </div>
                 <button
                   type="submit"
-                  className="btn-primary hover:bg-[#4900EB]"
+                  className="btn-primary inline-block w-1/2  hover:bg-[#4900EB]"
                 >
                   Add post
                 </button>

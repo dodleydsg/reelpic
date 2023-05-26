@@ -10,14 +10,27 @@ import {
   toggleAddCatalogueModal,
   toggleAddPost,
 } from "../store/features/uiSlice";
-import { useRouter } from "next/router";
 import { CompleteLogin } from "../components/requireLogin";
 import BookmarkModal from "../components/modal/bookmarkModal";
 import { toggleAddPostModal } from "../store/features/uiSlice";
+import { useEffect, useState } from "react";
+import userResolver from "../resolvers/user.resolver";
+import postActions from "../actions/post.actions";
+import postResolver from "../resolvers/post.resolver";
 
 function Home() {
   const { user } = useSelector((state) => state.user);
+  const [feed, updateFeed] = useState({});
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getFeed = async () => {
+      const { data } = await postResolver(postActions.FEED);
+      updateFeed();
+    };
+
+    getFeed();
+  }, []);
 
   return (
     <>

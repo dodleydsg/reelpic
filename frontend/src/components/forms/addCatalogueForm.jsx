@@ -10,6 +10,7 @@ import {
   toggleAddCatalogueModal,
   toggleSuccessModal,
 } from "../../store/features/uiSlice";
+import ErrorMessage from "./errorMessage";
 
 export default function AddCatalogueForm() {
   const dispatch = useDispatch();
@@ -46,43 +47,39 @@ export default function AddCatalogueForm() {
     >
       {(formik) => (
         <form onSubmit={formik.handleSubmit} className="space-y-4 py-4">
-          <div>
-            <label htmlFor="title" className="sr-only">
+          <div className="space-y-2">
+            <label htmlFor="title">
               Title
+              {formik.errors.title && formik.touched.title ? (
+                <ErrorMessage message={formik.errors.title} />
+              ) : null}
             </label>
             <InputElement
               type="text"
               className="w-full"
-              placeholder="Title"
+              placeholder="A useful title is always beneficial"
               id="title"
               {...formik.getFieldProps("title")}
             />
           </div>
-          <div>
-            <label htmlFor="description" className="sr-only">
+          <div className="space-y-2">
+            <label htmlFor="description">
               Description
+              {formik.errors.description && formik.touched.description ? (
+                <ErrorMessage message={formik.errors.description} />
+              ) : null}
             </label>
+
             <textarea
               type="textarea"
               rows="5"
-              placeholder="Description"
+              placeholder="Write a useful description to help organise your images/posts"
               id="description"
               className="border p-4 w-full rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark "
               {...formik.getFieldProps("description")}
             />
           </div>
-          <div className="space-y-1">
-            {formik.errors.title && formik.touched.title ? (
-              <div className="text-xs text-danger-default/50">
-                {formik.errors.title}
-              </div>
-            ) : null}{" "}
-            {formik.errors.description && formik.touched.description ? (
-              <div className="text-xs text-danger-default/50">
-                {formik.errors.description}
-              </div>
-            ) : null}
-          </div>
+          <div className="space-y-1"> </div>
           <button
             disabled={formik.isSubmitting}
             type="submit"

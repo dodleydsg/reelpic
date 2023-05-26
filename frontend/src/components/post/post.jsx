@@ -6,17 +6,23 @@ import { useState } from "react";
 import { MdLink } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
-import { IoChatbox, IoHeart } from "react-icons/io5";
+import {
+  IoChatbox,
+  IoEye,
+  IoEyeOutline,
+  IoHeart,
+  IoTrendingUp,
+} from "react-icons/io5";
 
-export default function Post() {
+export default function Post({ user, likes, views, created, tags, content }) {
   const [commentsShown, toggleComments] = useState(false);
   return (
     <div>
       <div className="flex justify-between items-center border border-gray-100 p-2">
         <div className="flex gap-2 items-center relative">
-          <Image alt="profile" src={profile1} className="h-10 w-10" />
-          <Link href="/a" className="text-label">
-            @majorlazer
+          <Image alt="profile" src={user.profile} className="h-10 w-10" />
+          <Link href={`/users/${user.username}`} className="text-label">
+            @{user.username}
           </Link>
           <Link href="/as" className="text-primary-default text-sm">
             Follow
@@ -24,15 +30,21 @@ export default function Post() {
         </div>
         <MdLink className="h-18 w-auto pr-4" />
       </div>
-      <Carousel images={[]} bookmark={false} />
+      <Carousel images={content.images} />
       <div className="border-gray-100 p-2 space-y-4">
         <div className="flex items-end justify-between">
           <div className="flex gap-4 mt-4 items-center">
             <div className="flex gap-2 items-center">
               <p className="flex items-center">
+                <IoTrendingUp className="w-5 h-auto items-center cursor-pointer" />
+              </p>
+              <p className="text-sm">{views}</p>
+            </div>
+            <div className="flex gap-2 items-center">
+              <p className="flex items-center">
                 <IoHeart className="w-5 h-auto items-center cursor-pointer" />
               </p>
-              <p className="text-sm">403,120</p>
+              <p className="text-sm">{likes}</p>
             </div>
             <div
               className="flex gap-2 items-center cursor-pointer"
@@ -41,32 +53,32 @@ export default function Post() {
               <p className="flex items-center">
                 <IoChatbox className="w-5 h-auto" />
               </p>
-              <p className="text-sm">1k</p>
+              <p className="text-sm">{content.commentCount}</p>
             </div>
           </div>
 
-          <p className="text-dark-default/70 text-sm font-light">4 hours ago</p>
+          <p className="text-dark-default/70 text-sm font-light">{created}</p>
         </div>
         <div
           className={
             commentsShown ? "bg-light-default/80 rounded-lg" : "hidden"
           }
         >
-          <Comment />
+          <Comment comments={content.comments} />
         </div>
-        <p className="text-dark-default/90">
-          After running expensive, computations for hundreds of hours, I present
-          to you faces of the world powered by the latest algorithms in neural
-          networks. Link in bio for complete list of images
-        </p>
+        <p className="text-dark-default/90">{content.body}</p>
 
         <div className="gap-2">
-          <button className="border rounded hover:text-primary-default/80 transition duration-200 border-primary-default/50 p-2">
-            People
-          </button>{" "}
-          <button className="border rounded hover:text-primary-default/80 transition duration-200 border-primary-default/50 p-2">
-            Nature
-          </button>
+          {tags.map((val, idx) => {
+            return (
+              <button
+                key={idx}
+                className="border rounded hover:text-primary-default/80 transition duration-200 border-primary-default/50 p-2"
+              >
+                {val.capitalize()}
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

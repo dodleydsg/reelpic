@@ -13,8 +13,12 @@ export default function SuccessModal() {
   useEffect(() => {
     if (successModal) {
       successModalRef.current.classList.add("translate-x-full");
+      successModalRef.current.classList.remove("opacity-0");
+      
     } else {
       successModalRef.current.classList.remove("translate-x-full");
+      successModalRef.current.classList.add("opacity-100");
+
     }
   }, [successModal]);
 

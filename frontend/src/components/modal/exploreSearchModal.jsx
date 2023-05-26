@@ -16,15 +16,17 @@ export default function ExploreSearchModal({ hidden }) {
   useEffect(() => {
     if (exploreModal) {
       exploreModalRef.current.classList.add("translate-y-full");
-    }else{
+      exploreModalRef.current.classList.remove("opacity-0");
+    } else {
       exploreModalRef.current.classList.remove("translate-y-full");
+      exploreModalRef.current.classList.add("opacity-0");
     }
   }, [exploreModal]);
 
   return (
     <div
       ref={exploreModalRef}
-      className="-top-full origin-top transition ease-in-out duration-300 inset-0 bg-black/70 z-[53] backdrop-blur h-full flex items-center justify-center w-full p-4 lg:p-8 fixed"
+      className="-top-full opacity-0 origin-top transition ease-in-out duration-300 inset-0 bg-black/70 z-[53] backdrop-blur h-full flex items-center justify-center w-full p-4 lg:p-8 fixed"
     >
       <div className="w-full max-w-4xl h-4/5 bg-white p-4 rounded-lg">
         <div className="flex items-center justify-end">

@@ -71,7 +71,7 @@ export default async function postResolver(action, userId, token, data) {
         },
       });
       return resp;
-    }  else if (action === postActions.POST_Like) {
+    } else if (action === postActions.POST_LIKE) {
       let resp = await axios({
         method: "post",
         data: { ...data, userId },
@@ -81,7 +81,7 @@ export default async function postResolver(action, userId, token, data) {
         },
       });
       return resp;
-    } else if (action === postActions.POST_FEED) {
+    } else if (action === postActions.FEED) {
       let resp = await axios({
         method: "post",
         data: { ...data, userId },
@@ -91,7 +91,7 @@ export default async function postResolver(action, userId, token, data) {
         },
       });
       return resp;
-    } else if (action === postActions.POST_EXPLORE) {
+    } else if (action === postActions.EXPLORE) {
       let resp = await axios({
         method: "get",
         url: BACKEND_DOMAIN + `/api/feed?userId=${userId}`,

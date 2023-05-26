@@ -63,10 +63,11 @@ export default function FormCarousel({ images }) {
             return (
               <div className="min-w-full inline-flex">
                 <img
+                key={idx}
                   alt={`postPreview${idx}`}
                   src={val}
-                  key={idx}
-                  className="max-h-full w-auto mx-auto duration-150 object-fit object-center aspect-video"
+                  
+                  className="max-h-full w-auto mx-auto duration-150 object-fit object-center "
                 />
               </div>
             );
@@ -78,6 +79,7 @@ export default function FormCarousel({ images }) {
           {images.map((val, idx) => {
             return (
               <div
+              key={idx}
                 className={`h-2 w-2 rounded-xl ${
                   activeCarousel === idx + 1
                     ? " bg-primary-default/50"

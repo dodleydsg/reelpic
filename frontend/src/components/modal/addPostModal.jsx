@@ -12,8 +12,13 @@ export default function AddPostModal() {
   useEffect(() => {
     if (addPostModal) {
       addPostModalRef.current.classList.add("translate-y-full");
+      addPostModalRef.current.classList.remove("opacity-0");
+
     } else {
       addPostModalRef.current.classList.remove("translate-y-full");
+      addPostModalRef.current.classList.add("opacity-0");
+
+      
     }
   }, [addPostModal]);
 

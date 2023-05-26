@@ -12,8 +12,12 @@ export default function CatalogueSearchModal() {
   useEffect(() => {
     if (catalogueModal) {
       catalogueModalRef.current.classList.add("translate-y-full");
+      catalogueModalRef.current.classList.remove("opacity-0");
+
     }else{
       catalogueModalRef.current.classList.remove("translate-y-full");
+      catalogueModalRef.current.classList.add("opacity-0");
+
     }
   }, [catalogueModal]);
 
