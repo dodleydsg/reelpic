@@ -7,6 +7,7 @@ import { useState } from "react";
 import { MdLink } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
+import prettyTime from "pretty-time";
 import {
   IoChatbox,
   IoEye,
@@ -62,7 +63,9 @@ export default function Post({ user, likes, views, created, tags, content }) {
             </div>
           </div>
 
-          <p className="text-dark-default/70 text-sm font-light">{created}</p>
+          <p className="text-dark-default/70 text-sm font-light">
+            {prettyTime(Date.parse(created))} ago
+          </p>
         </div>
         <div
           className={

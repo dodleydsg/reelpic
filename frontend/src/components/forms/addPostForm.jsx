@@ -20,7 +20,6 @@ export default function AddPostForm() {
   const dispatch = useDispatch();
   const id = localStorage.getItem("id");
   const token = localStorage.getItem("token");
-  const router = useRouter();
   const MAX_STEPS = 2;
   const [steps, updateSteps] = useState(1);
   const [files, updateFiles] = useState([]);
@@ -42,6 +41,7 @@ export default function AddPostForm() {
     e.preventDefault();
     e.stopPropagation();
     let files = e.target.files;
+    updateRawFiles(files);
     if (files.length > 10) {
       alert("Helo");
       formik.setFieldError("media", "The upload limit is 10 images");
@@ -81,33 +81,36 @@ export default function AddPostForm() {
           media: [],
         }}
         validate={formValidator}
-        onSubmit={(values, { setSubmitting, resetForm }) => {
+        onSubmit={async (values, { setSubmitting, resetForm }) => {
+          setSubmitting(true);
           let imageUrls = [];
           for (let i = 0; i < rawFiles.length; i++) {
             const itemStorageRef = ref(
               storage,
               `images/${id}/${rawFiles.item(i).name}`
             );
-            uploadBytes(itemStorageRef, rawFiles.item(i))
-              .then(() => {
-                getDownloadURL(itemStorageRef).then((url) => {
-                  imageUrls.push(url);
-                });
-              })
-              .catch((error) => {
-                console.log(error);
-              });
+            try {
+              await uploadBytes(itemStorageRef, rawFiles.item(i));
+              let url = await getDownloadURL(itemStorageRef);
+              imageUrls.push(url);
+              console.log(imageUrls);
+            } catch (error) {
+              console.log(error);
+            }
           }
           postResolver(postActions.CREATE_POST, id, token, {
             content: {
               body: values.body,
-              image: imageUrls,
+              images: imageUrls,
             },
+
+            user: id,
             tags: values.tags,
           })
             .then(({ data }) => {
-              dispatch(toggleSuccessModal());
+              console.info(data);
               dispatch(toggleAddPostModal());
+              dispatch(toggleSuccessModal());
               resetForm();
               updateFiles([]);
             })
@@ -236,7 +239,7 @@ export default function AddPostForm() {
                         <div className="flex w-full flex-wrap gap-2">
                           {formik.values.tags.map((val, idx) => (
                             <div
-                              key={idx}
+                              key={val}
                               className="flex py-2 gap-1 items-center px-4 rounded border border-dark-default/60 "
                             >
                               <span className="block">{val}</span>
@@ -276,6 +279,7 @@ export default function AddPostForm() {
                   ) : null}
                 </div>
                 <button
+                  disabled={formik.isSubmitting}
                   type="submit"
                   className="btn-primary inline-block w-1/2  hover:bg-[#4900EB]"
                 >

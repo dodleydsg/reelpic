@@ -170,7 +170,7 @@ const feed = async (req, res, next) => {
           feed.addToSet(_.last(tags[i].posts).toString());
         }
       }
-      random post
+      // random post
       let randomPost = _.nth(
         tags[i].posts,
         Math.floor(Math.random() * tags[i].posts.length)
@@ -190,8 +190,11 @@ const feed = async (req, res, next) => {
       let post = await Post.findById(feed[i])
         .populate("user", "username photo")
         .exec();
-      req.profile.seen.addToSet(post._id);
-      extra_feed.push(post);
+        if (post) {
+          req.profile.seen.addToSet(post._id);
+          extra_feed.push(post);
+        }
+      
     }
     await req.profile.save();
     return res.json(extra_feed);
