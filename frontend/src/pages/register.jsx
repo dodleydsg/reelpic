@@ -39,9 +39,9 @@ export default function Register() {
                   />
                 </div>
               </div>
-              <p className="text-center text-subheading">
-                Register and share your moments
-              </p>
+              <h3 className="text-lg text-center font-medium text-pink-500">
+                Register and start sharing
+              </h3>
             </div>
             <div className="mt-7">
               <RegisterForm googleSignIn={googleSignIn} router={router} />

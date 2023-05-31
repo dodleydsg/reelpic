@@ -2,62 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 /* Hides scrollbar for carousel */
 
-#scrollCard::-webkit-scrollbar{
+
+::-webkit-scrollbar{
+    width: 4px
+}
+::-webkit-scrollbar-track{
     display: none;
 }
-
-#scrollCard{
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+::-webkit-scrollbar-thumb{
+    background: #888;
+    border-radius: 1px;
+}
+::-webkit-scrollbar-thumb:hover{
+    background: #555;
+    transition: all ease-in-out 300ms;
+}
+#scrollCard::-webkit-scrollbar {
+  display: none;
 }
 
-#mainContent::-webkit-scrollbar{
-    display: none;
+#scrollCard {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-#mainContent{
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+#mainContent::-webkit-scrollbar {
+  display: none;
 }
 
-html{
-    scrollbar-color: red red;
+#mainContent {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-.no-scrollBar{
-    -ms-overflow-style: none;
-    scrollbar-width: none; 
+.no-scrollBar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
-.no-scrollBar::-webkit-scrollbar{
-    display: none;
+.no-scrollBar::-webkit-scrollbar {
+  display: none;
 }
 
-@layer components{
-    .text-label{
-        @apply font-medium text-sm
-    }
-    .text-heading{
-        @apply  font-semibold text-4xl
-    }
-    .text-subheading{
-        @apply text-lg text-dark-default/70 font-semibold
-    }
-    .btn-google{
-        @apply block w-full mx-auto transition duration-200 bg-[#DD4B39] py-[14px] rounded-md text-white text-lg
-    }.btn-apple{
-        @apply block w-full mx-auto transition duration-200 bg-black py-[14px] rounded-md text-white text-lg
-    }.btn-primary{
-        @apply block w-full mx-auto transition duration-200 bg-primary-default py-[14px] rounded-md text-white text-lg
-    }.btn-secondary{
-        @apply block w-full mx-auto transition duration-200 bg-danger-default py-[14px] rounded-md text-white text-lg
-    }
-    .link{
-        @apply text-blue-400 hover:text-blue-500 transition duration-200
-    }
-   
-
+@layer components {
+  .text-label {
+    @apply font-medium text-sm;
+  }
+  .text-heading {
+    @apply font-semibold text-4xl;
+  }
+  .text-subheading {
+    @apply text-lg text-dark-default/70 font-semibold;
+  }
+  .btn-google {
+    @apply block w-full mx-auto transition duration-200 bg-[#DD4B39] py-[14px] rounded-md text-white text-lg;
+  }
+  .btn-apple {
+    @apply block w-full mx-auto transition duration-200 bg-black py-[14px] rounded-md text-white text-lg;
+  }
+  .btn-primary {
+    @apply block w-full mx-auto transition duration-200 bg-primary-default py-[14px] rounded-md text-white text-lg;
+  }
+  .btn-secondary {
+    @apply block w-full mx-auto transition duration-200 bg-danger-default py-[14px] rounded-md text-white text-lg;
+  }
+  .link {
+    @apply text-blue-400 hover:text-blue-500 transition duration-200;
+  }
 }

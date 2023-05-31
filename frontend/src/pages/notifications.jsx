@@ -13,7 +13,7 @@ function Notifications() {
         pageTitle="Alerts | Find alerts for recent activity"
       >
         <div className="px-4 pt-6">
-          <h2 className="font-medium text-xl ">Notifications</h2>
+          <h3 className="font-bold text-xl text-pink-500">Notifications</h3>{" "}
           <div className="space-y-2">
             <div>
               <p className="text-right text-sm text-dark-default/80">

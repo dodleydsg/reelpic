@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
+import withPlaiceholder from "@plaiceholder/next";
+import { config } from "bluebird";
 const nextConfig = {
   reactStrictMode: false,
 };
 
-module.exports = {
+const config = {
   ...nextConfig,
   images: {
     remotePatterns: [
@@ -15,3 +17,5 @@ module.exports = {
     ],
   },
 };
+
+export default withPlaiceholder(config);

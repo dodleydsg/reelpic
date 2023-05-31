@@ -79,7 +79,7 @@ function Catalogue() {
                 Create catalogue
               </button>
             </div>
-            <h3 className="font-bold text-xl">My catalogues</h3>
+            <h3 className="font-bold text-xl text-pink-500">My catalogues</h3>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-2 ">
               {catalogues.map((val) => {
                 return <CatalogueCard title={val.title} key={val._id} />;

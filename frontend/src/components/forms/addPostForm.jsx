@@ -127,32 +127,37 @@ export default function AddPostForm() {
             className="mx-auto space-y-4 flex flex-col items-center h-full overflow-y-scroll no-scrollBar"
           >
             <div className="flex w-full items-center justify-between py-2">
-              <button
-                type="button"
-                onClick={(e) => {
-                  _updateSteps("backward");
-                }}
-                className="p-2 border-primary-default/10 rounded border hover:bg-primary-default/10 transition duration-200"
-              >
-                <IoChevronBack />
-              </button>
               <h5 className="font-medium text-xl">
                 {steps === 1 ? "Media" : null}
                 {steps === 2 ? "Content" : null}
               </h5>
-              <button
-                type="button"
-                onClick={() => {
-                  formik.validateForm().then((errors) => {
-                    if (!errors.media) {
-                      _updateSteps("forward");
-                    }
-                  });
-                }}
-                className="p-2 border-primary-default/10 rounded border hover:bg-primary-default/10 transition duration-200"
-              >
-                <IoChevronForward />
-              </button>
+              {steps === 1 ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    formik.validateForm().then((errors) => {
+                      if (!errors.media) {
+                        _updateSteps("forward");
+                      }
+                    });
+                  }}
+                  className="py-2 px-4 flex items-center border border-primary-default/80 rounded hover:bg-primary-default hover:text-white transition duration-200"
+                >
+                  Content
+                  <IoChevronForward />
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => {
+                    _updateSteps("backward");
+                  }}
+                  className="py-2 px-4 flex items-center border border-primary-default/80 rounded hover:bg-primary-default hover:text-white transition duration-200"
+                >
+                  Images
+                  <IoChevronBack />
+                </button>
+              )}
             </div>
             {steps === 1 ? (
               <>
@@ -193,7 +198,7 @@ export default function AddPostForm() {
                 <textarea
                   id="body"
                   rows="5"
-                  className="grow block w-full border p-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark resize-none h-64"
+                  className="grow block w-full border p-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark resize-none"
                   placeholder="Give a useful description to your post"
                   {...formik.getFieldProps("body")}
                 />

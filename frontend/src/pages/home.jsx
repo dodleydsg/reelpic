@@ -29,7 +29,6 @@ function Home() {
         const userId = localStorage.getItem("id");
         const token = localStorage.getItem("token");
         const { data } = await postResolver(postActions.FEED, userId, token);
-        console.log(data);
         updateFeed(data);
       } catch (error) {
         console.log(error);

@@ -28,7 +28,7 @@ export default function BookmarkModal() {
       ref={bookmarkModalRef}
       className="-top-full max-w-full origin-bottom transition ease-in-out duration-300 inset-0 bg-black/70 z-[53] backdrop-blur h-full flex items-center justify-center w-full p-4 lg:p-8 fixed"
     >
-      <div className="w-full max-w-4xl h-4/5 bg-white p-4 rounded-lg">
+      <div className="w-full max-w-lg h-full overflow-y-scroll bg-white p-4 rounded-lg">
         <div className="flex items-center justify-end">
           <IoClose
             onClick={() => dispatch(toggleBookmarkModal())}
@@ -43,36 +43,19 @@ export default function BookmarkModal() {
             </div>
           </form>
 
-          <div className="divide-y-2 space-y-2">
-            {/* Recent */}
-            <div className="space-y-1">
-              <h4 className="text-sm font-light">Recent</h4>
-              <div className="grid grid-cols-2 lg:grid-cols-4">
-                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
-                  <p>Fashion</p>
-                </div>
-                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
-                  <p>Food</p>
-                </div>
-                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
-                  <p>Tech</p>
-                </div>
-              </div>
-            </div>
-            {/* Search results */}
-            <div className="space-y-1 py-2">
-              <h4 className="text-sm font-light">Search results</h4>
-              <div className="grid grid-cols-2 lg:grid-cols-4">
-                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
-                  <p>Fashion</p>
-                </div>
-                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
-                  <p>Food</p>
-                </div>
-                <div className="border border-gray-100 hover:scale-95 cursor-pointer transition duration-150 flex items-center p-4">
-                  <p>Tech</p>
-                </div>
-              </div>
+          {/* Search results */}
+          <div className="space-y-1 py-2">
+            <h4 className="text-sm font-light">Search results</h4>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+              <p className="border border-primary-default/80 rounded hover:scale-95 hover:text-white hover:bg-primary-default cursor-pointer transition duration-150 flex items-center p-4">
+                Fashion
+              </p>
+              <p className="border border-primary-default/80 rounded  hover:scale-95 hover:text-white hover:bg-primary-default cursor-pointer transition duration-150 flex items-center p-4">
+                Food
+              </p>
+              <p className="border border-primary-default/80 rounded  hover:scale-95 hover:text-white hover:bg-primary-default cursor-pointer transition duration-150 flex items-center p-4">
+                Tech
+              </p>
             </div>
           </div>
         </div>

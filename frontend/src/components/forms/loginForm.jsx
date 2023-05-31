@@ -23,7 +23,6 @@ export default function LoginForm() {
           .required(),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        alert("Am trying");
         authResolver(authRoutes.LOGIN, {
           data: {
             email: values.email,
@@ -37,8 +36,7 @@ export default function LoginForm() {
           })
           .catch((error) => {
             console.log(error);
-            alert("Ooops");
-            alert(error);
+
             // router.push("/_error");
           });
         setSubmitting(false);

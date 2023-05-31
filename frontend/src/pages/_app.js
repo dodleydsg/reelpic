@@ -43,7 +43,7 @@ const grandHotel = localFont({
 export default function App({ Component, pageProps }) {
   return (
     <Provider store={store}>
-      <main className={`${neusa.variable} ${grandHotel.variable} font-sans`}>
+      <main className={`${neusa.variable} ${grandHotel.variable} font-sans `}>
         <Component {...pageProps} />
       </main>
     </Provider>

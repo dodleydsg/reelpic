@@ -45,9 +45,10 @@ export default function Login() {
                     />
                   </div>
                 </div>
-                <p className="text-center text-subheading">
+
+                <h3 className="text-lg text-center font-medium text-pink-500">
                   Login to access your account
-                </p>
+                </h3>
               </div>
               <div className="mt-7">
                 <LoginForm router={router} />

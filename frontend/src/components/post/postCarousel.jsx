@@ -6,9 +6,9 @@ import {
 } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleBookmarkModal } from "@/components/store/features/uiSlice";
+import Image from "next/image";
 
 export default function Carousel({ images, bookmark, view }) {
-  const { loggedIn } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [activeCarousel, setActiveCarousel] = useState(1);
   // Carousel item count starts from 1
@@ -91,9 +91,16 @@ export default function Carousel({ images, bookmark, view }) {
         >
           {images.map((val, idx) => {
             return (
-              <img
+              <Image
                 alt={`postPreview${idx}`}
                 src={val}
+                fill={true}
+                loader={({ src }) => src}
+                quality={50}
+                unoptimized={true}
+                placeholder="blur"
+                blurDataURL="iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk8Jj5HwADEwHiN47L5QAAAABJRU5ErkJggg==
+                "
                 key={idx}
                 data-active={idx === 0 ? "true" : null}
                 className="h-full w-full lg:w-auto absolute inset-0
@@ -118,6 +125,7 @@ export default function Carousel({ images, bookmark, view }) {
           {images.map((val, idx) => {
             return (
               <div
+                key={idx}
                 className={`h-2 w-2 rounded-xl ${
                   activeCarousel === idx + 1
                     ? " bg-primary-default/50"

@@ -27,7 +27,7 @@ function Explore() {
               Search users, catalogues and tags
             </div>
           </div>
-
+          <h3 className="font-bold text-xl text-pink-500">Explore</h3>
           <Masonry />
         </div>
       </NavbarTemplate>

@@ -28,7 +28,7 @@ export default function ExploreSearchModal({ hidden }) {
       ref={exploreModalRef}
       className="-top-full opacity-0 origin-top transition ease-in-out duration-300 inset-0 bg-black/70 z-[53] backdrop-blur h-full flex items-center justify-center w-full p-4 lg:p-8 fixed"
     >
-      <div className="w-full max-w-4xl h-4/5 bg-white p-4 rounded-lg">
+      <div className="w-full max-w-lg h-full overflow-y-scroll bg-white p-4 rounded-lg">
         <div className="flex items-center justify-end">
           <IoClose
             onClick={() => dispatch(toggleExploreModal())}
