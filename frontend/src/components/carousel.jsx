@@ -1,21 +1,19 @@
-import { debounce } from "lodash";
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function FormCarousel({ images }) {
-  const dispatch = useDispatch();
+export default function Carousel({ images }) {
   const [activeCarousel, setActiveCarousel] = useState(0);
   const CONTENT_LENGTH = images.length;
-
   const carouselRef = useRef();
 
-  const checkNavigation = () => {};
+  useEffect(() => {
+    carouselRef.current.style.background = `url("${images[activeCarousel]}")`;
+  }, activeCarousel);
 
   let touchstartX = 0;
   let touchendX = 0;
-  // debounce(swipe, 250);
 
   const swipe = (e) => {
     console.log(e.changedTouches);
@@ -38,7 +36,6 @@ export default function FormCarousel({ images }) {
     }
   };
 
-
   const navigateCarousel = (direction) => {
     const carousel = carouselRef.current;
     if (direction === "left") {
@@ -57,13 +54,13 @@ export default function FormCarousel({ images }) {
   };
   if (CONTENT_LENGTH === 0) {
     return (
-      <section className="bg-none  py-5 w-full relative overflow-hidden flex p-4 bg-gray-100 min-h-[60%]"></section>
+      <section className="bg-none h-full  py-5 w-full relative overflow-hidden flex p-4 bg-gray-100 min-h-[60%]"></section>
     );
   }
 
   return (
     <>
-      <section className="bg-none py-5 w-full relative overflow-hidden flex bg-gray-100 min-h-[60%]">
+      <section className="py-5 w-full h-full relative overflow-hidden flex  min-h-[60vh]">
         <button
           type="button"
           onClick={(e) => {

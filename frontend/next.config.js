@@ -1,13 +1,12 @@
 /** @type {import('next').NextConfig} */
-import withPlaiceholder from "@plaiceholder/next";
-import { config } from "bluebird";
 const nextConfig = {
   reactStrictMode: false,
 };
 
-const config = {
+module.exports = {
   ...nextConfig,
   images: {
+    deviceSizes: [600, 640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     remotePatterns: [
       {
         protocol: "https",
@@ -17,5 +16,3 @@ const config = {
     ],
   },
 };
-
-export default withPlaiceholder(config);

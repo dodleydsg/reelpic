@@ -86,7 +86,7 @@ export default function Carousel({ images, bookmark, view }) {
           <IoChevronForward className="text-xl" />
         </button>
         <div
-          className="absolute flex inset-0 lg:inset-6 mx-auto carousel"
+          className="absolute bg-default-primary flex inset-0 lg:inset-6 mx-auto carousel"
           data-current="0"
         >
           {images.map((val, idx) => {

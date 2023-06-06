@@ -7,6 +7,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  likes: [
+    {
+      type: mongoose.Types.ObjectId,
+    },
+  ],
   email: {
     type: String,
     trim: true,

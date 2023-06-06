@@ -41,6 +41,7 @@ const userSlice = createSlice({
         state.catalogueList = payload.catalogues;
         state.notifications = payload.notifications;
         state.posts = payload.posts;
+        state.likes = payload.likes;
         state.pending = false;
         state.rejected = false;
         state.loggedIn = true;

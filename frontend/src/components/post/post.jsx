@@ -1,5 +1,5 @@
 import React from "react";
-import Carousel from "./postCarousel";
+import Carousel from "../carousel";
 import profile1 from "../../assets/images/Profile1.png";
 import template from "../../assets/images/food.jpg";
 import Comment from "../comment";
@@ -15,11 +15,22 @@ import {
   IoHeart,
   IoTrendingUp,
 } from "react-icons/io5";
+import { useSelector } from "react-redux";
 
-export default function Post({ user, likes, views, created, tags, content }) {
+export default function Post({
+  _id,
+  user,
+  likes,
+  views,
+  created,
+  tags,
+  content,
+}) {
   const [commentsShown, toggleComments] = useState(false);
+  const userLikes = useSelector((state) => state.user.likes);
+  //userLikes is an array corresponding to the user's liked posts
   return (
-    <div>
+    <div className="h-full">
       <div className="flex justify-between items-center border border-gray-100 p-2">
         <div className="flex gap-2 items-center relative">
           <Image
@@ -48,7 +59,11 @@ export default function Post({ user, likes, views, created, tags, content }) {
             </div>
             <div className="flex gap-2 items-center">
               <p className="flex items-center">
-                <IoHeart className="w-5 h-auto items-center cursor-pointer" />
+                <IoHeart
+                  className={`w-5 h-auto items-center cursor-pointer ${userLikes.includes(
+                    _id
+                  )}`}
+                />
               </p>
               <p className="text-sm">{likes}</p>
             </div>

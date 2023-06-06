@@ -8,6 +8,7 @@ const Post = require("../models/post.model"),
   _ = require("lodash");
 
 let LIKE_REQUESTS = 0;
+const LIKE_THRESHOLD = 1000;
 
 const redisClient = new Redis();
 
@@ -190,11 +191,10 @@ const feed = async (req, res, next) => {
       let post = await Post.findById(feed[i])
         .populate("user", "username photo")
         .exec();
-        if (post) {
-          req.profile.seen.addToSet(post._id);
-          extra_feed.push(post);
-        }
-      
+      if (post) {
+        req.profile.seen.addToSet(post._id);
+        extra_feed.push(post);
+      }
     }
     await req.profile.save();
     return res.json(extra_feed);
@@ -258,21 +258,28 @@ const like = async (req, res, next) => {
     if (user._id.toString() !== req.body.userId.toString()) {
       unAuthorizedErrorBlock(res);
     }
-    if (LIKE_REQUESTS > 3) {
+    if (LIKE_REQUESTS > LIKE_THRESHOLD) {
       // If threshold for just Redis updates is reached, pull the Post object from MongoDB and likes and update the post.likes property
       console.log("slow");
       let post = await Post.findById(req.body.postId);
       let likes = parseInt(
         await redisClient.get(`post:${req.body.postId}:likes`)
       );
+      let usersLike = await redisClient.smembers(
+        `post:${req.body.postId}:usersLike`
+      );
 
-      // update with values from redis
+      //update with values from redis
       post.likes += likes;
+      usersLike || post.usersLike.addToSet(usersLike);
+
       // update with respect to action
       if (req.body.action.toLowerCase() === "like") {
         post.likes++;
+        post.usersLike.addToSet(req.body.userId);
       } else {
         post.likes > 0 ? post.likes-- : null;
+        post.usersLike.pull(req.body.userId);
       }
       await post.save();
 
@@ -280,6 +287,11 @@ const like = async (req, res, next) => {
 
       // now update Redis database with correct value, due to downtime while processesing previous actions
       await redisClient.decrby(`post:${req.body.postId}:likes`, likes);
+      usersLike ||
+        (await redisClient.srem(
+          `post:${req.body.postId}:usersLike`,
+          usersLike
+        ));
 
       LIKE_REQUESTS = 0;
     } else {
@@ -288,7 +300,15 @@ const like = async (req, res, next) => {
       LIKE_REQUESTS++;
       if (req.body.action.toLowerCase() === "like") {
         await redisClient.incr(`post:${req.body.postId}:likes`);
+        await redisClient.sadd(
+          `post:${req.body.postId}:users_like`,
+          req.body.userId
+        );
       } else {
+        await redisClient.srem(
+          `post:${req.body.postId}:users_like`,
+          req.body.userId
+        );
         await redisClient.decr(`post:${req.body.postId}:likes`);
       }
     }
