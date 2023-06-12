@@ -8,7 +8,7 @@ const Post = require("../models/post.model"),
   _ = require("lodash");
 
 let LIKE_REQUESTS = 0;
-const LIKE_THRESHOLD = 1000;
+const LIKE_THRESHOLD = 5;
 
 const redisClient = new Redis();
 
@@ -258,13 +258,14 @@ const like = async (req, res, next) => {
     if (user._id.toString() !== req.body.userId.toString()) {
       unAuthorizedErrorBlock(res);
     }
+    let likes = parseInt(
+      await redisClient.get(`post:${req.body.postId}:likes`)
+    );
     if (LIKE_REQUESTS > LIKE_THRESHOLD) {
       // If threshold for just Redis updates is reached, pull the Post object from MongoDB and likes and update the post.likes property
       console.log("slow");
       let post = await Post.findById(req.body.postId);
-      let likes = parseInt(
-        await redisClient.get(`post:${req.body.postId}:likes`)
-      );
+
       let usersLike = await redisClient.smembers(
         `post:${req.body.postId}:usersLike`
       );
@@ -309,7 +310,9 @@ const like = async (req, res, next) => {
           `post:${req.body.postId}:users_like`,
           req.body.userId
         );
-        await redisClient.decr(`post:${req.body.postId}:likes`);
+        if (likes > 0) {
+          await redisClient.decr(`post:${req.body.postId}:likes`);
+        }
       }
     }
 
