@@ -92,7 +92,8 @@ export default function Carousel({ images, description }) {
                   alt={description}
                   width={1200}
                   height={800}
-                  unoptimized={true}
+                  placeholder="blur"
+                  blurDataURL={val + "-blur"}
                   loader={({ src, height, width }) => src}
                   src={val}
                   className="max-h-full my-auto w-auto mx-auto duration-150"
@@ -108,7 +109,7 @@ export default function Carousel({ images, description }) {
             return (
               <div
                 key={idx}
-                className={`h-2 w-2 rounded-xl ${
+                className={`cursor-pointer h-2 w-2 rounded-xl ${
                   activeCarousel === idx
                     ? " bg-primary-default/50"
                     : " bg-dark-default/50"

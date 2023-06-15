@@ -21,6 +21,7 @@ import postResolver from "../resolvers/post.resolver";
 function Home() {
   const [feed, updateFeed] = useState([]);
   const dispatch = useDispatch();
+  const { stale } = useSelector((state) => state.ui);
 
   useEffect(() => {
     const getFeed = async () => {
@@ -35,7 +36,7 @@ function Home() {
     };
 
     getFeed();
-  }, []);
+  }, [stale]);
 
   return (
     <>

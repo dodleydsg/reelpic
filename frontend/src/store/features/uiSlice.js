@@ -9,8 +9,11 @@ const initialState = {
   failureModal: false,
   catalogueModal: false,
   bookmarkModal: false,
-  alertText: "",
+  alertText: "Nothing to see here",
+  alertVariant: "default",
+  alertAction: "refresh",
   alert: true,
+  stale: false,
 };
 
 const uiSlice = createSlice({
@@ -20,14 +23,19 @@ const uiSlice = createSlice({
     toggleMask: (state) => {
       state.mask = !state.mask;
     },
-    setAlertText: (state, { payload }) => {
-      state.alertText = payload;
+    configureAlert: (state, { payload }) => {
+      state.alertText = payload.text;
+      state.alertVariant = payload.variant;
+      state.alertAction = payload.action;
     },
     setAlert: (state, { payload }) => {
       state.alert = payload;
     },
     setMask: (state, { payload }) => {
       state.mask = payload;
+    },
+    setStale: (state, { payload }) => {
+      state.stale = payload;
     },
     resetState: (state) => {
       state = initialState;
@@ -56,8 +64,9 @@ const uiSlice = createSlice({
 export const {
   toggleMask,
   setMask,
+  setStale,
   setAlert,
-  setAlertText,
+  configureAlert,
   resetState,
   toggleAddPostModal,
   toggleAddCatalogueModal,

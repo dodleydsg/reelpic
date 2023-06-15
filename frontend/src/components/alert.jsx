@@ -1,20 +1,31 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setAlert } from "../store/features/uiSlice";
-import { IoClose } from "react-icons/io5";
+import {
+  IoCheckmarkDoneCircle,
+  IoClose,
+  IoInformation,
+  IoInformationCircle,
+  IoInformationCircleOutline,
+  IoRefresh,
+  IoWarning,
+  IoWarningOutline,
+} from "react-icons/io5";
+import _ from "lodash";
+import { setStale } from "../store/features/uiSlice";
 
-export default function Alert({ variant, text }) {
-  const { alertText, alert } = useSelector((state) => state.ui);
+export default function Alert() {
+  const { alertText, alertAction, alertVariant, alert } = useSelector(
+    (state) => state.ui
+  );
   const dispatch = useDispatch();
   const alertRef = useRef();
 
-  useEffect(() => {
-    if (alert) {
-      setTimeout(() => {
-        setAlert(false);
-      }, 3000);
-    }
+  // if (alert) {
+  //   _.delay(() => dispatch(setAlert(false)), 3000);
+  // }
 
+  useEffect(() => {
     if (alert) {
       alertRef.current.classList.add("translate-y-full");
       alertRef.current.classList.remove("opacity-0");
@@ -23,21 +34,116 @@ export default function Alert({ variant, text }) {
       alertRef.current.classList.add("opacity-0");
     }
   }, [alert]);
-  if (variant === "danger") {
+  if (alertVariant === "danger") {
+    return (
+      <div className="grid">
+        <div
+          ref={alertRef}
+          className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-full fixed z-[56]  rounded bg-blue-100  p-4 justify-self-center text-danger-default/80  flex items-center justify-between gap-6"
+        >
+          <div className="flex items-center gap-2">
+            <IoWarningOutline className="text-danger-default/80 w-6 h-auto" />
+            <span className="text-sm">{alertText}</span>
+          </div>
+          <div className="flex items-center gap-4">
+            {alertAction === "refresh" ? (
+              <span
+                className="text-danger-default/80 font-bold p-2 cursor-pointer"
+                onClick={() => dispatch(setStale(true))}
+              >
+                Refresh
+              </span>
+            ) : null}
+            <IoClose
+              className="cursor-pointer"
+              onClick={() => dispatch(setAlert(false))}
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
-  if (variant === "success") {
+  if (alertVariant === "info") {
+    return (
+      <div className="grid">
+        <div
+          ref={alertRef}
+          className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-blue-600  flex items-center justify-between gap-6"
+        >
+          <div className="flex items-center gap-2">
+            <IoInformationCircleOutline className="w-6 h-auto" />
+            <span className="text-sm text-blue-900">{alertText}</span>
+          </div>
+          <div className="flex items-center gap-4">
+            {alertAction === "refresh" ? (
+              <span
+                className="text-blue-900 font-bold p-2 cursor-pointer"
+                onClick={() => dispatch(setStale(true))}
+              >
+                Refresh
+              </span>
+            ) : null}
+            <IoClose
+              className="cursor-pointer"
+              onClick={() => dispatch(setAlert(false))}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+  if (alertVariant === "success") {
+    return (
+      <div className="grid">
+        <div
+          ref={alertRef}
+          className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-green-600  flex items-center justify-between gap-6"
+        >
+          <div className="flex items-center gap-2">
+            <IoCheckmarkDoneCircle className="w-6 h-auto" />
+            <span className="text-sm text-green-900">{alertText}</span>
+          </div>
+          <div className="flex items-center gap-4">
+            {alertAction === "refresh" ? (
+              <span
+                className="text-green-900 font-bold p-2 cursor-pointer"
+                onClick={() => dispatch(setStale(true))}
+              >
+                Refresh
+              </span>
+            ) : null}
+            <IoClose
+              className="cursor-pointer"
+              onClick={() => dispatch(setAlert(false))}
+            />
+          </div>
+        </div>
+      </div>
+    );
   }
   return (
     <div className="grid">
       <div
         ref={alertRef}
-        className="max-w-lg duration-200 origin-top translate-full fixed z-[56]  rounded bg-light-default  border border-primary-default/40 p-4 justify-self-center text-dark-default text-sm gap-2 flex items-center"
+        className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-dark-default  flex items-center justify-between gap-6"
       >
-        <span>Post added successfully</span>
-        <IoClose
-          className="cursor-pointer"
-          onClick={() => dispatch(setAlert(false))}
-        />
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-dark-default">{alertText}</span>
+        </div>
+        <div className="flex items-center gap-4">
+          {alertAction === "refresh" ? (
+            <span
+              className="text-dark-default font-bold p-2 cursor-pointer"
+              onClick={() => dispatch(setStale(true))}
+            >
+              Refresh
+            </span>
+          ) : null}
+          <IoClose
+            className="cursor-pointer"
+            onClick={() => dispatch(setAlert(false))}
+          />
+        </div>
       </div>
     </div>
   );
