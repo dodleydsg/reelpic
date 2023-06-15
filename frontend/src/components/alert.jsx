@@ -21,25 +21,25 @@ export default function Alert() {
   const dispatch = useDispatch();
   const alertRef = useRef();
 
-  // if (alert) {
-  //   _.delay(() => dispatch(setAlert(false)), 3000);
-  // }
+  if (alert) {
+    _.delay(() => dispatch(setAlert(false)), 5000);
+  }
 
   useEffect(() => {
     if (alert) {
-      alertRef.current.classList.add("translate-y-full");
+      alertRef.current.classList.remove("-translate-y-full");
       alertRef.current.classList.remove("opacity-0");
     } else {
-      alertRef.current.classList.remove("translate-y-full");
+      alertRef.current.classList.add("-translate-y-full");
       alertRef.current.classList.add("opacity-0");
     }
   }, [alert]);
-  if (alertVariant === "danger") {
+  if (true) {
     return (
       <div className="grid">
         <div
           ref={alertRef}
-          className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-full fixed z-[56]  rounded bg-blue-100  p-4 justify-self-center text-danger-default/80  flex items-center justify-between gap-6"
+          className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top  fixed z-[56]  rounded bg-blue-100  p-4 justify-self-center text-danger-default/80  flex items-center justify-between gap-6"
         >
           <div className="flex items-center gap-2">
             <IoWarningOutline className="text-danger-default/80 w-6 h-auto" />
@@ -68,7 +68,7 @@ export default function Alert() {
       <div className="grid">
         <div
           ref={alertRef}
-          className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-blue-600  flex items-center justify-between gap-6"
+          className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-y-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-blue-600  flex items-center justify-between gap-6"
         >
           <div className="flex items-center gap-2">
             <IoInformationCircleOutline className="w-6 h-auto" />
@@ -97,7 +97,7 @@ export default function Alert() {
       <div className="grid">
         <div
           ref={alertRef}
-          className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-green-600  flex items-center justify-between gap-6"
+          className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-y-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-green-600  flex items-center justify-between gap-6"
         >
           <div className="flex items-center gap-2">
             <IoCheckmarkDoneCircle className="w-6 h-auto" />
@@ -125,7 +125,7 @@ export default function Alert() {
     <div className="grid">
       <div
         ref={alertRef}
-        className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-dark-default  flex items-center justify-between gap-6"
+        className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-y-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-dark-default  flex items-center justify-between gap-6"
       >
         <div className="flex items-center gap-2">
           <span className="text-sm text-dark-default">{alertText}</span>

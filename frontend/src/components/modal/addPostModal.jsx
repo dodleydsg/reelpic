@@ -30,10 +30,12 @@ export default function AddPostModal() {
       <div className="w-full max-w-2xl space-y-4 h-full overflow-y-scroll bg-white p-9 rounded-lg">
         <div className="flex items-center justify-between">
           <h2 className="text-2xl font-medium text-pink-500">New post</h2>
-          <IoClose
+          <span
             onClick={() => dispatch(toggleAddPostModal())}
-            className="cursor-pointer text-xl text-danger-default/80 hover:text-danger-default transition duration-200"
-          />
+            className="p-4 cursor-pointer text-xl text-danger-default/80 hover:text-danger-default transition duration-200"
+          >
+            <IoClose />
+          </span>
         </div>
         <AddPostForm />
       </div>

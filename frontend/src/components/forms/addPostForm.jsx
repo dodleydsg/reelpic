@@ -11,6 +11,8 @@ import postResolver from "../../resolvers/post.resolver";
 import postActions from "../../actions/post.actions";
 import { useDispatch } from "react-redux";
 import {
+  configureAlert,
+  setAlert,
   toggleAddPostModal,
   toggleSuccessModal,
 } from "../../store/features/uiSlice";
@@ -110,7 +112,14 @@ export default function AddPostForm() {
             .then(({ data }) => {
               console.info(data);
               dispatch(toggleAddPostModal());
-              dispatch(toggleSuccessModal());
+              dispatch(
+                configureAlert({
+                  variant: "success",
+                  text: "Successfully added post, refresh to stay updated",
+                  action: "refresh",
+                })
+              );
+              dispatch(setAlert(true));
               resetForm();
               updateFiles([]);
             })

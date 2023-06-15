@@ -9,6 +9,8 @@ import {
   toggleAddCatalogue,
   toggleAddCatalogueModal,
   toggleSuccessModal,
+  configureAlert,
+  setAlert,
 } from "../../store/features/uiSlice";
 import ErrorMessage from "./errorMessage";
 
@@ -36,7 +38,13 @@ export default function AddCatalogueForm() {
           .then(({ data }) => {
             dispatch(updateCatalogueList(data._id));
             dispatch(toggleAddCatalogueModal(false));
-            dispatch(toggleSuccessModal());
+            dispatch(
+              configureAlert({
+                variant: "success",
+                text: "Successfully added catalogue",
+              })
+            );
+            dispatch(setAlert(true));
           })
           .catch((error) => {
             // console.log(error.response.data.error);

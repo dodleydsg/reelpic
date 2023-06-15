@@ -48,9 +48,7 @@ function Home() {
       >
         <div className="space-y-4">
           <div className="mt-20 lg:mt-0">
-            <h3 className="text-lg font-medium text-pink-500">
-              Trending catalogues
-            </h3>
+            <h3 className="text-lg font-medium">Trending catalogues</h3>
             <ScrollCard />
           </div>
           <div className="sticky h-auto top-0 z-[51] bg-white">
