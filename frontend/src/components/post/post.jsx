@@ -47,7 +47,7 @@ export default function Post({
         </div>
         <MdLink className="h-18 w-auto pr-4" />
       </div>
-      <Carousel images={content.images} />
+      <Carousel images={content.images} description={content.body} />
       <div className="border-gray-100 p-2 space-y-4">
         <div className="flex items-end justify-between">
           <div className="flex gap-4 mt-4 items-center">
@@ -91,12 +91,12 @@ export default function Post({
         </div>
         <p className="text-dark-default/90">{content.body}</p>
 
-        <div className="gap-2">
+        <div className="gap-2 flex">
           {tags.map((val, idx) => {
             return (
               <button
                 key={idx}
-                className="border rounded hover:text-primary-default/80 transition duration-200 border-primary-default/50 p-2"
+                className="border rounded hover:text-primary-default/80 transition duration-200 border-primary-default/50 py-2 px-4"
               >
                 {val}
               </button>

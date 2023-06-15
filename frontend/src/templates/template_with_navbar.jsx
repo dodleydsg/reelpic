@@ -17,6 +17,7 @@ import authResolver from "../resolvers/auth.resolver";
 import SuccessModal from "../components/modal/successModal";
 import AddPostModal from "../components/modal/addPostModal";
 import AddCatalogueModal from "../components/modal/addCatalogueModal";
+import Alert from "../components/alert";
 
 export default function ({ children, headerText, HeaderAside, pageTitle }) {
   const router = useRouter();
@@ -34,6 +35,7 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
       </Head>
       <div>
         <Mask />
+        <Alert />
         <SuccessModal />
         <AddPostModal />
         <AddCatalogueModal />

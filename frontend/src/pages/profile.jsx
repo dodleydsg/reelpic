@@ -21,7 +21,7 @@ function Profile() {
   const router = useRouter();
 
   const TopTab = () => (
-    <div className="sticky z-20 top-[72px] lg:top-0  py-4 bg-white">
+    <div className="sticky z-20 lg:top-0 top-[72px]  py-4 bg-white">
       <div className="flex  p-2 mx-auto justify-around items-center gap-4 bg-light-default border-2">
         {TABS.map((val, idx) => {
           let classes = "px-4 py-2 rounded cursor-pointer";

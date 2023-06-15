@@ -1,16 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { IoChevronBack, IoChevronForward } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function Carousel({ images }) {
+export default function Carousel({ images, description }) {
   const [activeCarousel, setActiveCarousel] = useState(0);
   const CONTENT_LENGTH = images.length;
   const carouselRef = useRef();
-
-  useEffect(() => {
-    carouselRef.current.style.background = `url("${images[activeCarousel]}")`;
-  }, activeCarousel);
 
   let touchstartX = 0;
   let touchendX = 0;
@@ -84,15 +80,16 @@ export default function Carousel({ images }) {
           onTouchEnd={(e) => swipe(e)}
           id="carousel"
           ref={carouselRef}
-          className="absolute transition-all ease-in-out duration-300 translate-x-0 inset-0 flex mx-auto carousel overflow-x-visible no-scrollBar"
+          className="absolute bg-contain transition-all ease-in-out duration-300 translate-x-0 inset-0 flex mx-auto carousel overflow-x-visible no-scrollBar"
           data-current="0"
         >
-          {images.map((val, idx) => {
+          {images.map((val) => {
             return (
               <div className="min-w-full h-auto inline-flex">
                 <Image
+                  ok={val}
                   key={val}
-                  alt={`postPreview${idx}`}
+                  alt={description}
                   width={1200}
                   height={800}
                   unoptimized={true}

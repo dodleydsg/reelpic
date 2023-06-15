@@ -187,7 +187,7 @@ const feed = async (req, res, next) => {
     }
 
     let extra_feed = [];
-    for (let i = 0; i < feed.length; i++) {
+    for (let i = feed.length - 1; i >= 0; i--) {
       let post = await Post.findById(feed[i])
         .populate("user", "username photo")
         .exec();

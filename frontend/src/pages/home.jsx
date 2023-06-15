@@ -19,7 +19,6 @@ import postActions from "../actions/post.actions";
 import postResolver from "../resolvers/post.resolver";
 
 function Home() {
-  const { user } = useSelector((state) => state.user);
   const [feed, updateFeed] = useState([]);
   const dispatch = useDispatch();
 

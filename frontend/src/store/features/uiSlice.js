@@ -9,6 +9,8 @@ const initialState = {
   failureModal: false,
   catalogueModal: false,
   bookmarkModal: false,
+  alertText: "",
+  alert: true,
 };
 
 const uiSlice = createSlice({
@@ -17,6 +19,12 @@ const uiSlice = createSlice({
   reducers: {
     toggleMask: (state) => {
       state.mask = !state.mask;
+    },
+    setAlertText: (state, { payload }) => {
+      state.alertText = payload;
+    },
+    setAlert: (state, { payload }) => {
+      state.alert = payload;
     },
     setMask: (state, { payload }) => {
       state.mask = payload;
@@ -48,6 +56,8 @@ const uiSlice = createSlice({
 export const {
   toggleMask,
   setMask,
+  setAlert,
+  setAlertText,
   resetState,
   toggleAddPostModal,
   toggleAddCatalogueModal,
