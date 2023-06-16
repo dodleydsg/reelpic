@@ -12,7 +12,7 @@ const initialState = {
   alertText: "Nothing to see here",
   alertVariant: "default",
   alertAction: "refresh",
-  alert: true,
+  alert: false,
   stale: false,
 };
 

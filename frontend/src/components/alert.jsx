@@ -4,11 +4,7 @@ import { setAlert } from "../store/features/uiSlice";
 import {
   IoCheckmarkDoneCircle,
   IoClose,
-  IoInformation,
-  IoInformationCircle,
   IoInformationCircleOutline,
-  IoRefresh,
-  IoWarning,
   IoWarningOutline,
 } from "react-icons/io5";
 import _ from "lodash";
@@ -34,7 +30,7 @@ export default function Alert() {
       alertRef.current.classList.add("opacity-0");
     }
   }, [alert]);
-  if (true) {
+  if (alertVariant === "danger") {
     return (
       <div className="grid">
         <div
@@ -125,7 +121,7 @@ export default function Alert() {
     <div className="grid">
       <div
         ref={alertRef}
-        className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top translate-y-full fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-dark-default  flex items-center justify-between gap-6"
+        className="max-w-lg w-full lg:max-w-2xl duration-200 origin-top fixed z-[56]  rounded bg-blue-100 p-4 justify-self-center text-dark-default  flex items-center justify-between gap-6"
       >
         <div className="flex items-center gap-2">
           <span className="text-sm text-dark-default">{alertText}</span>

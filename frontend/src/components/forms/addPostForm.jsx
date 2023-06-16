@@ -97,37 +97,48 @@ export default function AddPostForm() {
               imageUrls.push(url);
               console.log(imageUrls);
             } catch (error) {
-              console.log(error);
+              null;
             }
           }
-          postResolver(postActions.CREATE_POST, id, token, {
-            content: {
-              body: values.body,
-              images: imageUrls,
-            },
+          if (!imageUrls) {
+            postResolver(postActions.CREATE_POST, id, token, {
+              content: {
+                body: values.body,
+                images: imageUrls,
+              },
 
-            user: id,
-            tags: values.tags,
-          })
-            .then(({ data }) => {
-              console.info(data);
-              dispatch(toggleAddPostModal());
-              dispatch(
-                configureAlert({
-                  variant: "success",
-                  text: "Successfully added post, refresh to stay updated",
-                  action: "refresh",
-                })
-              );
-              dispatch(setAlert(true));
-              resetForm();
-              updateFiles([]);
+              user: id,
+              tags: values.tags,
             })
-            .catch((error) => {
-              console.log(error);
-              resetForm();
-              updateFiles([]);
-            });
+              .then(({ data }) => {
+                console.info(data);
+                dispatch(toggleAddPostModal());
+                dispatch(
+                  configureAlert({
+                    variant: "success",
+                    text: "Successfully added post, refresh to stay updated",
+                    action: "refresh",
+                  })
+                );
+                dispatch(setAlert(true));
+                resetForm();
+                updateFiles([]);
+              })
+              .catch((error) => {
+                console.log(error);
+                resetForm();
+                updateFiles([]);
+              });
+          } else {
+            dispatch(
+              configureAlert({
+                variant: "danger",
+                text: "Couldn't submit post, check connection",
+              })
+            );
+            dispatch(setAlert(true));
+            dispatch(toggleAddPostModal());
+          }
         }}
       >
         {(formik) => (
@@ -295,9 +306,17 @@ export default function AddPostForm() {
                 <button
                   disabled={formik.isSubmitting}
                   type="submit"
-                  className="btn-primary inline-block w-1/2  hover:bg-[#4900EB]"
+                  className={`btn-primary inline-block w-1/2   ${
+                    formik.isSubmitting
+                      ? "cursor-not-allowed opacity-50"
+                      : "hover:bg-[#4900EB]"
+                  }`}
                 >
-                  Add post
+                  {formik.isSubmitting ? (
+                    <span>Submitting</span>
+                  ) : (
+                    <span>Add post</span>
+                  )}
                 </button>
               </div>
             ) : null}
