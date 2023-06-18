@@ -258,13 +258,12 @@ export default function StartingForm({ email }) {
                 </li>
               </ul>
               {/* Error section */}
-              <div className="bg-red-200 rounded-md p-2">
-                {formik.errors.interests ? (
-                  <p className="text-sm text-danger-default/80">
-                    {formik.errors.interests}
-                  </p>
-                ) : null}
-              </div>
+
+              {formik.errors.interests ? (
+                <p className="bg-red-200 rounded-md p-2 text-sm text-danger-default/80">
+                  {formik.errors.interests}
+                </p>
+              ) : null}
 
               <div className="flex justify-between items-center gap-2">
                 <button

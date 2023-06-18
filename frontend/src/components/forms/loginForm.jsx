@@ -4,8 +4,19 @@ import * as Yup from "yup";
 import authResolver from "../../resolvers/auth.resolver";
 import authRoutes from "../../actions/auth.actions";
 import { useRouter } from "next/router";
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  onAuthStateChanged,
+} from "firebase/auth";
+import { auth } from "../firebase";
 
-export default function LoginForm({ googleSignUp }) {
+const googleSignUp = async () => {
+  const provider = new GoogleAuthProvider();
+  let cred = await signInWithPopup(auth, provider);
+  const { email } = cred.user;
+};
+export default function LoginForm() {
   const router = useRouter();
   return (
     <Formik
@@ -102,10 +113,38 @@ export default function LoginForm({ googleSignUp }) {
             </Link>
           </div>
           <div className="space-y-4 sm:pl-6">
-            <button className="btn-google hover:bg-[#DA3925]">
+            <button
+              type="button"
+              onClick={async (e) => {
+                e.target.disabled = "true";
+                const provider = new GoogleAuthProvider();
+                let cred = await signInWithPopup(auth, provider);
+                const { email } = cred.user;
+                authResolver(authRoutes.OAuthLOGIN, {
+                  data: {
+                    email: email,
+                    provider: "google",
+                  },
+                })
+                  .then(({ data }) => {
+                    localStorage.setItem("token", data.token);
+                    localStorage.setItem("id", data._id);
+                    router.push("/home");
+                  })
+                  .catch((error) => {
+                    console.log(error);
+
+                    // router.push("/_error");
+                  });
+                e.target.disabled = "false";
+              }}
+              className="btn-google hover:bg-[#DA3925] disabled:cursor-not-allowed disabled:opacity-50"
+            >
               Login with Google
             </button>
-            <button className="btn-apple ">Login with Apple</button>
+            <button type="button" className="btn-apple ">
+              Login with Apple
+            </button>
           </div>
         </form>
       )}

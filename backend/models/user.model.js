@@ -93,16 +93,14 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.virtual("password")
   .set(function (password) {
-    if (this.provider === provider.SELF) {
+   
       this._password = password;
       this.salt = this.makeSalt();
       this.hashed_password = this.encryptPassword(password);
-    }
+    
   })
   .get(function () {
-    if(this.provider === provider.SELF){
       return this._password;
-    }
   });
 
 UserSchema.methods = {

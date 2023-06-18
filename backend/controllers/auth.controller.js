@@ -5,7 +5,7 @@ const { sendMail } = require("../helpers/emailReset");
 const resetModes = require("../helpers/resetModes.js");
 const { createHmac } = require("node:crypto");
 const { extend } = require("lodash");
-
+const provider = require("../helpers/authProvider");
 
 const OAuthLogin = async (req, res) => {
   try {
@@ -16,8 +16,9 @@ const OAuthLogin = async (req, res) => {
         error: "User not found, wrong email or password",
       });
     }
+    console.log(user.provider);
     if (user.provider !== req.body.provider) {
-      return res.state(400).json({
+      return res.status(400).json({
         error: `User hasn't register with ${req.body.provider}`,
       });
     } else {
@@ -60,6 +61,11 @@ const login = async (req, res) => {
       (await User.findOne({ username: req.body.username }));
     if (!user) {
       console.error(`User not found, found ${user}`);
+      return res.status(404).json({
+        error: "User not found, wrong email or password",
+      });
+    }
+    if (!user.provider === provider.SELF) {
       return res.status(404).json({
         error: "User not found, wrong email or password",
       });
