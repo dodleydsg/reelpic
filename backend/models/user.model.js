@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const { createHmac } = require("node:crypto");
 const resetModes = require("../helpers/resetModes");
-const registerModes = require("../helpers/registerModes");
+const provider = require("../helpers/authProvider");
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -54,9 +54,10 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: resetModes.LOCKED,
   },
-  registerMode: {
+  provider: {
+    //corresponds to authentication provider, SELF refers to authentication with REELPIC
     type: String,
-    default: registerModes.SELF,
+    default: provider.SELF,
   },
   photo: {
     type: String,
@@ -92,12 +93,16 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.virtual("password")
   .set(function (password) {
-    this._password = password;
-    this.salt = this.makeSalt();
-    this.hashed_password = this.encryptPassword(password);
+    if (this.provider === provider.SELF) {
+      this._password = password;
+      this.salt = this.makeSalt();
+      this.hashed_password = this.encryptPassword(password);
+    }
   })
   .get(function () {
-    return this._password;
+    if(this.provider === provider.SELF){
+      return this._password;
+    }
   });
 
 UserSchema.methods = {

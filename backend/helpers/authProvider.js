@@ -1,7 +1,7 @@
-registerModes = {
+provider = {
   GOOGLE: "google",
   APPLE: "apple",
   SELF: "self",
 };
 
-module.exports = registerModes;
+module.exports = provider;

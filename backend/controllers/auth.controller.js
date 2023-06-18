@@ -16,7 +16,7 @@ const OAuthLogin = async (req, res) => {
         error: "User not found, wrong email or password",
       });
     }
-    if (user.registerMode !== req.body.provider) {
+    if (user.provider !== req.body.provider) {
       return res.state(400).json({
         error: `User hasn't register with ${req.body.provider}`,
       });

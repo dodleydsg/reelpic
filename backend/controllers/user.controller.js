@@ -37,6 +37,9 @@ const create = async (req, res, next) => {
     genericErrorBlock(error, res);
   }
 };
+
+
+
 const list = async (req, res, next) => {
   try {
     let users = await User.find().select("name email updated created");
