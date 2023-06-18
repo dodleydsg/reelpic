@@ -12,7 +12,6 @@ export default function Carousel({ images, description }) {
   let touchendX = 0;
 
   const swipe = (e) => {
-    console.log(e.changedTouches);
     if (e.type === "touchstart") {
       touchstartX = e.changedTouches[0].screenX;
     }
@@ -38,13 +37,11 @@ export default function Carousel({ images, description }) {
       if (activeCarousel > 0) {
         carousel.style.translate = `-${activeCarousel * 100 - 100}% 0`;
         setActiveCarousel(activeCarousel - 1);
-        console.log("Did it left");
       }
     } else if (direction === "right") {
       if (activeCarousel < CONTENT_LENGTH - 1) {
         carousel.style.translate = `-${100 + activeCarousel * 100}% 0`;
         setActiveCarousel(activeCarousel + 1);
-        console.log("Did it right");
       }
     }
   };

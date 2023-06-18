@@ -9,7 +9,7 @@ export default function Reset() {
       </Head>
       <div className="relative font-sans mx-auto min-h-screen bg-[url('../assets/images/pattern_bg.webp')] flex items-center bg-cover">
         <div className="p-2 w-full">
-          <div className=" bg-white max-w-[380px] w-full mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px]">
+          <div className=" items-center bg-white max-w-xl mx-auto my-auto rounded-xl px-[22px] sm:px-16 py-[35px] sm:py-[55px] w-full">
             <div className="space-y-3 sm:space-y-7">
               <div className="flex gap-3 items-center w-full justify-center">
                 <h1 className="text-heading text-center font-logo text-logoBlue">
@@ -26,7 +26,7 @@ export default function Reset() {
               </div>
               <p className="text-center text-subheading">Reset your password</p>
             </div>
-            <div className="mt-7 w-full">
+            <div className="mt-7">
               {/* Form element and inputs */}
               <form className="w-full min-h-[280px]">
                 <div className="space-y-4 mb-4">
