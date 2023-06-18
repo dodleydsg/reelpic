@@ -7,7 +7,7 @@ import userActions from "../../actions/user.actions";
 import userResolver from "../../resolvers/user.resolver";
 import { useState } from "react";
 
-export default function RegisterForm({ googleSignIn }) {
+export default function RegisterForm({ googleSignUp }) {
   const [errors, updateErrors] = useState("");
   const router = useRouter();
   return (
@@ -127,7 +127,7 @@ export default function RegisterForm({ googleSignIn }) {
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  googleSignIn();
+                  googleSignUp();
                 }}
                 className="btn-google hover:bg-[#DA3925]"
               >

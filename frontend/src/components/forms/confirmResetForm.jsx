@@ -1,6 +1,6 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
-import authResolver from "@/components/resolvers/auth.resolver";
+import authResolver from "../../resolvers/auth.resolver";
 import authActions from "../../actions/auth.actions";
 import { useState } from "react";
 import Link from "next/link";

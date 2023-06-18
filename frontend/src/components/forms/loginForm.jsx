@@ -5,7 +5,7 @@ import authResolver from "../../resolvers/auth.resolver";
 import authRoutes from "../../actions/auth.actions";
 import { useRouter } from "next/router";
 
-export default function LoginForm() {
+export default function LoginForm({ googleSignUp }) {
   const router = useRouter();
   return (
     <Formik

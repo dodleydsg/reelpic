@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { createHmac } = require("node:crypto");
 const resetModes = require("../helpers/resetModes");
+const registerModes = require("../helpers/registerModes");
 
 const UserSchema = new mongoose.Schema({
   name: {
@@ -52,6 +53,10 @@ const UserSchema = new mongoose.Schema({
   resetMode: {
     type: String,
     default: resetModes.LOCKED,
+  },
+  registerMode: {
+    type: String,
+    default: registerModes.SELF,
   },
   photo: {
     type: String,

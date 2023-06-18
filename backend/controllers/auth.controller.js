@@ -6,6 +6,53 @@ const resetModes = require("../helpers/resetModes.js");
 const { createHmac } = require("node:crypto");
 const { extend } = require("lodash");
 
+
+const OAuthLogin = async (req, res) => {
+  try {
+    let user = await User.findOne({ email: req.body.email });
+    if (!user) {
+      console.error(`User not found, found ${user}`);
+      return res.status(404).json({
+        error: "User not found, wrong email or password",
+      });
+    }
+    if (user.registerMode !== req.body.provider) {
+      return res.state(400).json({
+        error: `User hasn't register with ${req.body.provider}`,
+      });
+    } else {
+      const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
+        expiresIn: "15 days",
+      });
+      const { _id } = user;
+
+      res.cookie("token", token, {
+        maxAge: 60 * 60,
+      });
+      res.cookie("_id", _id, {
+        maxAge: 60 * 60,
+      });
+      user.last_login = Date.now();
+      user.save();
+      return res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        last_login: user.last_login,
+        posts: user.posts,
+        catalogues: user.catalogues,
+        following: user.following,
+        followers: user.following,
+        token,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(404).json({
+      error: "Couldn't not login",
+    });
+  }
+};
 const login = async (req, res) => {
   try {
     let user =
@@ -61,11 +108,6 @@ const logout = async (req, res) => {
     message: "Logged out successfully",
   });
 };
-
-const googleLogin = async (req, res, next) => {};
-
-const appleLogin = async (req, res, next) => {};
-
 const hasAuthorization = async (req, res, next) => {
   const authorized = req.profile && req.auth && req.profile._id == req.auth._id;
   if (!authorized) {
@@ -205,7 +247,6 @@ const reset_done = async (req, res) => {
   // Changes reset mode to "LOCKED"
 };
 
-
 const requireLogin = expressjwt({
   secret: process.env.JWT_SECRET,
   algorithms: ["HS256"],
@@ -220,4 +261,5 @@ module.exports = {
   password_reset,
   reset_confirm,
   reset_done,
+  OAuthLogin,
 };

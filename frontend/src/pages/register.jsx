@@ -11,9 +11,10 @@ import {
 } from "firebase/auth";
 
 export default function Register() {
-  const googleSignIn = () => {
+  const googleSignUp = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithPopup(auth, provider);
+    let cred = await signInWithPopup(auth, provider);
+    const { email } = cred.user;
   };
 
   const router = useRouter();
@@ -44,7 +45,7 @@ export default function Register() {
               </h3>
             </div>
             <div className="mt-7">
-              <RegisterForm googleSignIn={googleSignIn} router={router} />
+              <RegisterForm googleSignUp={googleSignUp} router={router} />
               <p className="text-sm text-center mt-7">
                 {" "}
                 Already have an account ? <br />
