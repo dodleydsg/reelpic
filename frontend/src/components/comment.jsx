@@ -2,112 +2,156 @@ import { useState } from "react";
 import Image from "next/image";
 import { MdArrowBack, MdComment, MdThumbUp } from "react-icons/md";
 import profile1 from "../assets/images/Profile1.png";
-import { IoSend } from "react-icons/io5";
+import {
+  IoArrowBack,
+  IoChatbox,
+  IoClose,
+  IoSend,
+  IoThumbsDownOutline,
+  IoThumbsUp,
+  IoThumbsUpOutline,
+} from "react-icons/io5";
 import Link from "next/link";
 import { useSelector } from "react-redux";
 
-export default function Comment() {
-  const [comments, updateComments] = useState([{}]);
+export default function Comment({ commentIds, toggleComments }) {
   const { loggedIn } = useSelector((state) => state.auth);
-  const [showReply, toggleReply] = useState(false);
+  const [showReply, setReply] = useState(true);
+  const [replyObj, setReplyObj] = useState({});
 
-  const CommentBlock = () => {
+  const CommentContainer = ({ children }) => {
     return (
-      <div className="border-1 ">
-        <div className="flex justify-start items-center gap-2">
-          <Image alt="jjs" className="w-6 h-6 rounded-[24px]" src={profile1} />
-          <p className="text-sm text-dark-default/80">Walter White</p>
-          <p className="text-xs text-dark-default/60">12h ago</p>
-        </div>
-        <div className="text-sm py-2 text-justify">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Odio itaque
-          officiis animi culpa ab earum, aspernatur nobis, quae corporis ullam
-          ipsum laborum eaque laudantium, veritatis dignissimos nam voluptates.
-          Libero, possimus?
-        </div>
-        <div className="flex items-center gap-4">
-          <div className="flex gap-4 items-center justify-between">
-            <div className="flex items-center gap-2">
-              <MdThumbUp className="w-4 h-auto" />
-              <span className="text-xs text-dark-default/75">1.2k</span>
-            </div>
-            <div className="flex  items-center gap-2">
-              <MdComment className="w-4 h-auto" />
-              <span className="text-xs text-dark-default/75">43</span>
-            </div>
-          </div>
-
-          <div></div>
-        </div>
+      <div className="overflow-y-scroll max-h-[50vh] py-4 border divide-y-2 space-y-2 border-1 rounded-sm">
+        {children}
       </div>
     );
   };
 
-  const Reply = () => {
+  const CommentHeader = () => {
     return (
-      <div className="text-dark-default/75 ">
-        <CommentBlock />
-      </div>
-    );
-  };
-
-  if (!loggedIn) {
-    return (
-      <div className="bg-white p-4">
-        <p className="gap-2 flex">
-          <Link className="link" href="/login">
-            Login
-          </Link>
-          to comment
-        </p>
-      </div>
-    );
-  }
-
-  if (showReply) {
-    return (
-      <div className="py-2">
-        <div className="space-y-4 px-1 pb-10 overflow-y-scroll max-h-52">
-          <div className="space-y-1 bg-light-default">
-            <div className="flex gap-4 items-center">
-              <MdArrowBack
-                className="w-4 h-auto cursor-pointer"
-                onClick={() => toggleReply(!showReply)}
-              />
-              <h3 className="text-subheading">Replies </h3>
-            </div>
-            <CommentBlock />
+      <div className="flex px-2 justify-between items-center">
+        {showReply ? (
+          <div className="flex items-center gap-2">
+            <span
+              onClick={() => setReply(false)}
+              className="p-2 bg-light-default hover:bg-gray-200 cursor-pointer transition rounded-full"
+            >
+              <IoArrowBack className="w-5 h-auto" />
+            </span>
+            <h6 className="font-medium text-lg text-pink-500">Replies</h6>
           </div>
-          <div className="ml-12">
-            <Reply />
+        ) : (
+          <div className="flex items-center">
+            <h6 className="font-medium text-lg text-pink-500">Comments</h6>
           </div>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div className="px-1 space-y-1 py-2">
-        <div className="space-y-2 mb-4 overflow-y-scroll max-h-52">
-          <h3 className="text-subheading">Comments</h3>
-          <CommentBlock />
-          <p
-            className="text-sm cursor-pointer link"
-            onClick={() => toggleReply(!showReply)}
+        )}
+        <div className="flex items-center gap">
+          <span
+            onClick={() => toggleComments()}
+            className="p-2 bg-light-default hover:bg-gray-200 cursor-pointer transition rounded-full"
           >
-            Show replies
-          </p>
+            <IoClose className="w-5 h-auto" />
+          </span>
         </div>
-        <form action="#" className="flex gap-4 w-full">
+      </div>
+    );
+  };
+
+  const CommentForm = ({ reply, placeholder }) => {
+    return (
+      <div className="px-2 pt-2 flex gap-2 lg:gap-4 w-full">
+        <Image
+          src={profile1}
+          className="w-auto h-8 lg:h-12 rounded-full"
+          alt="profile picture"
+        />
+        <form
+          className="gap-2 lg:gap-4 flex w-full"
+          onSubmit={(e) => {
+            e.preventDefault();
+            alert(document.querySelector("#body").value);
+            e.target.reset();
+          }}
+        >
           <textarea
-            rows="1"
-            placeholder="Add comment"
-            className=" resize-none px-2 bg-gray-100 py-2 grow h-10 rounded focus:outline-0 focus:ring-2 focus:ring-primary-default/50"
+            id="body"
+            name="body"
+            className="w-full text-sm lg:text-base placeholder:text-sm lg:placeholder:text-base border h-8 lg:h-12 max-h-36 py-2 resize-none px-2 lg:px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark"
+            placeholder={placeholder}
           />
-          <button className="h-full rounded-sm flex shrink-0 p-3 items-center justify-center  text-primary-default">
-            <IoSend className="w-4 h-auto" />
+          <button
+            type="submit"
+            className="h-8 w-12 lg:h-12 lg:w-16 text-primary-default border border-primary-default hover:bg-light-default flex items-center justify-center rounded-sm"
+          >
+            <IoSend className="w-4 lg:w-6 h-auto" />
           </button>
         </form>
       </div>
     );
-  }
+  };
+  const CommentBody = ({ reply }) => {
+    const CommentItem = () => {
+      return (
+        <div className="cursor-pointer  hover:bg-gray-100 p-2 flex gap-2 lg:gap-4 w-full">
+          <Image
+            src={profile1}
+            className="w-auto h-8 lg:h-12 rounded-full"
+            alt="profile picture"
+          />
+          <div className="flex flex-col gap-1">
+            <div className="flex gap-1 items-center text-dark-default/60 text-xs">
+              <span>@malina</span>
+              <span>.</span>
+              <span>4d ago</span>
+            </div>
+            <p className="text-sm">
+              This is not Asian food. This is a work of art.
+            </p>
+            <div className="flex gap-4">
+              <IoThumbsUpOutline />
+              <IoThumbsDownOutline />
+              <IoChatbox />
+            </div>
+          </div>
+        </div>
+      );
+    };
+    if (replyObj && showReply) {
+      return (
+        <div className="px-2 pt-2">
+          <CommentItem />
+          <div className="ml-4">
+            <CommentForm placeholder={"Add a reply..."} />
+          </div>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-2">
+        <div onClick={() => setReply(true)}>
+          <CommentItem />
+        </div>
+        <div onClick={() => setReply(true)}>
+          <CommentItem />
+        </div>
+        <div onClick={() => setReply(true)}>
+          <CommentItem />
+        </div>
+        <div onClick={() => setReply(true)}>
+          <CommentItem />
+        </div>
+        <div onClick={() => setReply(true)}>
+          <CommentItem />
+        </div>
+      </div>
+    );
+  };
+  return (
+    <CommentContainer>
+      <CommentHeader />
+      {!showReply ? <CommentForm placeholder={"Add a comment..."} /> : null}
+      <CommentBody />
+    </CommentContainer>
+  );
 }

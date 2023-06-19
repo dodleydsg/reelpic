@@ -26,7 +26,7 @@ export default function Post({
   tags,
   content,
 }) {
-  const [commentsShown, toggleComments] = useState(false);
+  const [commentsShown, toggleComments] = useState(true);
   const userLikes = useSelector((state) => state.user.likes);
   //userLikes is an array corresponding to the user's liked posts
   return (
@@ -69,7 +69,7 @@ export default function Post({
             </div>
             <div
               className="flex gap-2 items-center cursor-pointer"
-              onClick={() => toggleComments(!commentsShown)}
+              onClick={() => toggleComments((state) => !state)}
             >
               <p className="flex items-center">
                 <IoChatbox className="w-5 h-auto" />
@@ -82,13 +82,7 @@ export default function Post({
             {prettyTime(Date.parse(created))} ago
           </p>
         </div>
-        <div
-          className={
-            commentsShown ? "bg-light-default/80 rounded-lg" : "hidden"
-          }
-        >
-          <Comment comments={content.comments} />
-        </div>
+        {commentsShown ? <Comment toggleComments={toggleComments} /> : null}
         <p className="text-dark-default/90">{content.body}</p>
 
         <div className="gap-2 flex">
