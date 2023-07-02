@@ -82,7 +82,9 @@ export default function Post({
             {prettyTime(Date.parse(created))} ago
           </p>
         </div>
-        {commentsShown ? <Comment toggleComments={toggleComments} /> : null}
+        {commentsShown ? (
+          <Comment postId={_id} toggleComments={toggleComments} />
+        ) : null}
         <p className="text-dark-default/90">{content.body}</p>
 
         <div className="gap-2 flex">

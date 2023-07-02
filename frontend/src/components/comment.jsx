@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { MdArrowBack, MdComment, MdThumbUp } from "react-icons/md";
 import profile1 from "../assets/images/Profile1.png";
@@ -6,18 +6,72 @@ import {
   IoArrowBack,
   IoChatbox,
   IoClose,
+  IoRefresh,
   IoSend,
   IoThumbsDownOutline,
   IoThumbsUp,
   IoThumbsUpOutline,
 } from "react-icons/io5";
 import Link from "next/link";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import commentActions from "../actions/comment.actions";
+import commentResolver from "../resolvers/comment.resolver";
+import { configureAlert, setAlert } from "../store/features/uiSlice";
 
-export default function Comment({ commentIds, toggleComments }) {
+export default function Comment({
+  postId,
+  commentIds,
+  toggleComments,
+  profileImg,
+}) {
+  const dispatch = useDispatch();
   const { loggedIn } = useSelector((state) => state.auth);
   const [showReply, setReply] = useState(true);
   const [replyObj, setReplyObj] = useState({});
+  const [comments, setComments] = useState([]);
+
+  /*  const commentItem = {
+    id: String,
+    likes: Number,
+    body: String,
+    replies: Array[commentItem],
+    created: Date,
+
+
+  } */
+  const addComment = async (e) => {
+    e.preventDefault();
+    let userId = localStorage.getItem("id");
+    let token = localStorage.getItem("token");
+    commentResolver(commentActions.CREATE_COMMENT, userId, token, {
+      body: "This is a sample comment",
+      postId: postId,
+    })
+      .then((data) => {
+        console.log(data);
+        dispatch(
+          configureAlert({
+            variant: "success",
+            text: "Comment added successfully",
+          })
+        );
+      })
+      .catch((error) => {
+        console.log(error);
+
+        dispatch(
+          configureAlert({
+            variant: "danger",
+            text: "Couldn't add comment, check connection",
+          })
+        );
+      });
+
+    alert(document.querySelector("#body").value);
+    e.target.reset();
+
+    dispatch(setAlert(true));
+  };
 
   const CommentContainer = ({ children }) => {
     return (
@@ -50,8 +104,14 @@ export default function Comment({ commentIds, toggleComments }) {
             onClick={() => toggleComments()}
             className="p-2 bg-light-default hover:bg-gray-200 cursor-pointer transition rounded-full"
           >
-            <IoClose className="w-5 h-auto" />
+            <IoRefresh className="w-5 h-auto" />
           </span>
+          <span
+            // onClick={() => toggleComments()}
+            className="p-2 bg-light-default hover:bg-gray-200 cursor-pointer transition rounded-full"
+          >
+            <IoClose className="w-5 h-auto" />
+          </span>{" "}
         </div>
       </div>
     );
@@ -67,11 +127,7 @@ export default function Comment({ commentIds, toggleComments }) {
         />
         <form
           className="gap-2 lg:gap-4 flex w-full"
-          onSubmit={(e) => {
-            e.preventDefault();
-            alert(document.querySelector("#body").value);
-            e.target.reset();
-          }}
+          onSubmit={(e) => addComment(e)}
         >
           <textarea
             id="body"
