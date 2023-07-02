@@ -41,10 +41,21 @@ export default function Comment({
   } */
   const addComment = async (e) => {
     e.preventDefault();
-    let userId = localStorage.getItem("id");
-    let token = localStorage.getItem("token");
+    const userId = localStorage.getItem("id");
+    const token = localStorage.getItem("token");
+    const body = document.querySelector("#body").value;
+    if (!body) {
+      dispatch(
+        configureAlert({
+          variant: "danger",
+          text: "Comment must have a body",
+        })
+      );
+      dispatch(setAlert(true));
+      return 0;
+    }
     commentResolver(commentActions.CREATE_COMMENT, userId, token, {
-      body: "This is a sample comment",
+      body,
       postId: postId,
     })
       .then((data) => {
@@ -57,8 +68,6 @@ export default function Comment({
         );
       })
       .catch((error) => {
-        console.log(error);
-
         dispatch(
           configureAlert({
             variant: "danger",
@@ -67,7 +76,6 @@ export default function Comment({
         );
       });
 
-    alert(document.querySelector("#body").value);
     e.target.reset();
 
     dispatch(setAlert(true));

@@ -35,15 +35,4 @@ CommentSchema.pre("remove", async function (next) {
   }
 });
 
-CommentSchema.post("create", async function (next) {
-  try {
-    let post = await Post.findOne({
-      _id: this.postId.toString(),
-    });
-    post.content.commentCount++;
-    await post.save();
-  } catch (error) {
-    next(error);
-  }
-});
 module.exports = mongoose.model("Comment", CommentSchema);

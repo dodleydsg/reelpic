@@ -6,6 +6,7 @@ const create = async (req, res, next) => {
     const comment = new Comment(req.body);
     let post = await Post.findById(req.body.postId.toString());
     post.content.comments.push(comment._id);
+    post.content.commentCount++;
     await post.save();
     await comment.save();
     return res.status(200).json({
