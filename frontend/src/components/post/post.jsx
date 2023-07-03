@@ -26,7 +26,7 @@ export default function Post({
   tags,
   content,
 }) {
-  const [commentsShown, toggleComments] = useState(true);
+  const [commentsShown, toggleComments] = useState(false);
   const userLikes = useSelector((state) => state.user.likes);
   //userLikes is an array corresponding to the user's liked posts
   return (

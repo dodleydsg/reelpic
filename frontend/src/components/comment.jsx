@@ -26,9 +26,14 @@ export default function Comment({
 }) {
   const dispatch = useDispatch();
   const { loggedIn } = useSelector((state) => state.auth);
-  const [showReply, setReply] = useState(true);
+  const [showReply, setReply] = useState(false);
   const [replyObj, setReplyObj] = useState({});
   const [comments, setComments] = useState([]);
+  const userId = localStorage.getItem("id");
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    getComments(true);
+  }, []);
 
   /*  const commentItem = {
     id: String,
@@ -39,10 +44,23 @@ export default function Comment({
 
 
   } */
+
+  const getComments = async (initial = false) => {
+    commentResolver(commentActions.LIST_COMMENTS, userId, token, {
+      initial,
+    })
+      .then((resp) => {
+        // console.log(resp.data);
+        setComments([...comments, resp.data]);
+        console.log(comments);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   const addComment = async (e) => {
     e.preventDefault();
-    const userId = localStorage.getItem("id");
-    const token = localStorage.getItem("token");
+
     const body = document.querySelector("#body").value;
     if (!body) {
       dispatch(
@@ -59,13 +77,16 @@ export default function Comment({
       postId: postId,
     })
       .then((data) => {
-        console.log(data);
         dispatch(
           configureAlert({
             variant: "success",
             text: "Comment added successfully",
           })
         );
+        setComments((prevState) => {
+          prevState.push(data.comment);
+          return prevState;
+        });
       })
       .catch((error) => {
         dispatch(
@@ -108,14 +129,11 @@ export default function Comment({
           </div>
         )}
         <div className="flex items-center gap">
-          <span
-            onClick={() => toggleComments()}
-            className="p-2 bg-light-default hover:bg-gray-200 cursor-pointer transition rounded-full"
-          >
+          <span className="p-2 bg-light-default hover:bg-gray-200 cursor-pointer transition rounded-full">
             <IoRefresh className="w-5 h-auto" />
           </span>
           <span
-            // onClick={() => toggleComments()}
+            onClick={() => toggleComments()}
             className="p-2 bg-light-default hover:bg-gray-200 cursor-pointer transition rounded-full"
           >
             <IoClose className="w-5 h-auto" />
@@ -140,7 +158,7 @@ export default function Comment({
           <textarea
             id="body"
             name="body"
-            className="w-full text-sm lg:text-base placeholder:text-sm lg:placeholder:text-base border h-8 lg:h-12 max-h-36 py-2 resize-none px-2 lg:px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark"
+            className="w-full no-scrollBar text-sm lg:text-base placeholder:text-sm lg:placeholder:text-base border h-8 lg:h-12 max-h-36 py-2 resize-none px-2 lg:px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark"
             placeholder={placeholder}
           />
           <button
@@ -153,8 +171,11 @@ export default function Comment({
       </div>
     );
   };
-  const CommentBody = ({ reply }) => {
-    const CommentItem = () => {
+  const CommentBody = ({ reply, body }) => {
+    if (comments.length === 0) {
+      return <h5 className="text-center font-medium pt-4">No Comments</h5>;
+    }
+    const CommentItem = (props) => {
       return (
         <div className="cursor-pointer  hover:bg-gray-100 p-2 flex gap-2 lg:gap-4 w-full">
           <Image
@@ -164,13 +185,11 @@ export default function Comment({
           />
           <div className="flex flex-col gap-1">
             <div className="flex gap-1 items-center text-dark-default/60 text-xs">
-              <span>@malina</span>
+              <span>{}</span>
               <span>.</span>
-              <span>4d ago</span>
+              <span>{props.created}</span>
             </div>
-            <p className="text-sm">
-              This is not Asian food. This is a work of art.
-            </p>
+            <p className="text-sm">{body}</p>
             <div className="flex gap-4">
               <IoThumbsUpOutline />
               <IoThumbsDownOutline />
@@ -193,21 +212,13 @@ export default function Comment({
 
     return (
       <div className="space-y-2">
-        <div onClick={() => setReply(true)}>
-          <CommentItem />
-        </div>
-        <div onClick={() => setReply(true)}>
-          <CommentItem />
-        </div>
-        <div onClick={() => setReply(true)}>
-          <CommentItem />
-        </div>
-        <div onClick={() => setReply(true)}>
-          <CommentItem />
-        </div>
-        <div onClick={() => setReply(true)}>
-          <CommentItem />
-        </div>
+        {comments.map((val) => {
+          return (
+            <div key={val._id} onClick={() => setReply(true)}>
+              <CommentItem body={val.body} />
+            </div>
+          );
+        })}
       </div>
     );
   };

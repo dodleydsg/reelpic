@@ -14,7 +14,7 @@ export default async function commentResolver(action, userId, token, data) {
         },
       });
       return resp;
-    } else if (action === postActions.DELETE_POST) {
+    } else if (action === commentActions.DELETE_COMMENT) {
       let resp = await axios({
         method: "delete",
         url: BACKEND_DOMAIN + `/api/post/delete/${data.postId}`,
@@ -24,16 +24,7 @@ export default async function commentResolver(action, userId, token, data) {
         },
       });
       return resp;
-    } else if (action === postActions.TRASH_POST) {
-      let resp = await axios({
-        method: "delete",
-        url: BACKEND_DOMAIN + `/api/post/${data.postId}?userId=${userId}`,
-        headers: {
-          Authorization: AUTH_TOKEN(token),
-        },
-      });
-      return resp;
-    } else if (action === postActions.UPDATE_POST) {
+    } else if (action === commentActions.UPDATE_COMMENT) {
       let resp = await axios({
         method: "put",
         data: { ...data, userId },
@@ -43,20 +34,20 @@ export default async function commentResolver(action, userId, token, data) {
         },
       });
       return resp;
-    } else if (action === postActions.READ_POST) {
+    } else if (action === commentActions.READ_COMMENT) {
       let resp = await axios({
         method: "get",
         url:
-          BACKEND_DOMAIN + `api/post/${options.catalogueId}?userId=${userId}`,
+          BACKEND_DOMAIN + `/api/post/${options.catalogueId}?userId=${userId}`,
         headers: {
           Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;
-    } else if (action === postActions.LIST_POSTS) {
+    } else if (action === commentActions.LIST_COMMENTS) {
       let resp = await axios({
         method: "get",
-        url: BACKEND_DOMAIN + `api/posts?userId=${userId}`,
+        url: BACKEND_DOMAIN + `/api/comments?userId=${userId}&initial=${data.initial}`,
         headers: {
           Authorization: AUTH_TOKEN(token),
         },

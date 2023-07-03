@@ -3,5 +3,5 @@ export default {
   DELETE_COMMENT: "delete_comment",
   READ_COMMENT: "read_comment",
   UPDATE_COMMENT: "update_comment",
-  LIST_COMMENT: "list_comments",
+  LIST_COMMENTS: "list_comments",
 };

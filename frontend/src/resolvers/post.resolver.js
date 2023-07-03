@@ -47,7 +47,7 @@ export default async function postResolver(action, userId, token, data) {
       let resp = await axios({
         method: "get",
         url:
-          BACKEND_DOMAIN + `api/post/${options.catalogueId}?userId=${userId}`,
+          BACKEND_DOMAIN + `/api/post/${options.catalogueId}?userId=${userId}`,
         headers: {
           Authorization: AUTH_TOKEN(token),
         },
@@ -56,7 +56,7 @@ export default async function postResolver(action, userId, token, data) {
     } else if (action === postActions.LIST_POSTS) {
       let resp = await axios({
         method: "get",
-        url: BACKEND_DOMAIN + `api/posts?userId=${userId}`,
+        url: BACKEND_DOMAIN + `/api/posts?userId=${userId}`,
         headers: {
           Authorization: AUTH_TOKEN(token),
         },

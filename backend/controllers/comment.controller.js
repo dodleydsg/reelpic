@@ -34,11 +34,19 @@ const read = async (req, res, next) => {
   }
 };
 
+let commentCursor = 0;
 const list = async (req, res, next) => {
   try {
-    const comments = await Comment.find({
+    if (req.query.initial) {
+      commentCursor = 0;
+    }
+    let comments = await Comment.find({
       post: req.params.postId,
-    });
+    })
+      .limit(2)
+      .skip(commentCursor);
+
+    commentCursor += 2;
     return res.status(200).json(comments);
   } catch (error) {
     genericErrorBlock(error, res);
