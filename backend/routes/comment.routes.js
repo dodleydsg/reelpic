@@ -29,6 +29,15 @@ router
     commentCtrl.listIds
   );
 
+  router
+    .route("/api/comments/detail")
+    .post(
+      userCtrl.getUser,
+      authCtrl.requireLogin,
+      authCtrl.hasAuthorization,
+      commentCtrl.detail
+    );
+
 router
   .route("/api/comment/:commentId")
   .get(

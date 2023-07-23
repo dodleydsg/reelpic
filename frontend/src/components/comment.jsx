@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { MdArrowBack, MdComment, MdThumbUp } from "react-icons/md";
 import profile1 from "../assets/images/Profile1.png";
@@ -28,11 +28,12 @@ export default function Comment({
   const [showReply, setReply] = useState(false);
   const [replyObj, setReplyObj] = useState({});
   const [comments, setComments] = useState([]);
+  const LoaderRef = useRef();
 
   const userId = localStorage.getItem("id");
   const token = localStorage.getItem("token");
   useEffect(() => {
-    getComments(true);
+    console.log(commentIds);
   }, []);
 
   /*  const commentItem = {
@@ -45,19 +46,26 @@ export default function Comment({
 
   } */
 
-  const getComments = async (initial = false) => {
-    commentResolver(commentActions.LIST_COMMENTS, userId, token, {
-      initial,
-    })
-      .then((resp) => {
-        // console.log(resp.data);
-        setComments([...comments, resp.data]);
-        console.log(resp.data);
+  const getComments = async (e) => {
+    const ids = commentIds.slice(comments.length, comments.length + 5);
+    console.log(ids);
+    commentResolver(
+      commentActions.DETAIl_COMMENTS,
+      userId,
+      token,
+      (data = {
+        ids,
+      })
+    )
+      .then(({ data }) => {
+        setComments([...comments, data]);
+        console.log(data);
       })
       .catch((error) => {
         console.log(error);
       });
   };
+
   const addComment = async (e) => {
     e.preventDefault();
 
@@ -76,7 +84,7 @@ export default function Comment({
       body,
       postId: postId,
     })
-      .then((data) => {
+      .then(({ data }) => {
         dispatch(
           configureAlert({
             variant: "success",
@@ -100,13 +108,32 @@ export default function Comment({
     dispatch(setAlert(true));
   };
 
+  let debouncedgetComments = _.debounce(getComments, 500, { maxWait: 1000 });
+
   const CommentContainer = ({ children }) => {
     return (
-      <div className="overflow-y-scroll max-h-[50vh] py-4 border divide-y-2 space-y-2 border-1 rounded-sm">
+      <div
+        onScroll={(e) => {
+          if (e.target.clientHeight - e.target.scrollTop < 50) {
+            console.log("Visible");
+            debouncedgetComments();
+            //debounce call to backend
+          }
+        }}
+        className="overflow-y-scroll max-h-[20vh] py-4 border divide-y-2 space-y-2 border-1 rounded-sm"
+      >
         {children}
       </div>
     );
   };
+
+  function Loader() {
+    return (
+      <div className="text-center text-sm text-pink-500" id="commentLoader">
+        Loading...
+      </div>
+    );
+  }
 
   const CommentHeader = () => {
     return (
@@ -170,7 +197,7 @@ export default function Comment({
     );
   };
   const CommentBody = ({ reply, body }) => {
-    if (comments.length === 0) {
+    if (commentIds.length === 0) {
       return <h5 className="text-center font-medium pt-4">No Comments</h5>;
     }
     const CommentItem = (props) => {
@@ -210,16 +237,18 @@ export default function Comment({
 
     return (
       <div className="space-y-2">
-        {comments.map((val) => {
+        {commentIds.map((val) => {
           return (
-            <div key={val._id} onClick={() => setReply(true)}>
+            <div key={val} onClick={() => setReply(true)}>
               <CommentItem body={val.body} />
             </div>
           );
         })}
+        <Loader />
       </div>
     );
   };
+
   return (
     <CommentContainer>
       <CommentHeader />

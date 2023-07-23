@@ -24,6 +24,16 @@ export default async function commentResolver(action, userId, token, data) {
         },
       });
       return resp;
+    } else if (action === commentActions.DETAIL_COMMENTS) {
+      let resp = await axios({
+        method: "post",
+        url: BACKEND_DOMAIN + `/api/comments/detail`,
+        data: {...data, userId },
+        headers: {
+          Authorization: AUTH_TOKEN(token),
+        },
+      });
+      return resp;
     } else if (action === commentActions.UPDATE_COMMENT) {
       let resp = await axios({
         method: "put",

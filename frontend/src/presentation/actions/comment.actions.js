@@ -4,5 +4,5 @@ export default {
   READ_COMMENT: "read_comment",
   UPDATE_COMMENT: "update_comment",
   LIST_COMMENTS: "list_comments",
-  LIST_COMMENTS_IDS: "list_comments_ids",
+  DETAIL_COMMENTS: "detail_comments",
 };

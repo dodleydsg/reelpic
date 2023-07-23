@@ -83,7 +83,11 @@ export default function Post({
           </p>
         </div>
         {commentsShown ? (
-          <Comment postId={_id} toggleComments={toggleComments} />
+          <Comment
+            commentIds={content.comments}
+            postId={_id}
+            toggleComments={toggleComments}
+          />
         ) : null}
         <p className="text-dark-default/90">{content.body}</p>
 

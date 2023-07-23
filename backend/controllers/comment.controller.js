@@ -47,6 +47,15 @@ const listIds = async (req, res, next) => {
   }
 };
 
+const detail = async (req, res, next) => {
+  try {
+    const posts = await Post.find({ _id: { $in: [req.body.ids] } });
+    return res.status(200).json(posts);
+  } catch (error) {
+    genericErrorBlock(error, res);
+  }
+};
+
 const remove = async (req, res, next) => {
   try {
     let comment = await Comment.findById(req.params.commentId);
@@ -95,4 +104,14 @@ const update = async (req, res, next) => {
   }
 };
 
-module.exports = { create, remove, like, list, listIds, reply, update, read };
+module.exports = {
+  create,
+  remove,
+  like,
+  list,
+  listIds,
+  reply,
+  update,
+  read,
+  detail,
+};
