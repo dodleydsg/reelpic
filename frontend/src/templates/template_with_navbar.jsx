@@ -12,8 +12,8 @@ import {
 import NavIcon from "../components/navBar/navIcon";
 import { useSelector, useDispatch } from "react-redux";
 import { setLoggedIn } from "../store/features/userSlice";
-import authActions from "../actions/auth.actions";
-import authResolver from "../resolvers/auth.resolver";
+import authActions from "../presentation/actions/auth.actions";
+import authResolver from "../presentation/resolvers/auth.resolver";
 import SuccessModal from "../components/modal/successModal";
 import AddPostModal from "../components/modal/addPostModal";
 import AddCatalogueModal from "../components/modal/addCatalogueModal";

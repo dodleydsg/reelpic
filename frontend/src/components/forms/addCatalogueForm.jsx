@@ -1,5 +1,5 @@
-import catalogueResolver from "../../resolvers/catalogue.resolver";
-import catalogueActions from "../../actions/catalogue.actions";
+import catalogueResolver from "../../presentation/resolvers/catalogue.resolver";
+import catalogueActions from "../../presentation/actions/catalogue.actions";
 import { updateCatalogueList } from "../../store/features/userSlice";
 import InputElement from "./input";
 import { Formik } from "formik";

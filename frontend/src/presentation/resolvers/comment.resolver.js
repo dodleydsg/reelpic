@@ -47,7 +47,20 @@ export default async function commentResolver(action, userId, token, data) {
     } else if (action === commentActions.LIST_COMMENTS) {
       let resp = await axios({
         method: "get",
-        url: BACKEND_DOMAIN + `/api/comments?userId=${userId}&initial=${data.initial}`,
+        url:
+          BACKEND_DOMAIN +
+          `/api/comments?userId=${userId}&initial=${data.initial}`,
+        headers: {
+          Authorization: AUTH_TOKEN(token),
+        },
+      });
+      return resp;
+    } else if (action === commentActions.LIST_COMMENTS_IDS) {
+      let resp = await axios({
+        method: "get",
+        url:
+          BACKEND_DOMAIN +
+          `/api/comments?userId=${userId}&postId=${data.postId}`,
         headers: {
           Authorization: AUTH_TOKEN(token),
         },

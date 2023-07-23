@@ -14,8 +14,8 @@ import {
 } from "react-icons/io5";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
-import commentActions from "../actions/comment.actions";
-import commentResolver from "../resolvers/comment.resolver";
+import commentActions from "../presentation/actions/comment.actions";
+import commentResolver from "../presentation/resolvers/comment.resolver";
 import { configureAlert, setAlert } from "../store/features/uiSlice";
 
 export default function Comment({

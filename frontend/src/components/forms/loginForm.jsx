@@ -1,8 +1,8 @@
 import { Formik } from "formik";
 import Link from "next/link";
 import * as Yup from "yup";
-import authResolver from "../../resolvers/auth.resolver";
-import authRoutes from "../../actions/auth.actions";
+import authResolver from "../../presentation/resolvers/auth.resolver";
+import authRoutes from "../../presentation/actions/auth.actions";
 import { useRouter } from "next/router";
 import {
   GoogleAuthProvider,

@@ -40,7 +40,7 @@ const list = () => {};
 
 const listIds = async (req, res, next) => {
   try {
-    const post = await Post.findById(req.params.postId);
+    const post = await Post.findById(req.query.postId);
     return res.status(200).json(post.content.comments);
   } catch (error) {
     genericErrorBlock(error, res);

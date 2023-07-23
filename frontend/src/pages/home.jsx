@@ -14,9 +14,8 @@ import { CompleteLogin } from "../components/requireLogin";
 import BookmarkModal from "../components/modal/bookmarkModal";
 import { toggleAddPostModal } from "../store/features/uiSlice";
 import { useEffect, useState } from "react";
-import userResolver from "../resolvers/user.resolver";
-import postActions from "../actions/post.actions";
-import postResolver from "../resolvers/post.resolver";
+import postActions from "../presentation/actions/post.actions";
+import postResolver from "../presentation/resolvers/post.resolver";
 
 function Home() {
   const [feed, updateFeed] = useState([]);

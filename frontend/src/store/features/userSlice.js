@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import userResolver from "../../resolvers/user.resolver";
-import userRoutes from "../../actions/user.actions";
+import userResolver from "../../presentation/resolvers/user.resolver";
+import userRoutes from "../../presentation/actions/user.actions";
 
 const initialState = {
   pending: true,

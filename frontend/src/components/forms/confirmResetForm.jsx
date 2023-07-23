@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
-import authResolver from "../../resolvers/auth.resolver";
-import authActions from "../../actions/auth.actions";
+import authResolver from "../../presentation/resolvers/auth.resolver";
+import authActions from "../../presentation/actions/auth.actions";
 import { useState } from "react";
 import Link from "next/link";
 

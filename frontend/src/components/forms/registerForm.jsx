@@ -1,10 +1,10 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
-import authResolver from "../../resolvers/auth.resolver";
-import authActions from "../../actions/auth.actions";
-import userActions from "../../actions/user.actions";
-import userResolver from "../../resolvers/user.resolver";
+import authResolver from "../../presentation/resolvers/auth.resolver";
+import authActions from "../../presentation/actions/auth.actions";
+import userActions from "../../presentation/actions/user.actions";
+import userResolver from "../../presentation/resolvers/user.resolver";
 import { useState } from "react";
 import {
   GoogleAuthProvider,

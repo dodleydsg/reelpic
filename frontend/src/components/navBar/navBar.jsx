@@ -28,8 +28,8 @@ import {
 import NavIcon from "./navIcon";
 import NavbarProfile from "./navBarProfile";
 import profile from "../../assets/images/Profile1.png";
-import authActions from "../../actions/auth.actions";
-import authResolver from "../../resolvers/auth.resolver";
+import authActions from "../../presentation/actions/auth.actions";
+import authResolver from "../../presentation/resolvers/auth.resolver";
 import { setLoggedIn } from "../../store/features/userSlice";
 
 export default function NavBar({ user }) {

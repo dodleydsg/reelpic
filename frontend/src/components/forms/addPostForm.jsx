@@ -7,8 +7,8 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import _ from "lodash";
 import ErrorMessage from "./errorMessage";
 import { useRouter } from "next/router";
-import postResolver from "../../resolvers/post.resolver";
-import postActions from "../../actions/post.actions";
+import postResolver from "../../presentation/resolvers/post.resolver";
+import postActions from "../../presentation/actions/post.actions";
 import { useDispatch } from "react-redux";
 import {
   configureAlert,

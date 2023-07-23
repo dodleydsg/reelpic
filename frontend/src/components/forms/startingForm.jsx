@@ -1,6 +1,6 @@
 import { Formik } from "formik";
-import userResolver from "../../resolvers/user.resolver";
-import userActions from "../../actions/user.actions";
+import userResolver from "../../presentation/resolvers/user.resolver";
+import userActions from "../../presentation/actions/user.actions";
 import { useRouter } from "next/router";
 const MAX_STEP = 2;
 import { useState } from "react";
