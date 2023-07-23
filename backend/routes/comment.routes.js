@@ -21,6 +21,15 @@ router
   );
 
 router
+  .route("/api/comments/ids/:postId")
+  .get(
+    userCtrl.getUser,
+    authCtrl.requireLogin,
+    authCtrl.hasAuthorization,
+    commentCtrl.listIds
+  );
+
+router
   .route("/api/comment/:commentId")
   .get(
     userCtrl.getUser,

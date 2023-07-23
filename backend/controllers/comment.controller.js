@@ -34,20 +34,14 @@ const read = async (req, res, next) => {
   }
 };
 
-let commentCursor = 0;
-const list = async (req, res, next) => {
-  try {
-    if (req.query.initial) {
-      commentCursor = 0;
-    }
-    let comments = await Comment.find({
-      post: req.params.postId,
-    })
-      .limit(2)
-      .skip(commentCursor);
 
-    commentCursor += 2;
-    return res.status(200).json(comments);
+
+const list = () => {};
+
+const listIds = async (req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.postId);
+    return res.status(200).json(post.content.comments);
   } catch (error) {
     genericErrorBlock(error, res);
   }
@@ -101,4 +95,4 @@ const update = async (req, res, next) => {
   }
 };
 
-module.exports = { create, remove, like, list, reply, update, read };
+module.exports = { create, remove, like, list, listIds, reply, update, read };

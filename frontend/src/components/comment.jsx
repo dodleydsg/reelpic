@@ -25,10 +25,10 @@ export default function Comment({
   profileImg,
 }) {
   const dispatch = useDispatch();
-  const { loggedIn } = useSelector((state) => state.auth);
   const [showReply, setReply] = useState(false);
   const [replyObj, setReplyObj] = useState({});
   const [comments, setComments] = useState([]);
+
   const userId = localStorage.getItem("id");
   const token = localStorage.getItem("token");
   useEffect(() => {
@@ -52,7 +52,7 @@ export default function Comment({
       .then((resp) => {
         // console.log(resp.data);
         setComments([...comments, resp.data]);
-        console.log(comments);
+        console.log(resp.data);
       })
       .catch((error) => {
         console.log(error);
@@ -83,10 +83,8 @@ export default function Comment({
             text: "Comment added successfully",
           })
         );
-        setComments((prevState) => {
-          prevState.push(data.comment);
-          return prevState;
-        });
+        setComments([data, ...comments]);
+        console.log(comments);
       })
       .catch((error) => {
         dispatch(
