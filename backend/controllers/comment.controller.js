@@ -1,5 +1,6 @@
 const Comment = require("../models/comment.model");
 const Post = require("../models/post.model");
+const mongoose = require("mongoose");
 const { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 const create = async (req, res, next) => {
   try {
@@ -34,8 +35,6 @@ const read = async (req, res, next) => {
   }
 };
 
-
-
 const list = () => {};
 
 const listIds = async (req, res, next) => {
@@ -49,7 +48,7 @@ const listIds = async (req, res, next) => {
 
 const detail = async (req, res, next) => {
   try {
-    const posts = await Post.find({ _id: { $in: [req.body.ids] } });
+    const posts = await Comment.find().where("_id").in(req.body.ids);
     return res.status(200).json(posts);
   } catch (error) {
     genericErrorBlock(error, res);

@@ -33,7 +33,7 @@ export default function Comment({
   const userId = localStorage.getItem("id");
   const token = localStorage.getItem("token");
   useEffect(() => {
-    console.log(commentIds);
+    getComments();
   }, []);
 
   /*  const commentItem = {
@@ -47,19 +47,12 @@ export default function Comment({
   } */
 
   const getComments = async (e) => {
-    const ids = commentIds.slice(comments.length, comments.length + 5);
-    console.log(ids);
-    commentResolver(
-      commentActions.DETAIl_COMMENTS,
-      userId,
-      token,
-      (data = {
-        ids,
-      })
-    )
-      .then(({ data }) => {
-        setComments([...comments, data]);
-        console.log(data);
+    const ids = commentIds.slice(comments.length, comments.length + 2);
+    commentResolver(commentActions.DETAIL_COMMENTS, userId, token, { ids })
+      .then((resp) => {
+        console.log(resp);
+        setComments([...comments, ...resp.data]);
+        console.log(comments);
       })
       .catch((error) => {
         console.log(error);
@@ -108,13 +101,13 @@ export default function Comment({
     dispatch(setAlert(true));
   };
 
-  let debouncedgetComments = _.debounce(getComments, 500, { maxWait: 1000 });
+  let debouncedgetComments = _.debounce(getComments, 1000, { maxWait: 2000 });
 
   const CommentContainer = ({ children }) => {
     return (
       <div
         onScroll={(e) => {
-          if (e.target.clientHeight - e.target.scrollTop < 50) {
+          if (e.target.clientHeight - e.target.scrollTop < 100) {
             console.log("Visible");
             debouncedgetComments();
             //debounce call to backend
@@ -197,10 +190,10 @@ export default function Comment({
     );
   };
   const CommentBody = ({ reply, body }) => {
-    if (commentIds.length === 0) {
-      return <h5 className="text-center font-medium pt-4">No Comments</h5>;
-    }
-    const CommentItem = (props) => {
+    // if (comments.length === 0) {
+    //   return <h5 className="text-center font-medium pt-4">No Comments</h5>;
+    // }
+    const CommentItem = ({ created, body }) => {
       return (
         <div className="cursor-pointer  hover:bg-gray-100 p-2 flex gap-2 lg:gap-4 w-full">
           <Image
@@ -212,7 +205,7 @@ export default function Comment({
             <div className="flex gap-1 items-center text-dark-default/60 text-xs">
               <span>{}</span>
               <span>.</span>
-              <span>{props.created}</span>
+              <span>{created}</span>
             </div>
             <p className="text-sm">{body}</p>
             <div className="flex gap-4">
@@ -237,9 +230,9 @@ export default function Comment({
 
     return (
       <div className="space-y-2">
-        {commentIds.map((val) => {
+        {comments.map((val) => {
           return (
-            <div key={val} onClick={() => setReply(true)}>
+            <div key={val._id} onClick={() => setReply(true)}>
               <CommentItem body={val.body} />
             </div>
           );

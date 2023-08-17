@@ -128,62 +128,44 @@ const returnPost = async (req, res, next) => {
 };
 
 const feed = async (req, res, next) => {
-  let seen = req.profile.seen || [];
-  /* 
-  Seen is an array of postIds, these postIds correspond to posts already viewed by the user
-  This array has a max length of 200, cleaning the array is done in the post.read controller
-  */
-
-  let interests = req.profile.interests;
-
   try {
+    const interests = req.profile.interests;
+    const seen = req.profile.seen || [];
     let feed = req.profile.feed;
+    /* 
+    Seen is an array of postIds, these postIds correspond to posts already viewed by the user
+    This array has a max length of 200, cleaning the array is done in the post.read controller
+    */
+
     let latestPost = _.last(req.profile.posts) || null;
     if (latestPost && !seen.includes(latestPost.toString())) {
       feed.addToSet(latestPost.toString());
     }
-    if (req.profile.following.length > 0) {
-      for (let i = 0; i < req.profile.following.length; i++) {
-        let user = await User.findOne({ _id: req.profile.following[i] });
-        if (_.last(user.posts)) {
-          if (seen.includes(_.last(user.posts).toString())) {
-            continue;
-          } else {
-            feed.addToSet(_.last(user.posts).toString());
-          }
-        }
+
+    // following stage
+    const following = req.profile.following;
+    let nFollowing = following.length - 1;
+    let userCount = 0;
+    while (nFollowing > -1 && count < 40) {
+      const userFollowing = await User.findById(following[nFollowing]);
+      let latestPost = _.last(userFollowing.posts) || null;
+      if (latestPost && !seen.includes(latestPost.toString())) {
+        feed.addToSet(latestPost.toString());
       }
+      userCount++;
+      nFollowing--;
     }
 
-    let tags = await Tag.find(
-      {
-        name: { $in: interests },
-      },
-      "posts"
-    ).limit(10);
-
+    // interest stage
+    const tags = await Tag.find().where("name").in(interests).limit(10);
     for (let i = 0; i < tags.length; i++) {
-      // last post
-      if (_.last(tags[i].posts)) {
-        if (seen.includes(_.last(tags[i].posts).toString())) {
-          continue;
-        } else {
-          feed.addToSet(_.last(tags[i].posts).toString());
-        }
-      }
-      // random post
-      let randomPost = _.nth(
-        tags[i].posts,
-        Math.floor(Math.random() * tags[i].posts.length)
-      );
+      let latestPost = _.last(tags[i].posts) || null;
+      if (latestPost && !seen.includes(latestPost.toString()))
+        feed.addToSet(latestPost.toString());
+    }
 
-      if (randomPost) {
-        if (seen.includes(randomPost.toString())) {
-          continue;
-        } else {
-          feed.addToSet(randomPost.toString());
-        }
-      }
+    if (feed > 100) {
+      feed.splice(0, feed.length - 100);
     }
 
     let extra_feed = [];
@@ -207,27 +189,32 @@ const explore = async (req, res, next) => {
   // This return Post ids for usage in the explore section
   // May include start, stop keys for pagination
   try {
-    let tags = req.profile.interests;
+    const interests = req.profile.interests;
+    const tags = await Tag.find().where("name").in(interests).limit(10);
+
+    let count = tags.length; // counts backwards
     let posts = [];
-
-    for (let i = 0; i < tags.length; i++) {
-      let tag = await Tag.findOne({ name: tags[i] });
-      if (!tag) {
-        continue;
+    let used = [];
+    while (posts < 100 && count > 0) {
+      let searchIdx = _.random(0, count - 1);
+      while (used.includes(searchIdx)) {
+        searchIdx = _.random(0, count - 1);
       }
-      console.log(tags[i]);
-      posts = posts.concat(tag.posts);
-    }
 
-    let extra_feed = [];
+      posts.push(...tags[searchIdx].posts.slice(-25));
+      count--;
+    }
+    console.log(posts);
+    let extra_explore = [];
     for (let i = 0; i < posts.length; i++) {
-      let post = await Post.findById(post[i]).select("content");
-
-      extra_feed.push(post);
+      let post = await Post.findById(posts[i]).select("_id content.images");
+      extra_explore.push(post);
     }
-    return res.json(extra_feed);
+    console.log(extra_explore);
+
+    return res.json(extra_explore);
   } catch (error) {
-    genericErrorBlock(error);
+    genericErrorBlock(error, res);
   }
 };
 

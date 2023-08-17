@@ -94,7 +94,7 @@ export default async function postResolver(action, userId, token, data) {
     } else if (action === postActions.EXPLORE) {
       let resp = await axios({
         method: "get",
-        url: BACKEND_DOMAIN + `/api/feed?userId=${userId}`,
+        url: BACKEND_DOMAIN + `/api/explore?userId=${userId}`,
         headers: {
           Authorization: AUTH_TOKEN(token),
         },

@@ -4,11 +4,30 @@ import profile from "../assets/images/Profile1.png";
 import Masonry from "../components/masonry/masonry";
 import ExploreSearchModal from "../components/modal/exploreSearchModal";
 import { toggleExploreModal } from "../store/features/uiSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CompleteLogin } from "../components/requireLogin";
+import { useState, useEffect } from "react";
+import postResolver from "../presentation/resolvers/post.resolver";
+import postActions from "../presentation/actions/post.actions";
 
 function Explore() {
+  const [exploreFeed, updateExploreFeed] = useState([]);
+  const { stale } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
+  useEffect(() => {
+    const explore = async () => {
+      try {
+        const userId = localStorage.getItem("id");
+        const token = localStorage.getItem("token");
+        const { data } = await postResolver(postActions.EXPLORE, userId, token);
+        updateExploreFeed(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    explore();
+  }, [stale]);
 
   return (
     <>
@@ -28,7 +47,7 @@ function Explore() {
             </div>
           </div>
           <h3 className="font-bold text-xl text-pink-500">Explore</h3>
-          <Masonry />
+          <Masonry data={exploreFeed} />
         </div>
       </NavbarTemplate>
     </>
