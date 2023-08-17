@@ -1,5 +1,4 @@
 import template from "../../assets/images/landscape.jpg";
-import Image from "next/image";
 
 export default function MasonryItem({ images }) {
   if (images.length > 2) {
