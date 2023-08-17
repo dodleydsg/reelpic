@@ -204,14 +204,24 @@ const explore = async (req, res, next) => {
       posts.push(...tags[searchIdx].posts.slice(-25));
       count--;
     }
-    console.log(posts);
+    req.profile.explore.addToSet(...posts);
+
+    if (req.profile.explore.lenght > 100) {
+      req.profile.explore = req.profile.explore.slice(req.profile.length - 100);
+    }
+
+    await req.profile.save();
+
     let extra_explore = [];
-    for (let i = 0; i < posts.length; i++) {
-      let post = await Post.findById(posts[i]).select("_id content.images");
-      extra_explore.push(post);
+    for (let i = 0; i < req.profile.explore.length; i++) {
+      let post = await Post.findById(req.profile.explore[i]).select(
+        "_id content.images"
+      );
+      if (post) {
+        extra_explore.push(post);
+      }
     }
     console.log(extra_explore);
-
     return res.json(extra_explore);
   } catch (error) {
     genericErrorBlock(error, res);

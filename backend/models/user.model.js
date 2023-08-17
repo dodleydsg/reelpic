@@ -30,6 +30,12 @@ const UserSchema = new mongoose.Schema({
       ref: "Post",
     },
   ],
+  explore: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Post",
+    },
+  ],
   bio: String,
   username: {
     type: String,
