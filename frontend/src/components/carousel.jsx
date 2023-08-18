@@ -82,16 +82,15 @@ export default function Carousel({ images, description }) {
         >
           {images.map((val) => {
             return (
-              <div className="min-w-full h-auto inline-flex">
+              <div key={val} className="min-w-full h-auto inline-flex">
                 <Image
-                  ok={val}
-                  key={val}
                   alt={description}
                   width={1200}
                   height={800}
+                  loading="lazy"
                   placeholder="blur"
                   blurDataURL={val + "-blur"}
-                  loader={({ src, height, width }) => src}
+                  unoptimized
                   src={val}
                   className="max-h-full my-auto w-auto mx-auto duration-150"
                 />

@@ -1,7 +1,6 @@
 import React from "react";
 import Carousel from "../carousel";
 import profile1 from "../../assets/images/Profile1.png";
-import template from "../../assets/images/food.jpg";
 import Comment from "../comment";
 import { useState } from "react";
 import { MdLink } from "react-icons/md";

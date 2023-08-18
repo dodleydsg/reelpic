@@ -47,12 +47,12 @@ export default function Comment({
   } */
 
   const getComments = async (e) => {
-    const ids = commentIds.slice(comments.length, comments.length + 2);
+    const ids = commentIds.slice(comments.length, comments.length + 5);
+    console.log(ids, commentIds);
+    console.log(commentIds);
     commentResolver(commentActions.DETAIL_COMMENTS, userId, token, { ids })
       .then((resp) => {
-        console.log(resp);
         setComments([...comments, ...resp.data]);
-        console.log(comments);
       })
       .catch((error) => {
         console.log(error);
@@ -88,6 +88,7 @@ export default function Comment({
         console.log(comments);
       })
       .catch((error) => {
+        console.log(error);
         dispatch(
           configureAlert({
             variant: "danger",
@@ -105,16 +106,7 @@ export default function Comment({
 
   const CommentContainer = ({ children }) => {
     return (
-      <div
-        onScroll={(e) => {
-          if (e.target.clientHeight - e.target.scrollTop < 100) {
-            console.log("Visible");
-            debouncedgetComments();
-            //debounce call to backend
-          }
-        }}
-        className="overflow-y-scroll max-h-[20vh] py-4 border divide-y-2 space-y-2 border-1 rounded-sm"
-      >
+      <div className="overflow-y-scroll max-h-auto  py-4 border divide-y-2 space-y-2 border-1 rounded-sm">
         {children}
       </div>
     );
@@ -122,9 +114,13 @@ export default function Comment({
 
   function Loader() {
     return (
-      <div className="text-center text-sm text-pink-500" id="commentLoader">
-        Loading...
-      </div>
+      <p
+        onClick={getComments}
+        className="text-center cursor-pointer text-sm text-pink-500"
+        id="commentLoader"
+      >
+        Load more
+      </p>
     );
   }
 
@@ -193,7 +189,7 @@ export default function Comment({
     // if (comments.length === 0) {
     //   return <h5 className="text-center font-medium pt-4">No Comments</h5>;
     // }
-    const CommentItem = ({ created, body }) => {
+    const CommentItem = ({ created, body, author }) => {
       return (
         <div className="cursor-pointer  hover:bg-gray-100 p-2 flex gap-2 lg:gap-4 w-full">
           <Image
@@ -203,9 +199,9 @@ export default function Comment({
           />
           <div className="flex flex-col gap-1">
             <div className="flex gap-1 items-center text-dark-default/60 text-xs">
-              <span>{}</span>
+              <span>{author.username || "[Deleted]"}</span>
               <span>.</span>
-              <span>{created}</span>
+              <span>{new Date(created).getFullYear()}</span>
             </div>
             <p className="text-sm">{body}</p>
             <div className="flex gap-4">
@@ -233,7 +229,11 @@ export default function Comment({
         {comments.map((val) => {
           return (
             <div key={val._id} onClick={() => setReply(true)}>
-              <CommentItem body={val.body} />
+              <CommentItem
+                body={val.body}
+                created={val.created}
+                author={val.author}
+              />
             </div>
           );
         })}

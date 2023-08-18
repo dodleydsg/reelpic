@@ -44,6 +44,7 @@ export default function ScrollCard() {
           </div>
           <Image
             alt="jj"
+            priority
             src={FireAndIce}
             className="h-full rounded-md w-auto mx-auto"
           />
@@ -56,6 +57,7 @@ export default function ScrollCard() {
           <Image
             alt="jj"
             src={FireAndIce}
+            priority
             className="h-full rounded-md w-auto mx-auto"
           />
         </div>
@@ -67,6 +69,7 @@ export default function ScrollCard() {
           <Image
             alt="jj"
             src={FireAndIce}
+            priority
             className="h-full rounded-md w-auto mx-auto"
           />
         </div>

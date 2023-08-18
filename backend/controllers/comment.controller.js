@@ -4,16 +4,13 @@ const mongoose = require("mongoose");
 const { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 const create = async (req, res, next) => {
   try {
-    const comment = new Comment(req.body);
+    const comment = new Comment({ ...req.body, author: req.profile._id });
     let post = await Post.findById(req.body.postId.toString());
     post.content.comments.push(comment._id);
     post.content.commentCount++;
     await post.save();
     await comment.save();
-    return res.status(200).json({
-      message: "Comment added successfully",
-      comment,
-    });
+    return res.status(200).json(comment);
   } catch (error) {
     genericErrorBlock(error, res);
   }
@@ -48,7 +45,10 @@ const listIds = async (req, res, next) => {
 
 const detail = async (req, res, next) => {
   try {
-    const posts = await Comment.find().where("_id").in(req.body.ids);
+    const posts = await Comment.find()
+      .where("_id")
+      .in(req.body.ids)
+      .populate("author", "username photo");
     return res.status(200).json(posts);
   } catch (error) {
     genericErrorBlock(error, res);

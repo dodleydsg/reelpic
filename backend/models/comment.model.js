@@ -8,6 +8,11 @@ const CommentSchema = mongoose.Schema({
     ref: "Post",
     required: "Comment must have a postId",
   },
+  author: {
+    type: mongoose.Types.ObjectId,
+    ref: "User",
+    required: "Comment must have an author",
+  },
   body: {
     type: String,
     required: "Comment must have a body",
