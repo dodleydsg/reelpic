@@ -5,17 +5,14 @@ import userRoutes from "../../presentation/actions/user.actions";
 const initialState = {
   pending: true,
   rejected: true,
-  loggedIn: true,
+  loggedIn: false,
 };
 
 export const getUser = createAsyncThunk(
   "user/getUser",
-  async ({ id, token }, thunkAPI) => {
+  async ({ token }, thunkAPI) => {
     try {
-      let resp = await userResolver(userRoutes.ALT_READ, {
-        userId: id,
-        token,
-      });
+      let resp = await userResolver(userRoutes.ALT_READ, token);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);

@@ -16,7 +16,6 @@ export default function Login() {
     try {
       const token = readCookie("token");
       if (token) {
-        console.log(token);
         dispatch(getUser({ token }));
       }
       if (loggedIn) {

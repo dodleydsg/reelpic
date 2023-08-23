@@ -19,7 +19,6 @@ const read = async (req, res, next) => {
 const list = async (req, res, next) => {
   try {
     let user = req.profile;
-    console.log(user);
     let catalogueIds = user.catalogues;
     return res.status(200).json({
       message: "Got catalogue items successfully",

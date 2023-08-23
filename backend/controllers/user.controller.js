@@ -6,10 +6,7 @@ const notify = require("../helpers/notify");
 
 const getUser = async (req, res, next) => {
   try {
-    let user = await User.findById(
-      req.cookies._id || req.body.userId || req.query.userId
-    );
-
+    let user = await User.findById(req.auth._id);
     if (!user) {
       return res.status(404).json({
         error: "User not found",
@@ -38,9 +35,6 @@ const create = async (req, res, next) => {
     genericErrorBlock(error, res);
   }
 };
-
-
-
 const list = async (req, res, next) => {
   try {
     let users = await User.find().select("name email updated created");

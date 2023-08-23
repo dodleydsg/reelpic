@@ -10,14 +10,14 @@ router
   .route("/api/user/:username")
   .get(userCtrl.read)
   .put(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     userCtrl.update
   )
   .delete(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     userCtrl.remove
   );
@@ -25,8 +25,8 @@ router
 router
   .route("/api/user")
   .post(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     userCtrl.altRead
   );
@@ -34,8 +34,8 @@ router
 router
   .route("/api/follow/:followId")
   .post(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     userCtrl.follow
   );

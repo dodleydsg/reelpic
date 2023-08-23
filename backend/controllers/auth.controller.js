@@ -76,15 +76,7 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "15 days",
-    });
-    const { _id } = user;
-
-    res.cookie("token", token, {
-      maxAge: 60 * 60,
-    });
-    res.cookie("_id", _id, {
-      maxAge: 60 * 60,
+      expiresIn: "7 days",
     });
     user.last_login = Date.now();
     user.save();
@@ -108,7 +100,7 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  res.clearCookie("t");
+  res.clearCookie("token");
   res.clearCookie("_id");
   return res.status(200).json({
     message: "Logged out successfully",
