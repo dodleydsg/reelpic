@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import LoadingScreen from "./loadingScreen";
 import { getUser } from "../store/features/userSlice";
+import { readCookie } from "../utils/cookie";
 
 export function CompleteLogin({ children }) {
   //Complete Login means user has completed creating account and is loggedIn
@@ -16,14 +17,14 @@ export function CompleteLogin({ children }) {
   const dispatch = useDispatch();
   useEffect(() => {
     try {
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("id");
-      if (token && id) {
-        dispatch(getUser({ token, id }));
+      const token = readCookie("token");
+      if (token) {
+        dispatch(getUser({ token }));
       } else {
         router.push("/login");
       }
     } catch (error) {
+      console.log("Error here");
       router.push("/login");
     }
   }, [loggedIn]);

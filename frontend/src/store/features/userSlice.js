@@ -35,6 +35,7 @@ const userSlice = createSlice({
     builder
       .addCase(getUser.fulfilled, (state, { payload }) => {
         state.user = payload;
+        state.loggedIn = true;
         state.catalogueList = payload.catalogues;
         state.notifications = payload.notifications;
         state.posts = payload.posts;

@@ -170,11 +170,7 @@ export default function NavBar({ user }) {
         <div>
           <span
             onClick={() => {
-              authResolver(authActions.LOGOUT, {
-                data: {
-                  userId: user._id,
-                },
-              });
+              authResolver(authActions.LOGOUT);
               dispatch(setLoggedIn(false));
             }}
             className="cursor-pointer flex justify-center lg:justify-start items-start gap-2 w-full text-lg text-danger-default font-medium"

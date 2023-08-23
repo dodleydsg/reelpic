@@ -1,6 +1,7 @@
 import axios from "axios";
 import authActions from "../actions/auth.actions";
 import { BACKEND_DOMAIN } from "./vars";
+import { deleteCookie } from "../../utils/cookie";
 
 export default async function authResolver(action, options) {
   try {
@@ -19,8 +20,7 @@ export default async function authResolver(action, options) {
       });
       return resp;
     } else if (action === authActions.LOGOUT) {
-      localStorage.clear("token");
-      localStorage.clear("id");
+      deleteCookie("token");
       let resp = await axios({
         method: "get",
         data: options.data,

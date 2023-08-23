@@ -17,14 +17,16 @@ export default function Login() {
       const token = readCookie("token");
       if (token) {
         dispatch(getUser({ token }));
-      }
-      if (loggedIn) {
-        router.push("/home");
+        console.log(state);
       }
     } catch (error) {
       // console.log(error);
     }
   }, []);
+
+  // if (loggedIn) {
+  //   router.push("/home");
+  // }
 
   if (loggedIn === undefined) {
     return <LoadingScreen />;
