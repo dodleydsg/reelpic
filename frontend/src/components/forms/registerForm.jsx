@@ -6,6 +6,7 @@ import authActions from "../../presentation/actions/auth.actions";
 import userActions from "../../presentation/actions/user.actions";
 import userResolver from "../../presentation/resolvers/user.resolver";
 import { useState } from "react";
+import { setCookie } from "../../utils/cookie";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -44,11 +45,8 @@ export default function RegisterForm() {
                 },
               })
                 .then(({ data }) => {
-                  localStorage.setItem("token", data.token);
-
-                  
-
-                  f;
+                  localStorage.setItem("token");
+                  setCookie(token, 7, data.token);
                   router.push("/getting_started");
                 })
                 .catch((error) => {

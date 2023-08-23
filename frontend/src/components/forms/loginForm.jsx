@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import authResolver from "../../presentation/resolvers/auth.resolver";
 import authRoutes from "../../presentation/actions/auth.actions";
 import { useRouter } from "next/router";
+import { readCookie, setCookie } from "../../utils/cookie";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -41,8 +42,8 @@ export default function LoginForm() {
           },
         })
           .then(({ data }) => {
-            localStorage.setItem("token", data.token);
-            localStorage.setItem("id", data._id);
+            setCookie("token", 7, data.token);
+
             router.push("/home");
           })
           .catch((error) => {
