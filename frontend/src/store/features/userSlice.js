@@ -5,7 +5,7 @@ import userRoutes from "../../presentation/actions/user.actions";
 const initialState = {
   pending: true,
   rejected: true,
-  loggedIn: false,
+  loggedIn: true,
 };
 
 export const getUser = createAsyncThunk(

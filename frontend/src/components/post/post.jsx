@@ -26,6 +26,9 @@ export default function Post({
   content,
 }) {
   const [commentsShown, toggleComments] = useState(false);
+  const updateComments = (arr) => {
+    content.comments = arr;
+  };
   const userLikes = useSelector((state) => state.user.likes);
   //userLikes is an array corresponding to the user's liked posts
   return (
@@ -44,7 +47,15 @@ export default function Post({
             Follow
           </Link>
         </div>
-        <MdLink className="h-18 w-auto pr-4" />
+        <MdLink
+          className="h-18 w-auto pr-4 cursor-pointer"
+          onClick={() => {
+            navigator.clipboard.writeText(
+              `${process.env.NEXT_PUBLIC_DOMAIN}/posts/${_id}`
+            );
+            console.log("Link copied to clipboard");
+          }}
+        />
       </div>
       <Carousel images={content.images} description={content.body} />
       <div className="border-gray-100 p-2 space-y-4">
@@ -83,6 +94,7 @@ export default function Post({
         </div>
         {commentsShown ? (
           <Comment
+            updateCommentIds={updateComments}
             commentIds={content.comments}
             postId={_id}
             toggleComments={toggleComments}

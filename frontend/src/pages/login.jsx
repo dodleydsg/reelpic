@@ -1,10 +1,12 @@
 import Head from "next/head";
 import Link from "next/link";
 import LoginForm from "../components/forms/loginForm";
-import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { redirect } from "next/navigation";
+import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../store/features/userSlice";
+import LoadingScreen from "../components/loadingScreen";
 
 export default function Login() {
   const router = useRouter();
@@ -18,10 +20,17 @@ export default function Login() {
       if (id && token) {
         dispatch(getUser({ token, id }));
       }
+      if (loggedIn) {
+        router.push("/home");
+      }
     } catch (error) {
       // console.log(error);
     }
   }, []);
+
+  if (loggedIn === undefined) {
+    return <LoadingScreen />;
+  }
   if (!loggedIn) {
     return (
       <>
@@ -64,7 +73,5 @@ export default function Login() {
         </div>
       </>
     );
-  } else {
-    router.push("/home");
   }
 }

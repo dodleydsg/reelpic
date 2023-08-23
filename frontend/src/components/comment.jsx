@@ -18,8 +18,11 @@ import commentActions from "../presentation/actions/comment.actions";
 import commentResolver from "../presentation/resolvers/comment.resolver";
 import { configureAlert, setAlert } from "../store/features/uiSlice";
 
+const COMMENT_REQUEST_LENGTH = 5;
+
 export default function Comment({
   postId,
+  updateCommentIds,
   commentIds,
   toggleComments,
   profileImg,
@@ -32,6 +35,9 @@ export default function Comment({
 
   const userId = localStorage.getItem("id");
   const token = localStorage.getItem("token");
+  const VIEWED_COMMENTS_REF = useRef([]);
+  const COMMENT_IDS_REF = useRef([...commentIds]);
+
   useEffect(() => {
     getComments();
   }, []);
@@ -46,17 +52,20 @@ export default function Comment({
 
   } */
 
-  const getComments = async (e) => {
-    const ids = commentIds.slice(comments.length, comments.length + 5);
-    console.log(ids, commentIds);
-    console.log(commentIds);
-    commentResolver(commentActions.DETAIL_COMMENTS, userId, token, { ids })
-      .then((resp) => {
-        setComments([...comments, ...resp.data]);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const getComments = async () => {
+    const ids = COMMENT_IDS_REF.current.slice(
+      comments.length,
+      comments.length + COMMENT_REQUEST_LENGTH
+    );
+    ids.length > 0
+      ? commentResolver(commentActions.DETAIL_COMMENTS, userId, token, { ids })
+          .then((resp) => {
+            setComments([...comments, ...resp.data]);
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+      : null;
   };
 
   const addComment = async (e) => {
@@ -84,8 +93,10 @@ export default function Comment({
             text: "Comment added successfully",
           })
         );
-        setComments([data, ...comments]);
-        console.log(comments);
+        setComments((comments) => {
+          return comments.fill(data, 0, 0);
+        });
+        VIEWED_COMMENTS_REF.current.push(data._id);
       })
       .catch((error) => {
         console.log(error);
@@ -102,11 +113,12 @@ export default function Comment({
     dispatch(setAlert(true));
   };
 
-  let debouncedgetComments = _.debounce(getComments, 1000, { maxWait: 2000 });
-
   const CommentContainer = ({ children }) => {
     return (
-      <div className="overflow-y-scroll max-h-auto  py-4 border divide-y-2 space-y-2 border-1 rounded-sm">
+      <div
+        style={{ maxHeight: "40vh" }}
+        className="overflow-y-scroll  py-4 border divide-y-2 space-y-2 border-1 rounded-sm"
+      >
         {children}
       </div>
     );
@@ -115,7 +127,9 @@ export default function Comment({
   function Loader() {
     return (
       <p
-        onClick={getComments}
+        onClick={async (e) => {
+          await getComments();
+        }}
         className="text-center cursor-pointer text-sm text-pink-500"
         id="commentLoader"
       >
@@ -225,19 +239,27 @@ export default function Comment({
     }
 
     return (
-      <div className="space-y-2">
-        {comments.map((val) => {
-          return (
-            <div key={val._id} onClick={() => setReply(true)}>
-              <CommentItem
-                body={val.body}
-                created={val.created}
-                author={val.author}
-              />
-            </div>
-          );
-        })}
-        <Loader />
+      <div
+        className="space-y-2 me"
+        onLoad={(e) => {
+          console.log("Done");
+        }}
+      >
+        {comments.length > 0 ? (
+          comments.map((val) => {
+            return (
+              <div key={val._id} onClick={() => setReply(true)}>
+                <CommentItem
+                  body={val.body}
+                  created={val.created}
+                  author={val.author}
+                />
+              </div>
+            );
+          })
+        ) : (
+          <p className="text-center">No comments</p>
+        )}
       </div>
     );
   };
@@ -247,6 +269,7 @@ export default function Comment({
       <CommentHeader />
       {!showReply ? <CommentForm placeholder={"Add a comment..."} /> : null}
       <CommentBody />
+      <Loader />
     </CommentContainer>
   );
 }
