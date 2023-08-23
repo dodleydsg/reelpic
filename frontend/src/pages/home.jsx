@@ -16,6 +16,7 @@ import { toggleAddPostModal } from "../store/features/uiSlice";
 import { useEffect, useState } from "react";
 import postActions from "../presentation/actions/post.actions";
 import postResolver from "../presentation/resolvers/post.resolver";
+import { readCookie } from "../utils/cookie";
 
 function Home() {
   const [feed, updateFeed] = useState([]);
@@ -25,9 +26,8 @@ function Home() {
   useEffect(() => {
     const getFeed = async () => {
       try {
-        const userId = localStorage.getItem("id");
-        const token = localStorage.getItem("token");
-        const { data } = await postResolver(postActions.FEED, userId, token);
+        const token = readCookie("token");
+        const { data } = await postResolver(postActions.FEED, token);
         updateFeed(data);
       } catch (error) {
         console.log(error);

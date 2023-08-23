@@ -2,11 +2,11 @@ import Head from "next/head";
 import Link from "next/link";
 import LoginForm from "../components/forms/loginForm";
 import { useEffect } from "react";
-import { redirect } from "next/navigation";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../store/features/userSlice";
 import LoadingScreen from "../components/loadingScreen";
+import { readCookie } from "../utils/cookie";
 
 export default function Login() {
   const router = useRouter();
@@ -14,11 +14,10 @@ export default function Login() {
   const dispatch = useDispatch();
   useEffect(() => {
     try {
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("id");
-      // console.log(token, id);
-      if (id && token) {
-        dispatch(getUser({ token, id }));
+      const token = readCookie("token");
+      if (token) {
+        console.log(token);
+        dispatch(getUser({ token }));
       }
       if (loggedIn) {
         router.push("/home");
