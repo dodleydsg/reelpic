@@ -17,9 +17,7 @@ export default async function userResolver(action, options) {
       let resp = await axios({
         method: "post",
         url: BACKEND_DOMAIN + "/api/user",
-        data: {
-          userId: options.userId,
-        },
+
         headers: {
           Authorization: AUTH_TOKEN(options.token),
         },
