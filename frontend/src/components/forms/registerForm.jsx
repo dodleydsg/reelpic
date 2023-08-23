@@ -45,7 +45,10 @@ export default function RegisterForm() {
               })
                 .then(({ data }) => {
                   localStorage.setItem("token", data.token);
-                  localStorage.setItem("id", data._id);
+
+                  
+
+                  f;
                   router.push("/getting_started");
                 })
                 .catch((error) => {

@@ -9,6 +9,7 @@ const getUser = async (req, res, next) => {
     let user = await User.findById(
       req.cookies._id || req.body.userId || req.query.userId
     );
+
     if (!user) {
       return res.status(404).json({
         error: "User not found",
