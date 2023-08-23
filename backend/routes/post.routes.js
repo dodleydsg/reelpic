@@ -8,24 +8,23 @@ const router = express.Router();
 router
   .route("/api/posts")
   .post(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     postCtrl.create
   )
   .get(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     postCtrl.list
   );
 
-
 router
   .route("/api/post/return/:postId")
   .get(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     postCtrl.returnPost
   );
@@ -33,14 +32,14 @@ router
   .route("/api/post/:postId")
   .get(userCtrl.getUser, postCtrl.read)
   .delete(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     postCtrl.trash
   )
   .put(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     postCtrl.update
   );
@@ -48,8 +47,8 @@ router
 router
   .route("/api/post/delete/:postId")
   .delete(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     postCtrl.remove
   );
@@ -57,25 +56,25 @@ router
 router
   .route("/api/post/like/")
   .post(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     postCtrl.like
   );
-  router
-    .route("/api/feed")
-    .post(
-      userCtrl.getUser,
-      authCtrl.requireLogin,
-      authCtrl.hasAuthorization,
-      postCtrl.feed
-    );
-  router
-    .route("/api/explore")
-    .get(
-      userCtrl.getUser,
-      authCtrl.requireLogin,
-      authCtrl.hasAuthorization,
-      postCtrl.explore
-    ); 
+router
+  .route("/api/feed")
+  .post(
+    authCtrl.requireLogin,
+    userCtrl.getUser,
+    authCtrl.hasAuthorization,
+    postCtrl.feed
+  );
+router
+  .route("/api/explore")
+  .get(
+    authCtrl.requireLogin,
+    userCtrl.getUser,
+    authCtrl.hasAuthorization,
+    postCtrl.explore
+  ); 
 module.exports = router;

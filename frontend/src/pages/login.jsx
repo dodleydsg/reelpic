@@ -10,14 +10,16 @@ import { readCookie } from "../utils/cookie";
 
 export default function Login() {
   const router = useRouter();
-  const { loggedIn } = useSelector((state) => state.user);
+  const { loggedIn, pending, fufilled, rejected } = useSelector(
+    (state) => state.user
+  );
+
   const dispatch = useDispatch();
   useEffect(() => {
     try {
       const token = readCookie("token");
       if (token) {
         dispatch(getUser({ token }));
-        console.log(state);
       }
     } catch (error) {
       // console.log(error);
@@ -28,10 +30,10 @@ export default function Login() {
   //   router.push("/home");
   // }
 
-  if (loggedIn === undefined) {
+  if (pending) {
     return <LoadingScreen />;
   }
-  if (!loggedIn) {
+  if (rejected) {
     return (
       <>
         <Head>
@@ -73,5 +75,7 @@ export default function Login() {
         </div>
       </>
     );
+  } else {
+    router.push("/home");
   }
 }
