@@ -74,7 +74,7 @@ export default function Post({
                       console.log(rejected);
                       dispatch(
                         configureAlert({
-                          variant: "danger",
+                          variant: "info",
                           text: "Please login to interact with posts",
                           action: "login",
                         })
@@ -93,7 +93,20 @@ export default function Post({
             </div>
             <div
               className="flex gap-2 items-center cursor-pointer"
-              onClick={() => toggleComments((state) => !state)}
+              onClick={() => {
+                if (rejected) {
+                  dispatch(
+                    configureAlert({
+                      variant: "success",
+                      text: "Please login to interact with posts",
+                      action: "login",
+                    })
+                  );
+                  dispatch(setAlert(true));
+                } else {
+                  toggleComments((state) => !state);
+                }
+              }}
             >
               <p className="flex items-center">
                 <IoChatbox className="w-5 h-auto" />

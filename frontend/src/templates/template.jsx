@@ -15,12 +15,12 @@ export default function ({ children, pageTitle }) {
         <meta name="viewport" content="width=device-width" />
         <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
       </Head>
+      <Alert />
       <div
         className={`w-screen h-screen relative container p-4 max-w-full ${
           addPost || addCatalogue ? "overflow-hidden lg:overflow-auto" : ""
         }`}
       >
-        <Alert />
         <div
           id="mainContent"
           className="lg:col-span-3 overflow-y-visible lg:overflow-y-scroll pb-40  relative gap-4"
