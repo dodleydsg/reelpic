@@ -1,6 +1,6 @@
 import Head from "next/head";
-
 import { useSelector } from "react-redux";
+import Alert from "../components/alert";
 
 export default function ({ children, pageTitle }) {
   const { addPost, addCatalogue } = useSelector((state) => state.ui);
@@ -20,6 +20,7 @@ export default function ({ children, pageTitle }) {
           addPost || addCatalogue ? "overflow-hidden lg:overflow-auto" : ""
         }`}
       >
+        <Alert />
         <div
           id="mainContent"
           className="lg:col-span-3 overflow-y-visible lg:overflow-y-scroll pb-40  relative gap-4"

@@ -1,19 +1,15 @@
 import { useRouter } from "next/router";
 import postResolver from "../../presentation/resolvers/post.resolver";
 import postActions from "../../presentation/actions/post.actions";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { getUser } from "../../store/features/userSlice";
 import Template from "../../templates/template";
-import AuthTemplate from "../../templates/template_with_navbar";
 import PostComponent from "../../components/post/post";
 import { useEffect } from "react";
 import { readCookie } from "../../utils/cookie";
-import NavbarProfile from "../../components/navBar/navBarProfile";
-import { IoPerson } from "react-icons/io5";
 
 export default function Post({ post }) {
   const dispatch = useDispatch();
-  const { rejected } = useSelector((state) => state.user);
   useEffect(() => {
     try {
       const token = readCookie("token");

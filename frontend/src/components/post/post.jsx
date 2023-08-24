@@ -7,14 +7,10 @@ import { MdLink } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
 import prettyTime from "pretty-time";
-import {
-  IoChatbox,
-  IoEye,
-  IoEyeOutline,
-  IoHeart,
-  IoTrendingUp,
-} from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { IoChatbox, IoHeart, IoTrendingUp } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import postResolver from "../../presentation/resolvers/post.resolver";
+import { setAlert, configureAlert } from "../../store/features/uiSlice";
 
 export default function Post({
   _id,
@@ -30,6 +26,9 @@ export default function Post({
     content.comments = arr;
   };
   const userLikes = useSelector((state) => state.user.likes) || [];
+  const rejected = useSelector((state) => state.user.rejected);
+  const dispatch = useDispatch();
+
   //userLikes is an array corresponding to the user's liked posts
   return (
     <div className="h-full">
@@ -70,9 +69,24 @@ export default function Post({
             <div className="flex gap-2 items-center">
               <p className="flex items-center">
                 <IoHeart
-                  className={`w-5 h-auto items-center cursor-pointer ${userLikes.includes(
-                    _id
-                  )}`}
+                  onClick={async (e) => {
+                    if (rejected) {
+                      console.log(rejected);
+                      dispatch(
+                        configureAlert({
+                          variant: "danger",
+                          text: "Please login to interact with posts",
+                          action: "login",
+                        })
+                      );
+                      dispatch(setAlert(true));
+                    }
+                    e.target.classList.toggle("text-pink-500");
+                    // await postResolver();
+                  }}
+                  className={`w-5 h-auto items-center cursor-pointer ${
+                    userLikes.includes(_id) ? "text-pink-500" : ""
+                  }`}
                 />
               </p>
               <p className="text-sm">{likes}</p>
