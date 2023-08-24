@@ -36,10 +36,8 @@ export default function LoginForm() {
       })}
       onSubmit={(values, { setSubmitting }) => {
         authResolver(authRoutes.LOGIN, {
-          data: {
-            email: values.email,
-            password: values.password,
-          },
+          email: values.email,
+          password: values.password,
         })
           .then(({ data }) => {
             setCookie("token", 7, data.token);
@@ -48,8 +46,6 @@ export default function LoginForm() {
           })
           .catch((error) => {
             console.log(error);
-
-            // router.push("/_error");
           });
         setSubmitting(false);
       }}
