@@ -30,7 +30,7 @@ router
   );
 router
   .route("/api/post/:postId")
-  .get(userCtrl.getUser, postCtrl.read)
+  .get(postCtrl.read)
   .delete(
     authCtrl.requireLogin,
     userCtrl.getUser,

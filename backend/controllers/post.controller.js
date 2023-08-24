@@ -15,17 +15,12 @@ const redisClient = new Redis();
 const read = async (req, res, next) => {
   try {
     let post = await Post.findById(req.params.postId);
-    let user = req.profile;
     if (!post) {
       return res.status(404).json({
         message: "Could'nt find post",
       });
     }
-    if (user.seen.length > 200) {
-      user.seen = [];
-      user.seen.addToSet(post._id.toString());
-    }
-    await user.save();
+    
     return res.status(200).json(post);
   } catch (error) {
     genericErrorBlock(error, res);

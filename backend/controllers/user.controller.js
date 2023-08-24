@@ -8,9 +8,7 @@ const getUser = async (req, res, next) => {
   try {
     let user = await User.findById(req.auth._id);
     if (!user) {
-      return res.status(404).json({
-        error: "User not found",
-      });
+      next();
     }
     req.profile = user;
     next();
