@@ -15,6 +15,7 @@ export const getUser = createAsyncThunk(
       let resp = await userResolver(userRoutes.ALT_READ, token);
       return resp.data;
     } catch (error) {
+      console.log(error);
       return thunkAPI.rejectWithValue(error);
     }
   }

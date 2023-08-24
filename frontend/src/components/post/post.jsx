@@ -29,7 +29,7 @@ export default function Post({
   const updateComments = (arr) => {
     content.comments = arr;
   };
-  const userLikes = useSelector((state) => state.user.likes);
+  const userLikes = useSelector((state) => state.user.likes) || [];
   //userLikes is an array corresponding to the user's liked posts
   return (
     <div className="h-full">
