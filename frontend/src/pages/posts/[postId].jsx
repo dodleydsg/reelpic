@@ -1,18 +1,18 @@
 import { useRouter } from "next/router";
 import postResolver from "../../presentation/resolvers/post.resolver";
 import postActions from "../../presentation/actions/post.actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../store/features/userSlice";
 import Template from "../../templates/template";
 import PostComponent from "../../components/post";
 import { useEffect } from "react";
 import { readCookie } from "../../utils/cookie";
 
-export default function Post({ post }) {
+export default function Post({ post, token }) {
   const dispatch = useDispatch();
+  const { rejected } = useSelector((state) => state.user);
   useEffect(() => {
     try {
-      const token = readCookie("token");
       dispatch(getUser({ token }));
     } catch (error) {
       console.log(error);
@@ -21,7 +21,7 @@ export default function Post({ post }) {
 
   return (
     <Template>
-      <PostComponent {...post} />
+      <PostComponent {...post} token />
     </Template>
   );
 }
@@ -32,6 +32,7 @@ export async function getServerSideProps(context) {
     context.req.cookies.token,
     {
       postId: context.params.postId,
+      token: context.req.cookies.token,
     }
   );
   return {

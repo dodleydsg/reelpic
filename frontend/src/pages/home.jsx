@@ -18,13 +18,13 @@ import { readCookie } from "../utils/cookie";
 
 function Home() {
   const [feed, updateFeed] = useState([]);
+  const token = readCookie("token");
   const dispatch = useDispatch();
   const { stale } = useSelector((state) => state.ui);
 
   useEffect(() => {
     const getFeed = async () => {
       try {
-        const token = readCookie("token");
         const { data } = await postResolver(postActions.FEED, token);
         updateFeed(data);
       } catch (error) {
@@ -70,7 +70,7 @@ function Home() {
           </div>
           <div className="space-y-4">
             {feed.map((val) => {
-              return <Post key={val._id} {...val} />;
+              return <Post token={token} key={val._id} {...val} />;
             })}
           </div>
         </div>

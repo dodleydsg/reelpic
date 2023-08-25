@@ -259,12 +259,16 @@ const like = async (req, res, next) => {
     if (req.body.action.toLowerCase() === "like") {
       user.likes.addToSet(post._id);
       post.usersLike.addToSet(user._id);
+      await user.save();
+      await post.save();
       return res.status(200).json({
         action: "Like",
       });
     }
     user.likes.pull(post._id);
     post.usersLike.pull(user._id);
+    await user.save();
+    await post.save();
     return res.status(200).json({
       action: "Dislike",
     });

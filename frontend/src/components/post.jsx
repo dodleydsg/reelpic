@@ -17,23 +17,21 @@ import { readCookie } from "../utils/cookie";
 export default function Post({
   _id,
   user,
-  likes,
+  usersLike,
   views,
   created,
   tags,
   content,
+  token,
 }) {
   const [commentsShown, toggleComments] = useState(false);
   const updateComments = (arr) => {
     content.comments = arr;
   };
-  const userLikes = useSelector((state) => state.user.likes) || [];
-
+  const likedPosts = useSelector((state) => state.user.likes) || [];
+  const [likes, updateLikes] = useState(usersLike.length);
   const rejected = useSelector((state) => state.user.rejected);
   const dispatch = useDispatch();
-  const token = readCookie("token");
-
-  //userLikes is an array corresponding to the user's liked posts
   return (
     <div className="h-full">
       <div className="flex justify-between items-center border border-gray-100 p-2">
@@ -75,7 +73,6 @@ export default function Post({
                 <IoHeart
                   onClick={async (e) => {
                     if (rejected) {
-                      console.log(rejected);
                       dispatch(
                         configureAlert({
                           variant: "info",
@@ -96,12 +93,14 @@ export default function Post({
                         userId: user._id,
                         action,
                       };
+                      likedPosts.includes(_id)
+                        ? updateLikes((prevLikes) => prevLikes - 1)
+                        : updateLikes((prevLikes) => prevLikes + 1);
                       await postResolver(postActions.POST_LIKE, token, data);
-                      console.log(userLikes);
                     }
                   }}
                   className={`w-5 h-auto items-center cursor-pointer ${
-                    userLikes.includes(_id) ? "text-pink-500" : ""
+                    likedPosts.includes(_id) ? "text-pink-500" : ""
                   }`}
                 />
               </p>
@@ -113,7 +112,7 @@ export default function Post({
                 if (rejected) {
                   dispatch(
                     configureAlert({
-                      variant: "success",
+                      variant: "info",
                       text: "Please login to interact with posts",
                       action: "login",
                     })
