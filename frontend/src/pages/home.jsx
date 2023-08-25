@@ -1,10 +1,8 @@
 import ScrollCard from "../components/scrollCard";
-import Post from "../components/post/post";
+import Post from "../components/post";
 import NavbarTemplate from "../templates/template_with_navbar";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
-import Image from "next/image";
-import { IoAdd } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import {
   toggleAddCatalogueModal,

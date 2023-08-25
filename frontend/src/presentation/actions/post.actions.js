@@ -5,6 +5,6 @@ export default {
   UPDATE_POST: "update_post",
   LIST_POSTS: "list_posts",
   FEED: "feed",
-  LIKE: "like",
+  POST_LIKE: "like",
   EXPLORE: "explore",
 };

@@ -4,7 +4,7 @@ import postActions from "../../presentation/actions/post.actions";
 import { useDispatch } from "react-redux";
 import { getUser } from "../../store/features/userSlice";
 import Template from "../../templates/template";
-import PostComponent from "../../components/post/post";
+import PostComponent from "../../components/post";
 import { useEffect } from "react";
 import { readCookie } from "../../utils/cookie";
 

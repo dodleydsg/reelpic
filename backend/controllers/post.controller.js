@@ -251,69 +251,20 @@ const like = async (req, res, next) => {
     if (user._id.toString() !== req.body.userId.toString()) {
       unAuthorizedErrorBlock(res);
     }
-    let likes = parseInt(
-      await redisClient.get(`post:${req.body.postId}:likes`)
-    );
-    if (LIKE_REQUESTS > LIKE_THRESHOLD) {
-      // If threshold for just Redis updates is reached, pull the Post object from MongoDB and likes and update the post.likes property
-      console.log("slow");
-      let post = await Post.findById(req.body.postId);
-
-      let usersLike = await redisClient.smembers(
-        `post:${req.body.postId}:usersLike`
-      );
-
-      //update with values from redis
-      post.likes += likes;
-      usersLike || post.usersLike.addToSet(usersLike);
-
-      // update with respect to action
-      if (req.body.action.toLowerCase() === "like") {
-        post.likes++;
-        post.usersLike.addToSet(req.body.userId);
-      } else {
-        post.likes > 0 ? post.likes-- : null;
-        post.usersLike.pull(req.body.userId);
-      }
-      await post.save();
-
-      // update with respect to action
-
-      // now update Redis database with correct value, due to downtime while processesing previous actions
-      await redisClient.decrby(`post:${req.body.postId}:likes`, likes);
-      usersLike ||
-        (await redisClient.srem(
-          `post:${req.body.postId}:usersLike`,
-          usersLike
-        ));
-
-      LIKE_REQUESTS = 0;
-    } else {
-      // If threshold not exceeded continue to update likes just on the Redis Database
-      console.log("Fast");
-      LIKE_REQUESTS++;
-      if (req.body.action.toLowerCase() === "like") {
-        await redisClient.incr(`post:${req.body.postId}:likes`);
-        await redisClient.sadd(
-          `post:${req.body.postId}:users_like`,
-          req.body.userId
-        );
-      } else {
-        await redisClient.srem(
-          `post:${req.body.postId}:users_like`,
-          req.body.userId
-        );
-        if (likes > 0) {
-          await redisClient.decr(`post:${req.body.postId}:likes`);
-        }
-      }
+    let post = await Post.findById(req.body.postId);
+    if (!post) {
+      console.log(error);
+      return genericErrorBlock(error, res);
     }
-
     if (req.body.action.toLowerCase() === "like") {
+      user.likes.addToSet(post._id);
+      post.usersLike.addToSet(user._id);
       return res.status(200).json({
         action: "Like",
       });
     }
+    user.likes.pull(post._id);
+    post.usersLike.pull(user._id);
     return res.status(200).json({
       action: "Dislike",
     });

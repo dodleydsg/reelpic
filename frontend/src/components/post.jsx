@@ -1,7 +1,7 @@
 import React from "react";
-import Carousel from "../carousel";
-import profile1 from "../../assets/images/Profile1.png";
-import Comment from "../comment";
+import Carousel from "./carousel";
+import profile1 from "../assets/images/Profile1.png";
+import Comment from "./comment";
 import { useState } from "react";
 import { MdLink } from "react-icons/md";
 import Image from "next/image";
@@ -9,8 +9,10 @@ import Link from "next/link";
 import prettyTime from "pretty-time";
 import { IoChatbox, IoHeart, IoTrendingUp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import postResolver from "../../presentation/resolvers/post.resolver";
-import { setAlert, configureAlert } from "../../store/features/uiSlice";
+import postResolver from "../presentation/resolvers/post.resolver";
+import { setAlert, configureAlert } from "../store/features/uiSlice";
+import postActions from "../presentation/actions/post.actions";
+import { readCookie } from "../utils/cookie";
 
 export default function Post({
   _id,
@@ -26,8 +28,10 @@ export default function Post({
     content.comments = arr;
   };
   const userLikes = useSelector((state) => state.user.likes) || [];
+
   const rejected = useSelector((state) => state.user.rejected);
   const dispatch = useDispatch();
+  const token = readCookie("token");
 
   //userLikes is an array corresponding to the user's liked posts
   return (
@@ -80,9 +84,21 @@ export default function Post({
                         })
                       );
                       dispatch(setAlert(true));
+                    } else {
+                      e.target.classList.toggle("text-pink-500");
+                      const action = e.target.classList.contains(
+                        "text-pink-500"
+                      )
+                        ? "like"
+                        : "unlike";
+                      const data = {
+                        postId: _id,
+                        userId: user._id,
+                        action,
+                      };
+                      await postResolver(postActions.POST_LIKE, token, data);
+                      console.log(userLikes);
                     }
-                    e.target.classList.toggle("text-pink-500");
-                    // await postResolver();
                   }}
                   className={`w-5 h-auto items-center cursor-pointer ${
                     userLikes.includes(_id) ? "text-pink-500" : ""

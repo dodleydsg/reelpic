@@ -3,7 +3,7 @@ import NavbarTemplate from "@/components/templates/template_with_navbar";
 import NoNavbarTemplate from "@/components/templates/template";
 import { useSelector } from "react-redux";
 import BackButton from "@/components/components/backButton";
-import Post from "@/components/components/post/post";
+import Post from "@/components/components/post";
 
 export default function CatalogueDetail() {
   const router = useRouter();

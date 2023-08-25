@@ -54,24 +54,28 @@ export default function Carousel({ images, description }) {
   return (
     <>
       <section className="py-5 w-full h-full relative overflow-hidden flex  min-h-[60vh]">
-        <button
-          type="button"
-          onClick={(e) => {
-            navigateCarousel("left");
-          }}
-          className="absolute border border-gray-200 bg-primary-default/10 top-1/2 left-0 z-[50] mx-2 p-4 rounded-full text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
-        >
-          <IoChevronBack className="text-xl" />
-        </button>
-        <button
-          type="button"
-          onClick={(e) => {
-            navigateCarousel("right");
-          }}
-          className="absolute border border-gray-200 top-1/2 right-0 z-[50]  mx-2 p-4 rounded-full text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
-        >
-          <IoChevronForward className="text-xl" />
-        </button>
+        {CONTENT_LENGTH > 1 ? (
+          <>
+            <button
+              type="button"
+              onClick={(e) => {
+                navigateCarousel("left");
+              }}
+              className="absolute border border-gray-200 bg-primary-default/10 top-1/2 left-0 z-[50] mx-2 p-4 rounded-full text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
+            >
+              <IoChevronBack className="text-xl" />
+            </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                navigateCarousel("right");
+              }}
+              className="absolute border border-gray-200 top-1/2 right-0 z-[50]  mx-2 p-4 rounded-full text-dark-default hover:bg-gray-500/50 hover:text-white transition duration-150"
+            >
+              <IoChevronForward className="text-xl" />
+            </button>
+          </>
+        ) : null}
         <div
           onTouchStart={(e) => swipe(e)}
           onTouchEnd={(e) => swipe(e)}
