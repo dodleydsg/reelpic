@@ -12,6 +12,7 @@ const authRoutes = require("./routes/auth.routes");
 const postRoutes = require("./routes/post.routes");
 const commentRoutes = require("./routes/comment.routes");
 const catalogueRoutes = require("./routes/catalogue.routes");
+const notificationsRoutes = require("./routes/notif.routes");
 
 const app = express();
 
@@ -31,6 +32,8 @@ app.use("/", authRoutes);
 app.use("/", postRoutes);
 app.use("/", commentRoutes);
 app.use("/", catalogueRoutes);
+app.use("/", notificationsRoutes);
+
 
 app.use((err, req, res, next) => {
   if (err.name === "UnauthorizedError") {

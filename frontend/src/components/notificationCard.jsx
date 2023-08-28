@@ -3,7 +3,7 @@ import Link from "next/link";
 import Profile1 from "../assets/images/Profile1.png";
 import Image from "next/image";
 
-export default function NotificationCard() {
+export default function NotificationCard({ details, time }) {
   return (
     <div
       className="flex gap-2 items-center border-gray-200
@@ -15,8 +15,8 @@ export default function NotificationCard() {
           @aisteve
         </Link>
       </div>
-      <p className="text-sm text-dark-default/90">followed you</p>
-      <p className="text-sm text-dark-default/70">2 mins ago</p>
+      <p className="text-sm text-dark-default/90">{details}</p>
+      <p className="text-sm text-dark-default/70">{time}</p>
     </div>
   );
 }

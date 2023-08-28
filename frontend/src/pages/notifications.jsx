@@ -3,8 +3,26 @@ import NotificationCard from "../components/notificationCard";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import { CompleteLogin } from "../components/requireLogin";
+import { useEffect, useState } from "react";
+import notificationResolver from "../presentation/resolvers/notifications.resolver";
+import notificationActions from "../presentation/actions/notification.actions";
+import { readCookie } from "../utils/cookie";
 
 function Notifications() {
+  const token = readCookie("token");
+  const [alerts, setAlerts] = useState([]);
+
+  useEffect(() => {
+    const getAlerts = async () => {
+      let { data } = await notificationResolver(
+        notificationActions.LIST_ALERTS,
+        token
+      );
+      setAlerts(data);
+    };
+    getAlerts();
+  }, []);
+
   return (
     <>
       <NavbarTemplate
@@ -13,27 +31,13 @@ function Notifications() {
         pageTitle="Alerts | Find alerts for recent activity"
       >
         <div className="px-4 pt-6">
-          <h3 className="font-bold text-xl text-pink-500">Notifications</h3>{" "}
+          <h3 className="font-bold text-xl text-pink-500">Notifications</h3>
           <div className="space-y-2">
             <div>
-              <p className="text-right text-sm text-dark-default/80">
-                {new Date().toLocaleDateString()}
-              </p>
               <hr className="mb-2" />
-              <NotificationCard />
-              <NotificationCard />
-              <NotificationCard />
-              <NotificationCard />
-            </div>
-            <div>
-              <p className="text-right text-sm text-dark-default/80">
-                {new Date(1223312131231).toLocaleDateString()}
-              </p>
-              <hr className="mb-2" />
-              <NotificationCard />
-              <NotificationCard />
-              <NotificationCard />
-              <NotificationCard />
+              {alerts.map((val) => {
+                <NotificationCard key={val.id} {...val} />;
+              })}
             </div>
           </div>
         </div>
@@ -47,4 +51,3 @@ export default () => (
     <Notifications />
   </CompleteLogin>
 );
-
