@@ -8,14 +8,14 @@ const router = express.Router();
 router
   .route("/api/catalogues")
   .get(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     catalogueCtrl.list
   )
   .post(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     catalogueCtrl.create
   );
@@ -23,26 +23,26 @@ router
 router
   .route("/api/catalogue/:catalogueId")
   .post(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     catalogueCtrl.addItem
   )
   .put(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     catalogueCtrl.update
   )
   .delete(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     catalogueCtrl.remove
   )
   .get(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     catalogueCtrl.read
   );
