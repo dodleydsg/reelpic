@@ -7,6 +7,10 @@ const CatalogueSchema = mongoose.Schema({
     ref: "User",
     required: "A catalogue must have a user",
   },
+  views: {
+    type: Number,
+    default: 0,
+  },
   title: {
     type: String,
     required: "Catalogue must have a title",

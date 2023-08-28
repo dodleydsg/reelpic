@@ -18,12 +18,16 @@ const read = async (req, res, next) => {
 };
 const list = async (req, res, next) => {
   try {
-    let user = req.profile;
-    let catalogueIds = user.catalogues;
-    return res.status(200).json({
-      message: "Got catalogue items successfully",
-      catalogueIds,
-    });
+    let catalogues = [];
+    let catalogueIds = req.profile.catalogues;
+    for (let i = catalogueIds.length - 1; i >= 0; i--) {
+      let catalogue = await Catalogue.findById(catalogueIds[i]);
+      // .populate("user", "username photo")
+      if (catalogue) {
+        catalogues.push(catalogue);
+      }
+    }
+    return res.status(200).json(catalogues);
   } catch (error) {
     genericErrorBlock(error, res);
   }

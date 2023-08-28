@@ -37,16 +37,11 @@ function Catalogue() {
 
   useEffect(() => {
     const getCatalogues = async () => {
-      const holder = [];
-      for (let i = 0; i < catalogueList.length; i++) {
-        let { data } = await catalogueResolver(
-          catalogueActions.READ_CATALOGUE,
-          token,
-          { catalogueId: catalogueList[i] }
-        );
-        holder.push(data);
-      }
-      updateCatalogues(holder);
+      let { data } = await catalogueResolver(
+        catalogueActions.LIST_CATALOGUES,
+        token
+      );
+      updateCatalogues(data);
     };
 
     getCatalogues();
