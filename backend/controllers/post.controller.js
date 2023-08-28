@@ -1,16 +1,11 @@
 const Post = require("../models/post.model"),
   errorHandler = require("../helpers/dbErrorHandler"),
-  Redis = require("ioredis"),
   { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors"),
   notify = require("../helpers/notify"),
   Tag = require("../models/tag.model"),
   User = require("../models/user.model"),
   _ = require("lodash");
 
-let LIKE_REQUESTS = 0;
-const LIKE_THRESHOLD = 5;
-
-const redisClient = new Redis();
 
 const read = async (req, res, next) => {
   try {
