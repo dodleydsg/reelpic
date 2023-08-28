@@ -9,6 +9,7 @@ import { CompleteLogin } from "../components/requireLogin";
 import { useState, useEffect } from "react";
 import postResolver from "../presentation/resolvers/post.resolver";
 import postActions from "../presentation/actions/post.actions";
+import { readCookie } from "../utils/cookie";
 
 function Explore() {
   const [exploreFeed, updateExploreFeed] = useState([]);
@@ -17,9 +18,8 @@ function Explore() {
   useEffect(() => {
     const explore = async () => {
       try {
-        const userId = localStorage.getItem("id");
-        const token = localStorage.getItem("token");
-        const { data } = await postResolver(postActions.EXPLORE, userId, token);
+        const token = readCookie("token");
+        const { data } = await postResolver(postActions.EXPLORE, token);
         updateExploreFeed(data);
       } catch (error) {
         console.log(error);

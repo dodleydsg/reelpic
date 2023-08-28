@@ -16,11 +16,11 @@ import catalogueActions from "../presentation/actions/catalogue.actions";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import CatalogueCard from "../components/catalogueCard";
+import { readCookie } from "../utils/cookie";
 
 function Catalogue() {
   const { catalogueList } = useSelector((state) => state.user);
-  const token = localStorage.getItem("token");
-  const userId = localStorage.getItem("id");
+  const token = readCookie("token");
   const dispatch = useDispatch();
   const [catalogues, updateCatalogues] = useState([]);
 
@@ -41,7 +41,6 @@ function Catalogue() {
       for (let i = 0; i < catalogueList.length; i++) {
         let { data } = await catalogueResolver(
           catalogueActions.READ_CATALOGUE,
-          userId,
           token,
           { catalogueId: catalogueList[i] }
         );
