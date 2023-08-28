@@ -1,7 +1,7 @@
 const User = require("../models/user.model");
 const jwt = require("jsonwebtoken");
 const { expressjwt } = require("express-jwt");
-const { sendMail } = require("../helpers/emailReset");
+const sendMail = require("../helpers/emailReset");
 const resetModes = require("../helpers/resetModes.js");
 const { createHmac } = require("node:crypto");
 const { extend } = require("lodash");
@@ -120,6 +120,9 @@ const password_reset = async (req, res) => {
     let user = await User.findOne({
       email: req.body.email,
     });
+    if (!user) {
+      return res.status("404");
+    }
     const user_obj = {
       _id: user._id,
       last_login: user.last_login,

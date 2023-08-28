@@ -5,6 +5,14 @@ import { deleteCookie } from "../../utils/cookie";
 
 export default async function authResolver(action, data) {
   try {
+    if (action === authActions.RESET) {
+      let resp = await axios({
+        method: "post",
+        data,
+        url: BACKEND_DOMAIN + "/auth/password_reset",
+      });
+      return resp;
+    }
     if (action === authActions.LOGIN) {
       let resp = await axios({
         method: "post",

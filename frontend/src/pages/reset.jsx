@@ -1,5 +1,7 @@
 import Head from "next/head";
 import InputElement from "../components/forms/input";
+import authResolver from "../presentation/resolvers/auth.resolver";
+import authActions from "../presentation/actions/auth.actions";
 
 export default function Reset() {
   return (
@@ -28,15 +30,28 @@ export default function Reset() {
             </div>
             <div className="mt-7">
               {/* Form element and inputs */}
-              <form className="w-full min-h-[280px]">
+              <form
+                className="w-full min-h-[280px]"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const form = e.target.elements;
+                  let email = form["email"].value;
+                  console.log(email);
+                  authResolver(authActions.RESET, { email });
+                }}
+              >
                 <div className="space-y-4 mb-4">
-                  <InputElement
-                    type="email"
-                    className="w-full"
+                  <input
                     placeholder="Email"
+                    type="text"
+                    id="email"
                     name="email"
+                    className="h-12 w-full border px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark"
                   />
-                  <button className="btn-primary hover:bg-[#4900EB]">
+                  <button
+                    type="submit"
+                    className="btn-primary hover:bg-[#4900EB]"
+                  >
                     Reset password
                   </button>
                   <p className="text-center text-sm">
