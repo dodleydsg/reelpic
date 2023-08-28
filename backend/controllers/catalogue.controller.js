@@ -35,10 +35,7 @@ const list = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     let user = req.profile;
-    if (user._id.toString() !== req.body.userId.toString()) {
-      unAuthorizedErrorBlock(error, res);
-    }
-    const catalogue = await Catalogue.create(req.body);
+    const catalogue = await Catalogue.create({...req.body, userId: user._id});
     user.catalogues.push(catalogue._id);
     await catalogue.save();
     await user.save();
@@ -46,6 +43,7 @@ const create = async (req, res, next) => {
     await notify(req.profile._id, description);
     return res.status(200).json(catalogue);
   } catch (error) {
+    console.log(error)
     genericErrorBlock(error, res);
   }
 };

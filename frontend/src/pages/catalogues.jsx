@@ -1,20 +1,16 @@
 import NavbarTemplate from "../templates/template_with_navbar";
-import Image from "next/image";
-import template1 from "../assets/images/1.png";
-import template2 from "../assets/images/2.png";
-import template3 from "../assets/images/3.png";
-import InputElement from "../components/forms/input";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
-import AddCatalogueForm from "../components/forms/addCatalogueForm";
 import CatalogueSearchModal from "../components/modal/catalogueSearchModal";
-import { toggleCatalogueModal } from "../store/features/uiSlice";
+import {
+  toggleCatalogueModal,
+  toggleAddCatalogueModal,
+} from "../store/features/uiSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { CompleteLogin } from "../components/requireLogin";
 import catalogueResolver from "../presentation/resolvers/catalogue.resolver";
 import catalogueActions from "../presentation/actions/catalogue.actions";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import CatalogueCard from "../components/catalogueCard";
 import { readCookie } from "../utils/cookie";
 
@@ -23,17 +19,6 @@ function Catalogue() {
   const token = readCookie("token");
   const dispatch = useDispatch();
   const [catalogues, updateCatalogues] = useState([]);
-
-  // useEffect(() => {
-  //   catalogueList.map(async (val) => {
-  //     let { data } = await catalogueResolver(
-  //       catalogueActions.LIST_CATALOGUES,
-  //       userId,
-  //       token,
-  //     );
-  //     updateCatalogues(data)
-
-  // }, [catalogueList])
 
   useEffect(() => {
     const getCatalogues = async () => {
@@ -67,6 +52,9 @@ function Catalogue() {
                 </div>
               </form>
               <button
+                onClick={() => {
+                  dispatch(toggleAddCatalogueModal());
+                }}
                 type="button"
                 className="px-4 rounded hidden lg:inline-block text-primary-default/60 border-gray-300 border py-2 hover:text-primary-default hover:bg-light-default transition my-5 cursor-pointer"
               >

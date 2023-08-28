@@ -4,7 +4,7 @@ import { updateCatalogueList } from "../../store/features/userSlice";
 import InputElement from "./input";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   toggleAddCatalogue,
   toggleAddCatalogueModal,
@@ -13,8 +13,10 @@ import {
   setAlert,
 } from "../../store/features/uiSlice";
 import ErrorMessage from "./errorMessage";
+import { readCookie } from "@/components/utils/cookie";
 
 export default function AddCatalogueForm() {
+  const { userId } = useSelector((state) => state.user.user._id);
   const dispatch = useDispatch();
   return (
     <Formik
@@ -29,10 +31,10 @@ export default function AddCatalogueForm() {
           .required("A little description for the title will help"),
       })}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        const token = localStorage.getItem("token");
-        const userId = localStorage.getItem("id");
-        catalogueResolver(catalogueActions.CREATE_CATALOGUE, userId, token, {
+        const token = readCookie("token");
+        catalogueResolver(catalogueActions.CREATE_CATALOGUE, token, {
           title: values.title,
+          userId,
           description: values.description,
         })
           .then(({ data }) => {
