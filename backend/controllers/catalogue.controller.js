@@ -40,7 +40,7 @@ const create = async (req, res, next) => {
     await catalogue.save();
     await user.save();
     let description = `Successfully created a new Catalogue <b>${catalogue.title}</b>`;
-    await notify(req.profile._id, description);
+    await notify(req.profile, req.profile._id, description);
     return res.status(200).json(catalogue);
   } catch (error) {
     console.log(error);

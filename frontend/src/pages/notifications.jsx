@@ -7,19 +7,18 @@ import { useEffect, useState } from "react";
 import notificationResolver from "../presentation/resolvers/notifications.resolver";
 import notificationActions from "../presentation/actions/notification.actions";
 import { readCookie } from "../utils/cookie";
-import { useSelector } from "react-redux";
+
 
 function Notifications() {
   const token = readCookie("token");
   const [alerts, setAlerts] = useState([]);
-  const { user } = useSelector((state) => state.user);
-  console.log(user);
   useEffect(() => {
     const getAlerts = async () => {
       let { data } = await notificationResolver(
         notificationActions.LIST_ALERTS,
         token
       );
+      console.log(data);
       setAlerts(data);
     };
     getAlerts();
@@ -38,7 +37,7 @@ function Notifications() {
             <div>
               <hr className="mb-2" />
               {alerts.map((val) => {
-                <NotificationCard key={val.id} {...val} />;
+                return <NotificationCard key={val.id} {...val} />;
               })}
             </div>
           </div>
