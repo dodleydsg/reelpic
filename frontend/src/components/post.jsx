@@ -28,6 +28,8 @@ export default function Post({
   const updateComments = (arr) => {
     content.comments = arr;
   };
+  let currentTime = Date.now();
+  let createdTime = new Date(created).valueOf();
   const likedPosts = useSelector((state) => state.user.likes) || [];
   const [likes, updateLikes] = useState(usersLike.length);
   const rejected = useSelector((state) => state.user.rejected);
@@ -131,7 +133,7 @@ export default function Post({
           </div>
 
           <p className="text-dark-default/70 text-sm font-light">
-            {prettyTime(Date.parse(created))} ago
+            {prettyTime([(currentTime - createdTime) / 1000, 0])} ago
           </p>
         </div>
         {commentsShown ? (
