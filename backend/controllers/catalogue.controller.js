@@ -39,7 +39,7 @@ const create = async (req, res, next) => {
     user.catalogues.push(catalogue._id);
     await catalogue.save();
     await user.save();
-    let description = `Successfully created a new Catalogue <b>${catalogue.title}</b>`;
+    let description = `Successfully created a new Catalogue ${catalogue.title}`;
     await notify(req.profile, req.profile._id, description);
     return res.status(200).json(catalogue);
   } catch (error) {
@@ -72,7 +72,7 @@ const update = async (req, res, next) => {
     });
     catalogue = extend(catalogue, req.body);
     await catalogue.save();
-    let description = `You updated the Catalogue <b>${catalogue.title}</b>`;
+    let description = `You updated the Catalogue ${catalogue.title}`;
     await notify(req.profile, req.profile._id, description);
     return res.status(200).json({
       message: "Catalogue updated",
@@ -90,7 +90,7 @@ const addItem = async (req, res, next) => {
     });
     catalogue.items = catalogue.items + req.body.items;
     await catalogue.save();
-    let description = `You updated the Catalogue with title <b>${catalogue.title}</b>`;
+    let description = `You updated the Catalogue with title ${catalogue.title}`;
     await notify(req.profile, req.profile._id, description);
     return res.status(200).json({
       message: "Successfully added item",

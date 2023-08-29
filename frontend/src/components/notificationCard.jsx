@@ -16,7 +16,7 @@ export default function NotificationCard({ linkedTo, created, description }) {
         </Link>
       </div>
 
-      <pre className="text-sm text-dark-default/90">{description}</pre>
+      <p className="text-sm text-dark-default/90">{description}</p>
       <p className="text-sm text-dark-default/70">{created}</p>
     </div>
   );
