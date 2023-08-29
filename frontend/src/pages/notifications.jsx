@@ -7,11 +7,13 @@ import { useEffect, useState } from "react";
 import notificationResolver from "../presentation/resolvers/notifications.resolver";
 import notificationActions from "../presentation/actions/notification.actions";
 import { readCookie } from "../utils/cookie";
+import { useSelector } from "react-redux";
 
 function Notifications() {
   const token = readCookie("token");
   const [alerts, setAlerts] = useState([]);
-
+  const { user } = useSelector((state) => state.user);
+  console.log(user);
   useEffect(() => {
     const getAlerts = async () => {
       let { data } = await notificationResolver(

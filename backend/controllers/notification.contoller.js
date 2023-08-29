@@ -16,11 +16,12 @@ const list = async (req, res) => {
   try {
     let alerts = await Notification.find()
       .where("_id")
-      .in(req.profile.notifications);
+      .in(req.profile.notifications)
+      .populate("linkedTo", "photo");
     if (req.profile.notifications && !alerts) {
       return res
         .status(404)
-        .json({ message: "Could'nt get notifications from selected ids" });
+        .json({ message: "Couldn't get notifications from selected ids" });
     }
     return res.json(alerts);
   } catch (error) {

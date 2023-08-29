@@ -17,9 +17,9 @@ export default async function catalogueResolver(action, token, data) {
     } else if (action === catalogueActions.DELETE_CATALOGUE) {
       let resp = await axios({
         method: "delete",
-        url: BACKEND_DOMAIN + `/api/catalogue/${options.catalogueId}`,
+        url: BACKEND_DOMAIN + `/api/catalogue/${data.catalogueId}`,
         headers: {
-          Authorization: AUTH_TOKEN(options.token),
+          Authorization: AUTH_TOKEN(token),
         },
       });
       return resp;
