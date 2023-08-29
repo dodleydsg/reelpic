@@ -34,8 +34,8 @@ const create = async (req, res, next) => {
     user.feed.push(post._id);
     await post.save();
     await user.save();
-    let description = `You added a post`;
-    await notify(user._id, description);
+    let description = `You created a new Post`;
+    await notify(req.profile, req.profile._id, description);
     for (let i = 0; i < post.tags.length; i++) {
       let tag = await Tag.findOne({ name: post.tags[i] });
       if (!tag) {
@@ -72,7 +72,7 @@ const trash = async (req, res, next) => {
     await post.save();
     await user.save();
     let description = `You trashed a post`;
-    notify(user._id, description);
+    await notify(req.profile, req.profile._id, description);
     return res.status(200).json({
       message: "Post sent to trash",
     });
@@ -83,13 +83,12 @@ const trash = async (req, res, next) => {
 
 const remove = async (req, res, next) => {
   try {
-    let user = req.profile;
     let post = await Post.findOne({
       _id: req.params.postId,
     });
     await post.remove();
     let description = `You deleted a post`;
-    notify(user._id, description);
+    await notify(req.profile, req.profile._id, description);
     return res.status(200).json({
       message: "Post successfully deleted",
     });
@@ -109,7 +108,7 @@ const returnPost = async (req, res, next) => {
     await user.save();
     await post.save();
     let description = `You retrieved a post`;
-    await notify(user._id, description);
+    await notify(req.profile, req.profile._id, description);
     return res.status(200).json({
       message: "Post returned to inbox",
     });
@@ -230,7 +229,7 @@ const update = async (req, res, next) => {
     );
     await post.save();
     let description = `You updated a post`;
-    await notify(req.profile._id, description);
+    await notify(req.profile, req.profile._id, description);
     return res.status(200).json({
       message: "Post updated",
       post,

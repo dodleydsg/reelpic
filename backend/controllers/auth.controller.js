@@ -6,6 +6,7 @@ const resetModes = require("../helpers/resetModes.js");
 const { createHmac } = require("node:crypto");
 const { extend } = require("lodash");
 const provider = require("../helpers/authProvider");
+const notify = require("../helpers/notify");
 
 const OAuthLogin = async (req, res) => {
   try {
@@ -231,6 +232,7 @@ const reset_done = async (req, res) => {
         });
       } else {
         user = extend(user, req.body);
+        notify(user._id, user._id, "Reseted password successfully");
         user.updated = Date.now();
         user.resetMode = resetModes.LOCKED;
         await user.save();

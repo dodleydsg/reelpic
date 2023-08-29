@@ -50,7 +50,6 @@ const read = async (req, res, next) => {
         message: "Couldn't find user",
       });
     }
-
     user.hashed_password = undefined;
     user.salt = undefined;
     user.resetMode = undefined;
@@ -90,7 +89,6 @@ const update = async (req, res, next) => {
         { ...req.body, email: undefined },
         { new: true }
       ));
-
     if (!user) {
       return res.status(404).json({
         message: "Couldn't find user",
@@ -101,8 +99,8 @@ const update = async (req, res, next) => {
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
-    let description = `You just updated your profile`;
-    await notify(user._id, description);
+    let description = `You successfully updated your profile`;
+    await notify(req.profile, req.profile._id, description);
     return res.status(200).json(user);
   } catch (error) {
     genericErrorBlock(error, res);
@@ -138,6 +136,12 @@ const follow = async (req, res, next) => {
     user.following.addToSet(req.params._id);
     await user.save();
     await target.save();
+    let description = `You followed ${target.username}`;
+    await notify(req.profile, req.profile._id, description);
+
+    description = `${req.profile.username} follows you`;
+    await notify(target, req.profile._id, description);
+
     return res.json({
       message: "Followed successfully",
     });
