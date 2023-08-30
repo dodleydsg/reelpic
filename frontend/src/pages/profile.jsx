@@ -1,7 +1,4 @@
 import NavbarTemplate from "../templates/template_with_navbar";
-import template1 from "../assets/images/1.png";
-import template2 from "../assets/images/2.png";
-import template3 from "../assets/images/3.png";
 import Mask from "../components/mask";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
@@ -12,13 +9,31 @@ import food from "../assets/images/food.jpg";
 import Image from "next/image";
 import { useSelector } from "react-redux";
 import { CompleteLogin } from "../components/requireLogin";
+import postResolver from "../presentation/resolvers/post.resolver";
+import postActions from "../presentation/actions/post.actions";
+import { readCookie } from "../utils/cookie";
+import { useEffect } from "react";
 
 const TABS = ["posts", "catalogues"];
 
 function Profile() {
   const { user } = useSelector((state) => state.user);
   const [activeTab, toggleTab] = useState("posts");
+  const [posts, setPosts] = useState([]);
   const router = useRouter();
+  useEffect(() => {
+    const token = readCookie("token");
+    const getPosts = async () => {
+      postResolver(postActions.LIST_POSTS, token)
+        .then(({ data }) => {
+          setPosts(data);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    getPosts();
+  }, []);
 
   const TopTab = () => (
     <div className="sticky z-20 lg:top-0 top-[72px]  py-4 bg-white">
@@ -63,85 +78,38 @@ function Profile() {
             <div className="flex max-w-lg self-center justify-between gap-12 px-6">
               <div className="flex gap-4 flex-col items-center">
                 <p>Followers</p>
-                <p className="text-sm text-dark-default/80">12k</p>
+                <p className="text-sm text-dark-default/80">{user.followers}</p>
               </div>
               <div className="flex gap-4 flex-col items-center">
                 <p>Following</p>
-                <p className="text-sm text-dark-default/80">673</p>
+                <p className="text-sm text-dark-default/80">{user.following}</p>
               </div>
             </div>
             <p className="max-w-sm self-center text-justify text-dark-default/90 text-sm text-dark">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Omnis,
-              ea dolor deleniti excepturi culpa consectetur debitis earum
-              aperiam accusantium veniam aut, illum sunt totam? Ad vel
-              repudiandae ut aperiam distinctio.
+              {user.bio}
             </p>
           </div>
           <TopTab />
           {activeTab === "posts" ? (
             <div>
               <div className="grid grid-cols-2 gap-2 lg:gap-4 lg:grid-cols-4">
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
-                <Image src={food} alt="food" />
+                {posts.map((val) => {
+                  return (
+                    <Image
+                      width="500"
+                      height="300"
+                      src={val.content.images[0]}
+                    />
+                  );
+                })}
+                {posts.length === 0 ? (
+                  <h1 className="text-center">You have no posts</h1>
+                ) : null}
               </div>
             </div>
           ) : null}
           {activeTab === "catalogues" ? (
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 ">
-              <div className="relative hover:cursor-pointer col-span-1  hover:scale-95 transition duration-300">
-                <div className="absolute inset-0 from-black/30 rounded-md to-black/60 bg-gradient-to-b"></div>
-                <div className="absolute pb-2 sm:pb-4 z-10 inset-0 bg-none text-white flex flex-col items-center justify-end">
-                  <p className="text-body">Family</p>
-                </div>
-                <Image
-                  src={template1}
-                  className="h-[150px] object-cover rounded-md w-full"
-                />
-              </div>
-              <div className="relative hover:cursor-pointer col-span-1  hover:scale-95 transition duration-300">
-                <div className="absolute inset-0 from-black/30 rounded-md to-black/60 bg-gradient-to-b"></div>
-                <div className="absolute pb-2 sm:pb-4 z-10 inset-0 bg-none text-white flex flex-col items-center justify-end">
-                  <p className="text-body">Design</p>
-                </div>
-                <Image
-                  src={template2}
-                  className="h-[150px] object-cover rounded-md w-full"
-                />
-              </div>
-              <div className="relative hover:cursor-pointer col-span-1  hover:scale-95 transition duration-300">
-                <div className="absolute inset-0 from-black/30 rounded-md to-black/60 bg-gradient-to-b"></div>
-                <div className="absolute pb-2 sm:pb-4 z-10 inset-0 bg-none text-white flex flex-col items-center justify-end">
-                  <p className="text-body">Nature</p>
-                </div>
-                <Image
-                  src={template3}
-                  className="h-[150px] object-cover rounded-md w-full"
-                />
-              </div>
-            </div>
+            <h1 className="text-center ">Coming Soon !!!</h1>
           ) : null}
         </div>
       </NavbarTemplate>
@@ -154,4 +122,3 @@ export default () => (
     <Profile />
   </CompleteLogin>
 );
-

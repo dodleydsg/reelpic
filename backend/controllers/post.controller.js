@@ -54,7 +54,14 @@ const create = async (req, res, next) => {
 
 const list = async (req, res, next) => {
   try {
-    const posts = req.profile.posts;
+    let posts = [];
+    const postsList = req.profile.posts;
+    for (let i = 0; i < postsList.length; i++) {
+      let post = await Post.findById(postsList[i]);
+      if (post) {
+        posts.push(post);
+      }
+    }
     return res.status(200).json(posts);
   } catch (error) {
     genericErrorBlock(error, res);
