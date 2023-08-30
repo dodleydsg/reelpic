@@ -18,7 +18,6 @@ function Notifications() {
         notificationActions.LIST_ALERTS,
         token
       );
-      console.log(data);
       setAlerts(data);
     };
     getAlerts();

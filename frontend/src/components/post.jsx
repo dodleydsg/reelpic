@@ -13,24 +13,26 @@ import postResolver from "../presentation/resolvers/post.resolver";
 import { setAlert, configureAlert } from "../store/features/uiSlice";
 import postActions from "../presentation/actions/post.actions";
 import { readCookie } from "../utils/cookie";
+import { updateUser } from "../store/features/userSlice";
 
 export default function Post({
   _id,
-  user,
   usersLike,
   views,
   created,
   tags,
   content,
-  token,
 }) {
+  const token = readCookie("token");
   const [commentsShown, toggleComments] = useState(false);
   const updateComments = (arr) => {
     content.comments = arr;
   };
   let currentTime = Date.now();
   let createdTime = new Date(created).valueOf();
-  const likedPosts = useSelector((state) => state.user.likes) || [];
+
+  const { user } = useSelector((state) => state.user);
+  const likedPosts = user.likes;
   const [likes, updateLikes] = useState(usersLike.length);
   const rejected = useSelector((state) => state.user.rejected);
   const dispatch = useDispatch();
@@ -84,21 +86,53 @@ export default function Post({
                       );
                       dispatch(setAlert(true));
                     } else {
-                      e.target.classList.toggle("text-pink-500");
-                      const action = e.target.classList.contains(
-                        "text-pink-500"
-                      )
-                        ? "like"
-                        : "unlike";
-                      const data = {
-                        postId: _id,
-                        userId: user._id,
-                        action,
-                      };
-                      likedPosts.includes(_id)
-                        ? updateLikes((prevLikes) => prevLikes - 1)
-                        : updateLikes((prevLikes) => prevLikes + 1);
-                      await postResolver(postActions.POST_LIKE, token, data);
+                      if (likedPosts.includes(_id)) {
+                        e.target.classList.remove("text-pink-500");
+                        const data = {
+                          postId: _id,
+                          userId: user._id,
+                          action: "unlike",
+                        };
+                        updateLikes((prevLikes) => prevLikes - 1);
+                        postResolver(postActions.POST_LIKE, token, data)
+                          .then(() => {
+                            dispatch(
+                              updateUser({
+                                ...user,
+                                likes: likedPosts.map((val) => {
+                                  return val !== _id;
+                                }),
+                              })
+                            );
+                          })
+                          .catch((error) => {
+                            console.log(error);
+                            e.target.classList.add("text-pink-500");
+                            updateLikes((prevLikes) => prevLikes + 1);
+                          });
+                      } else {
+                        e.target.classList.add("text-pink-500");
+                        const data = {
+                          postId: _id,
+                          userId: user._id,
+                          action: "like",
+                        };
+                        updateLikes((prevLikes) => prevLikes + 1);
+                        postResolver(postActions.POST_LIKE, token, data)
+                          .then(() => {
+                            dispatch(
+                              updateUser({
+                                ...user,
+                                likes: [...likedPosts, _id],
+                              })
+                            );
+                          })
+                          .catch((error) => {
+                            console.log(error);
+                            e.target.classList.remove("text-pink-500");
+                            updateLikes((prevLikes) => prevLikes - 1);
+                          });
+                      }
                     }
                   }}
                   className={`w-5 h-auto items-center cursor-pointer ${

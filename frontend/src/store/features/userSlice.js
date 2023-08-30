@@ -31,16 +31,19 @@ const userSlice = createSlice({
     updateCatalogueList: (state, { payload }) => {
       state.catalogueList = [...state.catalogueList, payload];
     },
+    updateUser: (state, { payload }) => {
+      state.user = { ...state.user, ...payload };
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getUser.fulfilled, (state, { payload }) => {
         state.user = payload;
         state.loggedIn = true;
-        state.catalogueList = payload.catalogues;
-        state.notifications = payload.notifications;
-        state.posts = payload.posts;
-        state.likes = payload.likes;
+        state.catalogueList = state.user.catalogues;
+        state.notifications = state.user.notifications;
+        state.posts = state.user.posts;
+        state.likes = state.user.likes;
         state.pending = false;
         state.rejected = false;
         state.loggedIn = true;
@@ -55,6 +58,7 @@ const userSlice = createSlice({
   },
 });
 
-export const { setLoggedIn, updateCatalogueList } = userSlice.actions;
+export const { setLoggedIn, updateCatalogueList, updateUser } =
+  userSlice.actions;
 
 export default userSlice.reducer;

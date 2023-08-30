@@ -7,21 +7,14 @@ import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import UpdatePasswordForm from "../components/forms/updatePasswordForm";
 import { CompleteLogin } from "../components/requireLogin";
+import { useSelector } from "react-redux";
 
 const TABS = ["profile", "password", "display"];
 
 function Settings() {
+  const { user } = useSelector((state) => state.user);
   const [activeTab, toggleTab] = useState("profile");
-  const [interests, updateInterest] = useState([
-    "cinema",
-    "nature",
-    "landscape",
-    "people",
-    "hobby",
-    "culture",
-    "scenery",
-    "food",
-  ]);
+  const [interests, updateInterest] = useState(user.interests);
 
   const deleteInterest = (interest) => {
     updateInterest((interests) => {
@@ -98,6 +91,8 @@ function Settings() {
                   Username
                 </label>
                 <InputElement
+                  readOnly
+                  value={user.username}
                   className="w-52 lg:w-72"
                   name="username"
                   type="text"
@@ -108,6 +103,7 @@ function Settings() {
                   Bio
                 </label>
                 <textarea
+                  value={user.bio}
                   name="bio"
                   className="border w-52 lg:w-72 p-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark "
                   id=""

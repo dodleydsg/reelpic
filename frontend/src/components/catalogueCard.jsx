@@ -14,7 +14,7 @@ export default function CatalogueCard({ title, cover, _id }) {
   const dispatch = useDispatch();
   return (
     <>
-      <Link href="#" className="relative inset-0 shrink-0">
+      <Link href={`/catalogue/${_id}`} className="relative inset-0 shrink-0">
         <div className="absolute inset-0 from-black/30 rounded-md to-black/60 bg-gradient-to-b"></div>
         <div className="absolute pb-2 sm:pb-4 z-10 px-4 inset-0 bg-none text-white flex items-end justify-between">
           <p className="text-body">{title}</p>

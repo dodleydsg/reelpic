@@ -71,7 +71,7 @@ function Home() {
           </div>
           <div className="space-y-4">
             {feed.map((val) => {
-              return <Post token={token} key={val._id} {...val} />;
+              return <Post key={val._id} {...val} />;
             })}
           </div>
         </div>

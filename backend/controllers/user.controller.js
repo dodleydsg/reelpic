@@ -20,12 +20,13 @@ const getUser = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     const user = new User(req.body);
-    console.log(user);
     user.resetMode = resetModes.LOCKED;
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
     user.resetMode = undefined;
+    let description = `You successfully created your profile`;
+    await notify(user, user._id, description);
     return res.status(200).json({
       message: "Successfully registered",
       user,
