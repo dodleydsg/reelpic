@@ -1,6 +1,9 @@
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { IoEye } from "react-icons/io5";
+import userResolver from "../../presentation/resolvers/user.resolver";
+import userActions from "../../presentation/actions/user.actions";
+import { readCookie } from "@/components/utils/cookie";
 
 export default function UpdatePasswordForm() {
   return (
@@ -18,9 +21,13 @@ export default function UpdatePasswordForm() {
           .required("Please enter a new password"),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          console.log(JSON.stringify(values, null, 2));
-        }, 1000);
+        const token = readCookie("token");
+        setSubmitting(true);
+        userResolver(userActions.UPDATE, token, values)
+          .then(() => {})
+          .catch(() => {
+            setSubmitting(false);
+          });
       }}
     >
       {(formik) => (

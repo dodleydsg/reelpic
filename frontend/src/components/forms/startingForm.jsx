@@ -4,6 +4,7 @@ import userActions from "../../presentation/actions/user.actions";
 import { useRouter } from "next/router";
 const MAX_STEP = 2;
 import { useState } from "react";
+import { readCookie } from "@/components/utils/cookie";
 
 export default function StartingForm({ email }) {
   const router = useRouter();
@@ -71,16 +72,11 @@ export default function StartingForm({ email }) {
       onSubmit={(values, { setSubmitting }) => {
         console.log(values);
         try {
-          let token = localStorage.getItem("token");
-          let userId = localStorage.getItem("id");
-          userResolver(userActions.UPDATE, {
-            token,
-            data: {
-              userId,
-              email: email,
-              username: values.username,
-              interests: values.interests,
-            },
+          const token = readCookie("token");
+          userResolver(userActions.UPDATE, token, {
+            email: email,
+            username: values.username,
+            interests: values.interests,
           }).then(({ data }) => {
             router.push("./home");
           });

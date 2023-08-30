@@ -50,6 +50,8 @@ const read = async (req, res, next) => {
         message: "Couldn't find user",
       });
     }
+    user.resetMode = undefined;
+    await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
     user.resetMode = undefined;
@@ -67,7 +69,8 @@ const altRead = async (req, res, next) => {
         message: "Couldn't find user",
       });
     }
-
+    user.resetMode = undefined;
+    await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
     user.resetMode = undefined;

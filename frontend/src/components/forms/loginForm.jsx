@@ -118,10 +118,8 @@ export default function LoginForm() {
                 let cred = await signInWithPopup(auth, provider);
                 const { email } = cred.user;
                 authResolver(authRoutes.OAuthLOGIN, {
-                  data: {
-                    email: email,
-                    provider: "google",
-                  },
+                  email: email,
+                  provider: "google",
                 })
                   .then(({ data }) => {
                     localStorage.setItem("token", data.token);

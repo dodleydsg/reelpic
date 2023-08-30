@@ -35,7 +35,8 @@ export default function RegisterForm() {
         })}
         onSubmit={(values, { setSubmitting }) => {
           userResolver(userActions.CREATE, {
-            data: { email: values.email, password: values.password },
+            email: values.email,
+            password: values.password,
           })
             .then(({ data }) => {
               authResolver(authActions.LOGIN, {
