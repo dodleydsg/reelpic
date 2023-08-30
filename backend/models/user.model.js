@@ -99,14 +99,12 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.virtual("password")
   .set(function (password) {
-   
-      this._password = password;
-      this.salt = this.makeSalt();
-      this.hashed_password = this.encryptPassword(password);
-    
+    this._password = password;
+    this.salt = this.makeSalt();
+    this.hashed_password = this.encryptPassword(password);
   })
   .get(function () {
-      return this._password;
+    return this._password;
   });
 
 UserSchema.methods = {
@@ -123,7 +121,7 @@ UserSchema.methods = {
     try {
       return createHmac("sha256", this.salt).update(password).digest("hex");
     } catch (error) {
-      console.error("Error created hash of password");
+      console.error("Error creating hash of password");
       return "";
     }
   },

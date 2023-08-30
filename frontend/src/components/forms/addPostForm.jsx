@@ -9,7 +9,7 @@ import ErrorMessage from "./errorMessage";
 import { useRouter } from "next/router";
 import postResolver from "../../presentation/resolvers/post.resolver";
 import postActions from "../../presentation/actions/post.actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   configureAlert,
   setAlert,
@@ -17,11 +17,12 @@ import {
   toggleSuccessModal,
 } from "../../store/features/uiSlice";
 import FormCarousel from "./formCarousel";
+import { readCookie } from "@/components/utils/cookie";
 
 export default function AddPostForm() {
+  const { user } = useSelector((state) => user);
   const dispatch = useDispatch();
-  const id = localStorage.getItem("id");
-  const token = localStorage.getItem("token");
+  const token = readCookie("token");
   const MAX_STEPS = 2;
   const [steps, updateSteps] = useState(1);
   const [files, updateFiles] = useState([]);
@@ -89,7 +90,7 @@ export default function AddPostForm() {
           for (let i = 0; i < rawFiles.length; i++) {
             const itemStorageRef = ref(
               storage,
-              `images/${id}/${rawFiles.item(i).name}`
+              `images/${user._id}/${rawFiles.item(i).name}`
             );
             try {
               await uploadBytes(itemStorageRef, rawFiles.item(i));
@@ -101,13 +102,12 @@ export default function AddPostForm() {
             }
           }
           if (!imageUrls) {
-            postResolver(postActions.CREATE_POST, id, token, {
+            postResolver(postActions.CREATE_POST, token, {
               content: {
                 body: values.body,
                 images: imageUrls,
               },
-
-              user: id,
+              user: user._id,
               tags: values.tags,
             })
               .then(({ data }) => {

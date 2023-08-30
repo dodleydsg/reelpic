@@ -25,7 +25,7 @@ export default async function userResolver(action, token, data) {
     } else if (action === userActions.CREATE) {
       let resp = await axios({
         method: "post",
-        data: data,
+        data,
         url: BACKEND_DOMAIN + "/api/users",
       });
       return resp;

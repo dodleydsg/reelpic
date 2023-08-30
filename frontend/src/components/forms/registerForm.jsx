@@ -6,7 +6,7 @@ import authActions from "../../presentation/actions/auth.actions";
 import userActions from "../../presentation/actions/user.actions";
 import userResolver from "../../presentation/resolvers/user.resolver";
 import { useState } from "react";
-import { setCookie } from "../../utils/cookie";
+import { readCookie, setCookie } from "../../utils/cookie";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -34,19 +34,18 @@ export default function RegisterForm() {
             .required(),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          userResolver(userActions.CREATE, {
+          console.log(values.email, values.password);
+          const token = readCookie("token");
+          userResolver(userActions.CREATE, token, {
             email: values.email,
             password: values.password,
           })
             .then(({ data }) => {
               authResolver(authActions.LOGIN, {
-                data: {
-                  email: values.email,
-                  password: values.password,
-                },
+                email: values.email,
+                password: values.password,
               })
                 .then(({ data }) => {
-                  localStorage.setItem("token");
                   setCookie(token, 7, data.token);
                   router.push("/getting_started");
                 })
