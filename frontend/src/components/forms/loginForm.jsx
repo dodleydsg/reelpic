@@ -3,8 +3,7 @@ import Link from "next/link";
 import * as Yup from "yup";
 import authResolver from "../../presentation/resolvers/auth.resolver";
 import authRoutes from "../../presentation/actions/auth.actions";
-import { useRouter } from "next/router";
-import { readCookie, setCookie } from "../../utils/cookie";
+import { setCookie } from "../../utils/cookie";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -17,8 +16,7 @@ const googleSignUp = async () => {
   let cred = await signInWithPopup(auth, provider);
   const { email } = cred.user;
 };
-export default function LoginForm() {
-  const router = useRouter();
+export default function LoginForm({ router }) {
   return (
     <Formik
       initialValues={{ email: "", password: "" }}
@@ -41,7 +39,6 @@ export default function LoginForm() {
         })
           .then(({ data }) => {
             setCookie("token", 7, data.token);
-
             router.push("/home");
           })
           .catch((error) => {
@@ -122,8 +119,7 @@ export default function LoginForm() {
                   provider: "google",
                 })
                   .then(({ data }) => {
-                    localStorage.setItem("token", data.token);
-                    localStorage.setItem("id", data._id);
+                    setCookie("token", 7, data.token);
                     router.push("/home");
                   })
                   .catch((error) => {

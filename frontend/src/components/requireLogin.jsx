@@ -52,10 +52,9 @@ export function PartialLogin({ children }) {
 
   useEffect(() => {
     try {
-      const token = localStorage.getItem("token");
-      const id = localStorage.getItem("id");
-      if (token && id) {
-        dispatch(getUser({ token, id }));
+      const token = readCookie("token");
+      if (token) {
+        dispatch(getUser({ token }));
       } else {
         router.push("/login");
       }

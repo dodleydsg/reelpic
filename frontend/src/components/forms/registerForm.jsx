@@ -34,14 +34,12 @@ export default function RegisterForm() {
             .required(),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          console.log(values.email, values.password);
-          const token = readCookie("token");
-          userResolver(userActions.CREATE, token, {
+          userResolver(userActions.CREATE, "", {
             email: values.email,
             password: values.password,
           })
             .then(({ data }) => {
-              authResolver(authActions.LOGIN, {
+              authResolver(authActions.LOGIN, "", {
                 email: values.email,
                 password: values.password,
               })

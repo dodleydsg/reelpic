@@ -211,7 +211,6 @@ const explore = async (req, res, next) => {
         extra_explore.push(post);
       }
     }
-    console.log(extra_explore);
     return res.json(extra_explore);
   } catch (error) {
     genericErrorBlock(error, res);
@@ -247,7 +246,6 @@ const like = async (req, res, next) => {
     }
     let post = await Post.findById(req.body.postId);
     if (!post) {
-      console.log(error);
       return genericErrorBlock(error, res);
     }
     if (req.body.action.toLowerCase() === "like") {
@@ -267,7 +265,6 @@ const like = async (req, res, next) => {
       action: "Dislike",
     });
   } catch (error) {
-    console.log(error);
     genericErrorBlock(error, res);
   }
 };

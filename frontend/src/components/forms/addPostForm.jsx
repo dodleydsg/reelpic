@@ -20,7 +20,7 @@ import FormCarousel from "./formCarousel";
 import { readCookie } from "@/components/utils/cookie";
 
 export default function AddPostForm() {
-  const { user } = useSelector((state) => user);
+  const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const token = readCookie("token");
   const MAX_STEPS = 2;

@@ -18,13 +18,14 @@ import { readCookie } from "../utils/cookie";
 
 function Home() {
   const [feed, updateFeed] = useState([]);
-  const token = readCookie("token");
+  let token = "";
   const dispatch = useDispatch();
   const { stale } = useSelector((state) => state.ui);
 
   useEffect(() => {
     const getFeed = async () => {
       try {
+        token = readCookie("token");
         const { data } = await postResolver(postActions.FEED, token);
         updateFeed(data);
       } catch (error) {

@@ -3,9 +3,6 @@ import Link from "next/link";
 import LoginForm from "../components/forms/loginForm";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser } from "../store/features/userSlice";
-import LoadingScreen from "../components/loadingScreen";
 import { readCookie } from "../utils/cookie";
 
 export default function Login() {
