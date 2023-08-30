@@ -45,10 +45,10 @@ function Home() {
         pageTitle="Home for all pics and stories"
       >
         <div className="space-y-4">
-          <div className="mt-20 lg:mt-0">
+          {/* <div className="mt-20 lg:mt-0">
             <h3 className="text-lg font-medium">Trending catalogues</h3>
             <ScrollCard />
-          </div>
+          </div> */}
           <div className="sticky h-auto top-0 z-[51] bg-white">
             <div className="lg:flex py-2  w-full justify-between hidden items-center ">
               <button
@@ -59,14 +59,14 @@ function Home() {
               >
                 Create post
               </button>
-              <button
+              {/* <button
                 onClick={() => {
                   dispatch(toggleAddCatalogueModal());
                 }}
                 className="p-4 rounded border-primary-default/20 hover:bg-light-default transition duration-300 flex border"
               >
                 Create catalogue
-              </button>
+              </button> */}
             </div>
           </div>
           <div className="space-y-4">

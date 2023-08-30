@@ -76,7 +76,7 @@ export default function Post({
               <p className="flex items-center">
                 <IoHeart
                   onClick={async (e) => {
-                    if (rejected) {
+                    if (!user) {
                       dispatch(
                         configureAlert({
                           variant: "info",

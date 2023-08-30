@@ -61,14 +61,6 @@ export default function ({ children, headerText, HeaderAside, pageTitle }) {
                 </div>
                 <div className="flex items-center gap-4">
                   <NavIcon
-                    href="/notifications"
-                    SolidIcon={() => <IoNotifications />}
-                    OutlineIcon={() => <IoNotificationsOutline />}
-                    path={pathname}
-                    display="Alerts"
-                    clickCallback={() => router.push("/notifications")}
-                  />
-                  <NavIcon
                     href="/settings"
                     SolidIcon={() => <IoSettings />}
                     OutlineIcon={() => <IoSettingsOutline />}

@@ -95,11 +95,17 @@ export default function NavBar({ user }) {
             path={pathname}
           />
           <NavIcon
+            href="/notifications"
+            SolidIcon={() => <IoNotifications />}
+            OutlineIcon={() => <IoNotificationsOutline />}
+            path={pathname}
+          />
+          {/* <NavIcon
             href="/catalogues"
             SolidIcon={(props) => <IoImages {...props} />}
             OutlineIcon={(props) => <IoImagesOutline {...props} />}
             path={pathname}
-          />
+          /> */}
         </div>
       </div>
 
@@ -144,13 +150,13 @@ export default function NavBar({ user }) {
             display="Explore"
           />
 
-          <NavIcon
+          {/* <NavIcon
             href="/catalogues"
             SolidIcon={(props) => <IoImages {...props} />}
             OutlineIcon={(props) => <IoImagesOutline {...props} />}
             path={pathname}
             display="Catalogues"
-          />
+          /> */}
           <NavIcon
             href="/notifications"
             SolidIcon={(props) => <IoNotifications {...props} />}
