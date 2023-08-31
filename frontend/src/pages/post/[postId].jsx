@@ -7,16 +7,25 @@ import Template from "../../templates/template";
 import PostComponent from "../../components/post";
 import { useEffect, useState } from "react";
 import { readCookie } from "../../utils/cookie";
+import LoadingScreen from "@/components/components/loadingScreen";
 
 export default function Post() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState({
+    usersLike: [],
+    user: { photo: "", username: "" },
+    content: { images: [] },
+    tags: [],
+    created: "",
+    _id: "",
+    views: "",
+  });
+  const { postId } = router.query;
 
   useEffect(() => {
     try {
       const token = readCookie("token");
-      const postId = router.query.postId;
       if (postId) {
         dispatch(getUser({ token }));
         postResolver(postActions.READ_POST, token, { postId }).then(
@@ -31,11 +40,13 @@ export default function Post() {
     }
   }, [router]);
 
-  return (
-    <Template>
-      <PostComponent {...post} postOwner={post.user} />
-    </Template>
-  );
+  if (postId) {
+    return (
+      <Template>
+        <PostComponent {...post} postOwner={post.user} />
+      </Template>
+    );
+  } else return <LoadingScreen />;
 }
 
 

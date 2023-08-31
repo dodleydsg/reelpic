@@ -27,7 +27,6 @@ export default function Post({ _id, usersLike, views, created, tags, content, po
   let likedPosts = [];
   const { user, rejected } = useSelector((state) => state.user);
   user ? (likedPosts = user.likes) : null;
-  console.log(user);
   const [likes, updateLikes] = useState(usersLike.length);
   const dispatch = useDispatch();
   return (
@@ -66,7 +65,7 @@ export default function Post({ _id, usersLike, views, created, tags, content, po
               <p className="flex items-center">
                 <IoHeart
                   onClick={async (e) => {
-                    if (!rejected) {
+                    if (rejected) {
                       dispatch(
                         configureAlert({
                           variant: "info",
@@ -83,7 +82,10 @@ export default function Post({ _id, usersLike, views, created, tags, content, po
                           userId: user._id,
                           action: "unlike",
                         };
-                        updateLikes((prevLikes) => prevLikes - 1);
+
+                        updateLikes((prevLikes) =>
+                          prevLikes > 0 ? prevLikes - 1 : 0
+                        );
                         postResolver(postActions.POST_LIKE, token, data)
                           .then(() => {
                             dispatch(
@@ -120,7 +122,9 @@ export default function Post({ _id, usersLike, views, created, tags, content, po
                           .catch((error) => {
                             console.log(error);
                             e.target.classList.remove("text-pink-500");
-                            updateLikes((prevLikes) => prevLikes - 1);
+                            updateLikes((prevLikes) =>
+                              prevLikes > 0 ? prevLikes - 1 : 0
+                            );
                           });
                       }
                     }
