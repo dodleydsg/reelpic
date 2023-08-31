@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import commentActions from "../presentation/actions/comment.actions";
 import commentResolver from "../presentation/resolvers/comment.resolver";
 import { configureAlert, setAlert } from "../store/features/uiSlice";
+import { readCookie } from "../utils/cookie";
 
 const COMMENT_REQUEST_LENGTH = 5;
 
@@ -33,8 +34,7 @@ export default function Comment({
   const [comments, setComments] = useState([]);
   const LoaderRef = useRef();
 
-  const userId = localStorage.getItem("id");
-  const token = localStorage.getItem("token");
+  const token = readCookie("token");
   const VIEWED_COMMENTS_REF = useRef([]);
   const COMMENT_IDS_REF = useRef([...commentIds]);
 
@@ -58,7 +58,7 @@ export default function Comment({
       comments.length + COMMENT_REQUEST_LENGTH
     );
     ids.length > 0
-      ? commentResolver(commentActions.DETAIL_COMMENTS, userId, token, { ids })
+      ? commentResolver(commentActions.DETAIL_COMMENTS, token, { ids })
           .then((resp) => {
             setComments([...comments, ...resp.data]);
           })
@@ -82,7 +82,7 @@ export default function Comment({
       dispatch(setAlert(true));
       return 0;
     }
-    commentResolver(commentActions.CREATE_COMMENT, userId, token, {
+    commentResolver(commentActions.CREATE_COMMENT, token, {
       body,
       postId: postId,
     })
