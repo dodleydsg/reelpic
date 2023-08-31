@@ -8,14 +8,14 @@ const router = express.Router();
 router
   .route("/api/comments")
   .get(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     commentCtrl.list
   )
   .post(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     commentCtrl.create
   );
@@ -23,38 +23,38 @@ router
 router
   .route("/api/comments/ids/:postId")
   .get(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     commentCtrl.listIds
   );
 
-  router
-    .route("/api/comments/detail")
-    .post(
-      userCtrl.getUser,
-      authCtrl.requireLogin,
-      authCtrl.hasAuthorization,
-      commentCtrl.detail
-    );
+router
+  .route("/api/comments/detail")
+  .post(
+    authCtrl.requireLogin,
+    userCtrl.getUser,
+    authCtrl.hasAuthorization,
+    commentCtrl.detail
+  );
 
 router
   .route("/api/comment/:commentId")
   .get(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     commentCtrl.read
   )
   .delete(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     commentCtrl.remove
   )
   .put(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     commentCtrl.update
   );
@@ -62,8 +62,8 @@ router
 router
   .route("/api/comment/reply")
   .post(
-    userCtrl.getUser,
     authCtrl.requireLogin,
+    userCtrl.getUser,
     authCtrl.hasAuthorization,
     commentCtrl.reply
   );

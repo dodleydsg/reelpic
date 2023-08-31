@@ -10,28 +10,30 @@ import { readCookie } from "../../utils/cookie";
 
 export default function Post() {
   const router = useRouter();
-  const { postId } = router.query;
   const dispatch = useDispatch();
   const [post, setPost] = useState({});
+
   useEffect(() => {
     try {
       const token = readCookie("token");
-      console.log(postId);
-      dispatch(getUser({ token }));
-      postResolver(postActions.READ_POST, token, { postId }).then(
-        ({ data }) => {
-          console.log(data);
-          setPost(data);
-        }
-      );
+      const postId = router.query.postId;
+      if (postId) {
+        dispatch(getUser({ token }));
+        postResolver(postActions.READ_POST, token, { postId }).then(
+          ({ data }) => {
+            console.log(data);
+            setPost(data);
+          }
+        );
+      }
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [router]);
 
   return (
     <Template>
-      {/* <PostComponent {...post} postOwner={post.user} /> */}
+      <PostComponent {...post} postOwner={post.user} />
     </Template>
   );
 }

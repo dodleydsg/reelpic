@@ -9,7 +9,10 @@ const Post = require("../models/post.model"),
 
 const read = async (req, res, next) => {
   try {
-    let post = await Post.findById(req.params.postId);
+    let post = await Post.findById(req.params.postId).populate(
+      "user",
+      "photo username"
+    );
     if (!post) {
       return res.status(404).json({
         message: "Could'nt find post",
