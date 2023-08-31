@@ -1,39 +1,39 @@
 import { useRouter } from "next/router";
-import NavbarTemplate from "@/components/templates/template_with_navbar";
-import NoNavbarTemplate from "@/components/templates/template";
-import { useSelector } from "react-redux";
-import BackButton from "@/components/components/backButton";
-import Post from "@/components/components/post";
+import postResolver from "../../presentation/resolvers/post.resolver";
+import postActions from "../../presentation/actions/post.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getUser } from "../../store/features/userSlice";
+import Template from "../../templates/template";
+import PostComponent from "../../components/post";
+import { useEffect, useState } from "react";
+import { readCookie } from "../../utils/cookie";
 
-export default function CatalogueDetail() {
+export default function Post() {
   const router = useRouter();
-  const { catalogueId } = router.query;
-  const { loggedIn } = useSelector((state) => state.auth); // if user is logged in
+  const { postId } = router.query;
+  const dispatch = useDispatch();
+  const [post, setPost] = useState({});
+  useEffect(() => {
+    try {
+      const token = readCookie("token");
+      console.log(postId);
+      dispatch(getUser({ token }));
+      postResolver(postActions.READ_POST, token, { postId }).then(
+        ({ data }) => {
+          console.log(data);
+          setPost(data);
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
-  if (loggedIn) {
-    return (
-      <>
-        <NavbarTemplate
-          headerText="Post details"
-          HeaderAside={() => <BackButton clickCallback={router.back} />}
-        >
-          <div className="relative h-full">
-            <div className="relative space-y-2">
-              <Post />
-            </div>
-          </div>
-        </NavbarTemplate>
-      </>
-    );
-  } else {
-    return (
-      <NoNavbarTemplate>
-        <div className="relative h-full">
-          <div className="relative space-y-2">
-            <Post />
-          </div>
-        </div>
-      </NoNavbarTemplate>
-    );
-  }
+  return (
+    <Template>
+      {/* <PostComponent {...post} postOwner={post.user} /> */}
+    </Template>
+  );
 }
+
+

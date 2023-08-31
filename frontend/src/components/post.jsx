@@ -15,14 +15,7 @@ import postActions from "../presentation/actions/post.actions";
 import { readCookie } from "../utils/cookie";
 import { updateUser } from "../store/features/userSlice";
 
-export default function Post({
-  _id,
-  usersLike,
-  views,
-  created,
-  tags,
-  content,
-}) {
+export default function Post({ _id, usersLike, views, created, tags, content, postOwner }) {
   const token = readCookie("token");
   const [commentsShown, toggleComments] = useState(false);
   const updateComments = (arr) => {
@@ -31,22 +24,19 @@ export default function Post({
   let currentTime = Date.now();
   let createdTime = new Date(created).valueOf();
 
-  const { user } = useSelector((state) => state.user);
-  const likedPosts = user.likes;
+  let likedPosts = [];
+  const { user, rejected } = useSelector((state) => state.user);
+  user ? (likedPosts = user.likes) : null;
+  console.log(user);
   const [likes, updateLikes] = useState(usersLike.length);
-  const rejected = useSelector((state) => state.user.rejected);
   const dispatch = useDispatch();
   return (
     <div className="h-full">
       <div className="flex justify-between items-center border border-gray-100 p-2">
         <div className="flex gap-2 items-center relative">
-          <Image
-            alt="profile"
-            src={user.photo || profile1}
-            className="h-10 w-10"
-          />
-          <Link href={`/users/${user.username}`} className="text-label">
-            @{user.username}
+          <Image alt="profile" src={postOwner.photo} className="h-10 w-10" />
+          <Link href={`/users/${postOwner.username}`} className="text-label">
+            @{postOwner.username}
           </Link>
           <Link href="/as" className="text-primary-default text-sm">
             Follow
@@ -56,7 +46,7 @@ export default function Post({
           className="h-18 w-auto pr-4 cursor-pointer"
           onClick={() => {
             navigator.clipboard.writeText(
-              `${process.env.NEXT_PUBLIC_DOMAIN}/posts/${_id}`
+              `${process.env.NEXT_PUBLIC_DOMAIN}/post/${_id}`
             );
             console.log("Link copied to clipboard");
           }}
@@ -76,7 +66,7 @@ export default function Post({
               <p className="flex items-center">
                 <IoHeart
                   onClick={async (e) => {
-                    if (!user) {
+                    if (!rejected) {
                       dispatch(
                         configureAlert({
                           variant: "info",
