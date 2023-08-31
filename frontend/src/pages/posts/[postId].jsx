@@ -5,15 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { getUser } from "../../store/features/userSlice";
 import Template from "../../templates/template";
 import PostComponent from "../../components/post";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { readCookie } from "../../utils/cookie";
 
-export default function Post({ post, token }) {
-  const dispatch = useDispatch();
-  const { rejected } = useSelector((state) => state.user);
+export default function Post() {
+  const router = useRouter();
+  const [post, setPost] = useState({});
   useEffect(() => {
     try {
-      dispatch(getUser({ token }));
+      const token = readCookie("token");
+      const postId = router.query;
+      const { data } = postResolver(postActions.READ_POST, token, { postId });
+      setPost(data);
     } catch (error) {
       console.log(error);
     }
@@ -21,23 +24,9 @@ export default function Post({ post, token }) {
 
   return (
     <Template>
-      <PostComponent {...post} token />
+      <PostComponent {...post} />
     </Template>
   );
 }
 
-export async function getServerSideProps(context) {
-  const { data } = await postResolver(
-    postActions.READ_POST,
-    context.req.cookies.token,
-    {
-      postId: context.params.postId,
-      token: context.req.cookies.token,
-    }
-  );
-  return {
-    props: {
-      post: data,
-    },
-  };
-}
+
