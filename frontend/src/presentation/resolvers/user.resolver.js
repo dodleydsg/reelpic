@@ -13,6 +13,13 @@ export default async function userResolver(action, token, data) {
         },
       });
       return resp;
+    } else if (action === userActions.HY_READ) {
+      let resp = await axios({
+        method: "post",
+        url: BACKEND_DOMAIN + "/api/user/hyRead",
+        data
+      });
+      return resp;
     } else if (action === userActions.ALT_READ) {
       let resp = await axios({
         method: "post",
@@ -33,7 +40,7 @@ export default async function userResolver(action, token, data) {
       let resp = await axios({
         method: "put",
         url: BACKEND_DOMAIN + `/api/user/${data.username || "_"}`,
-        data: data,
+        data,
         headers: {
           Authorization: AUTH_TOKEN(token),
         },
