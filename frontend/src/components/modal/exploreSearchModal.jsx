@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 import { toggleExploreModal } from "@/components/store/features/uiSlice";
 
 export default function ExploreSearchModal({ hidden }) {
-  const [searchChoice, setSearchChoice] = useState("all");
+  const [searchChoice, setSearchChoice] = useState("users");
   // state is used for styling, options for input styling are uncontrolled
   const { exploreModal } = useSelector((state) => state.ui);
   const dispatch = useDispatch();
@@ -38,29 +38,9 @@ export default function ExploreSearchModal({ hidden }) {
         <div>
           <form className="grid bg-white sticky top-[72px] lg:top-0 py-4 grid-cols-2 gap-2">
             <div className="col-span-2 lg:col-span-1 relative">
-              <SearchInput placeholder="Search users or tags" />
+              <SearchInput placeholder="Search users or posts" />
             </div>
             <div className="col-span-2 lg:col-span-1 flex items-center flex-wrap gap-2">
-              <div>
-                <InputElement
-                  id="all"
-                  name="searchChoice"
-                  className="hidden"
-                  aria-hidden="true"
-                  type="radio"
-                />
-                <label
-                  onClick={() => setSearchChoice("all")}
-                  htmlFor="all"
-                  className={`${
-                    searchChoice === "all"
-                      ? "bg-primary-default/80 text-light-default"
-                      : "bg-light-default hover:bg-primary-default/10 transition duration-150 "
-                  } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded text-center inline-block cursor-pointer`}
-                >
-                  All
-                </label>
-              </div>
               <div>
                 <InputElement
                   id="people"
@@ -70,55 +50,36 @@ export default function ExploreSearchModal({ hidden }) {
                   type="radio"
                 />
                 <label
-                  onClick={() => setSearchChoice("people")}
-                  htmlFor="people"
+                  onClick={() => setSearchChoice("users")}
+                  htmlFor="users"
                   className={`${
-                    searchChoice === "people"
+                    searchChoice === "users"
                       ? "bg-primary-default/80 text-light-default"
                       : "bg-light-default hover:bg-primary-default/10 transition duration-150 "
                   } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded inline-block text-center cursor-pointer`}
                 >
-                  People
+                  Users
                 </label>
               </div>
+
               <div>
                 <InputElement
-                  id="catalogues"
+                  id="posts"
                   name="searchChoice"
                   className="hidden"
                   aria-hidden="true"
                   type="radio"
                 />
                 <label
-                  onClick={() => setSearchChoice("catalogues")}
-                  htmlFor="catalogues"
+                  onClick={() => setSearchChoice("posts")}
+                  htmlFor="posts"
                   className={`${
-                    searchChoice === "catalogues"
-                      ? "bg-primary-default/80 text-light-default"
-                      : "bg-light-default hover:bg-primary-default/10 transition duration-150 "
-                  } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded inline-block text-center cursor-pointer`}
-                >
-                  Catalogues
-                </label>
-              </div>
-              <div>
-                <InputElement
-                  id="tags"
-                  name="searchChoice"
-                  className="hidden"
-                  aria-hidden="true"
-                  type="radio"
-                />
-                <label
-                  onClick={() => setSearchChoice("tags")}
-                  htmlFor="tags"
-                  className={`${
-                    searchChoice === "tags"
+                    searchChoice === "posts"
                       ? "bg-primary-default/80 text-light-default"
                       : "bg-light-default hover:bg-primary-default/10 transition duration-150 "
                   } p-2 bg-light-default border-gray-300 border text-dark-default  min-w-[64px] rounded text-center inline-block cursor-pointer`}
                 >
-                  Tags
+                  Posts
                 </label>
               </div>
             </div>

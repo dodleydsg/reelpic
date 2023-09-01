@@ -43,7 +43,7 @@ function Explore() {
               onClick={() => dispatch(toggleExploreModal())}
               className="w-full px-4 lg:w-1/2 h-12 border rounded-md cursor-pointer text-gray-600 flex items-center "
             >
-              Search users, catalogues and tags
+              Search users or posts
             </div>
           </div>
           <h3 className="font-bold text-xl text-pink-500">Explore</h3>
