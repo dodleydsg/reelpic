@@ -1,4 +1,9 @@
 import { useRouter } from "next/router";
+import { useState } from "react";
+import { IoChevronBack } from "react-icons/io5";
+import NavbarProfile from "./navBar/navBarProfile";
+import Image from "next/image";
+import Link from "next/link";
 
 const TABS = ["posts", "catalogues"];
 
@@ -7,7 +12,7 @@ function UserDetails({ user }) {
   const router = useRouter();
 
   const TopTab = () => (
-    <div className="sticky z-20 lg:top-0 top-[72px]  py-4 bg-white">
+    <div className="sticky z-20 lg:top-0 top-0  py-4 bg-white">
       <div className="flex  p-2 mx-auto justify-around items-center gap-4 bg-light-default border-2">
         {TABS.map((val, idx) => {
           let classes = "px-4 py-2 rounded cursor-pointer";
@@ -26,68 +31,63 @@ function UserDetails({ user }) {
 
   return (
     <>
-      <Mask />
-      <NavbarTemplate
-        HeaderAside={() => <NavbarProfile image={user.photo} />}
-        headerText="Profile"
-        pageTitle="My profile"
-      >
-        <div className="space-y-4 py-4 relative">
-          <IoChevronBack
-            onClick={() => router.back()}
-            className="cursor-pointer text-dark-default text-lg lg:text-2xl"
-          />
+      <div className="space-y-4 py-4 relative">
+        <IoChevronBack
+          onClick={() => router.back()}
+          className="cursor-pointer text-dark-default text-lg lg:text-2xl"
+        />
 
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="gap-2 self-center flex flex-col items-center">
-              <NavbarProfile image={profile} />
-              <p className="text-sm text-medium text-dark-default">
-                Stephen King
-              </p>
-              <p className="text-xs text-dark-default/80">@{user.username}</p>
-            </div>
-            <div className="flex max-w-lg self-center justify-between gap-12 px-6">
-              <div className="flex gap-4 flex-col items-center">
-                <p>Followers</p>
-                <p className="text-sm text-dark-default/80">
-                  {user.followers.length}
-                </p>
-              </div>
-              <div className="flex gap-4 flex-col items-center">
-                <p>Following</p>
-                <p className="text-sm text-dark-default/80">
-                  {user.following.length}
-                </p>
-              </div>
-            </div>
-            <p className="max-w-sm self-center text-justify text-dark-default/90 text-sm text-dark">
-              {user.bio}
+        <div className="flex flex-col justify-center space-y-4">
+          <div className="gap-2 self-center flex flex-col items-center">
+            <NavbarProfile image={user.photo} />
+            <p className="text-sm text-medium text-dark-default">
+              Stephen King
             </p>
+            <p className="text-xs text-dark-default/80">@{user.username}</p>
           </div>
-          <TopTab />
-          {activeTab === "posts" ? (
-            <div>
-              <div className="grid grid-cols-2 gap-2 lg:gap-4 lg:grid-cols-4">
-                {user.posts.map((val) => {
-                  return (
+          <div className="flex max-w-lg self-center justify-between gap-12 px-6">
+            <div className="flex gap-4 flex-col items-center">
+              <p>Followers</p>
+              <p className="text-sm text-dark-default/80">
+                {user.followers.length}
+              </p>
+            </div>
+            <div className="flex gap-4 flex-col items-center">
+              <p>Following</p>
+              <p className="text-sm text-dark-default/80">
+                {user.following.length}
+              </p>
+            </div>
+          </div>
+          <p className="max-w-sm self-center text-justify text-dark-default/90 text-sm text-dark">
+            {user.bio}
+          </p>
+        </div>
+        <TopTab />
+        {activeTab === "posts" ? (
+          <div>
+            <div className="grid grid-cols-2 gap-2 lg:gap-4 lg:grid-cols-4">
+              {user.posts.map((val) => {
+                return (
+                  <Link key={val._id} href={`/post/${val._id}`}>
                     <Image
                       width="500"
                       height="300"
                       src={val.content.images[0]}
                     />
-                  );
-                })}
-                {posts.length === 0 ? (
-                  <h1 className="text-center">You have no posts</h1>
-                ) : null}
-              </div>
+                  </Link>
+                );
+              })}
+              {user.posts.length === 0 ? (
+                <h1 className="text-center">You have no posts</h1>
+              ) : null}
             </div>
-          ) : null}
-          {activeTab === "catalogues" ? (
-            <h1 className="text-center ">Coming Soon !!!</h1>
-          ) : null}
-        </div>
-      </NavbarTemplate>
+          </div>
+        ) : null}
+        {activeTab === "catalogues" ? (
+          <h1 className="text-center ">Coming Soon !!!</h1>
+        ) : null}
+      </div>
     </>
   );
 }
