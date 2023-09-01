@@ -35,6 +35,43 @@ const create = async (req, res, next) => {
     genericErrorBlock(error, res);
   }
 };
+
+
+const hybridRead = async (req, res, next) => {
+  try {
+    const {username, populate} = req.body
+    let user;
+    // const SAMPLE_REQUEST = {
+    //   username: 'malina',
+    //   populate: {
+    //     field: 'posts',
+    //     subFields: ['images', '_id']
+    //   }
+    // }
+    if(populate.field){
+      let select = '';
+      for(let i=0; i<populate.subFields.length; i++){
+        select + ' ' + populate.subFields[i]
+      }
+      user = await User.findOne({username}).populate(populate.field, select)
+    }else{
+      user = await User.findOne({ username });
+    }
+    if (!user) {
+      return res.status(404).json({
+        message: "Couldn't find user",
+      });
+    }
+    user.resetMode = undefined;
+    await user.save();
+    user.hashed_password = undefined;
+    user.salt = undefined;
+    user.resetMode = undefined;
+    return res.status(200).json(user);
+  } catch (error) {
+    genericErrorBlock(error, res);
+  }
+}
 const list = async (req, res, next) => {
   try {
     let users = await User.find().select("name email updated created");
@@ -164,4 +201,5 @@ module.exports = {
   altRead,
   getUser,
   follow,
+  hybridRead
 };

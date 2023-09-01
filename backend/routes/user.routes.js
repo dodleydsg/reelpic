@@ -31,6 +31,9 @@ router
     userCtrl.altRead
   );
 
+
+router.route("/api/user/hyRead").post(userCtrl.hybridRead)
+
 router
   .route("/api/follow/:followId")
   .post(
