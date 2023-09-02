@@ -17,22 +17,13 @@ const OAuthLogin = async (req, res) => {
         error: "User not found, wrong email or password",
       });
     }
-    console.log(user.provider);
     if (user.provider !== req.body.provider) {
       return res.status(400).json({
         error: `User hasn't register with ${req.body.provider}`,
       });
     } else {
       const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, {
-        expiresIn: "15 days",
-      });
-      const { _id } = user;
-
-      res.cookie("token", token, {
-        maxAge: 60 * 60,
-      });
-      res.cookie("_id", _id, {
-        maxAge: 60 * 60,
+        expiresIn: "7 days",
       });
       user.last_login = Date.now();
       user.save();
@@ -136,10 +127,10 @@ const password_reset = async (req, res) => {
     const token = timestamp + "|" + hash;
     if (user) {
       const options = {
-        from: process.env.EMAIL,
-        to: "dodleydesign@gmail.com",
+        from: process.env.EMAIL_SERVER,
+        to: user.email,
         subject: "Reset password",
-        body: `localhost:3000/auth/reset_confirm/${user._id}/${token}`,
+        text: `localhost:3000/auth/reset_confirm/${user._id}/${token}`,
       };
       sendMail(options);
       // Changes reset mode to "PENDING"

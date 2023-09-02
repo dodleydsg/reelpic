@@ -1,18 +1,15 @@
 const nodemailer = require("nodemailer");
 
 const transporter = nodemailer.createTransport({
-  host: "dodleydesign@gmail.com",
-  port: 587,
+  service:'gmail',
   auth: {
-    user: "dodleydesign@gmail.com",
-    pass: "nd1d0d13y",
+    user: process.env.EMAIL_SERVER,
+    pass: process.env.EMAIL_PASS
   },
 });
 
-async function sendMail({ from, to, subject, body }) {
-  let options = {
-    ...arguments["0"],
-  };
+async function sendMail(options) {
+  console.log(options)
   await transporter.sendMail(options, (error, info) => {
     if (error) {
       console.log(error);
