@@ -2,8 +2,10 @@ import Head from "next/head";
 import InputElement from "../components/forms/input";
 import authResolver from "../presentation/resolvers/auth.resolver";
 import authActions from "../presentation/actions/auth.actions";
+import { useState } from "react";
 
 export default function Reset() {
+  const [sent, setSent] = useState(false);
   return (
     <>
       <Head>
@@ -36,8 +38,11 @@ export default function Reset() {
                   e.preventDefault();
                   const form = e.target.elements;
                   let email = form["email"].value;
-                  console.log(email);
-                  authResolver(authActions.RESET, { email });
+                  authResolver(authActions.RESET, { email })
+                    .then(() => {})
+                    .catch(() => {});
+
+                  setSent((prevState) => !prevState);
                 }}
               >
                 <div className="space-y-4 mb-4">
@@ -50,14 +55,27 @@ export default function Reset() {
                   />
                   <button
                     type="submit"
-                    className="btn-primary hover:bg-[#4900EB]"
+                    className={` ${
+                      sent
+                        ? "block w-full mx-auto transition duration-200 py-[14px] rounded-md text-white text-lg bg-gray-300 cursor-not-allowed"
+                        : "btn-primary hover:bg-[#4900EB]"
+                    }`}
+                    disabled={sent}
                   >
                     Reset password
                   </button>
-                  <p className="text-center text-sm">
-                    Please enter the email your registered with. <br />
-                    More instructions would be sent there
-                  </p>
+
+                  {sent ? (
+                    <p className="text-center text-sm font-bold">
+                      Check your email on instructions for changing your
+                      password
+                    </p>
+                  ) : (
+                    <p className="text-center text-sm">
+                      Please enter the email your registered with. <br />
+                      More instructions would be sent there
+                    </p>
+                  )}
                 </div>
               </form>
             </div>
