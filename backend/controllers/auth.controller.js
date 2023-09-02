@@ -130,7 +130,7 @@ const password_reset = async (req, res) => {
         from: process.env.EMAIL_SERVER,
         to: user.email,
         subject: "Reset password",
-        text: `localhost:3000/auth/reset_confirm/${user._id}/${token}`,
+        text: `${process.env.FRONTEND_URI}/reset_confirm/${user._id}/${token}`,
       };
       sendMail(options, user);
       // Changes reset mode to "PENDING"
@@ -213,7 +213,7 @@ const reset_done = async (req, res) => {
     if (!user) {
       console.error(`Unknown user.  User object ${user}`);
       return res.status(404).json({
-        message: "Couldn't retrive the user with the given email",
+        message: "Couldn't retrieve the user with the given email",
       });
     } else {
       console.log(user.resetMode);
@@ -223,7 +223,7 @@ const reset_done = async (req, res) => {
         });
       } else {
         user = extend(user, req.body);
-        notify(user._id, user._id, "Reseted password successfully");
+        notify(user._id, user._id, "Password reset successfully");
         user.updated = Date.now();
         user.resetMode = resetModes.LOCKED;
         await user.save();
