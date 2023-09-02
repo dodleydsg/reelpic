@@ -132,7 +132,7 @@ const password_reset = async (req, res) => {
         subject: "Reset password",
         text: `localhost:3000/auth/reset_confirm/${user._id}/${token}`,
       };
-      sendMail(options);
+      sendMail(options, user);
       // Changes reset mode to "PENDING"
       user.resetMode = resetModes.PENDING;
       await user.save();
