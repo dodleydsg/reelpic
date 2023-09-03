@@ -31,7 +31,7 @@ export default async function authResolver(action, data) {
       let resp = await axios({
         method: "post",
         data,
-        url: BACKEND_DOMAIN + `/auth/reset_confirm/${data.userId}/${data.token}`,
+        url: BACKEND_DOMAIN + `/auth/reset_confirm`,
       });
       return resp;
     } else if (action === authActions.LOGOUT) {

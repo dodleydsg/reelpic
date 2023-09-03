@@ -150,15 +150,16 @@ const reset_confirm = async (req, res, next) => {
   // Verifies token in url and return appropriate message
 
   try {
+    const {userId, token} = req.body
     let user = await User.findOne({
-      _id: req.params.userId,
+      _id: userId
     });
     if (user) {
       if (user.resetMode !== resetModes.PENDING) {
         return res.status(404).json({ message: "Reset token invalid" });
       }
-      const timestamp = req.params.token.split("|")[0];
-      const hash = req.params.token.split("|")[1];
+      const timestamp = token.split("|")[0];
+      const hash = token.split("|")[1];
       // check if token is expired
 
       const user_obj = {
