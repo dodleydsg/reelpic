@@ -20,6 +20,14 @@ export default async function authResolver(action, data) {
         url: BACKEND_DOMAIN + "/auth/login",
       });
       return resp;
+    }
+    if (action === authActions.RESET_DONE) {
+      let resp = await axios({
+        method: "post",
+        data,
+        url: BACKEND_DOMAIN + "/auth/reset_done",
+      });
+      return resp;
     } else if (action === authActions.OAuthLOGIN) {
       let resp = await axios({
         method: "post",
