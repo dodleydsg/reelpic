@@ -70,7 +70,7 @@ export default function StartingForm({ email }) {
       initialValues={{ username: "", interests: [] }}
       validate={formValidator}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
+        // console.log(values);
         try {
           const token = readCookie("token");
           userResolver(userActions.UPDATE, token, {
@@ -81,7 +81,7 @@ export default function StartingForm({ email }) {
             router.push("./home");
           });
         } catch (error) {
-          console.log(error);
+          // console.log(error);
         }
         setSubmitting(false);
       }}
