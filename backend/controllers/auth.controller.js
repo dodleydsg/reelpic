@@ -12,7 +12,7 @@ const OAuthLogin = async (req, res) => {
   try {
     let user = await User.findOne({ email: req.body.email });
     if (!user) {
-      console.error(`User not found, found ${user}`);
+      // console.error(`User not found, found ${user}`);
       return res.status(404).json({
         error: "User not found, wrong email or password",
       });
@@ -40,7 +40,7 @@ const OAuthLogin = async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return res.status(404).json({
       error: "Couldn't not login",
     });
@@ -52,7 +52,7 @@ const login = async (req, res) => {
       (await User.findOne({ email: req.body.email })) ||
       (await User.findOne({ username: req.body.username }));
     if (!user) {
-      console.error(`User not found, found ${user}`);
+      // console.error(`User not found, found ${user}`);
       return res.status(404).json({
         error: "User not found, wrong email or password",
       });
@@ -63,7 +63,7 @@ const login = async (req, res) => {
       });
     }
     if (!user.authenticate(req.body.password)) {
-      console.error(`User couldn't authenticate. User object ${user}`);
+      // console.error(`User couldn't authenticate. User object ${user}`);
       return res.status(404).send({ error: "Email and password dont't match" });
     }
 
@@ -84,7 +84,7 @@ const login = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return res.status(404).json({
       error: "Couldn't not login",
     });
@@ -138,7 +138,7 @@ const password_reset = async (req, res) => {
       await user.save();
     }
   } catch (error) {
-    console.error(`Error sending reset email. Error object - ${error}`);
+    // console.error(`Error sending reset email. Error object - ${error}`);
   } finally {
     return res.status(200).json({
       message: `Reset message was sent to ${req.body.email}`,
@@ -208,26 +208,24 @@ const reset_confirm = async (req, res, next) => {
 const reset_done = async (req, res) => {
   // Resets the password
   try {
-    let user = await User.findOne({
-      email: req.body.email,
-    });
+    const {userId, password} = req.body
+    let user = await User.findById(userId)
     if (!user) {
-      console.error(`Unknown user.  User object ${user}`);
+      // console.error(`Unknown user.  User object ${user}`);
       return res.status(404).json({
         message: "Couldn't retrieve the user with the given email",
       });
     } else {
-      console.log(user.resetMode);
       if (user.resetMode !== resetModes.INCOMING) {
         return res.status(401).json({
           message: "Token expired, request new token",
         });
       } else {
-        user = extend(user, req.body);
-        notify(user._id, user._id, "Password reset successfully");
+        user.password = password
         user.updated = Date.now();
         user.resetMode = resetModes.LOCKED;
         await user.save();
+        notify(user, user._id, "Password reset successfully");
         user.hashed_password = undefined;
         user.salt = undefined;
         return res.status(200).json({
@@ -237,7 +235,7 @@ const reset_done = async (req, res) => {
       }
     }
   } catch (error) {
-    console.error(error);
+    // console.error(error);
   }
   // Changes reset mode to "LOCKED"
 };

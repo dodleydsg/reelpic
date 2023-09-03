@@ -7,7 +7,7 @@ const notify = async (user, linkedTo, description) => {
     let notification = new Notification({ userId, description, linkedTo });
     await notification.save();
     user.notifications.push(notification._id);
-    console.log(user);
+    // console.log(user);
     await user.save();
   } catch (error) {
     return errorHandler.getErrorMessage(error);
