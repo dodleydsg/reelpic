@@ -87,198 +87,207 @@ export default function StartingForm({ email }) {
       }}
     >
       {(formik) => (
-        <form className="space-y-2" onSubmit={formik.handleSubmit}>
+        <>
           {step === 1 ? (
-            <div className="space-y-2">
-              <p className="text-center text-subheading">Choose a username</p>
-
-              <label htmlFor="username" className="sr-only">
-                Choose a username
-              </label>
-              <input
-                placeholder="Username"
-                type="text"
-                id="username"
-                className={`h-12 w-full border px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark ${
-                  formik.errors.username && formik.touched.username
-                    ? " ring ring-danger-default/50"
-                    : ""
-                }`}
-                {...formik.getFieldProps("username")}
-              />
-
-              {formik.errors.username && formik.touched.username ? (
-                <div className="text-xs text-danger-default/50 my-2">
-                  {formik.errors.username}
-                </div>
-              ) : (
-                <span className="text-xs font-light text-dark-default">
-                  This is what is going to be used as your main handle, but it
-                  can be changed later
-                </span>
-              )}
-              <button
-                onClick={(e) => _updateStep("forward")}
-                type="button"
-                className="btn-primary col-span-1 block text-center justify-self-end hover:bg-[#4900EB] w-full px-6 mx-0 col-offset-1"
-              >
-                Next
-              </button>
-            </div>
+            <p className="text-center text-subheading">Choose a username</p>
+          ) : null}
+          {step === 2 ? (
+            <p className="text-center text-subheading">
+              What are you interested in ?
+            </p>
           ) : null}
 
-          {step === 2 ? (
-            <div className="lg:space-y-4 space-y-2">
-              <p className="text-center text-subheading">
-                What are you interested in ?
-              </p>
-              <ul className="list-none grid text-light-default font-light text-sm grid-cols-3 gap-2">
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-selected="false"
-                  data-value="photography"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-red-300 p-4"
-                >
-                  Photography
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="tech"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#2D0F75] p-4"
-                >
-                  Tech
-                </li>{" "}
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="design"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#3D367B] p-4"
-                >
-                  Design
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="architecture"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#6a83d0] p-4"
-                >
-                  Architecture
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="art"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#CF8E2E] p-4"
-                >
-                  Art
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="cinema"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#E33194] p-4"
-                >
-                  Cinema
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="landscapes"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#8B8110] p-4"
-                >
-                  Landscapes
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="cuisines"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#42A16B] p-4"
-                >
-                  Cuisines
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="AI"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#121283] p-4"
-                >
-                  AI
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="Nature"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#417E41] p-4"
-                >
-                  Nature
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="Automobiles"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#A2A3B8] p-4"
-                >
-                  Automobiles
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="Culture"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#909C22] p-4"
-                >
-                  Culture
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="people"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#128EED] p-4"
-                >
-                  People
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="Fashion"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#B2056C] p-4"
-                >
-                  Fashion
-                </li>
-                <li
-                  onClick={(e) => _toggleInterests(e, formik)}
-                  data-value="Hobbies"
-                  data-selected="false"
-                  className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#31DD32] p-4"
-                >
-                  Hobbies
-                </li>
-              </ul>
-              {/* Error section */}
+          <form
+            className="w-full min-h-[280px] space-y-2"
+            onSubmit={formik.handleSubmit}
+          >
+            {step === 1 ? (
+              <div className="space-y-2 mb-4">
+                <label htmlFor="username" className="sr-only">
+                  Choose a username
+                </label>
+                <input
+                  placeholder="Username"
+                  type="text"
+                  id="username"
+                  className={`h-12 w-full border px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark ${
+                    formik.errors.username && formik.touched.username
+                      ? " ring ring-danger-default/50"
+                      : ""
+                  }`}
+                  {...formik.getFieldProps("username")}
+                />
 
-              {formik.errors.interests ? (
-                <p className="bg-red-200 rounded-md p-2 text-sm text-danger-default/80">
-                  {formik.errors.interests}
-                </p>
-              ) : null}
-
-              <div className="flex justify-between items-center gap-2">
+                {formik.errors.username && formik.touched.username ? (
+                  <div className="text-xs text-danger-default/50 my-2">
+                    {formik.errors.username}
+                  </div>
+                ) : (
+                  <span className="text-xs font-light text-dark-default">
+                    This is what is going to be used as your main handle, but it
+                    can be changed later
+                  </span>
+                )}
                 <button
-                  onClick={() => _updateStep("backward")}
+                  onClick={(e) => _updateStep("forward")}
                   type="button"
-                  className="link pl-4 w-full items-center col-span-1 justify-start"
-                >
-                  Back
-                </button>
-                <button
-                  type="submit"
                   className="btn-primary col-span-1 block text-center justify-self-end hover:bg-[#4900EB] w-full px-6 mx-0 col-offset-1"
                 >
-                  Get started
+                  Next
                 </button>
               </div>
-            </div>
-          ) : null}
-        </form>
+            ) : null}
+
+            {step === 2 ? (
+              <div className="lg:space-y-4 space-y-2">
+                <ul className="list-none grid text-light-default font-light text-sm grid-cols-3 gap-2">
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-selected="false"
+                    data-value="photography"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-red-300 p-4"
+                  >
+                    Photography
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="tech"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#2D0F75] p-4"
+                  >
+                    Tech
+                  </li>{" "}
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="design"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#3D367B] p-4"
+                  >
+                    Design
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="architecture"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#6a83d0] p-4"
+                  >
+                    Architecture
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="art"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#CF8E2E] p-4"
+                  >
+                    Art
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="cinema"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#E33194] p-4"
+                  >
+                    Cinema
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="landscapes"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#8B8110] p-4"
+                  >
+                    Landscapes
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="cuisines"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#42A16B] p-4"
+                  >
+                    Cuisines
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="AI"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#121283] p-4"
+                  >
+                    AI
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="Nature"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#417E41] p-4"
+                  >
+                    Nature
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="Automobiles"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#A2A3B8] p-4"
+                  >
+                    Automobiles
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="Culture"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#909C22] p-4"
+                  >
+                    Culture
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="people"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#128EED] p-4"
+                  >
+                    People
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="Fashion"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#B2056C] p-4"
+                  >
+                    Fashion
+                  </li>
+                  <li
+                    onClick={(e) => _toggleInterests(e, formik)}
+                    data-value="Hobbies"
+                    data-selected="false"
+                    className="cursor-pointer hover:contrast-150 transition duration-300 flex items-center justify-center rounded col-span-1 bg-[#31DD32] p-4"
+                  >
+                    Hobbies
+                  </li>
+                </ul>
+                {/* Error section */}
+
+                {formik.errors.interests ? (
+                  <p className="bg-red-200 rounded-md p-2 text-sm text-danger-default/80">
+                    {formik.errors.interests}
+                  </p>
+                ) : null}
+
+                <div className="flex justify-between items-center gap-2">
+                  <button
+                    onClick={() => _updateStep("backward")}
+                    type="button"
+                    className="link pl-4 w-full items-center col-span-1 justify-start"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn-primary col-span-1 block text-center justify-self-end hover:bg-[#4900EB] w-full px-6 mx-0 col-offset-1"
+                  >
+                    Get started
+                  </button>
+                </div>
+              </div>
+            ) : null}
+          </form>
+        </>
       )}
     </Formik>
   );

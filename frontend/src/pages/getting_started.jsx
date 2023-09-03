@@ -15,7 +15,7 @@ function GettingStarted() {
         <div className="absolute inset-0 opacity-50 bg-gradient-to-b from-black to-[rgb(0,0,0,.5)] flex items-center"></div>
         <div className="p-2 w-full relative z-10">
           <div className="items-center bg-white min-h-[540px] max-w-xl lg:h-3/5 mx-auto my-auto rounded-xl px-[22px] lg:px-16 py-[35px] lg:py-[55px]">
-            <div className="space-y-3 lg:space-y-7 sm:px-20">
+            <div className="space-y-3 lg:space-y-7">
               <div className="flex gap-3 items-center w-full justify-center">
                 <h1 className="text-heading text-center font-logo text-logoBlue">
                   Reelpic
@@ -29,7 +29,6 @@ function GettingStarted() {
                   />
                 </div>
               </div>
-
               <StartingForm email={user.email} />
             </div>
           </div>
