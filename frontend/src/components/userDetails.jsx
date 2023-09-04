@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
-import { IoChevronBack } from "react-icons/io5";
+import { IoChevronBack, IoImages, IoPencil, IoTrash } from "react-icons/io5";
 import NavbarProfile from "./navBar/navBarProfile";
 import Image from "next/image";
 import Link from "next/link";
@@ -72,9 +72,7 @@ function UserDetails({ authUser, user }) {
         <div className="flex flex-col justify-center space-y-4">
           <div className="gap-2 self-center flex flex-col items-center">
             <NavbarProfile image={user.photo} />
-            <p className="text-sm text-medium text-dark-default">
-              Stephen King
-            </p>
+
             <p className="text-xs text-dark-default/80">@{user.username}</p>
           </div>
           <div className="flex max-w-lg self-center justify-between gap-12 px-6">
@@ -99,16 +97,46 @@ function UserDetails({ authUser, user }) {
         <TopTab />
         {activeTab === "posts" ? (
           <div>
-            <div className="grid grid-cols-2 gap-2 lg:gap-4 lg:grid-cols-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 lg:gap-4 lg:grid-cols-4">
               {user.posts.map((val) => {
                 return (
-                  <Link key={val._id} href={`/post/${val._id}`}>
-                    <Image
-                      width="500"
-                      height="300"
-                      src={val.content.images[0]}
-                    />
-                  </Link>
+                  <>
+                    {val.content.images.length > 1 &&
+                    authUser._id === user._id ? (
+                      <Link
+                        key={val._id}
+                        href={`/post/${val._id}`}
+                        className="relative"
+                      >
+                        <div className="absolute inset-0 flex items-end">
+                          <div className="p-2 w-full bg-dark-default/80 flex justify-between">
+                            <IoImages className="h-auto w-8 text-white" />
+                            <div className="flex gap-2">
+                              <button className="p-2 rounded-sm bg-gray-100/50 hover:bg-gray-100 hover:text-danger-default/80 transition duration-200">
+                                <IoTrash />
+                              </button>
+                              <button className="p-2 rounded-sm bg-gray-100/50 hover:bg-gray-100 hover:text-primary-default/80 transition duration-200">
+                                <IoPencil />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <Image
+                          width="500"
+                          height="300"
+                          src={val.content.images[0]}
+                        />
+                      </Link>
+                    ) : (
+                      <Link key={val._id} href={`/post/${val._id}`}>
+                        <Image
+                          width="500"
+                          height="300"
+                          src={val.content.images[0]}
+                        />
+                      </Link>
+                    )}
+                  </>
                 );
               })}
               {user.posts.length === 0 ? (
