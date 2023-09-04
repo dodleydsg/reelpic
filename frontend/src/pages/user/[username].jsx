@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import userResolver from "@/components/presentation/resolvers/user.resolver";
 import userActions from "@/components/presentation/actions/user.actions";
@@ -12,6 +12,7 @@ import { getUser } from "@/components/store/features/userSlice";
 export default function User() {
   const router = useRouter();
   const dispatch = useDispatch();
+  const authUser = useSelector((state) => state.user.user);
   const [user, setUser] = useState({
     usersLike: [],
     user: { photo: "", username: "" },
@@ -28,17 +29,29 @@ export default function User() {
 
   useEffect(() => {
     try {
-      const token = readCookie("token");
       if (username) {
-        dispatch(getUser({ token }));
+        const token = readCookie("token");
+        if (token) {
+          dispatch(getUser({ token }));
+        }
         userResolver(userActions.HY_READ, "", {
           username,
-          populate: {
-            field: "posts",
-            subFields: ["images", "_id"],
-          },
+          populate: [
+            {
+              field: "posts",
+              subFields: ["content", "_id"],
+            },
+            {
+              field: "followers",
+              subFields: ["followers", "following", "username", "photo"],
+            },
+            {
+              field: "following",
+              subFields: ["followers", "following", "username", "photo"],
+            },
+          ],
         }).then(({ data }) => {
-          console.log(data);
+          // console.log(data);
           setUser(data);
         });
       }
@@ -50,7 +63,7 @@ export default function User() {
   if (username) {
     return (
       <Template>
-        <UserDetails user={user} />
+        <UserDetails authUser={authUser} user={user} />
       </Template>
     );
   } else return <LoadingScreen />;

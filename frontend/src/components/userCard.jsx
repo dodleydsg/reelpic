@@ -6,7 +6,7 @@ export default function ({ photo, followers, following, _id, username }) {
   return (
     <div className="grid text-sm grid-cols-4  gap-2 border-primary-default/20 border rounded-md">
       <div className="p-2 col-span-1  flex flex-col items-center justify-center gap-2 border-r-2 border-primary-default/20">
-        <Link href={`/user/${_id}`}>
+        <Link href={`/user/${username}`}>
           <ProfilePic />
         </Link>
         <p className="text-xs font-bold mt-2">@{username}</p>
