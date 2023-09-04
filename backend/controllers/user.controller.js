@@ -1,8 +1,8 @@
 const User = require("../models/user.model");
-const extend = require("lodash");
 const { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 const resetModes = require("../helpers/resetModes");
 const notify = require("../helpers/notify");
+const _ = require("lodash")
 
 const getUser = async (req, res, next) => {
   try {
@@ -48,12 +48,16 @@ const hybridRead = async (req, res, next) => {
     //     subFields: ['images', '_id']
     //   }
     // }
-    if(populate.field){
-      let select = '';
-      for(let i=0; i<populate.subFields.length; i++){
-        select + ' ' + populate.subFields[i]
+    if(populate.length > 0){
+      let popArray = []
+      for(let i = 0; i<populate.length; i++ ){
+        let obj = {}
+        obj.path = populate[i].field
+        let select = _.join(populate[i].subFields, ' ')
+        obj.select = select
+        popArray.push(obj)
       }
-      user = await User.findOne({username}).populate(populate.field, select)
+      user = await User.findOne({username}).populate(popArray)
     }else{
       user = await User.findOne({ username });
     }
