@@ -2,90 +2,56 @@ import NavbarTemplate from "../templates/template_with_navbar";
 import Mask from "../components/mask";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
-import { useRouter } from "next/router";
-import { IoChevronBack } from "react-icons/io5";
 import { useState } from "react";
-import food from "../assets/images/food.jpg";
-import Image from "next/image";
 import { useSelector } from "react-redux";
 import { CompleteLogin } from "../components/requireLogin";
-import postResolver from "../presentation/resolvers/post.resolver";
-import postActions from "../presentation/actions/post.actions";
-import { readCookie } from "../utils/cookie";
 import { useEffect } from "react";
-import userCard from "../components/userCard";
-import UserCard from "../components/userCard";
-
-let followers = [
-  {
-    _id: 1,
-    followers: [1, 2, 3],
-    following: [1, 2, 3, 3, 4, 3, 21],
-    username: "dodley",
-    photo: "",
-  },
-  {
-    _id: 1,
-    followers: [1, 2, 3.1, 2, 1, 2, 1],
-    following: [1, 2, 3],
-    username: "dodley",
-    photo: "",
-  },
-  {
-    _id: 1,
-    followers: [1, 2, 3, 1],
-    following: [1, 2, 3, 1, 2, 12, 2, 1, 21, 122],
-    username: "dodley",
-    photo: "",
-  },
-  {
-    _id: 1,
-    followers: [1, 2, 3],
-    following: [1, 2, 3],
-    username: "dodley",
-    photo: "",
-  },
-];
-
-const TABS = ["posts", "followers", "following"];
+import userResolver from "../presentation/resolvers/user.resolver";
+import userActions from "../presentation/actions/user.actions";
+import UserDetails from "../components/userDetails";
 
 function Profile() {
-  const { user } = useSelector((state) => state.user);
-  const [activeTab, toggleTab] = useState("posts");
-  const [posts, setPosts] = useState([]);
-  const router = useRouter();
+  const authUser = useSelector((state) => state.user.user);
+  const { username } = authUser;
+  const [user, setUser] = useState({
+    usersLike: [],
+    user: { photo: "", username: "" },
+    content: { images: [] },
+    tags: [],
+    created: "",
+    _id: "",
+    views: "",
+    followers: [],
+    following: [],
+    posts: [],
+  });
   useEffect(() => {
-    const token = readCookie("token");
-    const getPosts = async () => {
-      postResolver(postActions.LIST_POSTS, token)
-        .then(({ data }) => {
-          setPosts(data);
-        })
-        .catch((err) => {
-          console.log(err);
+    try {
+      if (username) {
+        userResolver(userActions.HY_READ, "", {
+          username,
+          populate: [
+            {
+              field: "posts",
+              subFields: ["content", "_id"],
+            },
+            {
+              field: "followers",
+              subFields: ["followers", "following", "username", "photo"],
+            },
+            {
+              field: "following",
+              subFields: ["followers", "following", "username", "photo"],
+            },
+          ],
+        }).then(({ data }) => {
+          setUser(data);
         });
-    };
-    getPosts();
+      }
+    } catch (error) {
+      // console.log(error);
+    }
   }, []);
-
-  const TopTab = () => (
-    <div className="sticky z-20 lg:top-0 top-[72px]  py-4 bg-white">
-      <div className="flex  p-2 mx-auto justify-around items-center gap-4 bg-light-default border-2">
-        {TABS.map((val, idx) => {
-          let classes = "px-4 py-2 rounded cursor-pointer";
-          if (val === activeTab) {
-            classes += " bg-gray-300";
-          }
-          return (
-            <p key={idx} className={classes} onClick={() => toggleTab(val)}>
-              {val.charAt(0).toLocaleUpperCase() + val.substring(1)}
-            </p>
-          );
-        })}
-      </div>
-    </div>
-  );
-
   return (
     <>
       <Mask />
@@ -94,69 +60,7 @@ function Profile() {
         headerText="Profile"
         pageTitle="My profile"
       >
-        <div className="space-y-4 py-4 relative">
-          <IoChevronBack
-            onClick={() => router.back()}
-            className="cursor-pointer text-dark-default text-lg lg:text-2xl"
-          />
-
-          <div className="flex flex-col justify-center space-y-4">
-            <div className="gap-2 self-center flex flex-col items-center">
-              <NavbarProfile image={profile} />
-              <p className="text-sm text-medium text-dark-default">
-                Stephen King
-              </p>
-              <p className="text-xs text-dark-default/80">@{user.username}</p>
-            </div>
-            <div className="flex max-w-lg self-center justify-between gap-12 px-6">
-              <div className="flex gap-4 flex-col items-center">
-                <p className="link cursor-pointer">Followers</p>
-                <p>{user.followers.length}</p>
-              </div>
-              <div className="flex gap-4 flex-col items-center">
-                <p className="link cursor-pointer">Following</p>
-                <p className="text-sm text-dark-default/80">
-                  {user.following.length}
-                </p>
-              </div>
-            </div>
-            <p className="max-w-sm self-center text-justify text-dark-default/90 text-sm text-dark">
-              {user.bio}
-            </p>
-          </div>
-          <TopTab />
-          {activeTab === "posts" ? (
-            <div>
-              <div className="grid grid-cols-2 gap-2 lg:gap-4 lg:grid-cols-4">
-                {posts.map((val) => {
-                  return (
-                    <Image
-                      width="500"
-                      height="300"
-                      src={val.content.images[0]}
-                    />
-                  );
-                })}
-                {posts.length === 0 ? (
-                  <h1 className="text-center">You have no posts</h1>
-                ) : null}
-              </div>
-            </div>
-          ) : null}
-          {activeTab === "followers" ? (
-            <>
-              <h1 className="text-center ">Following</h1>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-                {followers.map((val) => {
-                  return <UserCard {...val} />;
-                })}
-              </div>
-            </>
-          ) : null}
-          {activeTab === "following" ? (
-            <h1 className="text-center">Here lies ur followers</h1>
-          ) : null}
-        </div>
+        <UserDetails authUser={authUser} user={user} />
       </NavbarTemplate>
     </>
   );
