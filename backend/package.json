@@ -1,5 +1,5 @@
 {
-  "name": "Reelpic backend",
+  "name": "reelpic_backend",
   "version": "1.0.0",
   "description": "Backend for social site for users to share, like and comment on images.",
   "main": "server.js",
