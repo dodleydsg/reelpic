@@ -2,7 +2,7 @@ const dotenv = require("dotenv").config({ path: "./.env" });
 const app = require("./app");
 const mongoose = require("mongoose");
 
-const MONGODB_URI = process.env.NODE_ENV === 'development' ? process.env.LOCAL_MONGODB_URI : process.env.ONLINE_MONGODB_URI
+const MONGODB_URI = process.env.NODE_ENV === 'development' ? process.env.LOCAL_MONGODB_URI : process.env.ONLINE_MONGODB_URI 
 
 mongoose
   .connect(MONGODB_URI, {
@@ -13,7 +13,7 @@ mongoose
     console.log("Successfully connected to Database");
   })
   .catch((error) => {
-    throw new Error("Couldn't connect to the databse, check your connection");
+    throw new Error("Couldn't connect to the database, check your connection");
   });
 
 app.listen(process.env.PORT, (err) => {
