@@ -4,10 +4,6 @@ import NavbarTemplate from "../templates/template_with_navbar";
 import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import { useSelector, useDispatch } from "react-redux";
-import {
-  toggleAddCatalogueModal,
-  toggleAddPost,
-} from "../store/features/uiSlice";
 import { CompleteLogin } from "../components/requireLogin";
 import BookmarkModal from "../components/modal/bookmarkModal";
 import { toggleAddPostModal } from "../store/features/uiSlice";

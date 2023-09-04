@@ -49,7 +49,8 @@ export default function LoginForm({ router }) {
     >
       {(formik) => (
         <form
-          className="w-full grid grid-cols-1 sm:grid-cols-2  sm:min-h-[280px] sm:divide-x-2"
+          className="w-full grid 
+          grid-cols-1 sm:grid-cols-2  sm:min-h-[280px] sm:divide-x-2"
           onSubmit={formik.handleSubmit}
         >
           <div className="space-y-4 sm:pr-6 mb-8">

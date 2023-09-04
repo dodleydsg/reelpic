@@ -8,11 +8,15 @@ import profile from "../assets/images/Profile1.png";
 import UpdatePasswordForm from "../components/forms/updatePasswordForm";
 import { CompleteLogin } from "../components/requireLogin";
 import { useSelector } from "react-redux";
+import userResolver from "../presentation/resolvers/user.resolver";
+import userActions from "../presentation/actions/user.actions";
+import { readCookie } from "../utils/cookie";
 
 const TABS = ["profile", "password", "display"];
 
 function Settings() {
   const { user } = useSelector((state) => state.user);
+  const token = readCookie("token");
   const [activeTab, toggleTab] = useState("profile");
   const [interests, updateInterest] = useState(user.interests);
 
@@ -34,6 +38,7 @@ function Settings() {
       return [...interests, interest.toLocaleLowerCase()];
     });
   };
+
   const TopTab = () => (
     <div className="sticky top-[72px] lg:top-0 bg-white py-2">
       <div className="flex p-2 mx-auto justify-around items-center gap-4 bg-light-default border-2">
@@ -68,95 +73,128 @@ function Settings() {
         <TopTab />
         {activeTab === TABS[0] ? (
           <TabWrapper>
-            <h2 className="font-bold">Edit Profile</h2>
-            <div className="flex flex-col items-center justify-start space-y-8 py-2">
-              <div className="flex justify-center items-center flex-col">
-                {/* Profile picture section */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                const form = e.target.elements;
+                const username = form["username"].value;
+                const bio = form["bio"].value;
+                const photo = "";
+                console.log(username, bio, interests, photo);
 
-                <InputElement type="file" id="profileImg" className="hidden" />
-                <label
-                  htmlFor="profileImg"
-                  className="flex items-center text-dark-default/80 text-sm cursor-pointer flex-col gap-2"
-                >
-                  <Image
-                    alt="jj"
-                    src={profile}
-                    className="w-20 h-20 rounded-[40px]"
-                  />
-                  <span>Click to change profile</span>
-                </label>
-              </div>
-              <div className=" flex gap-2 lg:gap-4 items-center">
-                <label htmlFor="username" className="w-20 text-right">
-                  Username
-                </label>
-                <InputElement
-                  readOnly
-                  value={user.username}
-                  className="w-52 lg:w-72"
-                  name="username"
-                  type="text"
-                />
-              </div>
-              <div className=" flex gap-2 lg:gap-4 items-center">
-                <label htmlFor="bio" className="w-20 text-right">
-                  Bio
-                </label>
-                <textarea
-                  value={user.bio}
-                  name="bio"
-                  className="border w-52 lg:w-72 p-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark "
-                  id=""
-                  rows="5"
-                ></textarea>
-              </div>
-              <div className="flex gap-2 lg:gap-4  items-center">
-                <label htmlFor="interest" className="w-20 text-right">
-                  Interests
-                </label>
-                <div className="w-52 lg:w-72 flex flex-wrap items-center gap-2">
+                userResolver(userActions.UPDATE, token, {
+                  username,
+                  bio,
+                  interests,
+                })
+                  .then(({ data }) => {
+                    console.log(data);
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+              }}
+            >
+              <h2 className="font-bold text-xl">Edit Profile</h2>
+              <div className="flex flex-col  space-y-8 py-2 w-full">
+                <div className="flex w-full flex-col">
+                  {/* Profile picture section */}
+
                   <InputElement
-                    name="interest"
-                    id="interest"
-                    type="text"
-                    placeholder="Add another"
+                    type="file"
+                    id="profileImg"
+                    className="hidden w-full"
                   />
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const interest =
-                        e.target.parentNode.querySelector("input#interest") ||
-                        document.getElementById("interest");
-                      addInterest(interest.value);
-                    }}
-                    className="border block h-full px-4 py-2 rounded text-primary-default bg-light-default hover:text-dark-default transition"
+                  <label
+                    htmlFor="profileImg"
+                    className="flex items-center text-dark-default/80 text-sm cursor-pointer  gap-2"
                   >
-                    Add
-                  </button>
+                    <Image
+                      alt="jj"
+                      src={profile}
+                      className="w-20 h-20 rounded-[40px]"
+                    />
+                    <span>Click to change profile</span>
+                  </label>
+                </div>
+                <div className="flex flex-col gap-2 lg:gap-4">
+                  <label htmlFor="username" className="font-bold">
+                    Username
+                  </label>
+                  <input
+                    readOnly
+                    value={user.username}
+                    name="username"
+                    id="username"
+                    type="text"
+                    className="h-12 w-full  max-w-sm border px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark"
+                  />
+                </div>
+                <div className="flex flex-col gap-2 lg:gap-4">
+                  <label htmlFor="bio" className="font-bold">
+                    Bio
+                  </label>
+                  <textarea
+                    defaultValue={user.bio}
+                    name="bio"
+                    className="border w-full max-w-sm p-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark "
+                    id="bio"
+                    rows="5"
+                  ></textarea>
+                </div>
+                <div className="flex flex-col gap-2 lg:gap-4 ">
+                  <label htmlFor="interest" className="w-20 font-bold">
+                    Interests
+                  </label>
+                  <div className="w-full flex flex-wrap items-center gap-2">
+                    <input
+                      name="interest"
+                      id="interest"
+                      type="text"
+                      placeholder="Add another"
+                      className="h-12 border px-4 rounded-md focus:outline-0 focus:ring-2 focus:ring-primary-default/50 text-dark"
+                    />
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const interest =
+                          e.target.parentNode.querySelector("input#interest") ||
+                          document.getElementById("interest");
+                        addInterest(interest.value);
+                      }}
+                      className="border block h-full px-4 py-2 rounded text-primary-default bg-light-default hover:text-dark-default transition"
+                    >
+                      Add
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div className="space-y-4">
-              <div className="flex gap-2 mt-4 flex-wrap">
-                {interests.map((val) => {
-                  return (
-                    <div
-                      key={val}
-                      className="flex gap-1 items-center px-4 py-2 rounded border border-dark-default/60"
-                    >
-                      {val}
-                      <MdClose
-                        className="text-danger-default cursor-pointer"
-                        onClick={() => deleteInterest(val)}
-                      />
-                    </div>
-                  );
-                })}
+              <div className="space-y-4">
+                <div className="flex gap-2 mt-4 flex-wrap">
+                  {interests.map((val) => {
+                    return (
+                      <div
+                        key={val}
+                        className="flex gap-1 items-center px-4 py-2 rounded border border-dark-default/60"
+                      >
+                        {val}
+                        <MdClose
+                          className="text-danger-default cursor-pointer"
+                          onClick={() => deleteInterest(val)}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+                <button
+                  type="submit"
+                  className="btn-primary inline-block
+                  w-auto px-4 hover:bg-primary-default/80 transition"
+                >
+                  Save Changes
+                </button>
               </div>
-              <button className="btn-primary w-40 hover:bg-primary-default/80 transition">
-                Save Changes
-              </button>
-            </div>
+            </form>
           </TabWrapper>
         ) : null}
         {activeTab === TABS[1] ? (
@@ -175,6 +213,7 @@ function Settings() {
                 </label>
                 <select
                   name="language"
+                  id="language"
                   className="w-52 lg:w-72 outline-none px-4 py-2 appearance-none border border-gray-300 rounded"
                 >
                   <option value="English">English</option>

@@ -39,7 +39,7 @@ export default async function userResolver(action, token, data) {
     } else if (action === userActions.UPDATE) {
       let resp = await axios({
         method: "put",
-        url: BACKEND_DOMAIN + `/api/user/${data.username || "_"}`,
+        url: BACKEND_DOMAIN + `/api/user/`,
         data,
         headers: {
           Authorization: AUTH_TOKEN(token),

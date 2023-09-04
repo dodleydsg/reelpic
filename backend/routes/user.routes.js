@@ -9,12 +9,6 @@ router.route("/api/users").get(userCtrl.list).post(userCtrl.create);
 router
   .route("/api/user/:username")
   .get(userCtrl.read)
-  .put(
-    authCtrl.requireLogin,
-    userCtrl.getUser,
-    authCtrl.hasAuthorization,
-    userCtrl.update
-  )
   .delete(
     authCtrl.requireLogin,
     userCtrl.getUser,
@@ -29,6 +23,11 @@ router
     userCtrl.getUser,
     authCtrl.hasAuthorization,
     userCtrl.altRead
+  ).put(
+    authCtrl.requireLogin,
+    userCtrl.getUser,
+    authCtrl.hasAuthorization,
+    userCtrl.update
   );
 
 

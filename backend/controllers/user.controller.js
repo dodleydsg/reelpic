@@ -120,15 +120,15 @@ const altRead = async (req, res, next) => {
 };
 const update = async (req, res, next) => {
   try {
-    const {username, interests} = req.body
-    let user = req.profile
+    let {username, bio, interests, photo} = req.body
+    let user = await User.findOneAndUpdate({email:req.profile.email}, {username, bio, interests, photo}, {
+      new: true
+    })
     if (!user) {
       return res.status(404).json({
         message: "Couldn't find user",
     });}
     user.updated = Date.now();
-    user.username =  username
-    user.interests =  interests
     await user.save();
     user.hashed_password = undefined;
     user.salt = undefined;
