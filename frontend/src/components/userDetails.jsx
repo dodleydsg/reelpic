@@ -4,10 +4,42 @@ import { IoChevronBack } from "react-icons/io5";
 import NavbarProfile from "./navBar/navBarProfile";
 import Image from "next/image";
 import Link from "next/link";
+import UserCard from "../components/userCard";
 
-const TABS = ["posts", "catalogues"];
+let followers = [
+  {
+    _id: 1,
+    followers: [1, 2, 3],
+    following: [1, 2, 3, 3, 4, 3, 21],
+    username: "dodley",
+    photo: "",
+  },
+  {
+    _id: 1,
+    followers: [1, 2, 3.1, 2, 1, 2, 1],
+    following: [1, 2, 3],
+    username: "dodley",
+    photo: "",
+  },
+  {
+    _id: 1,
+    followers: [1, 2, 3, 1],
+    following: [1, 2, 3, 1, 2, 12, 2, 1, 21, 122],
+    username: "dodley",
+    photo: "",
+  },
+  {
+    _id: 1,
+    followers: [1, 2, 3],
+    following: [1, 2, 3],
+    username: "dodley",
+    photo: "",
+  },
+];
 
-function UserDetails({ user }) {
+const TABS = ["posts", "followers", "following"];
+
+function UserDetails({ authUser, user }) {
   const [activeTab, toggleTab] = useState("posts");
   const router = useRouter();
 
@@ -59,6 +91,7 @@ function UserDetails({ user }) {
               </p>
             </div>
           </div>
+          <FollowButton authUser={authUser} user={user} />
           <p className="max-w-sm self-center text-justify text-dark-default/90 text-sm text-dark">
             {user.bio}
           </p>
@@ -84,12 +117,52 @@ function UserDetails({ user }) {
             </div>
           </div>
         ) : null}
-        {activeTab === "catalogues" ? (
-          <h1 className="text-center ">Coming Soon !!!</h1>
+        {activeTab === "followers" ? (
+          <>
+            <h1 className="text-center ">Following</h1>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {followers.map((val) => {
+                return <UserCard {...val} />;
+              })}
+            </div>
+          </>
+        ) : null}
+        {activeTab === "following" ? (
+          <h1 className="text-center">Here lies ur followers</h1>
         ) : null}
       </div>
     </>
   );
 }
+
+const FollowButton = ({ authUser, user }) => {
+  if (authUser) {
+    if (authUser._id === user._id) {
+      return null;
+    }
+    if (authUser.followers.includes(user._id)) {
+      return (
+        <div className="text-center">
+          <span>Follows you</span>
+          <button className="btn-primary hover:bg-[#4900EB]">
+            Follow back
+          </button>
+        </div>
+      );
+    }
+    if (user.followers.includes(authUser._id)) {
+      return (
+        <button className="text-primary hover:bg-[#4900EB]">Unfollow</button>
+      );
+    }
+    return (
+      <button className="btn-primary max-w-sm inline-block hover:bg-[#4900EB]">
+        Follow
+      </button>
+    );
+  } else {
+    return null;
+  }
+};
 
 export default UserDetails;
