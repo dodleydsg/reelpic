@@ -2,8 +2,10 @@ const dotenv = require("dotenv").config({ path: "./.env" });
 const app = require("./app");
 const mongoose = require("mongoose");
 
+const MONGODB_URI = process.env.NODE_ENV === 'development' ? process.env.LOCAL_MONGODB_URI : process.env.ONLINE_MONGODB_URI
+
 mongoose
-  .connect(process.env.MONGODB_URI, {
+  .connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
