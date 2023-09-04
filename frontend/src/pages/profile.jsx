@@ -13,8 +13,41 @@ import postResolver from "../presentation/resolvers/post.resolver";
 import postActions from "../presentation/actions/post.actions";
 import { readCookie } from "../utils/cookie";
 import { useEffect } from "react";
+import userCard from "../components/userCard";
+import UserCard from "../components/userCard";
 
-const TABS = ["posts", "catalogues"];
+let followers = [
+  {
+    _id: 1,
+    followers: [1, 2, 3],
+    following: [1, 2, 3, 3, 4, 3, 21],
+    username: "dodley",
+    photo: "",
+  },
+  {
+    _id: 1,
+    followers: [1, 2, 3.1, 2, 1, 2, 1],
+    following: [1, 2, 3],
+    username: "dodley",
+    photo: "",
+  },
+  {
+    _id: 1,
+    followers: [1, 2, 3, 1],
+    following: [1, 2, 3, 1, 2, 12, 2, 1, 21, 122],
+    username: "dodley",
+    photo: "",
+  },
+  {
+    _id: 1,
+    followers: [1, 2, 3],
+    following: [1, 2, 3],
+    username: "dodley",
+    photo: "",
+  },
+];
+
+const TABS = ["posts", "followers", "following"];
 
 function Profile() {
   const { user } = useSelector((state) => state.user);
@@ -77,12 +110,14 @@ function Profile() {
             </div>
             <div className="flex max-w-lg self-center justify-between gap-12 px-6">
               <div className="flex gap-4 flex-col items-center">
-                <p>Followers</p>
-                <p className="text-sm text-dark-default/80">{user.followers}</p>
+                <p className="link cursor-pointer">Followers</p>
+                <p>{user.followers.length}</p>
               </div>
               <div className="flex gap-4 flex-col items-center">
-                <p>Following</p>
-                <p className="text-sm text-dark-default/80">{user.following}</p>
+                <p className="link cursor-pointer">Following</p>
+                <p className="text-sm text-dark-default/80">
+                  {user.following.length}
+                </p>
               </div>
             </div>
             <p className="max-w-sm self-center text-justify text-dark-default/90 text-sm text-dark">
@@ -108,8 +143,18 @@ function Profile() {
               </div>
             </div>
           ) : null}
-          {activeTab === "catalogues" ? (
-            <h1 className="text-center ">Coming Soon !!!</h1>
+          {activeTab === "followers" ? (
+            <>
+              <h1 className="text-center ">Following</h1>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                {followers.map((val) => {
+                  return <UserCard {...val} />;
+                })}
+              </div>
+            </>
+          ) : null}
+          {activeTab === "following" ? (
+            <h1 className="text-center">Here lies ur followers</h1>
           ) : null}
         </div>
       </NavbarTemplate>
