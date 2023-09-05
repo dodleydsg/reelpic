@@ -29,6 +29,25 @@ export default function Post({ _id, usersLike, views, created, tags, content, po
   user ? (likedPosts = user.likes) : null;
   const [likes, updateLikes] = useState(usersLike.length);
   const dispatch = useDispatch();
+
+  const FollowLink = () => {
+    if (user) {
+      if (postOwner._id === user._id) {
+        return null;
+      }
+      if (!user.following.includes(postOwner._id)) {
+        return (
+          <Link className="link text-sm" href={`/user/${postOwner.username}`}>
+            Follow
+          </Link>
+        );
+      }
+      return null;
+    } else {
+      return null;
+    }
+  };
+
   return (
     <div className="h-full">
       <div className="flex justify-between items-center border border-gray-100 p-2">
@@ -37,9 +56,7 @@ export default function Post({ _id, usersLike, views, created, tags, content, po
           <Link href={`/users/${postOwner.username}`} className="text-label">
             @{postOwner.username}
           </Link>
-          <Link href="/as" className="text-primary-default text-sm">
-            Follow
-          </Link>
+          <FollowLink />
         </div>
         <MdLink
           className="h-18 w-auto pr-4 cursor-pointer"
@@ -55,12 +72,7 @@ export default function Post({ _id, usersLike, views, created, tags, content, po
       <div className="border-gray-100 p-2 space-y-4">
         <div className="flex items-end justify-between">
           <div className="flex gap-4 mt-4 items-center">
-            <div className="flex gap-2 items-center">
-              <p className="flex items-center">
-                <IoTrendingUp className="w-5 h-auto items-center cursor-pointer" />
-              </p>
-              <p className="text-sm">{views}</p>
-            </div>
+            <div className="flex gap-2 items-center"></div>
             <div className="flex gap-2 items-center">
               <p className="flex items-center">
                 <IoHeart

@@ -113,10 +113,9 @@ export default function NavBar({ user }) {
 
       <div className="shadow-xl sticky top-0 h-screen col-span-1 py-12 px-4 lg:px-8 hidden lg:block  space-y-10 text-center  from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
         <div className="flex items-center gap-4 justify-start">
-          <NavbarProfile image={profile} />
+          <NavbarProfile image={user.photo} />
           <div>
-            <p className="text-label">Stephen King</p>
-            <p className="text-xs text-dark-default/70">@stephenking</p>
+            <p className="text-xs text-dark-default/70">@{user.username}</p>
           </div>
         </div>
         <div className="2xl:grid grid-cols-3 hidden">
