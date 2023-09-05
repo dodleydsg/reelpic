@@ -4,8 +4,11 @@ import { IoEye } from "react-icons/io5";
 import userResolver from "../../presentation/resolvers/user.resolver";
 import userActions from "../../presentation/actions/user.actions";
 import { readCookie } from "@/components/utils/cookie";
+import { useDispatch } from "react-redux";
+import { configureAlert, setAlert } from "@/components/store/features/uiSlice";
 
 export default function UpdatePasswordForm() {
+  const dispatch = useDispatch();
   return (
     <Formik
       initialValues={{
@@ -14,18 +17,35 @@ export default function UpdatePasswordForm() {
       }}
       validationSchema={Yup.object({
         oldPassword: Yup.string()
-          .min(8, "Password must be atleast 8 characters")
+          .min(6, "Password must be atleast 6 characters")
           .required("Please enter your old password"),
         newPassword: Yup.string()
-          .min(8, "Password must be atleast 8 characters")
+          .min(6, "Password must be atleast 6 characters")
           .required("Please enter a new password"),
       })}
       onSubmit={(values, { setSubmitting }) => {
         const token = readCookie("token");
         setSubmitting(true);
-        userResolver(userActions.UPDATE, token, values)
-          .then(() => {})
-          .catch(() => {
+        // console.log(values);
+        userResolver(userActions.CHANGE_PASSWORD, token, values)
+          .then(({ data }) => {
+            dispatch(
+              configureAlert({
+                variant: "success",
+                text: data.message,
+              })
+            );
+            dispatch(setAlert(true));
+          })
+          .catch((error) => {
+            // console.log(error);
+            dispatch(
+              configureAlert({
+                variant: "danger",
+                text: "Couldn't update password",
+              })
+            );
+            dispatch(setAlert(true));
             setSubmitting(false);
           });
       }}

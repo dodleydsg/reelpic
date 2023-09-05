@@ -7,16 +7,18 @@ import NavbarProfile from "../components/navBar/navBarProfile";
 import profile from "../assets/images/Profile1.png";
 import UpdatePasswordForm from "../components/forms/updatePasswordForm";
 import { CompleteLogin } from "../components/requireLogin";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import userResolver from "../presentation/resolvers/user.resolver";
 import userActions from "../presentation/actions/user.actions";
 import { readCookie } from "../utils/cookie";
+import { configureAlert, setAlert } from "../store/features/uiSlice";
 
 const TABS = ["profile", "password", "display"];
 
 function Settings() {
   const { user } = useSelector((state) => state.user);
   const token = readCookie("token");
+  const dispatch = useDispatch();
   const [activeTab, toggleTab] = useState("profile");
   const [interests, updateInterest] = useState(user.interests);
 
@@ -88,10 +90,23 @@ function Settings() {
                   interests,
                 })
                   .then(({ data }) => {
-                    console.log(data);
+                    dispatch(
+                      configureAlert({
+                        variant: "success",
+                        text: "Updated profile, successfully",
+                      })
+                    );
+                    dispatch(setAlert(true));
                   })
                   .catch((error) => {
-                    console.log(error);
+                    dispatch(
+                      configureAlert({
+                        variant: "danger",
+                        text: "Failed to updated profile",
+                      })
+                    );
+                    dispatch(setAlert(true));
+                    // console.log(error);
                   });
               }}
             >
