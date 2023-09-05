@@ -17,7 +17,7 @@ const list = async (req, res) => {
     let alerts = await Notification.find()
       .where("_id")
       .in(req.profile.notifications)
-      .populate("linkedTo", "photo");
+      .populate("linkedTo", "photo").sort('-created');
     if (req.profile.notifications && !alerts) {
       return res
         .status(404)
