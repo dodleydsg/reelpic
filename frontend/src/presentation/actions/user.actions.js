@@ -6,4 +6,5 @@ export default {
   CREATE: "create",
   FOLLOW: "follow",
   HY_READ: 'hy_read',
+  CHANGE_PASSWORD: 'change_password',
 };

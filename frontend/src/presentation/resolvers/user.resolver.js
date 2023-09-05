@@ -35,6 +35,15 @@ export default async function userResolver(action, token, data) {
         data,
         url: BACKEND_DOMAIN + "/api/users",
       });
+      return resp;} else if (action === userActions.CHANGE_PASSWORD) {
+      let resp = await axios({
+        method: "post",
+        data,
+        url: BACKEND_DOMAIN + "/api/password",
+        headers: {
+          Authorization: AUTH_TOKEN(token),
+        },
+      });
       return resp;
     } else if (action === userActions.UPDATE) {
       let resp = await axios({
