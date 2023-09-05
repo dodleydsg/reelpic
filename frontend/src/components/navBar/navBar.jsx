@@ -31,6 +31,7 @@ import profile from "../../assets/images/Profile1.png";
 import authActions from "../../presentation/actions/auth.actions";
 import authResolver from "../../presentation/resolvers/auth.resolver";
 import { setLoggedIn } from "../../store/features/userSlice";
+import GenerateProfile from "../generateProfile";
 
 export default function NavBar({ user }) {
   const mobileActionExpandRef = useRef();
@@ -112,10 +113,14 @@ export default function NavBar({ user }) {
       {/* Mobile Nav end */}
 
       <div className="shadow-xl sticky top-0 h-screen col-span-1 py-12 px-4 lg:px-8 hidden lg:block  space-y-10 text-center  from-gray-200 to-gray-300/40 bg-gradient-to-tl ">
-        <div className="flex items-center gap-4 justify-start">
-          <NavbarProfile image={user.photo} />
+        <div className="flex items-center gap-2 justify-start">
+          {user.photo ? (
+            <NavbarProfile image={user.photo} />
+          ) : (
+            <GenerateProfile username={user.username} />
+          )}
           <div>
-            <p className="text-xs text-dark-default/70">@{user.username}</p>
+            <p className="text-sm text-dark-default/70">@{user.username}</p>
           </div>
         </div>
         <div className="2xl:grid grid-cols-3 hidden">
