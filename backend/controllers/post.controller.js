@@ -28,10 +28,6 @@ const read = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     let user = req.profile;
-
-    if (user._id.toString() !== req.body.userId.toString()) {
-      unAuthorizedErrorBlock(res);
-    }
     let post = new Post(req.body);
     user.posts.push(post._id);
     user.feed.push(post._id);
