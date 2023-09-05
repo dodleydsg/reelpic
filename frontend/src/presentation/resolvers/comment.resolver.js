@@ -28,7 +28,7 @@ export default async function commentResolver(action, token, data) {
       let resp = await axios({
         method: "post",
         url: BACKEND_DOMAIN + `/api/comments/detail`,
-        data: { ...data },
+        data,
         headers: {
           Authorization: AUTH_TOKEN(token),
         },

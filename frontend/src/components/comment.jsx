@@ -21,13 +21,7 @@ import { readCookie } from "../utils/cookie";
 
 const COMMENT_REQUEST_LENGTH = 5;
 
-export default function Comment({
-  postId,
-  updateCommentIds,
-  commentIds,
-  toggleComments,
-  profileImg,
-}) {
+export default function Comment({ postId, commentIds, toggleComments }) {
   const dispatch = useDispatch();
   const [showReply, setReply] = useState(false);
   const [replyObj, setReplyObj] = useState({});
@@ -70,7 +64,6 @@ export default function Comment({
 
   const addComment = async (e) => {
     e.preventDefault();
-
     const body = document.querySelector("#body").value;
     if (!body) {
       dispatch(
@@ -266,10 +259,11 @@ export default function Comment({
 
   return (
     <CommentContainer>
-      <CommentHeader />
+      {/* <CommentHeader />
       {!showReply ? <CommentForm placeholder={"Add a comment..."} /> : null}
       <CommentBody />
-      <Loader />
+      <Loader /> */}
+      <p className="px-2">Comments coming soon</p>
     </CommentContainer>
   );
 }
