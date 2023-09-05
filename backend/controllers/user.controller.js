@@ -2,7 +2,7 @@ const User = require("../models/user.model");
 const { genericErrorBlock, unAuthorizedErrorBlock } = require("./errors");
 const resetModes = require("../helpers/resetModes");
 const notify = require("../helpers/notify");
-const _ = require("lodash")
+const _ = require("lodash");
 
 const getUser = async (req, res, next) => {
   try {
@@ -36,10 +36,25 @@ const create = async (req, res, next) => {
   }
 };
 
+const updatePassword = async (req, res, next) => {
+  try {
+    let user = req.profile;
+    const { oldPassword, newPassword } = req.body;
+    if (!user.authenticate(oldPassword)) {
+      return res.status(401).json({ message: "Old password doesn't match" });
+    }
+    user.password = newPassword;
+    await user.save();
+    notify(user, user._id,  "Successfully updated your password")
+    return res.status(200).json({ message: "Changed password successfully" });
+  } catch (error) {
+    genericErrorBlock(error, res);
+  }
+};
 
 const hybridRead = async (req, res, next) => {
   try {
-    const {username, populate} = req.body
+    const { username, populate } = req.body;
     let user;
     // const SAMPLE_REQUEST = {
     //   username: 'malina',
@@ -48,17 +63,17 @@ const hybridRead = async (req, res, next) => {
     //     subFields: ['images', '_id']
     //   }
     // }
-    if(populate.length > 0){
-      let popArray = []
-      for(let i = 0; i<populate.length; i++ ){
-        let obj = {}
-        obj.path = populate[i].field
-        let select = _.join(populate[i].subFields, ' ')
-        obj.select = select
-        popArray.push(obj)
+    if (populate.length > 0) {
+      let popArray = [];
+      for (let i = 0; i < populate.length; i++) {
+        let obj = {};
+        obj.path = populate[i].field;
+        let select = _.join(populate[i].subFields, " ");
+        obj.select = select;
+        popArray.push(obj);
       }
-      user = await User.findOne({username}).populate(popArray)
-    }else{
+      user = await User.findOne({ username }).populate(popArray);
+    } else {
       user = await User.findOne({ username });
     }
     if (!user) {
@@ -75,7 +90,7 @@ const hybridRead = async (req, res, next) => {
   } catch (error) {
     genericErrorBlock(error, res);
   }
-}
+};
 const list = async (req, res, next) => {
   try {
     let users = await User.find().select("name email updated created");
@@ -124,14 +139,19 @@ const altRead = async (req, res, next) => {
 };
 const update = async (req, res, next) => {
   try {
-    let {username, bio, interests, photo} = req.body
-    let user = await User.findOneAndUpdate({email:req.profile.email}, {username, bio, interests, photo}, {
-      new: true
-    })
+    let { username, bio, interests, photo } = req.body;
+    let user = await User.findOneAndUpdate(
+      { email: req.profile.email },
+      { username, bio, interests, photo },
+      {
+        new: true,
+      }
+    );
     if (!user) {
       return res.status(404).json({
         message: "Couldn't find user",
-    });}
+      });
+    }
     user.updated = Date.now();
     await user.save();
     user.hashed_password = undefined;
@@ -196,5 +216,6 @@ module.exports = {
   altRead,
   getUser,
   follow,
-  hybridRead
+  hybridRead,
+  updatePassword,
 };

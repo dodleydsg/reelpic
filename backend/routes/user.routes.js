@@ -42,6 +42,11 @@ router
     userCtrl.follow
   );
 
+router.route("/api/password").post(authCtrl.requireLogin,
+  userCtrl.getUser,
+  authCtrl.hasAuthorization, 
+  userCtrl.updatePassword)
+
 
 router.param("userId", userCtrl.getUser);
 
