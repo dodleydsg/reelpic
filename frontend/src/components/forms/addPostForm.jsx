@@ -96,12 +96,12 @@ export default function AddPostForm() {
               await uploadBytes(itemStorageRef, rawFiles.item(i));
               let url = await getDownloadURL(itemStorageRef);
               imageUrls.push(url);
-              console.log(imageUrls);
+              // console.log(imageUrls);
             } catch (error) {
               null;
             }
           }
-          if (!imageUrls) {
+          if (imageUrls) {
             postResolver(postActions.CREATE_POST, token, {
               content: {
                 body: values.body,
@@ -111,7 +111,7 @@ export default function AddPostForm() {
               tags: values.tags,
             })
               .then(({ data }) => {
-                console.info(data);
+                // console.info(data);
                 dispatch(toggleAddPostModal());
                 dispatch(
                   configureAlert({
@@ -125,7 +125,15 @@ export default function AddPostForm() {
                 updateFiles([]);
               })
               .catch((error) => {
-                console.log(error);
+                // console.log(error);
+                dispatch(toggleAddPostModal());
+                dispatch(
+                  configureAlert({
+                    variant: "danger",
+                    text: "Couldn't add post",
+                  })
+                );
+                dispatch(setAlert(true));
                 resetForm();
                 updateFiles([]);
               });
