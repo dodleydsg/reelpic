@@ -68,8 +68,8 @@ export default async function userResolver(action, token, data) {
     } else if (action === userActions.FOLLOW) {
       let resp = await axios({
         method: "post",
-        url: BACKEND_DOMAIN + `/api/follow/${data.followId}`,
-        data: data,
+        url: BACKEND_DOMAIN + `/api/follow`,
+        data,
         headers: {
           Authorization: AUTH_TOKEN(token),
         },
