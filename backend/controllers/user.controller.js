@@ -179,25 +179,33 @@ const remove = async (req, res, next) => {
 const follow = async (req, res, next) => {
   try {
     let user = req.profile;
-    if (user._id.toString() === req.params.followId.toString()) {
+    const {action, target, _id} = req.body
+    if (user._id.toString() === target.toString()) {
       return res.json({
         message: "You can't follow yourself",
       });
     }
-    let target = await User.findOne({ _id: req.params._id });
+    let targetUser = await User.findOne({ _id: target });
     if (!target) {
       genericErrorBlock(Error("Couldn't find user", res));
     }
-
-    target.followers.addToSet(user._id.toString());
-    user.following.addToSet(req.params._id);
+    if(action.toLowerCase().trim() === 'follow'){
+      targetUser.followers.addToSet(user._id.toString());
+      user.following.addToSet(target);
+      let description = `You followed ${targetUser.username}`;
+      await notify(req.profile, req.profile._id, description);
+      description = `${user.username} followed you`
+      await notify(targetUser, targetUser._id, description)
+    }else{
+      targetUser.followers.pull(user._id.toString());
+      user.following.pull(target)
+      let description = `You unfollowed ${targetUser.username}`;
+      await notify(req.profile, req.profile._id, description);
+      description = `${user.username} unfollowed you`
+      await notify(targetUser, targetUser._id, description)
+    }
     await user.save();
-    await target.save();
-    let description = `You followed ${target.username}`;
-    await notify(req.profile, req.profile._id, description);
-
-    description = `${req.profile.username} follows you`;
-    await notify(target, req.profile._id, description);
+    await targetUser.save();
 
     return res.json({
       message: "Followed successfully",

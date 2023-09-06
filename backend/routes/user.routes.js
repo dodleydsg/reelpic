@@ -34,7 +34,7 @@ router
 router.route("/api/user/hyRead").post(userCtrl.hybridRead)
 
 router
-  .route("/api/follow/:followId")
+  .route("/api/follow")
   .post(
     authCtrl.requireLogin,
     userCtrl.getUser,
