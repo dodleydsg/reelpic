@@ -208,7 +208,7 @@ const follow = async (req, res, next) => {
     await targetUser.save();
 
     return res.json({
-      message: "Followed successfully",
+      message: action.toLowerCase().trim() === 'follow'? "Followed successfully" : "Unfollowed successfully",
     });
   } catch (error) {
     genericErrorBlock(error, res);
