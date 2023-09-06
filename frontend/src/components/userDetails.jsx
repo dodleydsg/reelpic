@@ -5,6 +5,9 @@ import NavbarProfile from "./navBar/navBarProfile";
 import Image from "next/image";
 import Link from "next/link";
 import UserCard from "../components/userCard";
+import userResolver from "../presentation/resolvers/user.resolver";
+import userActions from "../presentation/actions/user.actions";
+import { readCookie } from "../utils/cookie";
 
 let followers = [
   {
@@ -42,6 +45,62 @@ const TABS = ["posts", "followers", "following"];
 function UserDetails({ authUser, user }) {
   const [activeTab, toggleTab] = useState("posts");
   const router = useRouter();
+
+  const follow = async (follow) => {
+    userResolver(userActions.FOLLOW, readCookie("token"), {
+      target: user._id,
+      _id: authUser._id,
+      action: follow ? "follow" : "unfollow",
+    })
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  
+  
+  const FollowButton = ({ authUser, user }) => {
+    if (authUser) {
+      if (authUser._id === user._id) {
+        return null;
+      }
+      if (authUser.followers.includes(user._id)) {
+        return (
+          <div className="text-center">
+            <span>Follows you</span>
+            <button
+              onClick={() => follow(true)}
+              className="btn-primary hover:bg-[#4900EB]"
+            >
+              Follow back
+            </button>
+          </div>
+        );
+      }
+      
+      for(let i=0; i<user.followers.length; i++){
+        if(user.followers[i]._id === authUser._id){
+          return <button
+          onClick={() => follow(false)}
+          className="btn-primary max-w-sm hover:bg-[#4900EB]"
+        >
+          Unfollow
+        </button>
+        }
+      }
+      return (
+        <button
+        onClick={()=> follow(true)}
+        className="btn-primary max-w-sm inline-block hover:bg-[#4900EB]">
+          Follow
+        </button>
+      );
+    } else {
+      return null;
+    }
+  };
 
   const TopTab = () => (
     <div className="sticky z-20 lg:top-0 top-0  py-4 bg-white">
@@ -163,34 +222,6 @@ function UserDetails({ authUser, user }) {
   );
 }
 
-const FollowButton = ({ authUser, user }) => {
-  if (authUser) {
-    if (authUser._id === user._id) {
-      return null;
-    }
-    if (authUser.followers.includes(user._id)) {
-      return (
-        <div className="text-center">
-          <span>Follows you</span>
-          <button className="btn-primary hover:bg-[#4900EB]">
-            Follow back
-          </button>
-        </div>
-      );
-    }
-    if (user.followers.includes(authUser._id)) {
-      return (
-        <button className="text-primary hover:bg-[#4900EB]">Unfollow</button>
-      );
-    }
-    return (
-      <button className="btn-primary max-w-sm inline-block hover:bg-[#4900EB]">
-        Follow
-      </button>
-    );
-  } else {
-    return null;
-  }
-};
+
 
 export default UserDetails;
