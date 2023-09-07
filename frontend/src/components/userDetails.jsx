@@ -11,9 +11,9 @@ import { readCookie } from "../utils/cookie";
 import { useDispatch } from "react-redux";
 import { configureAlert, setAlert } from "../store/features/uiSlice";
 
-const TABS = ["posts", "followers", "following"];
 
 function UserDetails({ authUser, user }) {
+  const TABS = ["posts", "followers", "following"];
   const dispatch = useDispatch()
   const [activeTab, toggleTab] = useState("posts");
   const router = useRouter();
