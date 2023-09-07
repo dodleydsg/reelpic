@@ -7,7 +7,7 @@ import GenerateProfile from "./generateProfile";
 
 export default function NotificationCard({ linkedTo, created, description }) {
   const createdTime = new Date(created).valueOf();
-  console.log(linkedTo)
+  // console.log(linkedTo)
   const currentTime = Date.now();
   return (
     <div

@@ -78,7 +78,7 @@ export default function Post({
               navigator.clipboard.writeText(
                 `${process.env.NEXT_PUBLIC_DOMAIN}/post/${_id}`
               );
-              console.log("Text copied");
+              // console.log("Text copied");
             }}
           />
         </div>
@@ -125,7 +125,7 @@ export default function Post({
                             );
                           })
                           .catch((error) => {
-                            console.log(error);
+                            // console.log(error);
                             e.target.classList.add("text-pink-500");
                             updateLikes((prevLikes) => prevLikes + 1);
                           });
@@ -147,7 +147,7 @@ export default function Post({
                             );
                           })
                           .catch((error) => {
-                            console.log(error);
+                            // console.log(error);
                             e.target.classList.remove("text-pink-500");
                             updateLikes((prevLikes) =>
                               prevLikes > 0 ? prevLikes - 1 : 0

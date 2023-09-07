@@ -42,7 +42,7 @@ export default function LoginForm({ router }) {
             router.push("/home");
           })
           .catch((error) => {
-            console.log(error);
+            // console.log(error);
           });
         setSubmitting(false);
       }}
@@ -124,7 +124,7 @@ export default function LoginForm({ router }) {
                     router.push("/home");
                   })
                   .catch((error) => {
-                    console.log(error);
+                    // console.log(error);
 
                     // router.push("/_error");
                   });

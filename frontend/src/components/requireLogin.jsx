@@ -24,7 +24,7 @@ export function CompleteLogin({ children }) {
         router.push("/login");
       }
     } catch (error) {
-      console.log("Error here");
+      // console.log("Error here");
       router.push("/login");
     }
   }, [loggedIn]);

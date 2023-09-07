@@ -25,7 +25,7 @@ function Home() {
         const { data } = await postResolver(postActions.FEED, token);
         updateFeed(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
 

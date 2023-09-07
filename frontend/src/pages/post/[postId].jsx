@@ -30,13 +30,13 @@ export default function Post() {
         dispatch(getUser({ token }));
         postResolver(postActions.READ_POST, token, { postId }).then(
           ({ data }) => {
-            console.log(data);
+            // console.log(data);
             setPost(data);
           }
         );
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }, [router]);
 

@@ -82,7 +82,7 @@ function Settings() {
                 const username = form["username"].value;
                 const bio = form["bio"].value;
                 const photo = "";
-                console.log(username, bio, interests, photo);
+                // console.log(username, bio, interests, photo);
 
                 userResolver(userActions.UPDATE, token, {
                   username,

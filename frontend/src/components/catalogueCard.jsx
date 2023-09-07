@@ -21,7 +21,7 @@ export default function CatalogueCard({ title, cover, _id }) {
           <div className="flex gap-4 items-center ">
             <button
               onClick={async () => {
-                console.log("Clicked");
+                // console.log("Clicked");
                 catalogueResolver(
                   catalogueActions.DELETE_CATALOGUE,
                   readCookie("token"),

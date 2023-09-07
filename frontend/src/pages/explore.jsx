@@ -22,7 +22,7 @@ function Explore() {
         const { data } = await postResolver(postActions.EXPLORE, token);
         updateExploreFeed(data);
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
 
