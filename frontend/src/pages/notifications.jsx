@@ -7,10 +7,12 @@ import { useEffect, useState } from "react";
 import notificationResolver from "../presentation/resolvers/notifications.resolver";
 import notificationActions from "../presentation/actions/notification.actions";
 import { readCookie } from "../utils/cookie";
+import { useSelector } from "react-redux";
 
 
 function Notifications() {
   const token = readCookie("token");
+  const {user} = useSelector(state => state.user)
   const [alerts, setAlerts] = useState([]);
   useEffect(() => {
     const getAlerts = async () => {
@@ -26,7 +28,7 @@ function Notifications() {
   return (
     <>
       <NavbarTemplate
-        HeaderAside={() => <NavbarProfile image={profile} />}
+        HeaderAside={() => <NavbarProfile username={user.username} image={profile} />}
         headerText="Alerts"
         pageTitle="Alerts | Find alerts for recent activity"
       >

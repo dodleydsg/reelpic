@@ -56,7 +56,7 @@ function Profile() {
     <>
       <Mask />
       <NavbarTemplate
-        HeaderAside={() => <NavbarProfile image={profile} />}
+        HeaderAside={() => <NavbarProfile username={authUser.username} image={profile} />}
         headerText="Profile"
         pageTitle="My profile"
       >

@@ -68,7 +68,7 @@ function Settings() {
   return (
     <>
       <NavbarTemplate
-        HeaderAside={() => <NavbarProfile image={profile} />}
+        HeaderAside={() => <NavbarProfile username={user.username} image={profile} />}
         headerText="Settings"
         pageTitle="Settings | Configure the app to your liking"
       >
@@ -115,7 +115,7 @@ function Settings() {
                 <div className="flex w-full flex-col">
                   {/* Profile picture section */}
 
-                  <InputElement
+                  {/* <InputElement
                     type="file"
                     id="profileImg"
                     className="hidden w-full"
@@ -129,8 +129,8 @@ function Settings() {
                       src={profile}
                       className="w-20 h-20 rounded-[40px]"
                     />
-                    <span>Click to change profile</span>
-                  </label>
+                    <span>Can't change profile</span>
+                  </label> */}
                 </div>
                 <div className="flex flex-col gap-2 lg:gap-4">
                   <label htmlFor="username" className="font-bold">

@@ -17,6 +17,7 @@ function Home() {
   let token = "";
   const dispatch = useDispatch();
   const { stale } = useSelector((state) => state.ui);
+  const {user} = useSelector(state => state.user)
 
   useEffect(() => {
     const getFeed = async () => {
@@ -36,7 +37,7 @@ function Home() {
     <>
       <BookmarkModal />
       <NavbarTemplate
-        HeaderAside={() => <NavbarProfile image={profile} />}
+        HeaderAside={() => <NavbarProfile username={user.username} image={profile} />}
         headerText="Home"
         pageTitle="Home for all pics and stories"
       >

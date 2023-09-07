@@ -14,6 +14,7 @@ import { readCookie } from "../utils/cookie";
 function Explore() {
   const [exploreFeed, updateExploreFeed] = useState([]);
   const { stale } = useSelector((state) => state.ui);
+  const {user} = useSelector(state => state.user)
   const dispatch = useDispatch();
   useEffect(() => {
     const explore = async () => {
@@ -33,7 +34,7 @@ function Explore() {
     <>
       <ExploreSearchModal />
       <NavbarTemplate
-        HeaderAside={() => <NavbarProfile image={profile} />}
+        HeaderAside={() => <NavbarProfile username={user.username} image={profile} />}
         headerText="Explore"
         pageTitle="Explore | Dive into the community to find the best pics and stories"
       >
