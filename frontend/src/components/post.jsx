@@ -201,7 +201,7 @@ export default function Post({
         ) : null}
         <p className="text-dark-default/90">{content.body}</p>
 
-        <div className="gap-2 flex">
+        <div className="gap-2 flex flex-wrap">
           {tags.map((val, idx) => {
             return (
               <button
