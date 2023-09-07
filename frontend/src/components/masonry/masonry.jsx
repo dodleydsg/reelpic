@@ -2,7 +2,7 @@ import MasonryItem from "./masonryItem";
 import Link from "next/link";
 
 export default function Mansory({ data }) {
-  let numberPerSection = Math.round(data.length / 4);
+  let numberPerSection = Math.floor(data.length / 4);
 
   return (
     <div className="transition-all duration-300 grid grid-cols-2 xl:grid-cols-4 gap-4">
