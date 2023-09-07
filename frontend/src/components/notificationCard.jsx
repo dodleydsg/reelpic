@@ -3,9 +3,11 @@ import Link from "next/link";
 import Profile1 from "../assets/images/Profile1.png";
 import Image from "next/image";
 import prettyTime from "pretty-time";
+import GenerateProfile from "./generateProfile";
 
 export default function NotificationCard({ linkedTo, created, description }) {
   const createdTime = new Date(created).valueOf();
+  console.log(linkedTo)
   const currentTime = Date.now();
   return (
     <div
@@ -13,9 +15,10 @@ export default function NotificationCard({ linkedTo, created, description }) {
     border-2 p-4 rounded text-center mb-2"
     >
       <div className="flex items-center gap-4">
-        <Image src={linkedTo.photo || Profile1} className="h-10 w-10" />
+        {linkedTo.photo?<Image src={linkedTo.photo || Profile1} className="h-10 w-10" /> :<GenerateProfile username={linkedTo.username}/>}
+        
         <Link href="/jaso" className="text-label">
-          @aisteve
+          {linkedTo.username}
         </Link>
       </div>
 

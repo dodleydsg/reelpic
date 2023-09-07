@@ -9,15 +9,16 @@ const read = async (req, res) => {
     }
     return res.json(alert);
   } catch (error) {
-    return genericErrorBlock(res);
+    return genericErrorBlock(error, res);
   }
 };
 const list = async (req, res) => {
   try {
-    let alerts = await Notification.find()
-      .where("_id")
-      .in(req.profile.notifications)
-      .populate("linkedTo", "photo").sort('-created');
+ let alerts= []   
+    for(let i=req.profile.notifications.length - 1; i>-1; i--){
+      let alert = await Notification.findById(req.profile.notifications[i]).populate("linkedTo", "username photo")
+alerts.push(alert)
+    }
     if (req.profile.notifications && !alerts) {
       return res
         .status(404)
@@ -25,7 +26,7 @@ const list = async (req, res) => {
     }
     return res.json(alerts);
   } catch (error) {
-    return genericErrorBlock(res);
+    return genericErrorBlock(error, res);
   }
 };
 
