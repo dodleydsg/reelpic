@@ -39,7 +39,7 @@ export default function RegisterForm() {
             password: values.password,
           })
             .then(({ data }) => {
-              authResolver(authActions.LOGIN, "", {
+              authResolver(authActions.LOGIN, {
                 email: values.email,
                 password: values.password,
               })
@@ -55,7 +55,7 @@ export default function RegisterForm() {
             })
             .catch((error) => {
               if (error.response) {
-                console.log(error.response);
+                // console.log(error.response);
                 updateErrors(error.response.data.message);
                 setSubmitting(false);
               } else if (error.request) {
@@ -157,7 +157,7 @@ export default function RegisterForm() {
                       })
                       .catch((error) => {
                         if (error.response) {
-                          console.log(error.response);
+                          // console.log(error.response);
                           updateErrors(error.response.data.message);
                         } else if (error.request) {
                           updateErrors("Error encountered");
