@@ -22,7 +22,8 @@ export default function SearchInput({ name, placeholder, queryCallback }) {
   };
   return (
     <>
-      <label className="sr-only" htmlFor="search">
+      <h1 className="text-center">Coming soon</h1>
+      {/* <label className="sr-only" htmlFor="search">
         {placeholder}
       </label>
       <input
@@ -47,6 +48,7 @@ export default function SearchInput({ name, placeholder, queryCallback }) {
           </div>
         ))}
       </div>
-    </>
+     */}
+     </>
   );
 }

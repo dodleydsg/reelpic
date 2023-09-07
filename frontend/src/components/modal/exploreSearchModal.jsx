@@ -40,7 +40,7 @@ export default function ExploreSearchModal({ hidden }) {
             <div className="col-span-2 lg:col-span-1 relative">
               <SearchInput placeholder="Search users or posts" />
             </div>
-            <div className="col-span-2 lg:col-span-1 flex items-center flex-wrap gap-2">
+            {/* <div className="col-span-2 lg:col-span-1 flex items-center flex-wrap gap-2">
               <div>
                 <InputElement
                   id="people"
@@ -82,7 +82,7 @@ export default function ExploreSearchModal({ hidden }) {
                   Posts
                 </label>
               </div>
-            </div>
+            </div> */}
           </form>
         </div>
       </div>
