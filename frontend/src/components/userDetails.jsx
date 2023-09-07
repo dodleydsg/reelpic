@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IoChevronBack, IoImages, IoPencil, IoTrash } from "react-icons/io5";
 import NavbarProfile from "./navBar/navBarProfile";
 import Image from "next/image";
@@ -8,41 +8,13 @@ import UserCard from "../components/userCard";
 import userResolver from "../presentation/resolvers/user.resolver";
 import userActions from "../presentation/actions/user.actions";
 import { readCookie } from "../utils/cookie";
-
-let followers = [
-  {
-    _id: 1,
-    followers: [1, 2, 3],
-    following: [1, 2, 3, 3, 4, 3, 21],
-    username: "dodley",
-    photo: "",
-  },
-  {
-    _id: 1,
-    followers: [1, 2, 3.1, 2, 1, 2, 1],
-    following: [1, 2, 3],
-    username: "dodley",
-    photo: "",
-  },
-  {
-    _id: 1,
-    followers: [1, 2, 3, 1],
-    following: [1, 2, 3, 1, 2, 12, 2, 1, 21, 122],
-    username: "dodley",
-    photo: "",
-  },
-  {
-    _id: 1,
-    followers: [1, 2, 3],
-    following: [1, 2, 3],
-    username: "dodley",
-    photo: "",
-  },
-];
+import { useDispatch } from "react-redux";
+import { configureAlert, setAlert } from "../store/features/uiSlice";
 
 const TABS = ["posts", "followers", "following"];
 
 function UserDetails({ authUser, user }) {
+  const dispatch = useDispatch()
   const [activeTab, toggleTab] = useState("posts");
   const router = useRouter();
 
@@ -53,10 +25,21 @@ function UserDetails({ authUser, user }) {
       action: follow ? "follow" : "unfollow",
     })
       .then(({ data }) => {
-        console.log(data);
+        dispatch(configureAlert({
+          variant: "success",
+          text: `Successfully completed action, refresh to see changes`,
+        }))
+        dispatch(setAlert(true))
+        // console.log(data);
+        
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
+        dispatch(configureAlert({
+          variant: "danger",
+          text: "Could'nt complete request",
+        }))
+        dispatch(setAlert(true))
       });
   };
   
@@ -206,16 +189,21 @@ function UserDetails({ authUser, user }) {
         ) : null}
         {activeTab === "followers" ? (
           <>
-            <h1 className="text-center ">Following</h1>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
-              {followers.map((val) => {
+              {user.followers.map((val) => {
                 return <UserCard {...val} />;
               })}
             </div>
           </>
         ) : null}
         {activeTab === "following" ? (
-          <h1 className="text-center">Here lies ur followers</h1>
+          <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+              {user.following.map((val) => {
+                return <UserCard {...val} />;
+              })}
+            </div>
+          </>
         ) : null}
       </div>
     </>

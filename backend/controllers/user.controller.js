@@ -20,6 +20,7 @@ const getUser = async (req, res, next) => {
 const create = async (req, res, next) => {
   try {
     const user = new User(req.body);
+    // console.log(user)
     user.resetMode = resetModes.LOCKED;
     await user.save();
     user.hashed_password = undefined;
@@ -32,6 +33,7 @@ const create = async (req, res, next) => {
       user,
     });
   } catch (error) {
+    // console.log(error)
     genericErrorBlock(error, res);
   }
 };
