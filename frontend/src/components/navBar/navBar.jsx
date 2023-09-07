@@ -47,7 +47,7 @@ export default function NavBar({ user }) {
     <>
       {/* Mobile nav */}
       <div className="lg:hidden  px-4  fixed flex z-[54]  inset-x-0 bottom-2 h-12 gap-4">
-        <div
+        {/* <div
           ref={mobileActionExpandRef}
           className="absolute z-[55] scale-y-0 transition-transform ease-in-out origin-bottom duration-300 border-[#D2C4E9] border ml-4 left-0 bottom-16 text-primary-default/70 w-40 rounded bg-light-default flex justify-evenly flex-col text-base"
         >
@@ -71,12 +71,15 @@ export default function NavBar({ user }) {
           >
             Add Catalogue
           </p>
-        </div>
+        </div> */}
         <button
           onClick={() => {
-            let menu = mobileActionExpandRef.current;
-            menu.classList.toggle("scale-y-0");
-            dispatch(toggleMask());
+
+            // let menu = mobileActionExpandRef.current;
+            // menu.classList.toggle("scale-y-0");
+            dispatch(toggleAddPostModal())
+            dispatch(setMask(false));
+            // dispatch(toggleMask());
           }}
           className="w-16 rounded flex items-center justify-center text-light-default bg-primary-default text-2xl"
         >
