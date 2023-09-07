@@ -7,15 +7,24 @@ import { MdLink } from "react-icons/md";
 import Image from "next/image";
 import Link from "next/link";
 import prettyTime from "pretty-time";
-import { IoChatbox, IoHeart, IoTrendingUp } from "react-icons/io5";
+import { IoChatbox, IoHeart } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import postResolver from "../presentation/resolvers/post.resolver";
 import { setAlert, configureAlert } from "../store/features/uiSlice";
 import postActions from "../presentation/actions/post.actions";
 import { readCookie } from "../utils/cookie";
 import { updateUser } from "../store/features/userSlice";
+import GenerateProfile from "./generateProfile";
 
-export default function Post({ _id, usersLike, views, created, tags, content, postOwner }) {
+export default function Post({
+  _id,
+  usersLike,
+  views,
+  created,
+  tags,
+  content,
+  postOwner,
+}) {
   const token = readCookie("token");
   const [commentsShown, toggleComments] = useState(false);
   const updateComments = (arr) => {
@@ -52,21 +61,27 @@ export default function Post({ _id, usersLike, views, created, tags, content, po
     <div className="h-full">
       <div className="flex justify-between items-center border border-gray-100 p-2">
         <div className="flex gap-2 items-center relative">
-          <Image alt="profile" src={postOwner.photo} className="h-10 w-10" />
-          <Link href={`/users/${postOwner.username}`} className="text-label">
+          {postOwner.photo ? (
+            <Image alt="profile" src={postOwner.photo} className="h-10 w-10" />
+          ) : (
+            <GenerateProfile username={postOwner.username} />
+          )}
+          <Link href={`/user/${postOwner.username}`} className="text-label">
             @{postOwner.username}
           </Link>
           <FollowLink />
         </div>
-        <MdLink
-          className="h-18 w-auto pr-4 cursor-pointer"
-          onClick={() => {
-            navigator.clipboard.writeText(
-              `${process.env.NEXT_PUBLIC_DOMAIN}/post/${_id}`
-            );
-            console.log("Link copied to clipboard");
-          }}
-        />
+        <div>
+          <MdLink
+            className="h-18 w-auto pr-4 cursor-pointer"
+            onClick={(e) => {
+              navigator.clipboard.writeText(
+                `${process.env.NEXT_PUBLIC_DOMAIN}/post/${_id}`
+              );
+              console.log("Text copied");
+            }}
+          />
+        </div>
       </div>
       <Carousel images={content.images} description={content.body} />
       <div className="border-gray-100 p-2 space-y-4">
