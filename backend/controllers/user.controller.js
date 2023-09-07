@@ -17,6 +17,25 @@ const getUser = async (req, res, next) => {
   }
 };
 
+// const recommend = async (req, res, next) => {
+//   try{
+//     // let users = await User.find().where(() => {
+//     //   const interests = this.interests
+
+//     //   for (let i=0;i<interests.length;i++){
+
+//     //   }
+//     // }).limit(10)
+//     const {interests} = req.profile
+//     for(let i=0; i<interests.length; i++){
+//       let users =  await User.find().where('interests').contains(interests[i])
+//     }
+
+//   }catch (error) {
+//     // console.log(error)
+//     genericErrorBlock(error, res);
+// }
+
 const create = async (req, res, next) => {
   try {
     const user = new User(req.body);

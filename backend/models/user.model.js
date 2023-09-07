@@ -111,7 +111,7 @@ UserSchema.methods = {
   authenticate: function (text) {
     return this.encryptPassword(text) === this.hashed_password;
   },
-
+  
   makeSalt: function () {
     return Math.round(new Date().valueOf() * Math.random()) + "";
   },
