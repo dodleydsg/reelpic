@@ -142,7 +142,7 @@ const feed = async (req, res, next) => {
     const following = req.profile.following;
     let nFollowing = following.length - 1;
     let userCount = 0;
-    while (nFollowing > -1 && count < 40) {
+    while (nFollowing > -1 && userCount < 40) {
       const userFollowing = await User.findById(following[nFollowing]);
       let latestPost = _.last(userFollowing.posts) || null;
       if (latestPost && !seen.includes(latestPost.toString())) {
