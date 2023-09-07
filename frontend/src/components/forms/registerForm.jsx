@@ -136,22 +136,17 @@ export default function RegisterForm() {
                     const provider = new GoogleAuthProvider();
                     let cred = await signInWithPopup(auth, provider);
                     const { email } = cred.user;
-                    userResolver(userActions.CREATE, {
-                      data: {
-                        email: email,
-                        provider: "google",
-                        password: "google",
-                      },
+                    userResolver(userActions.CREATE, "", {
+                      email,
+                      provider: "google",
+                      password: "google",
                     })
                       .then(({ data }) => {
                         authResolver(authActions.OAuthLOGIN, {
-                          data: {
-                            email: email,
-                          },
+                          email, provider: 'google'
                         })
                           .then(({ data }) => {
-                            localStorage.setItem("token", data.token);
-                            localStorage.setItem("id", data._id);
+                            setCookie("token", 7, data.token);
                             router.push("/getting_started");
                           })
                           .catch((error) => {
@@ -172,7 +167,7 @@ export default function RegisterForm() {
                       });
                     e.target.disabled = "false";
                   }}
-                  className="btn-google hover:bg-[#DA3925]"
+                  className="btn-google hover:bg-[#DA3925] disabled:opacity-30"
                 >
                   Sign up with Google
                 </button>

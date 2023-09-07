@@ -18,7 +18,7 @@ export default function FormCarousel({ images }) {
   // debounce(swipe, 250);
 
   const swipe = (e) => {
-    console.log(e.changedTouches);
+    // console.log(e.changedTouches);
     if (e.type === "touchstart") {
       touchstartX = e.changedTouches[0].screenX;
     }
@@ -38,20 +38,19 @@ export default function FormCarousel({ images }) {
     }
   };
 
-
   const navigateCarousel = (direction) => {
     const carousel = carouselRef.current;
     if (direction === "left") {
       if (activeCarousel > 0) {
         carousel.style.translate = `-${activeCarousel * 100 - 100}% 0`;
         setActiveCarousel(activeCarousel - 1);
-        console.log("Did it left");
+        // console.log("Did it left");
       }
     } else if (direction === "right") {
       if (activeCarousel < CONTENT_LENGTH - 1) {
         carousel.style.translate = `-${100 + activeCarousel * 100}% 0`;
         setActiveCarousel(activeCarousel + 1);
-        console.log("Did it right");
+        // console.log("Did it right");
       }
     }
   };

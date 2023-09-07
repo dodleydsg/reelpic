@@ -1,5 +1,5 @@
 const express = require("express");
-const notificationCtrl = require("../controllers/notification.contoller");
+const notificationCtrl = require("../controllers/notification.controller");
 const postCtrl = require("../controllers/post.controller");
 const userCtrl = require("../controllers/user.controller");
 const authCtrl = require("../controllers/auth.controller");
