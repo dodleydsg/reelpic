@@ -13,7 +13,7 @@ import userActions from "../presentation/actions/user.actions";
 import { readCookie } from "../utils/cookie";
 import { configureAlert, setAlert } from "../store/features/uiSlice";
 
-const TABS = ["profile", "password", "display"];
+const TABS = ["Profile", "Password", "Display"];
 
 function Settings() {
   const { user } = useSelector((state) => state.user);
@@ -51,7 +51,7 @@ function Settings() {
           }
           return (
             <p key={idx} className={classes} onClick={() => toggleTab(val)}>
-              {val.charAt(0).toLocaleUpperCase() + val.substring(1)}
+              {val}
             </p>
           );
         })}
