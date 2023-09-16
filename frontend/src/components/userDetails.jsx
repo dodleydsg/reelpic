@@ -10,10 +10,10 @@ import userActions from "../presentation/actions/user.actions";
 import { readCookie } from "../utils/cookie";
 import { useDispatch } from "react-redux";
 import { configureAlert, setAlert } from "../store/features/uiSlice";
+const TABS = ["Posts", "Followers", "Following"];
 
 
 function UserDetails({ authUser, user }) {
-  const TABS = ["posts", "followers", "following"];
   const dispatch = useDispatch()
   const [activeTab, toggleTab] = useState("posts");
   const router = useRouter();
@@ -95,7 +95,7 @@ function UserDetails({ authUser, user }) {
           }
           return (
             <p key={idx} className={classes} onClick={() => toggleTab(val)}>
-              {val.charAt(0).toLocaleUpperCase() + val.substring(1)}
+              {val}
             </p>
           );
         })}
